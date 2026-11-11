@@ -490,6 +490,17 @@ nav,.nav,.section-header{
 }
 
 </style>
+
+    <!-- SDP PWA: installable school app -->
+    <meta name="theme-color" content="#081321">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SDP">
+    <link rel="manifest" href="./manifest.webmanifest">
+    <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
+    <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+
 </head>
 <body class="min-h-screen relative">
 
@@ -1639,7 +1650,57 @@ nav,.nav,.section-header{
         function v6PrintAnnualReport(id) {
             const r=v6CloudData.reports?.[id]; if(!r)return;
             const w=window.open('','_blank'); if(!w)return;
-            w.document.write(`<!doctype html><html lang="ar" dir="rtl"><meta charset="utf-8"><title>${escapeHtml(r.title||'التقرير السنوي')}</title><body style="font-family:Arial;padding:32px;line-height:2"><h1>${escapeHtml(r.school||'إعدادية صلاح الدين للبنين')}</h1><h2>${escapeHtml(r.title||'التقرير السنوي')}</h2><p>السنة: ${Number(r.year)||'—'}</p><p>الإعلانات المنشورة: ${Number(r.metrics?.publishedAnnouncements)||0}</p><p>موارد المكتبة: ${Number(r.metrics?.libraryResources)||0}</p><p>سجلات المختبرات الرقمية: ${Number(r.metrics?.digitalLabRecords)||0}</p><p>${escapeHtml(r.note||'')}</p><hr><p>إدارة المدرسة</p><script>window.print()<\/script></body></html>`); w.document.close();
+            w.document.write(`<!doctype html><html lang="ar" dir="rtl"><meta charset="utf-8"><title>${escapeHtml(r.title||'التقرير السنوي')}</title><body style="font-family:Arial;padding:32px;line-height:2"><h1>${escapeHtml(r.school||'إعدادية صلاح الدين للبنين')}</h1><h2>${escapeHtml(r.title||'التقرير السنوي')}</h2><p>السنة: ${Number(r.year)||'—'}</p><p>الإعلانات المنشورة: ${Number(r.metrics?.publishedAnnouncements)||0}</p><p>موارد المكتبة: ${Number(r.metrics?.libraryResources)||0}</p><p>سجلات المختبرات الرقمية: ${Number(r.metrics?.digitalLabRecords)||0}</p><p>${escapeHtml(r.note||'')}</p><hr><p>إدارة المدرسة</p><script>window.print()<\/script>
+<!-- SDP PWA installer + service worker -->
+<style>
+#sdp-install-app{position:fixed;right:16px;bottom:92px;z-index:9998;display:none;align-items:center;gap:9px;
+padding:12px 17px;border:1px solid rgba(245,217,138,.65);border-radius:999px;
+background:linear-gradient(135deg,#f5d98a,#c99a35);color:#101827;font:900 13px 'Cairo',sans-serif;
+box-shadow:0 12px 34px rgba(0,0,0,.42),0 0 24px rgba(216,180,90,.25);cursor:pointer}
+#sdp-install-app:active{transform:scale(.97)}
+@media(min-width:700px){#sdp-install-app{right:28px;bottom:28px}}
+</style>
+<button id="sdp-install-app" type="button" aria-label="تثبيت تطبيق المدرسة">⬇ تثبيت تطبيق المدرسة</button>
+<script>
+(() => {
+  const installButton = document.getElementById('sdp-install-app');
+  let installPrompt = null;
+
+  window.addEventListener('beforeinstallprompt', (event) => {
+    event.preventDefault();
+    installPrompt = event;
+    if (installButton) installButton.style.display = 'inline-flex';
+  });
+
+  if (installButton) {
+    installButton.addEventListener('click', async () => {
+      if (!installPrompt) {
+        alert('لتثبيت التطبيق: افتح قائمة Chrome ⋮ ثم اختر "تثبيت التطبيق" أو "إضافة إلى الشاشة الرئيسية".');
+        return;
+      }
+      installPrompt.prompt();
+      try { await installPrompt.userChoice; } catch (_) {}
+      installPrompt = null;
+      installButton.style.display = 'none';
+    });
+  }
+
+  window.addEventListener('appinstalled', () => {
+    if (installButton) installButton.style.display = 'none';
+    installPrompt = null;
+  });
+
+  if ('serviceWorker' in navigator && location.protocol === 'https:') {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .then(() => console.info('[SDP] App mode ready'))
+        .catch(error => console.warn('[SDP] Service worker:', error));
+    });
+  }
+})();
+</script>
+
+</body></html>`); w.document.close();
         }
         function v6InitCloudPortal() {
             v6RenderCloudAuth();
