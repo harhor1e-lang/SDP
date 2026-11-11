@@ -2659,7 +2659,8 @@ nav,.nav,.section-header{
                 return;
             }
 
-            filteredKeys.forEach(key => {
+            const visibleStudentKeys = filteredKeys.slice(0, 30);
+visibleStudentKeys.forEach(key => {
                 const student = globalStudentsData[key];
                 const card = document.createElement('div');
                 card.className = 'theme-card p-4 rounded-2xl space-y-3 border border-yellow-500/20 relative';
@@ -2699,7 +2700,16 @@ nav,.nav,.section-header{
                 `;
                 container.appendChild(card);
             });
-        }
+      if (filteredKeys.length > visibleStudentKeys.length) {
+    const moreBtn = document.createElement('button');
+    moreBtn.textContent = 'عرض المزيد من الطلاب';
+    moreBtn.className = 'col-span-full w-full py-3 rounded-xl bg-amber-500 text-black font-bold';
+    moreBtn.onclick = () => {
+        window.studentRenderLimit += 30;
+        renderStudentsList();
+    };
+    container.appendChild(moreBtn);
+}  }
 
         function updateStudent(studentId) {
             if (!requireAdmin() || !firebaseReady()) return;
