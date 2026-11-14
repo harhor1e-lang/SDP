@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إعدادية صلاح الدين للبنين | V6 Elite 3D</title>
+    <title>إعدادية صلاح الدين للبنين | V19 Royal Sapphire & Gold</title>
     <script src="https://cdn.tailwindcss.com?v=2026.1">
 </script>
     <script>
@@ -11,6 +11,8 @@
     </script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-storage-compat.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" referrerpolicy="no-referrer"></script>
     <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;700;900&family=Cairo:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
         body {
@@ -114,7 +116,8 @@
             transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), visibility 1.2s;
         }
         .fade-out { opacity: 0; visibility: hidden; }
-    </style>
+    .v7-page.active #average-calculator-section{display:block!important}
+</style>
 
     <style id="premium-school-theme">
         :root {
@@ -490,6 +493,141 @@ nav,.nav,.section-header{
 }
 
 </style>
+
+<style id="salah-v7-style">
+#average-calculator-section,#question-bank-section,#library-section,#school-communication-portal,#annual-report-public,#teacher-portal-section,#student-portal-section,#attendance-summary-section,#school-operations-section,#report-center-section,#school-timetable-section,#school-initiatives-section,#school-achievements-section,#admin-command-section{display:none!important}
+.v7-page{display:none;max-width:1100px;margin:18px auto;padding:14px;position:relative;z-index:5}.v7-page.active{display:block}
+.v7-panel{padding:18px;border:1px solid #3b7895;border-radius:20px;background:linear-gradient(145deg,#112b49,#071426);box-shadow:0 18px 45px #0006}
+.v7-launch-grid,.v7-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:11px}
+.v7-launch{padding:18px 10px;min-height:105px;border-radius:18px;border:1px solid #4b7895;background:linear-gradient(145deg,#183b5d,#091a30);color:#fff;font-weight:900}
+.v7-launch span{display:block;font-size:27px;margin-bottom:7px}.v7-launch small{display:block;color:#b9c9d9;font-size:10px}
+.v7-item{padding:12px;margin:9px 0;border:1px solid #ffffff25;border-radius:13px;background:#ffffff09}
+.v7-field{width:100%;padding:10px;margin:4px 0;border-radius:10px;background:#061426;color:white;border:1px solid #ffffff30}
+.v7-btn{padding:9px 13px;border-radius:11px;background:linear-gradient(120deg,#e8bd63,#b48638);color:#101a28;font-size:11px;font-weight:900;margin:3px}
+.v7-btn.alt{background:#ffffff12;color:#f2dfad;border:1px solid #ffffff25}
+.v7-tabs{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}.v7-tabs button{padding:8px 12px;border:1px solid #ffffff30;border-radius:10px;color:#f4e5bd}.v7-tabs button.active{background:#d8b45a;color:#111}
+.v7-item img{max-width:100%;max-height:280px;object-fit:contain;border-radius:10px;margin-top:8px}
+.v7-badge{display:grid;grid-template-columns:90px 1fr 80px;gap:10px;align-items:center;padding:14px;border:2px solid #d8b45a;border-radius:16px;background:#102943}.v7-badge img{max-width:100%;max-height:80px;object-fit:contain}
+@media(max-width:520px){.v7-badge{grid-template-columns:65px 1fr 60px}}
+</style>
+<style id="v9-final-layout">
+.quick-access{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;max-width:760px;margin:14px auto 0!important}
+.quick-access a,.quick-access button{min-width:0;min-height:86px}
+#v7-guidance,#v7-badge{display:none!important}#school-info-section{display:block!important;max-width:1100px;margin:24px auto 100px!important}
+#notices-section{border:1px solid rgba(216,180,90,.45);background:linear-gradient(145deg,rgba(20,43,67,.96),rgba(8,18,31,.98));box-shadow:0 18px 45px rgba(0,0,0,.25)}
+#notices-section h2{letter-spacing:.2px;text-shadow:0 2px 14px rgba(216,180,90,.22)}
+@media(max-width:520px){.quick-access{gap:6px!important}.quick-access a,.quick-access button{padding:9px 5px!important;grid-template-columns:1fr!important;text-align:center!important}.quick-access span{grid-column:1!important}.quick-access b,.quick-access small{grid-column:1!important;font-size:10px!important}}
+</style>
+<style id="remove-floating-command-dock">.floating-command-dock{display:none!important;visibility:hidden!important;pointer-events:none!important}</style>
+<style id="essential-school-actions-style">
+.essential-school-actions{
+  position:relative!important; inset:auto!important; transform:none!important;
+  z-index:30; display:flex; flex-direction:row; flex-wrap:wrap;
+  justify-content:center; align-items:center; gap:12px;
+  width:100%; max-width:100%; margin:14px auto 18px; padding:0 12px;
+  background:transparent!important; border:0!important; box-shadow:none!important;
+  backdrop-filter:none!important; border-radius:0!important;
+}
+.essential-school-actions .essential-action-btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  min-width:132px; padding:12px 22px; border-radius:14px;
+  color:#f5d98a; font-weight:800; font-size:15px;
+  background:linear-gradient(135deg,#10243b,#0a1729);
+  border:1px solid rgba(216,180,90,.55);
+  box-shadow:0 5px 16px rgba(0,0,0,.22);
+}
+@media(max-width:480px){
+ .essential-school-actions{gap:8px;margin:10px auto 14px}
+ .essential-school-actions .essential-action-btn{flex:1;min-width:120px;padding:11px 10px;font-size:14px}
+}
+</style>
+
+
+<style id="v14-admin-console">
+#admin-dashboard-modal{background:radial-gradient(ellipse at 12% 8%,rgba(18,105,220,.24),transparent 38%),radial-gradient(ellipse at 88% 12%,rgba(216,180,90,.18),transparent 34%),rgba(2,8,18,.96)!important}
+#admin-dashboard-modal .v14-admin-shell{max-width:1180px!important;border:1px solid rgba(42,177,230,.35)!important;background:linear-gradient(145deg,rgba(10,28,51,.98),rgba(4,12,25,.98))!important;box-shadow:0 25px 90px #000b,0 0 45px #0b74b533!important}
+.v14-admin-home,.v14-admin-page{animation:v14Enter .32s ease both}
+@keyframes v14Enter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.v14-admin-nav{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:12px;margin:18px 0}
+.v14-admin-tile{display:flex;align-items:center;gap:12px;text-align:right;min-height:88px;padding:15px;border-radius:18px;color:#eff8ff;background:linear-gradient(145deg,rgba(18,53,88,.86),rgba(7,19,37,.92));border:1px solid rgba(54,190,235,.28);box-shadow:inset 0 1px #ffffff12,0 12px 28px #0005;transition:transform .28s,border-color .28s,box-shadow .28s;}
+.v14-admin-tile:hover{transform:translateY(-5px);border-color:#e4c36d;box-shadow:0 15px 34px #0008,0 0 24px #1aaed733}
+.v14-admin-tile .v14-icon{width:43px;height:43px;flex:0 0 43px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(145deg,#f4d98e,#b88a35);color:#0a1b30;font-size:22px;box-shadow:0 0 20px #e5bf5a33}
+.v14-admin-tile b{display:block;font-size:13px;color:#f5dfa0}.v14-admin-tile small{display:block;color:#a9c1d7;font-size:10px;margin-top:4px;line-height:1.6}
+.v14-page-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:15px 17px;margin:15px 0;border:1px solid #2b91bb55;border-radius:18px;background:linear-gradient(100deg,#102d4cdd,#0a192ddd)}
+.v14-back{border:1px solid #d8b45a88;background:#d8b45a18;color:#f7dfa0;padding:9px 15px;border-radius:12px;font-weight:900;font-size:12px}
+.v14-admin-page>[data-v14-content]{display:grid;gap:14px}.v14-admin-page [data-v14-content]>:first-child{margin-top:0}
+.v14-connection{display:inline-flex;align-items:center;gap:7px;border:1px solid #ffffff20;border-radius:999px;padding:7px 11px;font-size:10px;color:#b9cadb;background:#ffffff08}.v14-dot{width:8px;height:8px;border-radius:50%;background:#eab308;box-shadow:0 0 12px currentColor}.v14-dot.online{background:#34d399;color:#34d399}.v14-dot.offline{background:#fb7185;color:#fb7185}
+#v14-admin-activity{border:1px solid #2b91bb55;border-radius:18px;padding:16px;background:linear-gradient(145deg,#102947cc,#071629ee)}.v14-activity-row{padding:10px 12px;border:1px solid #ffffff12;border-radius:12px;background:#ffffff08;margin-top:8px}.v14-activity-row small{display:block;color:#9db2c8;margin-top:4px;font-size:10px}
+#v14-admin-toast{position:fixed;z-index:20000;bottom:22px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;padding:12px 18px;border:1px solid #39c6a0;border-radius:14px;background:#08291f;color:#c8ffe9;box-shadow:0 10px 35px #0008;transition:.25s;font-size:12px;font-weight:800}#v14-admin-toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:520px){.v14-admin-nav{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.v14-admin-tile{min-height:78px;padding:10px;gap:8px}.v14-admin-tile .v14-icon{width:36px;height:36px;flex-basis:36px;font-size:18px}.v14-admin-tile b{font-size:11px}.v14-admin-tile small{font-size:9px}}
+</style>
+
+
+<style id="salah-v19-visitor-vision">
+/* V19: restore the original sapphire/navy + imperial gold identity.
+   A refined visitor-facing visual layer only; no application logic or IDs changed. */
+:root{
+ --v19-night:#071426;--v19-navy:#0b1d36;--v19-blue:#12365a;
+ --v19-gold:#d7b66a;--v19-gold-light:#f2d99a;--v19-ice:#e9f0f8;
+ --v19-muted:#aebed0;--v19-line:rgba(215,182,106,.24);
+}
+html{scroll-behavior:smooth}
+body{
+ background-color:var(--v19-night)!important;
+ background-image:
+  radial-gradient(ellipse at 12% 4%,rgba(37,91,139,.28),transparent 34%),
+  radial-gradient(ellipse at 88% 17%,rgba(190,148,65,.13),transparent 28%),
+  radial-gradient(ellipse at 50% 100%,rgba(22,55,91,.22),transparent 42%),
+  linear-gradient(145deg,#061121 0%,#0a1a31 48%,#071426 100%)!important;
+ background-attachment:fixed!important;color:var(--v19-ice)!important;
+}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.12;
+ background-image:linear-gradient(30deg,rgba(226,194,123,.18) 1px,transparent 1px),linear-gradient(150deg,rgba(122,169,207,.13) 1px,transparent 1px);
+ background-size:54px 94px;mask-image:linear-gradient(to bottom,black,transparent 78%)}
+header{position:relative}
+header h1,header h2{letter-spacing:.015em}
+.hero-stage{padding-top:clamp(1rem,3vw,2.4rem);padding-bottom:clamp(1rem,3vw,2.5rem)}
+.hero-stage>div:first-child,.hero-stage .hero-card,.hero-stage .theme-panel{
+ border:1px solid rgba(215,182,106,.3)!important;
+ background:linear-gradient(135deg,rgba(15,39,68,.94),rgba(7,19,36,.92) 58%,rgba(31,45,62,.9))!important;
+ box-shadow:0 24px 70px rgba(0,0,0,.34),inset 0 1px rgba(255,255,255,.08),0 0 34px rgba(28,82,130,.12)!important;
+}
+.hero-stage h1,.hero-stage h2{color:#f5e6c2!important;text-shadow:0 5px 28px rgba(215,182,106,.18)}
+.hero-stage p{color:#d5e0ed!important}
+.identity-console,.platform-stats,.smart-portals,.v7-launch{
+ border-color:var(--v19-line)!important;
+}
+.identity-console,.smart-portals>*,.v7-launch>*{
+ box-shadow:0 16px 42px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.06);
+}
+.theme-panel,.theme-card,.average-calc-shell{
+ background:linear-gradient(145deg,rgba(15,31,52,.94),rgba(9,22,40,.94))!important;
+ border-color:rgba(151,178,204,.18)!important;
+ box-shadow:0 14px 38px rgba(0,0,0,.2),inset 0 1px rgba(255,255,255,.055)!important;
+}
+.theme-panel h2,.theme-panel h3,.theme-card h2,.theme-card h3{color:#f0dba9!important}
+button,.btn,a[class*="bg-amber"],a[class*="bg-yellow"]{
+ transition:transform .22s ease,box-shadow .22s ease,filter .22s ease;
+}
+button:hover,.btn:hover,a[class*="bg-amber"]:hover,a[class*="bg-yellow"]:hover{
+ transform:translateY(-2px);filter:brightness(1.07);box-shadow:0 10px 26px rgba(0,0,0,.26),0 0 18px rgba(215,182,106,.13)
+}
+input,select,textarea{
+ background:rgba(4,15,29,.76)!important;color:#edf3fa!important;
+ border-color:rgba(151,178,204,.28)!important;
+}
+input:focus,select:focus,textarea:focus{outline:none!important;border-color:rgba(225,192,117,.78)!important;box-shadow:0 0 0 3px rgba(215,182,106,.12)!important}
+::placeholder{color:#91a4ba!important}
+/* Restrained metallic-gold accents: premium, not visually noisy. */
+.text-amber-300,.text-yellow-300,.text-amber-400{color:#e7c77e!important}
+.border-amber-400,.border-yellow-500{border-color:rgba(215,182,106,.48)!important}
+#particle-canvas{opacity:.22!important}
+@keyframes v19Rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.hero-stage,.identity-console,.platform-stats,.smart-portals{animation:v19Rise .75s ease both}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+@media(max-width:640px){.hero-stage{padding-top:1rem}.theme-panel,.theme-card{backdrop-filter:blur(12px)}body::before{opacity:.07}}
+</style>
+
 </head>
 <body class="min-h-screen relative">
 
@@ -515,7 +653,7 @@ nav,.nav,.section-header{
     <div class="bg-gradient-to-r from-yellow-600 via-yellow-500 to-yellow-600 text-black py-2 font-bold text-xs shadow-md relative z-10">
         <div class="marquee-container">
             <div class="marquee-content">
-                <span>🌟 أهلاً بكم في المنصة السحابية الرسمية لإعدادية صلاح الدين للبنين (تأسست 1966) • إدارة أ. محمد أكرم الربيعي 🌟 رابط قناة السادس: t.me/salaldeen27 • قناة الخامس: t.me/salahschool27 • قناة الرابع: t.me/salah_2027_4 🌟</span>
+                <span>🌟 أهلاً بكم في المنصة السحابية الرسمية لإعدادية صلاح الدين للبنين (تأسست 1966) • إدارة أ. محمد أكرم الربيعي 🌟 رابط قناة السادس: t.me/SD_6th • قناة الخامس: t.me/SD_5th • قناة الرابع: t.me/SD_4th 🌟</span>
             </div>
         </div>
     </div>
@@ -533,10 +671,10 @@ nav,.nav,.section-header{
         </div>
 
         <div class="flex items-center gap-2.5 flex-wrap justify-center">
-            <a href="https://t.me/schoolorders22" target="_blank" class="px-3 py-1.5 rounded-full theme-card text-[11px] font-bold flex items-center gap-1.5 border border-blue-500/30 text-blue-400 hover:scale-105 transition"><span>📢</span> العامة</a>
-            <a href="https://t.me/salaldeen27" target="_blank" class="px-3 py-1.5 rounded-full theme-card text-[11px] font-bold flex items-center gap-1.5 border border-yellow-500/40 text-yellow-400 hover:scale-105 transition"><span>✨</span> السادس</a>
-            <a href="https://t.me/salahschool27" target="_blank" class="px-3 py-1.5 rounded-full theme-card text-[11px] font-bold flex items-center gap-1.5 border border-purple-500/30 text-purple-400 hover:scale-105 transition"><span>📚</span> الخامس</a>
-            <a href="https://t.me/salah_2027_4" target="_blank" class="px-3 py-1.5 rounded-full theme-card text-[11px] font-bold flex items-center gap-1.5 border border-emerald-500/30 text-emerald-400 hover:scale-105 transition"><span>📖</span> الرابع</a>
+            <a href="https://t.me/SD_Alerts" target="_blank" class="px-3 py-1.5 rounded-full theme-card text-[11px] font-bold flex items-center gap-1.5 border border-blue-500/30 text-blue-400 hover:scale-105 transition"><span>📢</span> العامة</a>
+            <a href="https://t.me/SD_6th" target="_blank" class="px-3 py-1.5 rounded-full theme-card text-[11px] font-bold flex items-center gap-1.5 border border-yellow-500/40 text-yellow-400 hover:scale-105 transition"><span>✨</span> السادس</a>
+            <a href="https://t.me/SD_5th" target="_blank" class="px-3 py-1.5 rounded-full theme-card text-[11px] font-bold flex items-center gap-1.5 border border-purple-500/30 text-purple-400 hover:scale-105 transition"><span>📚</span> الخامس</a>
+            <a href="https://t.me/SD_4th" target="_blank" class="px-3 py-1.5 rounded-full theme-card text-[11px] font-bold flex items-center gap-1.5 border border-emerald-500/30 text-emerald-400 hover:scale-105 transition"><span>📖</span> الرابع</a><button type="button" onclick="v7Open('calculator')" class="px-3 py-1.5 rounded-full theme-card text-[11px] font-bold">🧮 الحاسبة</button><button type="button" onclick="v7Open('timetable')" class="px-3 py-1.5 rounded-full theme-card text-[11px] font-bold">🗓️ جدول الدروس</button>
         </div>
     </header>
 
@@ -586,16 +724,10 @@ nav,.nav,.section-header{
             </div>
             <div class="identity-side-mark"><span>بغداد · الشعب</span><strong>تأسست</strong><b>1966</b></div>
         </div>
-        <nav class="quick-access" aria-label="الوصول السريع">
-            <a href="#labs-section"><span>⌘</span><b>المختبرات</b><small>التجارب والتطبيق</small></a>
-            <a href="#notices-section"><span>▤</span><b>التبليغات</b><small>آخر إعلانات الإدارة</small></a>
-            <a href="#library-section"><span>▣</span><b>المكتبة</b><small>الكتب والملازم</small></a> <a href="#question-bank-section"><span>✎</span><b>بنك الأسئلة</b><small>الوزاريات والمراجعة</small></a>
-            <a href="#average-calculator-section"><span>∑</span><b>حاسبة المعدل</b><small>احسب معدلك الدراسي</small></a>
-            <a href="#teachers-section"><span>✦</span><b>الأساتذة</b><small>الهيئة التعليمية</small></a>
-            <button type="button" onclick="openStudentsPinModal()"><span>◎</span><b>سجل الطلاب</b><small>بوابة الإشراف الإداري</small></button>
-        </nav>
+        
     </section>
 
+    <!-- تم حذف لوحة الاختصارات المربعة بناءً على طلب الإدارة -->
     <!-- شريط البث الإداري العاجل -->
     <section id="live-broadcast-banner" class="hidden max-w-7xl mx-auto mt-4 px-4 md:px-6 relative z-20" aria-live="assertive">
         <div class="theme-panel rounded-2xl border border-red-500/50 bg-red-950/40 p-4 flex items-start gap-3 shadow-xl">
@@ -632,7 +764,26 @@ nav,.nav,.section-header{
       </div>
     </section>
 
-    <main class="max-w-7xl mx-auto px-4 md:px-6 py-6 space-y-8 relative z-10 mb-28">
+    
+<section id="v7-launch" class="max-w-7xl mx-auto px-4 md:px-6 relative z-10"><div class="v7-panel text-center">
+<h2 class="title-font text-2xl font-black gold-gradient-text">الخدمات المدرسية المستقلة</h2><p class="sd-muted">افتح الخدمة من الأيقونة دون ازدحام الصفحة الرئيسية</p>
+<div class="v7-launch-grid">
+<button class="v7-launch" onclick="v7Open('students')"><span>🎓</span>بوابة الطالب<small>الرابع والخامس والسادس</small></button>
+<button class="v7-launch" onclick="v7Open('timetable')"><span>🗓️</span>جدول الدروس<small>الجداول الأسبوعية</small></button>
+<button class="v7-launch" onclick="v7Open('calculator')"><span>🧮</span>الحاسبة الطلابية</button>
+<button class="v7-launch" onclick="v7Open('reports')"><span>🖨️</span>التقارير والطباعة</button>
+<button class="v7-launch" onclick="v7Open('contact')"><span>✉️</span>مراسلة الإدارة</button>
+<button class="v7-launch" onclick="document.getElementById('guidance-public-section')?.scrollIntoView({behavior:'smooth',block:'start'})"><span>🧭</span>قسم المرشد التربوي<small>الإرشادات والتوعية المدرسية</small></button>
+
+
+</div></div></section>
+<section id="v7-students" class="v7-page"><div class="v7-panel"><button class="v7-btn alt" onclick="v7Back()">رجوع</button><h2 class="title-font text-2xl font-black gold-gradient-text">بوابة الطالب</h2><div id="v7-grades" class="v7-tabs"></div><div id="v7-cats" class="v7-tabs"></div><div id="v7-student-items"></div></div></section>
+<section id="v7-timetable" class="v7-page"><div class="v7-panel"><button class="v7-btn alt" onclick="v7Back()">رجوع</button><h2 class="title-font text-2xl font-black gold-gradient-text">جدول الدروس الأسبوعي</h2><div id="v7-table-grades" class="v7-tabs"></div><div id="v7-table-view"></div></div></section>
+<section id="v7-calculator" class="v7-page"><div class="v7-panel"><button class="v7-btn alt" onclick="v7Back()">رجوع</button><h2 class="title-font text-2xl font-black gold-gradient-text">الحاسبة الطلابية</h2><div id="v7-calc-slot"></div></div></section>
+<section id="v7-reports" class="v7-page"><div class="v7-panel"><button class="v7-btn alt" onclick="v7Back()">رجوع</button><h2 class="title-font text-2xl font-black gold-gradient-text">مركز التقارير والطباعة</h2><div id="v7-report-items"></div></div></section>
+<section id="v7-contact" class="v7-page"><div class="v7-panel"><button class="v7-btn alt" onclick="v7Back()">رجوع</button><h2 class="title-font text-2xl font-black gold-gradient-text">مراسلة الإدارة بسرية</h2><select id="v7-msg-kind" class="v7-field"><option>استفسار</option><option>شكوى</option><option>مقترح</option><option>فاعل خير</option><option>رسالة أخرى</option></select><input id="v7-msg-name" class="v7-field" placeholder="الاسم (اختياري)" maxlength="80"><textarea id="v7-msg-body" class="v7-field" rows="5" maxlength="3000" placeholder="اكتب رسالتك..."></textarea><button class="v7-btn" onclick="v7Send()">إرسال للإدارة</button><p id="v7-msg-status"></p></div></section>
+<!-- حُذف تبويب الإرشاد وتبويب الهوية المستقلان؛ إدارة الهوية أصبحت داخل سجل الطلاب -->
+<main class="max-w-7xl mx-auto px-4 md:px-6 py-6 space-y-8 relative z-10 mb-28">
 
         <!-- الأقسام الأربعة الجديدة والمخصصة للمختبرات (حاسوب، فيزياء، كيمياء، أحياء) -->
         <section id="labs-section" class="space-y-6">
@@ -685,9 +836,9 @@ nav,.nav,.section-header{
             <div class="flex justify-between items-center border-b border-yellow-500/20 pb-4">
                 <div>
                     <span class="px-3 py-1 rounded-full text-[11px] font-bold bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 inline-block mb-2">
-                        التبليغات والإرشادات الرسمية (مدى الحياة)
+                        التبليغات الرسمية (مدى الحياة)
                     </span>
-                    <h2 class="title-font text-2xl md:text-3xl font-black">رادار الإدارة والإرشاد التربوي</h2>
+                    <h2 class="title-font text-2xl md:text-3xl font-black">تبليغات الإدارة المدرسية</h2>
                 </div>
             </div>
             <div id="live-posts-container" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
@@ -695,6 +846,23 @@ nav,.nav,.section-header{
 
         <!-- الخزينة السحابية للكتب -->
         <!-- بنك الأسئلة والوزاريات -->
+        <section id="guidance-public-section" class="theme-panel p-6 md:p-8 rounded-[2rem] space-y-5 border border-emerald-400/30">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                    <span class="text-[10px] font-black tracking-widest text-emerald-300">STUDENT WELLBEING · GUIDANCE</span>
+                    <h2 class="text-2xl font-black text-emerald-200 mt-1">قسم المرشد التربوي</h2>
+                    <p class="text-sm opacity-75 mt-1">إرشادات وتوجيهات تربوية وتوعوية من المرشد التربوي أ. أحمد زبون الساعدي.</p>
+                </div>
+                <div class="flex items-center gap-2 flex-wrap">
+                    <span class="rounded-full px-3 py-2 text-xs font-bold border border-emerald-400/30 text-emerald-200">تحديث مباشر</span>
+                    <button onclick="openCounselorLogin()" class="px-4 py-2 rounded-xl bg-emerald-500/15 border border-emerald-400/40 text-emerald-200 text-xs font-black hover:bg-emerald-500/25">دخول المرشد التربوي</button>
+                </div>
+            </div>
+            <div id="guidance-public-posts" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <p class="text-sm opacity-70 text-center py-5">جارٍ تحميل إرشادات المرشد التربوي...</p>
+            </div>
+        </section>
+
         <section id="question-bank-section" class="theme-panel p-6 md:p-8 rounded-[2rem] space-y-5">
             <div class="flex flex-wrap items-center justify-between gap-3 border-b border-yellow-500/20 pb-4">
                 <div><span class="text-[10px] text-yellow-400 font-bold">المراجعة والاستعداد للامتحانات</span><h2 class="title-font text-2xl font-black gold-gradient-text">بنك الأسئلة والوزاريات</h2><p class="text-[11px] opacity-70 mt-1">مصادر وأسئلة مرتبة حسب المرحلة والمادة</p></div>
@@ -940,31 +1108,10 @@ nav,.nav,.section-header{
             </div>
         </section>
     </main>
-
-    <!-- شريط التحكم العائم المصغر والأنيق -->
-    <nav class="floating-command-dock flex items-center gap-1.5 md:gap-2 flex-wrap justify-center">
-        <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="px-2.5 py-1.5 rounded-full bg-yellow-500 text-black font-black text-[11px] shadow-md flex items-center gap-1">
-            <span>🏛️</span> الرئيسية
-        </button>
-        <button onclick="scrollToNotices()" class="px-2.5 py-1.5 rounded-full theme-card font-bold text-[11px] flex items-center gap-1 border border-yellow-500/20">
-            <span>📢</span> التبليغات
-        </button>
-        <button onclick="document.getElementById('average-calculator-section').scrollIntoView({behavior:'smooth'})" class="px-2.5 py-1.5 rounded-full theme-card font-bold text-[11px] flex items-center gap-1 border border-yellow-500/30 text-yellow-300"><span>∑</span> حاسبة المعدل</button>
-        <a href="https://t.me/salaldeen27" target="_blank" class="px-2.5 py-1.5 rounded-full theme-card font-bold text-[11px] flex items-center gap-1 border border-yellow-500/30 text-yellow-400">
-            <span>✨</span> السادس
-        </a>
-        <a href="https://t.me/salahschool27" target="_blank" class="px-2.5 py-1.5 rounded-full theme-card font-bold text-[11px] flex items-center gap-1 border border-purple-500/30 text-purple-400">
-            <span>📚</span> الخامس
-        </a>
-        <a href="https://t.me/salah_2027_4" target="_blank" class="px-2.5 py-1.5 rounded-full theme-card font-bold text-[11px] flex items-center gap-1 border border-emerald-500/30 text-emerald-400">
-            <span>📖</span> الرابع
-        </a>
-        <button onclick="openPinModal()" class="px-2.5 py-1.5 rounded-full theme-card font-bold text-[11px] flex items-center gap-1 border border-yellow-500/30">
-            <span>🔐</span> الإدارة
-        </button>
-        <button onclick="openStudentsPinModal()" class="px-2.5 py-1.5 rounded-full theme-card font-bold text-[11px] flex items-center gap-1 border border-yellow-500/30 text-yellow-400">
-            <span>👨‍🎓</span> سجل الطلاب
-        </button>
+    <!-- أزرار الإدارة وسجل الطلاب مستقلة عن المربع المحذوف -->
+    <nav class="essential-school-actions" aria-label="إدارة المدرسة وسجل الطلاب">
+      <button type="button" onclick="openPinModal()" class="essential-action-btn">🔐 الإدارة</button>
+      <button type="button" onclick="openStudentsPinModal()" class="essential-action-btn">👨‍🎓 سجل الطلاب</button>
     </nav>
 
     <!-- نافذة الرمز السري للإدارة -->
@@ -979,6 +1126,33 @@ nav,.nav,.section-header{
             <p id="admin-auth-status" class="text-[11px] text-amber-300" role="status">رمز دخول الإدارة.</p>
             <button onclick="verifySecretPin()" class="w-full py-3 rounded-xl bg-gradient-to-r from-yellow-600 to-yellow-400 text-black font-black text-sm shadow-lg">دخول اللوحة</button>
         </div>
+    </div>
+
+    <!-- دخول مستقل للمرشد التربوي -->
+    <div id="counselor-login-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-[1300] hidden flex items-center justify-center p-4">
+      <div class="theme-panel p-7 rounded-3xl max-w-md w-full space-y-4 border border-emerald-400/40 shadow-2xl">
+        <div class="flex items-center justify-between"><h3 class="text-xl font-black text-emerald-200">دخول المرشد التربوي</h3><button onclick="closeCounselorLogin()" class="font-bold">✕</button></div>
+        <p class="text-xs opacity-75">أدخل رمز الدخول الموحد للمدير والمرشد. هذا الدخول يفتح صلاحية نشر الإرشادات فقط.</p>
+        <input id="counselor-pin-input" type="password" inputmode="numeric" autocomplete="off" placeholder="••••" class="w-full bg-black/50 border border-white/15 rounded-xl p-3 text-center tracking-widest text-lg">
+        <p id="counselor-login-status" class="text-xs text-emerald-200" role="status">رمز الدخول الموحد.</p>
+        <button onclick="loginCounselor()" class="w-full py-3 rounded-xl bg-emerald-500 text-black font-black">دخول المرشد</button>
+      </div>
+    </div>
+    <div id="counselor-workspace-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-[1301] hidden overflow-y-auto p-3 md:p-6">
+      <div class="theme-panel max-w-3xl mx-auto my-5 p-6 rounded-3xl border border-emerald-400/40 space-y-4">
+        <div class="flex justify-between items-center gap-2"><div><h3 class="text-xl font-black text-emerald-200">مساحة المرشد التربوي</h3><p id="counselor-account-label" class="text-xs opacity-70">صلاحية نشر الإرشادات فقط</p></div><button onclick="logoutCounselor()" class="px-3 py-2 rounded-lg border border-red-400/30 text-red-300 text-xs">خروج</button></div>
+        <input id="counselor-post-title" maxlength="140" placeholder="عنوان الإرشاد" class="w-full bg-black/50 border border-white/15 rounded-xl p-3 text-sm">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <select id="counselor-post-category" class="w-full bg-black/50 border border-white/15 rounded-xl p-3 text-sm"><option>دراسي</option><option>نفسي وانفعالي</option><option>سلوكي</option><option>اجتماعي</option><option>صحي</option><option>وقائي</option><option>مهني</option></select>
+          <select id="counselor-post-audience" class="w-full bg-black/50 border border-white/15 rounded-xl p-3 text-sm"><option>جميع الطلبة</option><option>المرحلة الرابعة</option><option>المرحلة الخامسة</option><option>المرحلة السادسة</option><option>أولياء الأمور</option><option>الهيئة التعليمية</option></select>
+        </div>
+        <textarea id="counselor-post-text" maxlength="3000" rows="7" placeholder="اكتب الإرشاد التربوي..." class="w-full bg-black/50 border border-white/15 rounded-xl p-3 text-sm"></textarea>
+        <label class="block text-xs text-emerald-200">إرفاق صورة اختيارية</label>
+        <input id="counselor-post-image" type="file" accept="image/jpeg,image/png,image/webp" onchange="previewCounselorImage(this)" class="text-xs">
+        <img id="counselor-post-preview" class="hidden max-h-64 rounded-xl object-contain w-full border border-emerald-400/30" alt="معاينة صورة الإرشاد">
+        <p id="counselor-publish-status" class="text-xs text-emerald-200" aria-live="polite"></p>
+        <button onclick="publishAsCounselor()" class="w-full py-3 rounded-xl bg-emerald-500 text-black font-black">نشر الإرشاد سحابياً</button>
+      </div>
     </div>
 
     <!-- نافذة الرمز السري لسجل الطلاب -->
@@ -1106,12 +1280,29 @@ nav,.nav,.section-header{
         <div class="max-w-4xl mx-auto theme-panel p-6 md:p-8 rounded-3xl space-y-8 border border-yellow-500/50">
             <div class="flex justify-between items-center border-b border-current pb-4">
                 <h2 class="title-font text-2xl font-black gold-gradient-text">لوحة التحكم السحابية الرسمية (أعدادية صلاح الدين)</h2>
-                <button onclick="closeAdminDashboard()" class="px-4 py-2 rounded-xl bg-red-500/20 text-red-400 border border-red-500/30 text-xs font-bold">إغلاق اللوحة</button>
+                
+<div id="v7-admin-tools" class="theme-card p-4 rounded-2xl border border-cyan-400/30 space-y-4">
+<h3 class="font-black text-cyan-200 text-lg">إدارة بوابة الطالب والجداول والرسائل والصور</h3>
+<p class="text-xs opacity-75">الصور تحفظ في Firebase Storage، وتُحفظ روابطها فقط داخل Realtime Database.</p>
+<div class="v7-grid">
+<div class="v7-item"><h4 class="font-black text-yellow-200">نشر مورد</h4>
+<select id="v7-grade" class="v7-field"><option>الرابع العلمي</option><option>الخامس العلمي</option><option>السادس العلمي</option></select>
+<select id="v7-category" class="v7-field"><option>كتب</option><option>ملازم</option><option>ملخصات</option><option>أسئلة شهرية</option><option>وزاريات</option></select>
+<input id="v7-title" class="v7-field" placeholder="عنوان المادة"><textarea id="v7-description" class="v7-field" placeholder="النص أو الوصف"></textarea><input id="v7-url" class="v7-field" placeholder="رابط الملف (اختياري)"><input id="v7-image" class="v7-field" type="file" accept="image/*"><button class="v7-btn" onclick="v7Publish()">نشر المادة</button></div>
+<div class="v7-item"><h4 class="font-black text-yellow-200">الجدول الأسبوعي</h4><select id="v7-table-grade" class="v7-field"><option>الرابع العلمي</option><option>الخامس العلمي</option><option>السادس العلمي</option></select><input id="v7-table-title" class="v7-field" placeholder="عنوان الجدول"><input id="v7-table-image" class="v7-field" type="file" accept="image/*"><button class="v7-btn" onclick="v7PublishTable()">نشر الجدول</button><div id="v7-admin-tables"></div>
+</div>
+</div>
+</div>
+<div class="v7-item"><h4 class="font-black text-cyan-200">إدارة التبليغات والإعلانات</h4><div id="v7-admin-items"></div><div id="v7-admin-posts"></div></div>
+<div class="v7-item"><h4 class="font-black text-cyan-200">صندوق رسائل الإدارة الخاصة</h4><div id="v7-inbox"></div></div>
+<div class="v7-item border border-red-400/30"><h4 class="font-black text-red-300">تنظيف بيانات الأقسام القديمة من Firebase</h4><p class="text-xs opacity-75">سيحذف من Firebase: questionBank وbooks وdigitalLibrary وschoolMessages وannualReports، كما يحذف منشورات الإرشاد القديمة فقط من posts. تبقى إعلانات الإدارة وسجلات الطلاب والهوية وبوابة الطالب والجداول والمختبرات.</p><button class="v7-btn alt" onclick="v7CleanupLegacyFirebase()">حذف بيانات الأقسام القديمة من Firebase</button><p id="v7-cleanup-status" class="text-xs"></p><p class="text-[11px] text-amber-200">لا يتم الحذف تلقائياً عند فتح الموقع؛ نفّذ التنظيف من هنا بعد مراجعة التأكيد. يجب أن تسمح قواعد Firebase بالكتابة حتى ينجح الحذف.</p></div>
+</div>
+<button onclick="closeAdminDashboard()" class="px-4 py-2 rounded-xl bg-red-500/20 text-red-400 border border-red-500/30 text-xs font-bold">إغلاق اللوحة</button>
             </div>
 
             <section class="theme-card p-4 rounded-2xl border border-emerald-400/40 space-y-3">
-              <div class="flex flex-wrap items-center justify-between gap-2"><div><h3 class="font-black text-emerald-300">☁️ اتصال Firebase السحابي</h3><p class="text-xs opacity-70">اختبار فعلي للقراءة والكتابة والحذف في قاعدة البيانات الجديدة.</p></div><span id="firebase-cloud-status" class="text-xs font-bold text-amber-300">لم يتم الاختبار بعد</span></div>
-              <button type="button" class="sd-btn" onclick="runFirebaseCloudTest()">اختبار الحفظ السحابي الآن</button>
+              <div class="flex flex-wrap items-center justify-between gap-2"><div><h3 class="font-black text-emerald-300">☁️ اتصال Firebase السحابي</h3><p class="text-xs opacity-70">اختبار فعلي للقراءة والكتابة والحذف في Realtime Database، ورفع صورة تجريبية ثم حذفها من Firebase Storage.</p></div><span id="firebase-cloud-status" class="text-xs font-bold text-amber-300">لم يتم الاختبار بعد</span></div>
+              <button type="button" class="sd-btn" onclick="runFirebaseCloudTest()">اختبار الاتصال وقاعدة البيانات ورفع الصور الآن</button>
               <p id="firebase-cloud-test-detail" class="text-xs leading-6 opacity-80" aria-live="polite">بعد الاختبار ستظهر هنا نتيجة الاتصال. لا يضيف الاختبار منشورات أو أسماء طلاب.</p>
             </section>
 
@@ -1283,7 +1474,7 @@ nav,.nav,.section-header{
 
             <!-- 1. نشر التبليغات العامة -->
             <div class="space-y-4">
-                <h3 class="font-bold text-sm">1. إدارة ونشر التبليغات والإرشادات العامة</h3>
+                <h3 class="font-bold text-sm">1. إدارة ونشر تبليغات الإدارة</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="theme-card p-4 rounded-2xl space-y-3">
                         <label class="text-xs font-bold text-yellow-400">قسم الإدارة (أ. محمد أكرم الربيعي)</label>
@@ -1294,9 +1485,21 @@ nav,.nav,.section-header{
 
                     <div class="theme-card p-4 rounded-2xl space-y-3">
                         <label class="text-xs font-bold text-emerald-400">قسم الإرشاد (أحمد زبون الساعدي)</label>
-                        <textarea id="guidance-post-text" placeholder="اكتب إرشاد التوعية هنا..." class="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-xs h-24 outline-none resize-none"></textarea>
-                        <input type="file" id="guidance-image-file" accept="image/*" class="text-xs opacity-70">
-                        <button onclick="publishGuidancePost()" class="w-full py-2 rounded-lg bg-emerald-500 text-black font-bold text-xs shadow-md">نشر فوري للإرشاد</button>
+                        <input id="guidance-post-title" maxlength="140" placeholder="عنوان الإرشاد التربوي" class="w-full bg-black/50 border border-emerald-400/20 rounded-xl p-3 text-xs outline-none">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                          <select id="guidance-post-category" class="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-xs">
+                            <option value="دراسي">📚 إرشاد دراسي</option><option value="نفسي وانفعالي">💚 إرشاد نفسي وانفعالي</option><option value="سلوكي">🤝 إرشاد سلوكي</option><option value="اجتماعي">🏫 إرشاد اجتماعي</option><option value="صحي">🩺 توعية صحية</option><option value="وقائي">🛡️ توعية ووقاية</option><option value="مهني">🧭 إرشاد مهني</option>
+                          </select>
+                          <select id="guidance-post-audience" class="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-xs">
+                            <option value="جميع الطلبة">جميع الطلبة</option><option value="المرحلة الرابعة">المرحلة الرابعة</option><option value="المرحلة الخامسة">المرحلة الخامسة</option><option value="المرحلة السادسة">المرحلة السادسة</option><option value="أولياء الأمور">أولياء الأمور</option><option value="الهيئة التعليمية">الهيئة التعليمية</option>
+                          </select>
+                        </div>
+                        <textarea id="guidance-post-text" placeholder="اكتب الإرشاد بأسلوب تربوي واضح: وصف الموقف، التوجيه العملي، وخطوات التطبيق..." class="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-xs min-h-36 outline-none resize-y" maxlength="3000"></textarea>
+                        <p class="text-[10px] opacity-60">اكتب بلغة هادئة ومحترمة، دون ذكر أسماء الطلبة أو تفاصيل تكشف هوياتهم.</p>
+                        <input type="file" id="guidance-image-file" accept="image/png,image/jpeg,image/webp" class="text-xs opacity-70" onchange="previewGuidanceImage(this)">
+                        <img id="guidance-image-preview" class="hidden max-h-64 w-full object-contain rounded-xl border border-emerald-400/30" alt="معاينة صورة الإرشاد">
+                        <p id="guidance-upload-status" class="text-[11px] text-emerald-300" aria-live="polite">يمكن إرفاق صورة JPG أو PNG أو WEBP حتى 8MB.</p>
+                        <button onclick="publishGuidancePost()" class="w-full py-3 rounded-xl bg-emerald-500 text-black font-black text-sm shadow-md">📤 نشر الإرشاد بواسطة المدير</button>
                     </div>
                 </div>
 
@@ -1388,60 +1591,81 @@ nav,.nav,.section-header{
 
     <!-- السكربتات البرمجية وأمان السحابة -->
     <script>
+        // نظام مؤثرات خفيف: عدد جسيمات متكيف، معدل إطارات محدود، وإيقاف عند إخفاء الصفحة
         const canvas = document.getElementById('particle-canvas');
-        const ctx = canvas.getContext('2d');
+        const ctx = canvas ? canvas.getContext('2d', { alpha: true }) : null;
         let particles = [];
+        let particleFrame = 0;
+        let lastParticleFrame = 0;
+        let particleRunning = false;
+        const isSmallScreen = window.matchMedia('(max-width: 700px)').matches;
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const particleEnabled = !isSmallScreen && !prefersReducedMotion && !!ctx;
 
         function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+            if (!canvas || !ctx) return;
+            const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+            canvas.width = Math.round(window.innerWidth * dpr);
+            canvas.height = Math.round(window.innerHeight * dpr);
+            canvas.style.width = window.innerWidth + 'px';
+            canvas.style.height = window.innerHeight + 'px';
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            initParticles();
         }
-        window.addEventListener('resize', () => { resizeCanvas(); initParticles(); });
-        resizeCanvas();
-
         class Particle {
             constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2.2 + 0.5;
-                this.speedX = (Math.random() - 0.5) * 0.7;
-                this.speedY = (Math.random() - 0.5) * 0.7;
-                this.opacity = Math.random() * 0.6 + 0.2;
+                this.x = Math.random() * window.innerWidth;
+                this.y = Math.random() * window.innerHeight;
+                this.size = Math.random() * 1.5 + 0.4;
+                this.speedX = (Math.random() - 0.5) * 0.28;
+                this.speedY = (Math.random() - 0.5) * 0.28;
+                this.opacity = Math.random() * 0.32 + 0.12;
             }
             update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.x < 0) this.x = canvas.width;
-                if (this.x > canvas.width) this.x = 0;
-                if (this.y < 0) this.y = canvas.height;
-                if (this.y > canvas.height) this.y = 0;
+                this.x += this.speedX; this.y += this.speedY;
+                if (this.x < 0) this.x = window.innerWidth;
+                if (this.x > window.innerWidth) this.x = 0;
+                if (this.y < 0) this.y = window.innerHeight;
+                if (this.y > window.innerHeight) this.y = 0;
             }
             draw() {
-                ctx.fillStyle = `rgba(212, 175, 55, ${this.opacity})`;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
+                ctx.fillStyle = `rgba(212,175,55,${this.opacity})`;
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
             }
         }
-
         function initParticles() {
             particles = [];
-            let count = Math.min(140, Math.max(24, Math.floor((window.innerWidth * window.innerHeight) / 14000)));
-            for (let i = 0; i < count; i++) {
-                particles.push(new Particle());
-            }
+            if (!particleEnabled) return;
+            const area = window.innerWidth * window.innerHeight;
+            const count = Math.min(42, Math.max(12, Math.floor(area / 42000)));
+            for (let i = 0; i < count; i++) particles.push(new Particle());
         }
-        initParticles();
-
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-            requestAnimationFrame(animateParticles);
+        function animateParticles(timestamp) {
+            if (!particleRunning || !particleEnabled || !ctx) return;
+            particleFrame = requestAnimationFrame(animateParticles);
+            if (timestamp - lastParticleFrame < 33) return; // قرابة 30 إطاراً بالثانية
+            lastParticleFrame = timestamp;
+            ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+            for (const p of particles) { p.update(); p.draw(); }
         }
-        animateParticles();
+        function startParticleAnimation() {
+            if (!particleEnabled || particleRunning || document.hidden) return;
+            particleRunning = true;
+            particleFrame = requestAnimationFrame(animateParticles);
+        }
+        function stopParticleAnimation() {
+            particleRunning = false;
+            if (particleFrame) cancelAnimationFrame(particleFrame);
+            if (ctx && canvas) ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+        }
+        resizeCanvas();
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(resizeCanvas, 180);
+        }, { passive: true });
+        document.addEventListener('visibilitychange', () => document.hidden ? stopParticleAnimation() : startParticleAnimation());
+        startParticleAnimation();
 
         function scrollToNotices() {
             document.getElementById('notices-section').scrollIntoView({ behavior: 'smooth' });
@@ -1639,7 +1863,9 @@ nav,.nav,.section-header{
         function v6PrintAnnualReport(id) {
             const r=v6CloudData.reports?.[id]; if(!r)return;
             const w=window.open('','_blank'); if(!w)return;
-            w.document.write(`<!doctype html><html lang="ar" dir="rtl"><meta charset="utf-8"><title>${escapeHtml(r.title||'التقرير السنوي')}</title><body style="font-family:Arial;padding:32px;line-height:2"><h1>${escapeHtml(r.school||'إعدادية صلاح الدين للبنين')}</h1><h2>${escapeHtml(r.title||'التقرير السنوي')}</h2><p>السنة: ${Number(r.year)||'—'}</p><p>الإعلانات المنشورة: ${Number(r.metrics?.publishedAnnouncements)||0}</p><p>موارد المكتبة: ${Number(r.metrics?.libraryResources)||0}</p><p>سجلات المختبرات الرقمية: ${Number(r.metrics?.digitalLabRecords)||0}</p><p>${escapeHtml(r.note||'')}</p><hr><p>إدارة المدرسة</p><script>window.print()<\/script></body></html>`); w.document.close();
+            w.document.write(`<!doctype html><html lang="ar" dir="rtl"><meta charset="utf-8"><title>${escapeHtml(r.title||'التقرير السنوي')}</title><body style="font-family:Arial;padding:32px;line-height:2"><h1>${escapeHtml(r.school||'إعدادية صلاح الدين للبنين')}</h1><h2>${escapeHtml(r.title||'التقرير السنوي')}</h2><p>السنة: ${Number(r.year)||'—'}</p><p>الإعلانات المنشورة: ${Number(r.metrics?.publishedAnnouncements)||0}</p><p>موارد المكتبة: ${Number(r.metrics?.libraryResources)||0}</p><p>سجلات المختبرات الرقمية: ${Number(r.metrics?.digitalLabRecords)||0}</p><p>${escapeHtml(r.note||'')}</p><hr><p>إدارة المدرسة</p><script>window.print()<\/script>
+
+</body></html>`); w.document.close();
         }
         function v6InitCloudPortal() {
             v6RenderCloudAuth();
@@ -1807,6 +2033,9 @@ nav,.nav,.section-header{
         };
         if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
+        // المدير والمرشد يستخدمان الرمز نفسه، وتُحدد الصلاحية من واجهة الدخول.
+        let isCounselorLoggedIn = false;
+
 
         // أدوات موحدة للتحقق من المدخلات والتعامل الآمن مع البيانات
         const MAX_UPLOAD_BYTES = 4 * 1024 * 1024;
@@ -1895,8 +2124,22 @@ nav,.nav,.section-header{
                 const saved = snap.val();
                 if (!saved || saved.message !== payload.message || saved.projectId !== firebaseConfig.projectId) throw new Error('تمت الكتابة لكن تعذرت مطابقة البيانات عند القراءة.');
                 await testRef.remove();
-                if (status) status.textContent = 'الاتصال والحفظ يعملان ✓';
-                if (detail) detail.textContent = 'نجح الاختبار: تمت الكتابة والقراءة ثم حذف سجل الاختبار. يمكنك الآن تجربة نشر تبليغ من قسم الإدارة.';
+                let storageResult = 'لم يختبر';
+                try {
+                    if (!firebase.storage) throw new Error('مكتبة Firebase Storage غير محمّلة.');
+                    const tinyPng = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/pV8AAAAASUVORK5CYII=';
+                    const storageTestRef = firebase.storage().ref().child('_connection-tests/' + Date.now() + '.png');
+                    await storageTestRef.putString(tinyPng, 'data_url', {contentType:'image/png'});
+                    const testUrl = await storageTestRef.getDownloadURL();
+                    if (!testUrl) throw new Error('لم يرجع Storage رابط الصورة.');
+                    await storageTestRef.delete();
+                    storageResult = 'نجح';
+                } catch (storageError) {
+                    storageResult = 'فشل: ' + (storageError.message || 'خطأ غير معروف');
+                }
+                if (status) status.textContent = storageResult === 'نجح' ? 'Realtime Database وStorage يعملان ✓' : 'قاعدة البيانات تعمل، لكن Storage يحتاج إعداداً';
+                if (detail) detail.textContent = 'Realtime Database: نجحت الكتابة والقراءة والحذف. Firebase Storage: ' + storageResult + '.';
+
             } catch (error) {
                 console.error('[Firebase cloud test]', error);
                 if (status) status.textContent = 'فشل الاختبار';
@@ -2041,10 +2284,19 @@ nav,.nav,.section-header{
         }, error => console.error('[Firebase] تعذر تحميل تعديلات نصوص الموقع:', error));
 
         const cursorGlow = document.getElementById('cursor-glow');
-        window.addEventListener('mousemove', (e) => {
-            cursorGlow.style.left = e.clientX + 'px';
-            cursorGlow.style.top = e.clientY + 'px';
-        });
+        if (cursorGlow && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+            let glowPending = false, glowX = 0, glowY = 0;
+            window.addEventListener('mousemove', (e) => {
+                glowX = e.clientX; glowY = e.clientY;
+                if (glowPending) return;
+                glowPending = true;
+                requestAnimationFrame(() => {
+                    cursorGlow.style.left = glowX + 'px';
+                    cursorGlow.style.top = glowY + 'px';
+                    glowPending = false;
+                });
+            }, { passive: true });
+        } else if (cursorGlow) { cursorGlow.style.display = 'none'; }
 
         window.addEventListener('load', () => {
             setTimeout(() => {
@@ -2061,10 +2313,33 @@ nav,.nav,.section-header{
             if (pinInput) pinInput.value = '';
         }
 
+        // رمز الإدارة موحد وسحابي؛ عند أول تشغيل فقط يُعتمد 1966 كرمز ابتدائي.
+        window.v14DigestPin = async function(pin, salt) {
+            const bytes = new TextEncoder().encode(String(salt) + '|' + String(pin));
+            const hash = await crypto.subtle.digest('SHA-256', bytes);
+            return Array.from(new Uint8Array(hash)).map(x => x.toString(16).padStart(2, '0')).join('');
+        };
+        window.v14VerifyAdminPin = async function(pin) {
+            if (typeof firebase === 'undefined' || !firebase.apps?.length) throw new Error('Firebase غير متصل.');
+            const ref = firebase.database().ref('adminAccess/credential');
+            const snap = await ref.once('value');
+            let cred = snap.val();
+            if (!cred) {
+                if (pin !== '1966') return false;
+                const salt = Array.from(crypto.getRandomValues(new Uint8Array(16))).map(x => x.toString(16).padStart(2, '0')).join('');
+                cred = { salt, hash: await window.v14DigestPin('1966', salt), updatedAt: Date.now(), version: 1 };
+                await ref.set(cred);
+            }
+            if (!cred.salt || !cred.hash) throw new Error('بيانات رمز الإدارة السحابي غير مكتملة.');
+            return (await window.v14DigestPin(pin, cred.salt)) === cred.hash;
+        };
         function verifySecretPin() {
             const enteredPin = (document.getElementById('secret-pin-input')?.value || '').trim();
             const status = document.getElementById('admin-auth-status');
-            if (enteredPin === '1966') {
+            if (!enteredPin) { if (status) status.textContent = 'أدخل الرمز السري.'; return; }
+            if (status) status.textContent = 'جارٍ التحقق من الرمز...';
+            window.v14VerifyAdminPin(enteredPin).then(ok => {
+            if (ok) {
                 isAdminLoggedIn = true;
                 closePinModal();
                 document.getElementById('admin-dashboard-modal').classList.remove('hidden');
@@ -2076,10 +2351,31 @@ nav,.nav,.section-header{
                 const pinInput = document.getElementById('secret-pin-input');
                 if (pinInput) { pinInput.value = ''; pinInput.focus(); }
             }
+            }).catch(error => { if (status) status.textContent = 'تعذر التحقق: ' + (error.message || 'تحقق من اتصال Firebase وقواعد القراءة.'); });
         }
 
-        function updateAdminPin() {
-            alert('رمز دخول الإدارة الحالي ثابت: 1966.');
+        async function updateAdminPin() {
+            const field = document.getElementById('new-admin-pin');
+            const button = field?.parentElement?.querySelector('button[onclick="updateAdminPin()"]');
+            const value = (field?.value || '').trim();
+            if (!isAdminLoggedIn) { alert('افتح لوحة المدير أولاً.'); return; }
+            if (value.length < 6) { alert('يجب أن يتكون الرمز الجديد من 6 أرقام أو أحرف على الأقل.'); field?.focus(); return; }
+            if (button) { button.disabled = true; button.textContent = 'جارٍ حفظ الرمز...'; }
+            try {
+                if (typeof firebase === 'undefined' || !firebase.apps?.length) throw new Error('Firebase غير متصل.');
+                const salt = Array.from(crypto.getRandomValues(new Uint8Array(16))).map(x => x.toString(16).padStart(2, '0')).join('');
+                const hash = await window.v14DigestPin(value, salt);
+                await Promise.race([
+                    firebase.database().ref('adminAccess/credential').set({ salt, hash, updatedAt: Date.now(), version: 1 }),
+                    new Promise((_, reject) => setTimeout(() => reject(new Error('انتهت مهلة الحفظ بعد 15 ثانية. تحقق من اتصال الإنترنت وقواعد Firebase.')), 15000))
+                ]);
+                field.value = '';
+                alert('تم تغيير رمز الإدارة وحفظه سحابياً. استخدم الرمز الجديد في تسجيل الدخول القادم.');
+            } catch (error) {
+                alert('تعذر حفظ رمز الإدارة: ' + (error.message || 'تحقق من صلاحيات Firebase Database.'));
+            } finally {
+                if (button) { button.disabled = false; button.textContent = 'حفظ الرمز الجديد'; }
+            }
         }
 
         function closeAdminDashboard() {
@@ -2110,14 +2406,152 @@ nav,.nav,.section-header{
             readMediaFile(file, media => savePostToFirebase('قسم الإدارة (أ. محمد أكرم الربيعي)', text, media, 'yellow', 'admin'));
         }
 
-        function publishGuidancePost() {
-            if (!requireAdmin() || !firebaseReady()) return;
-            const text = document.getElementById('guidance-post-text').value.trim();
-            const fileInput = document.getElementById('guidance-image-file');
-            const file = fileInput.files[0];
-            if (!text && !file) { alert('اكتب نصاً أو اختر صورة أولاً'); return; }
-            if (file && !file.type.startsWith('image/')) { alert('قسم الإرشاد يقبل الصور فقط.'); return; }
-            readMediaFile(file, media => savePostToFirebase('قسم الإرشاد التربوي (أحمد زبون الساعدي)', text, media, 'emerald', 'guidance'));
+        // V15 guidance image pipeline: compress locally and save image data with the post in Realtime Database.
+        // This mirrors the working archive approach and avoids Firebase Storage upload failures on mobile.
+        function v15GuidanceImageMime(file) {
+            const ext=String(file?.name||'').split('.').pop().toLowerCase();
+            return String(file?.type||({jpg:'image/jpeg',jpeg:'image/jpeg',png:'image/png',webp:'image/webp'}[ext]||'')).toLowerCase();
+        }
+        async function v15CompressGuidanceImage(file) {
+            if(!file) return null;
+            if(file.size>8*1024*1024) throw new Error('حجم الصورة الأصلية يجب ألا يتجاوز 8MB.');
+            const mime=v15GuidanceImageMime(file);
+            if(!['image/jpeg','image/png','image/webp'].includes(mime)) throw new Error('الصيغ المدعومة JPG وPNG وWEBP فقط.');
+            let bitmap;
+            try { bitmap=await createImageBitmap(file); }
+            catch(e) { throw new Error('تعذر فتح الصورة على الهاتف. جرّب صورة JPG أو PNG أو WEBP.'); }
+            try {
+                const scale=Math.min(1,1440/Math.max(bitmap.width,bitmap.height));
+                let width=Math.max(1,Math.round(bitmap.width*scale)),height=Math.max(1,Math.round(bitmap.height*scale));
+                let canvas=document.createElement('canvas');
+                const ctx=canvas.getContext('2d',{alpha:false});
+                if(!ctx) throw new Error('تعذر تجهيز الصورة في المتصفح.');
+                let blob=null;
+                for(let pass=0;pass<5;pass++) {
+                    canvas.width=width; canvas.height=height;
+                    ctx.fillStyle='#ffffff'; ctx.fillRect(0,0,width,height); ctx.drawImage(bitmap,0,0,width,height);
+                    let quality=.78;
+                    for(let q=0;q<6;q++) {
+                        blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/jpeg',quality));
+                        if(blob && blob.size<=480*1024) break;
+                        quality=Math.max(.38,quality-.08);
+                    }
+                    if(blob && blob.size<=520*1024) break;
+                    width=Math.max(1,Math.round(width*.78)); height=Math.max(1,Math.round(height*.78));
+                }
+                if(!blob || blob.size>520*1024) throw new Error('تعذر ضغط الصورة إلى حجم مناسب. اختر صورة أصغر.');
+                const dataUrl=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result||''));reader.onerror=()=>reject(new Error('تعذرت قراءة الصورة بعد ضغطها.'));reader.readAsDataURL(blob);});
+                return {dataUrl,size:blob.size,width,height,mime:'image/jpeg'};
+            } finally { try{bitmap.close();}catch(_){} }
+        }
+        function v15WithTimeout(promise,ms,label) {
+            return Promise.race([promise,new Promise((_,reject)=>setTimeout(()=>reject(new Error('انتهت مهلة '+label+'. تحقق من الإنترنت وصلاحيات Realtime Database.')),ms))]);
+        }
+
+        function previewGuidanceImage(input) {
+            const file = input?.files?.[0];
+            const preview = document.getElementById('guidance-image-preview');
+            const status = document.getElementById('guidance-upload-status');
+            if (!preview) return;
+            if (!file) { preview.removeAttribute('src'); preview.classList.add('hidden'); if(status) status.textContent='يمكن إرفاق صورة JPG أو PNG أو WEBP حتى 8MB.'; return; }
+            if (!['image/jpeg','image/png','image/webp'].includes(v15GuidanceImageMime(file)) || file.size > 8*1024*1024) {
+                input.value=''; preview.removeAttribute('src'); preview.classList.add('hidden');
+                if(status) status.textContent='الصورة غير صالحة أو أكبر من 8MB.'; alert('اختر صورة JPG أو PNG أو WEBP لا يتجاوز حجمها 8MB.'); return;
+            }
+            const reader = new FileReader();
+            reader.onload = () => { preview.src=String(reader.result||''); preview.classList.remove('hidden'); };
+            reader.readAsDataURL(file);
+            if(status) status.textContent='تم اختيار الصورة؛ ستُضغط وتحفظ مع الإرشاد في قاعدة البيانات عند النشر.';
+        }
+
+        function openCounselorLogin() {
+            const el=document.getElementById('counselor-login-modal');
+            if(el) el.classList.remove('hidden');
+        }
+        function closeCounselorLogin() {
+            const el=document.getElementById('counselor-login-modal');
+            if(el) el.classList.add('hidden');
+            const status=document.getElementById('counselor-login-status'); if(status)status.textContent='';
+        }
+        async function loginCounselor() {
+            const pin=(document.getElementById('counselor-pin-input')?.value||'').trim();
+            const status=document.getElementById('counselor-login-status');
+            try { if (!(await window.v14VerifyAdminPin(pin))) { if(status) status.textContent='الرمز السري غير صحيح.'; const field=document.getElementById('counselor-pin-input'); if(field){field.value='';field.focus();} return; } }
+            catch(error) { if(status) status.textContent='تعذر التحقق: '+(error.message||'تحقق من Firebase.'); return; }
+            isCounselorLoggedIn=true;
+            closeCounselorLogin();
+            const work=document.getElementById('counselor-workspace-modal');
+            if(work) work.classList.remove('hidden');
+            const label=document.getElementById('counselor-account-label');
+            if(label) label.textContent='دخول بالرمز الموحد · صلاحية نشر الإرشادات فقط';
+        }
+        function logoutCounselor() {
+            isCounselorLoggedIn=false;
+            ['counselor-post-title','counselor-post-text','counselor-post-image','counselor-pin-input'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+            const preview=document.getElementById('counselor-post-preview');if(preview){preview.removeAttribute('src');preview.classList.add('hidden');}
+            const modal=document.getElementById('counselor-workspace-modal');if(modal)modal.classList.add('hidden');
+        }
+        function previewCounselorImage(input) {
+            const file=input?.files?.[0], preview=document.getElementById('counselor-post-preview');
+            if(!file||!preview)return;
+            if(!['image/jpeg','image/png','image/webp'].includes(v15GuidanceImageMime(file))||file.size>8*1024*1024){input.value='';preview.classList.add('hidden');alert('اختر JPG أو PNG أو WEBP بحجم لا يتجاوز 8MB.');return;}
+            const reader=new FileReader();reader.onload=()=>{preview.src=String(reader.result||'');preview.classList.remove('hidden');};reader.readAsDataURL(file);
+        }
+        async function publishAsCounselor() {
+            if(!isCounselorLoggedIn){alert('سجّل دخول المرشد أولاً بالرمز الموحد.');return;}
+            if(!firebaseReady()){alert('اتصال Firebase غير جاهز حالياً.');return;}
+            const title=(document.getElementById('counselor-post-title')?.value||'').trim().slice(0,140);
+            const body=(document.getElementById('counselor-post-text')?.value||'').trim().slice(0,3000);
+            const category=document.getElementById('counselor-post-category')?.value||'دراسي';
+            const audience=document.getElementById('counselor-post-audience')?.value||'جميع الطلبة';
+            const file=document.getElementById('counselor-post-image')?.files?.[0]||null;
+            const status=document.getElementById('counselor-publish-status');
+            const button=document.querySelector('button[onclick="publishAsCounselor()"]');
+            if(!title||!body){if(status)status.textContent='أدخل عنوان الإرشاد ونصه.';return;}
+            if(file&&(!['image/jpeg','image/png','image/webp'].includes(v15GuidanceImageMime(file))||file.size>8*1024*1024)){if(status)status.textContent='اختر صورة JPG أو PNG أو WEBP لا تتجاوز 8MB.';return;}
+            try {
+                if(button){button.disabled=true;button.textContent='جارٍ تجهيز الإرشاد وحفظه...';}
+                let imageData=null;
+                if(file){if(status)status.textContent='جارٍ ضغط صورة الإرشاد داخل الهاتف...';imageData=await v15CompressGuidanceImage(file);}
+                if(status)status.textContent='جارٍ حفظ الإرشاد والصورة في قاعدة البيانات السحابية...';
+                const record={author:'قسم الإرشاد التربوي',title,text:body,category,audience,imgSrc:imageData?.dataUrl||null,imageMime:imageData?.mime||'',imageSize:imageData?.size||0,timestamp:Date.now(),published:true,source:'guidance'};
+                await v15WithTimeout(db.ref('posts').push(record),30000,'حفظ الإرشاد');
+                ['counselor-post-title','counselor-post-text','counselor-post-image'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+                const preview=document.getElementById('counselor-post-preview');if(preview){preview.removeAttribute('src');preview.classList.add('hidden');}
+                if(status)status.textContent='تم نشر الإرشاد وحفظ الصورة سحابياً بنجاح.';
+            } catch(error) {
+                console.error('Counselor publish failed',error);
+                if(status)status.textContent='فشل النشر: '+(error.message||'تحقق من صلاحيات Realtime Database.');
+            } finally {if(button){button.disabled=false;button.textContent='نشر الإرشاد سحابياً';}}
+        }
+
+        async function publishGuidancePost() {
+            if(!requireAdmin()||!firebaseReady())return;
+            const title=(document.getElementById('guidance-post-title')?.value||'').trim().slice(0,140);
+            const body=(document.getElementById('guidance-post-text')?.value||'').trim().slice(0,3000);
+            const category=document.getElementById('guidance-post-category')?.value||'دراسي';
+            const audience=document.getElementById('guidance-post-audience')?.value||'جميع الطلبة';
+            const file=document.getElementById('guidance-image-file')?.files?.[0]||null;
+            if(!title||!body){alert('أدخل عنوان الإرشاد ونصه قبل النشر.');return;}
+            if(file&&(!['image/jpeg','image/png','image/webp'].includes(v15GuidanceImageMime(file))||file.size>8*1024*1024)){alert('اختر صورة JPG أو PNG أو WEBP لا يتجاوز حجمها 8MB.');return;}
+            const status=document.getElementById('guidance-upload-status');
+            const button=document.querySelector('button[onclick="publishGuidancePost()"]');
+            try {
+                if(button){button.disabled=true;button.textContent='جارٍ تجهيز الإرشاد...';}
+                let imageData=null;
+                if(file){if(status)status.textContent='جارٍ ضغط صورة الإرشاد داخل الهاتف...';imageData=await v15CompressGuidanceImage(file);}
+                if(status)status.textContent='جارٍ حفظ الإرشاد والصورة في Firebase Realtime Database...';
+                const record={author:'قسم الإرشاد التربوي (نشر المدير)',title,text:body,category,audience,imgSrc:imageData?.dataUrl||null,imageMime:imageData?.mime||'',imageSize:imageData?.size||0,timestamp:Date.now(),published:true,source:'guidance'};
+                await v15WithTimeout(db.ref('posts').push(record),30000,'حفظ الإرشاد');
+                ['guidance-post-title','guidance-post-text','guidance-image-file'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+                const preview=document.getElementById('guidance-image-preview');if(preview){preview.removeAttribute('src');preview.classList.add('hidden');}
+                if(status)status.textContent='تم نشر الإرشاد وحفظ الصورة سحابياً بنجاح.';
+                alert('تم نشر الإرشاد التربوي بنجاح.');
+            } catch(error) {
+                console.error('Guidance publish failed',error);
+                if(status)status.textContent='تعذر النشر: '+(error.message||'تحقق من اتصال Firebase وصلاحيات Realtime Database.');
+                alert('تعذر نشر الإرشاد: '+(error.message||'تحقق من صلاحيات Realtime Database.'));
+            } finally {if(button){button.disabled=false;button.textContent='📤 نشر الإرشاد والصورة مباشرة';}}
         }
 
         function savePostToFirebase(author, text, imgSrc, colorClass, source) {
@@ -2317,7 +2751,63 @@ nav,.nav,.section-header{
                     container.appendChild(div);
                 });
             }
+            renderGuidancePublicPosts();
             renderAdminPosts();
+        }
+
+        function renderGuidancePublicPosts() {
+            const container = document.getElementById('guidance-public-posts');
+            if (!container) return;
+            container.innerHTML = '';
+            const entries = Object.entries(globalPostsData || {})
+                .filter(([, post]) => String(post?.author || '').includes('الإرشاد التربوي'))
+                .sort((a, b) => Number(b[1]?.timestamp || 0) - Number(a[1]?.timestamp || 0));
+            if (!entries.length) {
+                const empty = document.createElement('p');
+                empty.className = 'text-sm opacity-70 text-center py-5 col-span-full';
+                empty.textContent = 'لا توجد إرشادات منشورة حالياً. ستظهر توجيهات المرشد هنا فور نشرها من لوحة الإدارة.';
+                container.appendChild(empty);
+                return;
+            }
+            entries.forEach(([, post]) => {
+                const card = document.createElement('article');
+                card.className = 'theme-card p-5 rounded-2xl space-y-3 border-r-4 border-emerald-400';
+                const head = document.createElement('div');
+                head.className = 'flex flex-wrap items-center justify-between gap-2';
+                const author = document.createElement('b');
+                author.className = 'text-emerald-300 text-sm';
+                author.textContent = post.author || 'قسم المرشد التربوي';
+                const date = document.createElement('span');
+                date.className = 'text-[10px] opacity-60';
+                date.textContent = post.timestamp ? new Date(Number(post.timestamp)).toLocaleString('ar-IQ') : 'إرشاد تربوي';
+                head.append(author, date);
+                if (post.title) {
+                    const title = document.createElement('h3');
+                    title.className = 'text-lg font-black text-emerald-200';
+                    title.textContent = post.title;
+                    card.appendChild(title);
+                }
+                if (post.category || post.audience) {
+                    const meta = document.createElement('p');
+                    meta.className = 'text-[11px] opacity-70';
+                    meta.textContent = [post.category ? 'المجال: '+post.category : '', post.audience ? 'الفئة: '+post.audience : ''].filter(Boolean).join(' · ');
+                    card.appendChild(meta);
+                }
+                const body = document.createElement('p');
+                body.className = 'text-sm leading-7 whitespace-pre-wrap break-words';
+                body.textContent = post.text || '';
+                card.append(head, body);
+                const imageUrl = safeMediaSource(post.imgSrc, 'image');
+                if (imageUrl) {
+                    const img = document.createElement('img');
+                    img.src = imageUrl;
+                    img.alt = 'مرفق إرشادي';
+                    img.loading = 'lazy';
+                    img.className = 'rounded-xl mt-2 max-h-72 w-full object-contain border border-emerald-400/20';
+                    card.appendChild(img);
+                }
+                container.appendChild(card);
+            });
         }
 
         function renderAdminPosts() {
@@ -2499,14 +2989,10 @@ nav,.nav,.section-header{
             if (field) field.value = '';
         }
 
-        function verifyStudentsPin() {
+        async function verifyStudentsPin() {
             const enteredPin = (document.getElementById('students-pin-input')?.value || '').trim();
-            if (enteredPin !== '1966') {
-                alert('الرمز السري غير صحيح.');
-                const field = document.getElementById('students-pin-input');
-                if (field) { field.value = ''; field.focus(); }
-                return;
-            }
+            try { if (!(await window.v14VerifyAdminPin(enteredPin))) { alert('الرمز السري غير صحيح.'); const field = document.getElementById('students-pin-input'); if (field) { field.value = ''; field.focus(); } return; } }
+            catch(error) { alert('تعذر التحقق من الرمز: '+(error.message||'تحقق من Firebase.')); return; }
             isAdminLoggedIn = true;
             closeStudentsPinModal();
             const dashboard = document.getElementById('students-dashboard-modal');
@@ -2587,13 +3073,49 @@ nav,.nav,.section-header{
             } else saveStudent('');
         }
 
+        window.updateStudentBadgeImage = function(studentId, kind, input) {
+            if (!requireAdmin() || !firebaseReady()) return;
+            const file = input && input.files && input.files[0];
+            if (!file) return;
+            if (!file.type.startsWith('image/') || file.size > 500 * 1024) {
+                alert('اختر صورة لا يتجاوز حجمها 500 كيلوبايت.'); input.value=''; return;
+            }
+            const reader = new FileReader();
+            reader.onload = () => {
+                const field = kind === 'photo' ? 'photoData' : 'qrData';
+                db.ref(`students/${studentId}`).update({[field]: reader.result, badgeUpdatedAt: Date.now()})
+                  .then(() => alert(kind === 'photo' ? 'تم تحديث صورة الطالب داخل الباج.' : 'تم تحديث صورة الباركود داخل الباج.'))
+                  .catch(error => reportDbError('تحديث صور الهوية', error));
+            };
+            reader.onerror = () => alert('تعذرت قراءة الصورة.');
+            reader.readAsDataURL(file);
+        };
+
+        window.generateStudentBadgeQr = function(studentId) {
+            if (!requireAdmin() || !firebaseReady()) return;
+            const st = globalStudentsData[studentId]; if (!st) return;
+            if (typeof QRCode === 'undefined') { alert('تعذر تحميل مولّد QR.'); return; }
+            const holder = document.createElement('div');
+            new QRCode(holder, {text: `SalahAlDin|${studentId}|${st.name}|${st.grade}|${st.section || ''}`, width: 240, height: 240, correctLevel: QRCode.CorrectLevel.H});
+            setTimeout(() => {
+                const canvas = holder.querySelector('canvas');
+                const img = holder.querySelector('img');
+                const data = canvas ? canvas.toDataURL('image/png') : (img ? img.src : '');
+                if (!data) { alert('تعذر إنشاء الباركود.'); return; }
+                db.ref(`students/${studentId}`).update({qrData: data, badgeUpdatedAt: Date.now()})
+                  .then(() => alert('تم إنشاء الباركود وحفظه في باج الطالب.'))
+                  .catch(error => reportDbError('إنشاء باركود الطالب', error));
+            }, 180);
+        };
+
         function printStudentIdentity(studentId) {
             const st = globalStudentsData[studentId]; if (!st) { alert('بيانات الطالب غير متاحة.'); return; }
             const photo = st.photoData ? `<img src="${st.photoData}" class="photo">` : `<div class="photo empty">صورة الطالب</div>`;
+            const qr = st.qrData ? `<img src="${st.qrData}" class="qr">` : `<div class="qr empty">QR</div>`;
             const logo = `<div class="crest"><div class="crest-star">★</div><div class="crest-title">صلاح الدين</div><div class="crest-sub">الإعدادية العلمية</div><div class="crest-year">1966</div></div>`;
             const w = window.open('', '_blank', 'width=720,height=800');
             if (!w) { alert('يرجى السماح بالنوافذ المنبثقة لطباعة الهوية.'); return; }
-            w.document.write(`<!doctype html><html lang="ar" dir="rtl"><meta charset="utf-8"><title>هوية الطالب</title><style>*{box-sizing:border-box}body{font-family:Tahoma,Arial;background:#eee;padding:25px}.id{width:340px;min-height:520px;margin:20px auto;background:linear-gradient(145deg,#071d32,#123c59 58%,#b28a3b);border:5px double #d8b65f;border-radius:22px;color:#fff;text-align:center;padding:20px;position:relative;overflow:hidden}.id:before{content:'';position:absolute;inset:9px;border:1px solid #d8b65f;border-radius:15px;pointer-events:none}.crest{margin:5px auto 14px;width:100px;height:112px;background:linear-gradient(#f5d77d,#a87925);clip-path:polygon(8% 0,92% 0,88% 72%,50% 100%,12% 72%);color:#09233a;padding-top:13px;text-shadow:none}.crest-star{font-size:23px}.crest-title{font-weight:900;font-size:15px}.crest-sub{font-size:9px;font-weight:bold}.crest-year{font-size:11px;font-weight:bold;margin-top:3px}.school{font-size:17px;font-weight:900;color:#f8df9a;margin:8px 0 3px}.sub{font-size:10px;letter-spacing:2px;color:#d9e5ee}.photo{display:block;width:116px;height:140px;object-fit:cover;border:4px solid #e1c16d;border-radius:13px;margin:18px auto 14px;background:#fff}.photo.empty{display:grid;place-items:center;color:#777;font-size:12px}.name{font-size:19px;font-weight:900;margin:8px 0 15px}.details{display:flex;justify-content:center;gap:10px}.pill{background:#fff;color:#102c43;border-radius:9px;padding:9px 12px;font-weight:bold;font-size:12px}.footer{margin-top:24px;border-top:1px solid #d8b65f;padding-top:10px;font-size:10px;color:#f4dfaa}.print{display:block;margin:15px auto;padding:10px 22px;border:0;border-radius:8px;background:#123c59;color:#fff;font-weight:bold}@media print{body{background:white;padding:0}.id{margin:0 auto;print-color-adjust:exact;-webkit-print-color-adjust:exact}.print{display:none}}</style><body><article class="id">${logo}<div class="school">إعدادية صلاح الدين للبنين</div><div class="sub">الفرع العلمي · تأسست 1966</div>${photo}<div class="name">${escapeStudentHtml(st.name)}</div><div class="details"><div class="pill">${escapeStudentHtml(st.grade || '—')}</div><div class="pill">الشعبة ${escapeStudentHtml(st.section || '—')}</div></div><div class="footer">هوية مدرسية · تُستخدم للأغراض المدرسية</div></article><button class="print" onclick="window.print()">طباعة الهوية</button></body></html>`);
+            w.document.write(`<!doctype html><html lang="ar" dir="rtl"><meta charset="utf-8"><title>هوية الطالب</title><style>*{box-sizing:border-box}body{font-family:Tahoma,Arial;background:#eee;padding:25px}.id{width:340px;min-height:520px;margin:20px auto;background:linear-gradient(145deg,#071d32,#123c59 58%,#b28a3b);border:5px double #d8b65f;border-radius:22px;color:#fff;text-align:center;padding:20px;position:relative;overflow:hidden}.id:before{content:'';position:absolute;inset:9px;border:1px solid #d8b65f;border-radius:15px;pointer-events:none}.crest{margin:5px auto 14px;width:100px;height:112px;background:linear-gradient(#f5d77d,#a87925);clip-path:polygon(8% 0,92% 0,88% 72%,50% 100%,12% 72%);color:#09233a;padding-top:13px;text-shadow:none}.crest-star{font-size:23px}.crest-title{font-weight:900;font-size:15px}.crest-sub{font-size:9px;font-weight:bold}.crest-year{font-size:11px;font-weight:bold;margin-top:3px}.school{font-size:17px;font-weight:900;color:#f8df9a;margin:8px 0 3px}.sub{font-size:10px;letter-spacing:2px;color:#d9e5ee}.identity-images{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:18px 0 14px;direction:rtl}.photo{display:block;width:118px;height:145px;object-fit:cover;border:4px solid #e1c16d;border-radius:13px;background:#fff}.photo.empty{display:grid;place-items:center;color:#777;font-size:12px}.qr{display:block;width:58px;height:58px;object-fit:contain;border:2px solid #e1c16d;border-radius:8px;background:#fff;padding:3px}.qr.empty{display:grid;place-items:center;color:#777;font-size:10px}.name{font-size:19px;font-weight:900;margin:8px 0 15px}.details{display:flex;justify-content:center;gap:10px}.pill{background:#fff;color:#102c43;border-radius:9px;padding:9px 12px;font-weight:bold;font-size:12px}.footer{margin-top:24px;border-top:1px solid #d8b65f;padding-top:10px;font-size:10px;color:#f4dfaa}.print{display:block;margin:15px auto;padding:10px 22px;border:0;border-radius:8px;background:#123c59;color:#fff;font-weight:bold}@media print{body{background:white;padding:0}.id{margin:0 auto;print-color-adjust:exact;-webkit-print-color-adjust:exact}.print{display:none}}</style><body><article class="id">${logo}<div class="school">إعدادية صلاح الدين للبنين</div><div class="sub">الفرع العلمي · تأسست 1966</div><div class="identity-images">${qr}${photo}</div><div class="name">${escapeStudentHtml(st.name)}</div><div class="details"><div class="pill">${escapeStudentHtml(st.grade || '—')}</div><div class="pill">الشعبة ${escapeStudentHtml(st.section || '—')}</div></div><div class="footer">هوية مدرسية · تُستخدم للأغراض المدرسية</div></article><button class="print" onclick="window.print()">طباعة الهوية</button></body></html>`);
             w.document.close();
         }
 
@@ -2659,20 +3181,24 @@ nav,.nav,.section-header{
                 return;
             }
 
-            const visibleStudentKeys = filteredKeys.slice(0, 30);
-visibleStudentKeys.forEach(key => {
+            filteredKeys.forEach(key => {
                 const student = globalStudentsData[key];
                 const card = document.createElement('div');
                 card.className = 'theme-card p-4 rounded-2xl space-y-3 border border-yellow-500/20 relative';
 
                 card.innerHTML = `
                     <div class="rounded-2xl overflow-hidden border-2 border-yellow-500/50 bg-gradient-to-br from-slate-950 via-sky-950 to-amber-900 text-white p-3">
-                      <div class="flex items-center gap-3">
-                        <div class="w-14 h-16 shrink-0 rounded-lg border-2 border-amber-300 overflow-hidden bg-white/10">${student.photoData ? `<img src="${student.photoData}" alt="صورة الطالب" class="w-full h-full object-cover">` : `<div class="w-full h-full grid place-items-center text-[9px] text-amber-200">الصورة</div>`}</div>
-                        <div class="flex-1 text-center"><div class="text-[9px] text-amber-200 font-bold">✦ إعدادية صلاح الدين للبنين ✦</div><div class="text-[8px] opacity-70 mt-1">الفرع العلمي · تأسست 1966</div><div class="font-black text-sm mt-2">${escapeStudentHtml(student.name)}</div><div class="text-[10px] text-amber-100 mt-1">${escapeStudentHtml(student.grade)} · الشعبة ${escapeStudentHtml(student.section || '—')}</div></div>
-                        <div class="w-12 h-14 border border-amber-300/70 rounded-b-xl bg-gradient-to-b from-amber-200 to-amber-600 text-slate-900 flex flex-col items-center justify-center"><span class="text-lg">★</span><b class="text-[8px]">1966</b></div>
+                      <div class="flex items-center gap-3" dir="rtl">
+                        <div class="w-12 h-12 shrink-0 rounded-md border border-amber-300 overflow-hidden bg-white p-1">${student.qrData ? `<img src="${student.qrData}" alt="باركود الطالب" class="w-full h-full object-contain">` : `<div class="w-full h-full grid place-items-center text-[8px] text-slate-700">QR</div>`}</div>
+                        <div class="flex-1 min-w-0 text-center"><div class="text-[9px] text-amber-200 font-bold">✦ إعدادية صلاح الدين للبنين ✦</div><div class="text-[8px] opacity-70 mt-1">الفرع العلمي · تأسست 1966</div><div class="font-black text-sm mt-2">${escapeStudentHtml(student.name)}</div><div class="text-[10px] text-amber-100 mt-1">${escapeStudentHtml(student.grade)} · الشعبة ${escapeStudentHtml(student.section || '—')}</div></div>
+                        <div class="w-20 h-24 shrink-0 rounded-lg border-2 border-amber-300 overflow-hidden bg-white/10">${student.photoData ? `<img src="${student.photoData}" alt="صورة الطالب" class="w-full h-full object-cover">` : `<div class="w-full h-full grid place-items-center text-[9px] text-amber-200">صورة الطالب</div>`}</div>
                       </div>
                       <button type="button" onclick="printStudentIdentity('${key}')" class="w-full mt-3 py-2 rounded-lg bg-amber-300 text-slate-950 text-[11px] font-black">🪪 استخراج وطباعة الهوية</button>
+                      <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2 border-t border-amber-300/20 pt-3">
+                        <label class="text-[10px] text-amber-100">📷 تعديل صورة الطالب (يسار الهوية)<input type="file" accept="image/*" class="block w-full mt-1 text-[10px]" onchange="updateStudentBadgeImage('${key}','photo',this)"></label>
+                        <label class="text-[10px] text-amber-100">▦ تعديل صورة الباركود (يمين الهوية)<input type="file" accept="image/*" class="block w-full mt-1 text-[10px]" onchange="updateStudentBadgeImage('${key}','qr',this)"></label>
+                        <button type="button" onclick="generateStudentBadgeQr('${key}')" class="sm:col-span-2 py-1.5 rounded-lg bg-sky-700 text-white text-[10px] font-bold">إنشاء باركود لهذا الطالب</button>
+                      </div>
                     </div>
                     <div class="flex justify-between items-start border-b border-current/10 pb-2">
                         <div>
@@ -2700,16 +3226,7 @@ visibleStudentKeys.forEach(key => {
                 `;
                 container.appendChild(card);
             });
-      if (filteredKeys.length > visibleStudentKeys.length) {
-    const moreBtn = document.createElement('button');
-    moreBtn.textContent = 'عرض المزيد من الطلاب';
-    moreBtn.className = 'col-span-full w-full py-3 rounded-xl bg-amber-500 text-black font-bold';
-    moreBtn.onclick = () => {
-        window.studentRenderLimit += 30;
-        renderStudentsList();
-    };
-    container.appendChild(moreBtn);
-}  }
+        }
 
         function updateStudent(studentId) {
             if (!requireAdmin() || !firebaseReady()) return;
@@ -3042,7 +3559,34 @@ visibleStudentKeys.forEach(key => {
             return `<div class="sd-certificate" style="--cert-ink:${p.ink};--cert-accent:${p.accent};--cert-pale:${p.pale};--cert-leaf:${p.leaf}"><div class="cert-frame"><div class="cert-inner">${corner}<div class="cert-top">${ornaments}<div class="cert-school">جمهورية العراق · وزارة التربية</div><div class="cert-school-name">إعدادية صلاح الدين للبنين</div><div class="cert-founded">الفرع العلمي · تأسست سنة 1966</div></div><div class="cert-seal" aria-label="شعار زخرفي">❀</div><div class="cert-title">${escapeHtml(c.type)}</div><div class="cert-divider">❧　❦　❧</div><div class="cert-intro">تتشرف إدارة المدرسة بمنح هذه الشهادة إلى الطالب</div><div class="cert-student">${escapeHtml(c.student)}</div><div class="cert-grade">${escapeHtml(c.grade)}</div><div class="cert-body">تقديراً لـ <b>${escapeHtml(c.reason)}</b><br>وإشادةً بما أظهره من اجتهادٍ وتميّز، سائلين الله له دوام التوفيق والنجاح.</div><div class="cert-bottom"><div><span>التاريخ</span><b>${escapeHtml(c.date)}</b></div><div class="cert-stamp">ختم المدرسة</div><div><span>مدير المدرسة</span><b>${escapeHtml(c.principal||'إدارة المدرسة')}</b></div></div><div class="cert-footer">بالعلم نبني المستقبل · صلاح الدين عنوان التميّز</div>${ornaments}${corner}</div></div></div>`;
         }
         function sdCertPreview(){if(!requireAdmin())return;const c=sdCertData();if(!c)return;sdCertCurrent=c;const host=document.getElementById('sd-cert-preview');host.innerHTML=sdCertMarkup(c);host.classList.remove('hidden');document.getElementById('sd-cert-status').textContent='هذه معاينة تصميم الشهادة. يمكنك حفظها أو طباعتها.';host.scrollIntoView({behavior:'smooth',block:'nearest'});}
-        function sdCertPrintCurrent(){if(!requireAdmin())return;const c=sdCertCurrent||sdCertData();if(!c)return;sdCertCurrent=c;const win=window.open('','_blank');if(!win){alert('اسمح بالنوافذ المنبثقة حتى تتمكن من طباعة الشهادة.');return;}win.document.write(`<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>شهادة تكريم - ${escapeHtml(c.student)}</title><style>@page{size:A4 landscape;margin:8mm}*{box-sizing:border-box}body{margin:0;font-family:Tahoma,Arial,sans-serif}.sd-certificate{height:190mm;padding:8mm;background:#fff}.cert-frame{height:100%;padding:9px;border:7px double var(--cert-accent);background:linear-gradient(135deg,var(--cert-pale),#fff 48%,var(--cert-pale));color:var(--cert-ink);outline:1px solid var(--cert-accent);outline-offset:-3px}.cert-inner{height:100%;border:2px solid var(--cert-accent);position:relative;text-align:center;padding:8px 35px;overflow:hidden;background:radial-gradient(ellipse at center,rgba(255,255,255,.94),rgba(255,255,255,.45))}.cert-top{position:relative;z-index:1}.ornament{width:100%;height:42px;display:block}.cert-corner{position:absolute;width:92px;height:92px;z-index:2;top:0;right:0}.cert-corner:last-child{top:auto;right:auto;bottom:0;left:0;transform:rotate(180deg)}.cert-divider{color:var(--cert-accent);font-size:19px;letter-spacing:7px;margin:0 auto 3px}.cert-school{font-size:13px}.cert-school-name{font-size:23px;font-weight:900;margin-top:4px}.cert-founded{font-size:11px;margin-top:3px}.cert-seal{margin:5px auto 2px;width:38px;height:38px;border:3px double var(--cert-accent);border-radius:50%;display:grid;place-items:center;color:var(--cert-leaf);font-size:27px;background:var(--cert-pale);box-shadow:0 0 0 4px #fff,0 0 0 5px var(--cert-accent).cert-title{font-size:31px;font-weight:900;color:var(--cert-accent);margin:6px 0}.cert-intro{font-size:15px}.cert-student{font-size:29px;font-weight:900;border-bottom:2px solid var(--cert-accent);display:inline-block;padding:3px 45px 8px;margin:7px auto}.cert-grade{font-size:14px}.cert-body{font-size:16px;line-height:2;margin:12px auto;max-width:80%}.cert-bottom{display:flex;justify-content:space-between;align-items:end;margin:15px 4% 0;font-size:12px}.cert-bottom div{display:flex;flex-direction:column;gap:7px;min-width:120px}.cert-stamp{border:2px dashed var(--cert-accent);border-radius:50%;width:88px;height:64px;justify-content:center;align-items:center;color:var(--cert-accent)}.cert-footer{font-size:11px;margin-top:8px;color:var(--cert-leaf)}@media screen{body{background:#eee;padding:12px}.sd-certificate{max-width:1100px;margin:auto;box-shadow:0 4px 25px #999}}@media print{body{padding:0}}</style></head><body>${sdCertMarkup(c)}<script>window.onload=()=>window.print()<\/script></body></html>`);win.document.close();}
+        function sdCertPrintCurrent(){if(!requireAdmin())return;const c=sdCertCurrent||sdCertData();if(!c)return;sdCertCurrent=c;const win=window.open('','_blank');if(!win){alert('اسمح بالنوافذ المنبثقة حتى تتمكن من طباعة الشهادة.');return;}win.document.write(`<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>شهادة تكريم - ${escapeHtml(c.student)}</title><style>@page{size:A4 landscape;margin:8mm}*{box-sizing:border-box}body{margin:0;font-family:Tahoma,Arial,sans-serif}.sd-certificate{height:190mm;padding:8mm;background:#fff}.cert-frame{height:100%;padding:9px;border:7px double var(--cert-accent);background:linear-gradient(135deg,var(--cert-pale),#fff 48%,var(--cert-pale));color:var(--cert-ink);outline:1px solid var(--cert-accent);outline-offset:-3px}.cert-inner{height:100%;border:2px solid var(--cert-accent);position:relative;text-align:center;padding:8px 35px;overflow:hidden;background:radial-gradient(ellipse at center,rgba(255,255,255,.94),rgba(255,255,255,.45))}.cert-top{position:relative;z-index:1}.ornament{width:100%;height:42px;display:block}.cert-corner{position:absolute;width:92px;height:92px;z-index:2;top:0;right:0}.cert-corner:last-child{top:auto;right:auto;bottom:0;left:0;transform:rotate(180deg)}.cert-divider{color:var(--cert-accent);font-size:19px;letter-spacing:7px;margin:0 auto 3px}.cert-school{font-size:13px}.cert-school-name{font-size:23px;font-weight:900;margin-top:4px}.cert-founded{font-size:11px;margin-top:3px}.cert-seal{margin:5px auto 2px;width:38px;height:38px;border:3px double var(--cert-accent);border-radius:50%;display:grid;place-items:center;color:var(--cert-leaf);font-size:27px;background:var(--cert-pale);box-shadow:0 0 0 4px #fff,0 0 0 5px var(--cert-accent).cert-title{font-size:31px;font-weight:900;color:var(--cert-accent);margin:6px 0}.cert-intro{font-size:15px}.cert-student{font-size:29px;font-weight:900;border-bottom:2px solid var(--cert-accent);display:inline-block;padding:3px 45px 8px;margin:7px auto}.cert-grade{font-size:14px}.cert-body{font-size:16px;line-height:2;margin:12px auto;max-width:80%}.cert-bottom{display:flex;justify-content:space-between;align-items:end;margin:15px 4% 0;font-size:12px}.cert-bottom div{display:flex;flex-direction:column;gap:7px;min-width:120px}.cert-stamp{border:2px dashed var(--cert-accent);border-radius:50%;width:88px;height:64px;justify-content:center;align-items:center;color:var(--cert-accent)}.cert-footer{font-size:11px;margin-top:8px;color:var(--cert-leaf)}@media screen{body{background:#eee;padding:12px}.sd-certificate{max-width:1100px;margin:auto;box-shadow:0 4px 25px #999}}@media print{body{padding:0}}</style><style id="v9-final-layout">
+.quick-access{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;max-width:760px;margin:14px auto 0!important}
+.quick-access a,.quick-access button{min-width:0;min-height:86px}
+#v7-guidance,#v7-badge{display:none!important}#school-info-section{display:block!important;max-width:1100px;margin:24px auto 100px!important}
+#notices-section{border:1px solid rgba(216,180,90,.45);background:linear-gradient(145deg,rgba(20,43,67,.96),rgba(8,18,31,.98));box-shadow:0 18px 45px rgba(0,0,0,.25)}
+#notices-section h2{letter-spacing:.2px;text-shadow:0 2px 14px rgba(216,180,90,.22)}
+@media(max-width:520px){.quick-access{gap:6px!important}.quick-access a,.quick-access button{padding:9px 5px!important;grid-template-columns:1fr!important;text-align:center!important}.quick-access span{grid-column:1!important}.quick-access b,.quick-access small{grid-column:1!important;font-size:10px!important}}
+</style>
+
+    <style id="v19-smoothness-optimization">
+      html { scroll-behavior: smooth; }
+      #particle-canvas { pointer-events:none; }
+      @media (max-width: 700px) {
+        #particle-canvas, #cursor-glow { display:none !important; }
+        .theme-panel, .theme-card, .sd-card, .v14-admin-tile,
+        .floating-command-dock, #live-broadcast-banner > div {
+          -webkit-backdrop-filter:none !important; backdrop-filter:none !important;
+        }
+        .theme-card, .sd-role-card, .v7-launch, button, a {
+          transition-duration:.16s !important;
+        }
+        .theme-card:hover, .sd-role-card:hover { transform:none !important; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; scroll-behavior:auto !important; }
+      }
+    </style>
+</head><body>${sdCertMarkup(c)}<script>window.onload=()=>window.print()<\/script></body></html>`);win.document.close();}
         function sdCertSave(){if(!requireAdmin())return;const c=sdCertCurrent||sdCertData();if(!c)return;const rows=sdCertRead();if(!rows.some(x=>x.id===c.id))rows.push(c);if(!v61Write(SD_CERT_KEY,rows)){alert('تعذر حفظ الشهادة على هذا الجهاز.');return;}sdCertCurrent=c;v61Audit('حفظ شهادة تكريم',c.student+' · '+c.type);sdCertRender();document.getElementById('sd-cert-status').textContent='تم حفظ الشهادة في السجل المحلي.';}
         function sdCertRender(){const host=document.getElementById('sd-cert-list');if(!host)return;const rows=sdCertRead();host.innerHTML=rows.length?rows.slice().reverse().map(c=>`<div class="sd-list-item"><div class="min-w-0 flex-1"><b>${escapeHtml(c.student)}</b><small class="sd-muted block">${escapeHtml(c.type)} · ${escapeHtml(c.grade)} · ${escapeHtml(c.date)}</small></div><div class="flex gap-1"><button class="sd-btn" type="button" onclick="sdCertReprint('${c.id}')">طباعة</button><button class="sd-btn" type="button" onclick="sdCertDelete('${c.id}')">حذف</button></div></div>`).join(''):'<div class="sd-empty">لا توجد شهادات محفوظة بعد.</div>';}
         function sdCertReprint(id){if(!requireAdmin())return;const c=sdCertRead().find(x=>x.id===id);if(!c)return;sdCertCurrent=c;sdCertPrintCurrent();}
@@ -3118,5 +3662,460 @@ visibleStudentKeys.forEach(key => {
         document.addEventListener('DOMContentLoaded',()=>{sdRenderAllLocal();sdSyncDashboardStats();const observer=new MutationObserver(sdSyncDashboardStats);['stat-visits','stat-students','stat-books'].forEach(id=>{const el=document.getElementById(id);if(el)observer.observe(el,{childList:true,characterData:true,subtree:true});});});
 
 </script>
+<script id="salah-v7-functions">
+(()=>{
+const $=id=>document.getElementById(id),grades=['الرابع العلمي','الخامس العلمي','السادس العلمي'],cats=['كتب','ملازم','ملخصات','أسئلة شهرية','وزاريات'];let g=grades[0],c=cats[0],data={},tables={},guides={},messages={},badge={},posts={};
+const esc=x=>String(x??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+const ready=()=>typeof db!=='undefined'&&typeof firebase!=='undefined'&&firebase.apps?.length;
+const admin=()=>typeof isAdminLoggedIn!=='undefined'&&isAdminLoggedIn;
+function gate(){if(!admin()){alert('هذه العملية للإدارة فقط.');return false}if(!ready()){alert('Firebase غير متاح.');return false}return true}
+async function uploadImage(f,path,oldUrl=''){
+ if(!f)return oldUrl||'';
+ if(!f.type.startsWith('image/')||f.size>8*1024*1024)throw new Error('اختر صورة صالحة لا يتجاوز حجمها 8MB.');
+ if(!firebase.storage)throw new Error('مكتبة Firebase Storage غير محمّلة.');
+ const safeName=String(f.name||'image').replace(/[^a-zA-Z0-9._-]/g,'_').slice(-80);
+ const ref=firebase.storage().ref().child(path+'/'+Date.now()+'_'+safeName);
+ const snap=await ref.put(f,{contentType:f.type});
+ const url=await snap.ref.getDownloadURL();
+ return url;
+}
+window.v7GuidanceUnlocked=false;
+window.v14GuidanceDigest=async function(password,salt){
+ const bytes=new TextEncoder().encode(String(salt)+'|'+String(password));
+ const hash=await crypto.subtle.digest('SHA-256',bytes);
+ return Array.from(new Uint8Array(hash)).map(x=>x.toString(16).padStart(2,'0')).join('');
+}
+async function v14VerifyGuidancePassword(password){
+ if(typeof firebase==='undefined'||!firebase.apps?.length)throw new Error('خدمة التخزين السحابي غير متاحة.');
+ const ref=firebase.database().ref('guidanceAccess/credential');
+ const snap=await ref.once('value');
+ let cred=snap.val();
+ if(!cred){
+  if(password!=='1966')return false;
+  const salt=Array.from(crypto.getRandomValues(new Uint8Array(16))).map(x=>x.toString(16).padStart(2,'0')).join('');
+  cred={salt,hash:await window.v14GuidanceDigest('1966',salt),updatedAt:Date.now(),version:1};
+  await ref.set(cred);
+ }
+ if(!cred.salt||!cred.hash)return false;
+ return (await window.v14GuidanceDigest(password,cred.salt))===cred.hash;
+}
+window.v7Open=async id=>{
+ if(id==='guidance'&&!window.v7GuidanceUnlocked){
+  const code=prompt('أدخل كلمة مرور قسم الإرشاد التربوي');
+  if(code===null)return;
+  try{if(!(await v14VerifyGuidancePassword(code))){alert('كلمة مرور الإرشاد غير صحيحة.');return}}
+  catch(e){alert('تعذر التحقق من كلمة المرور: '+(e.message||'تحقق من اتصال Firebase.'));return}
+  window.v7GuidanceUnlocked=true;
+ }
+ v7Back(false);$('v7-'+id)?.classList.add('active');if(id==='students')renderStudents();if(id==='timetable')renderTable();if(id==='calculator'){let el=$('average-calculator-section');if(el){$('v7-calc-slot').appendChild(el);el.style.display='block'}}if(id==='reports')renderReports();if(id==='guidance')renderGuidance();if(id==='badge')renderBadge();$('v7-'+id)?.scrollIntoView({behavior:'smooth',block:'start'})};
+window.v7Back=(scroll=true)=>{document.querySelectorAll('.v7-page').forEach(x=>x.classList.remove('active'));if(scroll)$('v7-launch')?.scrollIntoView({behavior:'smooth',block:'center'})};
+function renderStudents(){ $('v7-grades').innerHTML=grades.map(x=>`<button class="${x===g?'active':''}" onclick="v7Grade('${x}')">${x}</button>`).join('');$('v7-cats').innerHTML=cats.map(x=>`<button class="${x===c?'active':''}" onclick="v7Cat('${x}')">${x}</button>`).join('');let items=data[g]?.[c]||{};$('v7-student-items').innerHTML=Object.entries(items).reverse().map(([id,x])=>`<div class="v7-item"><b>${esc(x.title)}</b><p>${esc(x.description||'')}</p>${x.image?`<img src="${x.image}" alt="مرفق">`:''}<div>${x.url?`<a class="v7-btn" target="_blank" rel="noopener" href="${esc(x.url)}">فتح الملف</a>`:''}<button class="v7-btn alt" onclick="v7Print('${g}','${c}','${id}')">طباعة</button></div></div>`).join('')||'<p class="sd-muted">لا توجد مواد منشورة لهذا القسم.</p>'}
+window.v7Grade=x=>{g=x;renderStudents()};window.v7Cat=x=>{c=x;renderStudents()};
+window.v7Publish=async()=>{if(!gate())return;let grade=$('v7-grade').value,cat=$('v7-category').value,title=$('v7-title').value.trim(),description=$('v7-description').value.trim(),url=$('v7-url').value.trim(),f=$('v7-image').files[0];if(!title||(!description&&!url&&!f)){alert('أدخل عنواناً ومحتوى أو رابطاً أو صورة');return}if(url&&!/^https?:\/\//i.test(url)){alert('الرابط غير صالح');return}try{let image=await uploadImage(f,'studentPortal/'+grade+'/'+cat);await db.ref('studentPortal/'+grade+'/'+cat).push({title,description,url,image,createdAt:Date.now()});alert('تم النشر وحفظ الصورة في Firebase Storage')}catch(e){alert('تعذر النشر: '+e.message)}};
+function renderAdmin(){
+ let h=$('v7-admin-items');
+ if(h)h.innerHTML=Object.entries(data).map(([gr,cs])=>Object.entries(cs||{}).map(([ca,items])=>Object.entries(items||{}).map(([id,x])=>`<div class="v7-item"><b>${esc(gr)} · ${esc(ca)} · ${esc(x.title)}</b><button class="v7-btn alt" onclick="v7Edit('${gr}','${ca}','${id}')">تعديل النص</button><button class="v7-btn alt" onclick="v7Delete('${gr}','${ca}','${id}')">حذف</button></div>`).join('')).join('')).join('')||'لا توجد مواد';
+ let p=$('v7-admin-posts');if(p)p.innerHTML=Object.entries(posts).reverse().map(([id,x])=>`<div class="v7-item">${esc(x.author)} · ${esc(x.text)}<button class="v7-btn alt" onclick="v7EditPost('${id}')">تعديل</button><button class="v7-btn alt" onclick="v7DeletePost('${id}')">حذف</button></div>`).join('')||'لا توجد منشورات';
+ let gh=$('v7-admin-guidance');if(gh)gh.innerHTML=Object.entries(guides).reverse().map(([id,x])=>`<div class="v7-item"><b>${esc((x.text||'إرشاد').slice(0,120))}</b><button class="v7-btn alt" onclick="v7EditGuidance('${id}')">تعديل</button><button class="v7-btn alt" onclick="v7DeleteGuidance('${id}')">حذف</button></div>`).join('')||'<p class="text-xs opacity-70">لا توجد منشورات إرشادية</p>';
+ let th=$('v7-admin-tables');if(th)th.innerHTML=Object.entries(tables).map(([gr,x])=>`<div class="v7-item"><b>${esc(gr)} · ${esc(x.title||'الجدول الأسبوعي')}</b><button class="v7-btn alt" onclick="v7EditTable('${gr}')">تعديل العنوان</button><button class="v7-btn alt" onclick="v7DeleteTable('${gr}')">حذف الجدول</button></div>`).join('')||'لا توجد جداول منشورة';
+}
+window.v7Edit=(gr,ca,id)=>{if(!gate())return;let x=data[gr]?.[ca]?.[id];if(!x)return;let t=prompt('تعديل العنوان',x.title);if(t===null)return;let d=prompt('تعديل النص',x.description||'');if(d===null)return;db.ref('studentPortal/'+gr+'/'+ca+'/'+id).update({title:t,description:d,updatedAt:Date.now()})};
+window.v7ReplaceResource=async(gr,ca,id,file)=>{if(!gate()||!file)return;let x=data[gr]?.[ca]?.[id];if(!x)return;try{let url=await uploadImage(file,'studentPortal/'+gr+'/'+ca);await db.ref('studentPortal/'+gr+'/'+ca+'/'+id).update({image:url,updatedAt:Date.now()});if(x.image)try{await firebase.storage().refFromURL(x.image).delete()}catch(e){console.warn(e)}alert('تم استبدال الصورة')}catch(e){alert(e.message)}};
+window.v7Delete=async(gr,ca,id)=>{if(!gate()||!confirm('حذف المادة وصورتها من التخزين السحابي نهائياً؟'))return;let x=data[gr]?.[ca]?.[id];try{await db.ref('studentPortal/'+gr+'/'+ca+'/'+id).remove();if(x?.image)try{await firebase.storage().refFromURL(x.image).delete()}catch(e){console.warn('تعذر حذف ملف الصورة القديم من Storage:',e)} }catch(e){alert('تعذر حذف المادة: '+e.message)}};
+function renderTable(){ $('v7-table-grades').innerHTML=grades.map(x=>`<button onclick="v7ShowTable('${x}')">${x}</button>`).join('');window.v7ShowTable(g);renderAdmin()}
+window.v7ShowTable=x=>{g=x;let t=tables[x];$('v7-table-view').innerHTML=t?`<h3>${esc(t.title)}</h3><img style="max-width:100%;border-radius:12px" src="${t.image}" alt="جدول ${esc(x)}">`:'<p class="sd-muted">لم ينشر جدول لهذا الصف بعد.</p>'};
+window.v7PublishTable=async()=>{if(!gate())return;let gr=$('v7-table-grade').value,title=$('v7-table-title').value.trim(),f=$('v7-table-image').files[0];if(!f){alert('اختر صورة الجدول');return}try{let old=tables[gr]?.image||'',image=await uploadImage(f,'weeklyTimetables/'+gr);await db.ref('weeklyTimetables/'+gr).set({title:title||'الجدول الأسبوعي',image,updatedAt:Date.now()});if(old)try{await firebase.storage().refFromURL(old).delete()}catch(e){console.warn('تعذر حذف الجدول السابق:',e)}alert('تم نشر الجدول وحفظ صورته في Storage')}catch(e){alert('تعذر النشر: '+e.message)}};
+window.v7Send=()=>{if(!ready()){alert('السحابة غير متاحة');return}let body=$('v7-msg-body').value.trim();if(body.length<5){$('v7-msg-status').textContent='اكتب الرسالة أولاً';return}db.ref('adminInbox').push({kind:$('v7-msg-kind').value,name:$('v7-msg-name').value.trim(),body,createdAt:Date.now()}).then(()=>{$('v7-msg-status').textContent='تم إرسال الرسالة إلى الإدارة';$('v7-msg-body').value=''}).catch(e=>$('v7-msg-status').textContent=e.message)};
+function renderInbox(){let h=$('v7-inbox');if(h)h.innerHTML=Object.entries(messages).reverse().map(([id,x])=>`<div class="v7-item"><b>${esc(x.kind)} · ${esc(x.name)}</b><p>${esc(x.body)}</p><button class="v7-btn alt" onclick="v7DeleteMessage('${id}')">حذف</button></div>`).join('')||'لا توجد رسائل'}
+window.v7DeleteMessage=id=>{if(gate()&&confirm('حذف الرسالة؟'))db.ref('adminInbox/'+id).remove()};
+function renderGuidance(){let h=$('v7-guidance-items');if(h)h.innerHTML=Object.entries(guides).reverse().map(([id,x])=>`<div class="v7-item"><p>${esc(x.text||'')}</p>${x.image?`<img src="${esc(x.image)}" alt="إرشاد">`:''}</div>`).join('')||'لا توجد إرشادات';renderAdmin()};
+window.v7EditGuidance=id=>{if(!gate())return;let x=guides[id];if(!x)return;let t=prompt('تعديل نص الإرشاد',x.text||'');if(t===null)return;db.ref('guidancePosts/'+id).update({text:t,updatedAt:Date.now()}).catch(e=>alert(e.message))};
+window.v7DeleteGuidance=async id=>{if(!gate()||!confirm('حذف منشور الإرشاد؟'))return;let x=guides[id];try{await db.ref('guidancePosts/'+id).remove();if(x?.image)try{await firebase.storage().refFromURL(x.image).delete()}catch(e){console.warn(e)}}catch(e){alert(e.message)}};
+window.v7EditTable=gr=>{if(!gate())return;let x=tables[gr];if(!x)return;let title=prompt('تعديل عنوان الجدول',x.title||'الجدول الأسبوعي');if(title!==null)db.ref('weeklyTimetables/'+gr).update({title,updatedAt:Date.now()})};
+window.v7DeleteTable=async gr=>{if(!gate()||!confirm('حذف جدول هذا الصف؟'))return;let x=tables[gr];try{await db.ref('weeklyTimetables/'+gr).remove();if(x?.image)try{await firebase.storage().refFromURL(x.image).delete()}catch(e){console.warn(e)}}catch(e){alert(e.message)}};
+window.v7GenerateQr=()=>{let value=$('v7-qr-value')?.value.trim(),host=$('v7-qr-preview');if(!value){alert('أدخل نصاً أو رقماً لإنشاء الباركود');return}if(typeof QRCode==='undefined'){alert('تعذر تحميل مكتبة إنشاء QR. تحقق من الاتصال ثم أعد المحاولة.');return}host.innerHTML='';new QRCode(host,{text:value,width:180,height:180,correctLevel:QRCode.CorrectLevel.H});let canvas=host.querySelector('canvas');setTimeout(()=>{let img=host.querySelector('img');let dataUrl=img?.src||(canvas?canvas.toDataURL('image/png'):'');if(dataUrl){window.v7GeneratedQr=dataUrl;let preview=$('v7-qr');if(preview)preview.src=dataUrl}},150)};
+
+function renderReports(){let h=$('v7-report-items');if(!h)return;h.innerHTML=Object.entries(data).map(([gr,cs])=>Object.entries(cs||{}).map(([ca,items])=>Object.entries(items||{}).map(([id,x])=>`<div class="v7-item"><b>${esc(gr)} · ${esc(ca)} · ${esc(x.title)}</b><button class="v7-btn" onclick="v7Print('${gr}','${ca}','${id}')">طباعة / PDF</button></div>`).join('')).join('')).join('')||'لا توجد موارد للطباعة'}
+window.v7Print=(gr,ca,id)=>{let x=data[gr]?.[ca]?.[id];if(!x)return;let w=window.open('','_blank');if(!w){alert('اسمح بالنوافذ المنبثقة');return}w.document.write(`<html lang="ar" dir="rtl"><meta charset="utf-8"><body style="font-family:Arial;padding:30px"><h2>${esc(x.title)}</h2><p>${esc(x.description)}</p>${x.image?`<img src="${x.image}" style="max-width:100%">`:''}${x.url?`<p><a href="${esc(x.url)}">${esc(x.url)}</a></p>`:''}</body></html>`);w.document.close();w.print()};
+window.v7SaveBadge=async()=>{if(!gate())return;try{let oldPhoto=badge.photo||'',oldQr=badge.qr||'',photo=await uploadImage($('v7-badge-photo-file').files[0],'badge/student-photo'),qrFile=$('v7-badge-qr-file').files[0],qr=qrFile?await uploadImage(qrFile,'badge/qr-code'):(window.v7GeneratedQr?await uploadImage(await (await fetch(window.v7GeneratedQr)).blob().then(b=>new File([b],'generated-qr.png',{type:'image/png'})),'badge/qr-code'):oldQr);await db.ref('badgeConfig').set({photo,qr,name:$('v7-badge-name-input').value.trim()||badge.name||'اسم الطالب',updatedAt:Date.now()});for(const old of [oldPhoto,oldQr])if(old)try{await firebase.storage().refFromURL(old).delete()}catch(e){console.warn('تعذر حذف صورة سابقة:',e)}alert('تم حفظ الهوية والباركود. يمكنك استبدال كل صورة بصورة جديدة بصورة مستقلة.')}catch(e){alert('تعذر حفظ الهوية: '+e.message)}};
+function renderBadge(){};
+window.v7EditPost=id=>{if(!gate())return;let x=posts[id];if(!x)return;let t=prompt('تعديل المنشور',x.text||'');if(t!==null)db.ref('posts/'+id).update({text:t,updatedAt:Date.now()})};
+window.v7DeletePost=id=>{if(gate()&&confirm('حذف المنشور؟'))db.ref('posts/'+id).remove()};
+window.v7CleanupLegacyFirebase=async()=>{
+ if(!gate())return;
+ const paths=['questionBank','books','digitalLibrary','schoolMessages','annualReports'];
+ const status=$('v7-cleanup-status');
+ if(!confirm('تأكيد نهائي: حذف بيانات الأقسام القديمة التالية من Firebase؟\\n'+paths.join(' ، ')+'\\nلن تُحذف بيانات الطلاب أو الإعلانات أو الهوية أو بوابة الطالب أو الجداول.'))return;
+ if(status)status.textContent='جارٍ حذف البيانات القديمة…';
+ try{
+   const updates={}; paths.forEach(path=>updates[path]=null);
+   const oldPosts=(await db.ref('posts').once('value')).val()||{};
+   Object.entries(oldPosts).forEach(([id,item])=>{if(String(item?.author||'').includes('الإرشاد التربوي'))updates['posts/'+id]=null});
+   await db.ref().update(updates);
+   if(status)status.textContent='تم حذف بيانات الأقسام القديمة المحددة من Firebase بنجاح.';
+   alert('اكتمل حذف بيانات الأقسام القديمة المحددة من Firebase.');
+ }catch(e){if(status)status.textContent='تعذر الحذف: '+e.message;alert('تعذر تنظيف Firebase: '+e.message)}
+};
+document.addEventListener('DOMContentLoaded',()=>{
+ const oldGuidance=document.getElementById('guidance-post-text');if(oldGuidance){const card=oldGuidance.closest('.theme-card');if(card)card.remove()}
+ const oldHeading=[...document.querySelectorAll('#admin-dashboard-modal h1,#admin-dashboard-modal h2,#admin-dashboard-modal h3,#admin-dashboard-modal h4')].find(x=>x.textContent.includes('إدارة بنك الأسئلة والوزاريات'));if(oldHeading){const box=oldHeading.closest('.theme-card')||oldHeading.parentElement;if(box)box.remove()}
+ const oldLibrary=document.getElementById('v6-digital-library-admin');if(oldLibrary)oldLibrary.remove();
+ const oldCommunication=document.getElementById('v6-communication-admin');if(oldCommunication)oldCommunication.remove();
+ const oldAnnual=document.getElementById('v6-annual-report-admin');if(oldAnnual)oldAnnual.remove();
+ const oldExam=[...document.querySelectorAll('#admin-dashboard-modal h1,#admin-dashboard-modal h2,#admin-dashboard-modal h3,#admin-dashboard-modal h4')].find(x=>x.textContent.includes('مختبر الامتحانات الإلكتروني'));if(oldExam){const box=oldExam.closest('.theme-card')||oldExam.parentElement;if(box)box.remove()}
+ const oldBooks=[...document.querySelectorAll('#admin-dashboard-modal h1,#admin-dashboard-modal h2,#admin-dashboard-modal h3,#admin-dashboard-modal h4')].find(x=>x.textContent.includes('إدارة الكتب والملفات'));if(oldBooks){const box=oldBooks.closest('.border-t')||oldBooks.parentElement;if(box)box.remove()}
+ if(!ready())return;
+const bind=(path,set,render)=>db.ref(path).on('value',s=>{set(s.val()||{});render()},e=>console.error(path,e));
+bind('studentPortal',x=>data=x,()=>{renderStudents();renderReports();renderAdmin()});
+bind('weeklyTimetables',x=>tables=x,renderTable);bind('guidancePosts',x=>guides=x,renderGuidance);bind('adminInbox',x=>messages=x,renderInbox);bind('badgeConfig',x=>badge=x,renderBadge);bind('posts',x=>posts=x,renderAdmin);
+});
+})();
+</script>
+
+<script id="v14-admin-console-script">
+(()=>{
+ const $=id=>document.getElementById(id);
+ const safeText=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ let toastTimer;
+ function toast(message,ok=true){let el=$('v14-admin-toast');if(!el){el=document.createElement('div');el.id='v14-admin-toast';document.body.appendChild(el)}el.textContent=(ok?'✓ ':'⚠ ')+message;el.style.borderColor=ok?'#39c6a0':'#fb7185';el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2600)}
+ function getAuditActor(){return 'مدير المنصة · جلسة الإدارة'}
+ function recordActivity(action,path){
+   if(!window.firebase||!firebase.apps?.length)return;
+   const p=String(path||'').replace(/^https?:\/\/[^/]+\/?/,'').replace(/^\//,'');
+   if(/(^|\/)(students|studentRecords|attendance|discipline|studentProfiles)(\/|$)/i.test(p)||/studentId|studentName/i.test(p))return;
+   if(p.startsWith('adminActivity'))return;
+   const parts=p.split('/').filter(Boolean);const allowed=['posts','labs','books','studentPortal','weeklyTimetables','guidancePosts','adminInbox','questionBank','badgeConfig','liveBroadcast','adminArchiveV14'];
+   if(parts.length&&!allowed.includes(parts[0]))return;
+   const section=(parts[0]||'إدارة النظام').replace(/([A-Z])/g,' $1');
+   try{firebase.database().ref('adminActivity').push({action,section:section.slice(0,60),actor:getAuditActor(),createdAt:firebase.database.ServerValue.TIMESTAMP});}catch(e){console.warn('تعذر تسجيل النشاط الإداري',e)}
+ }
+ function initAudit(){
+   try{
+    const proto=Object.getPrototypeOf(firebase.database().ref());
+    [['set','حفظ'],['update','تعديل'],['remove','حذف']].forEach(([method,label])=>{
+      const original=proto[method];if(!original||original.__v14Wrapped)return;
+      const wrapped=function(...args){const path=this.toString();const result=original.apply(this,args);Promise.resolve(result).then(()=>{recordActivity(label,path);toast(label+' البيانات بنجاح')}).catch(()=>{});return result};wrapped.__v14Wrapped=true;proto[method]=wrapped;
+    });
+    const connected=firebase.database().ref('.info/connected');
+    connected.on('value',snap=>{const online=snap.val()===true;document.querySelectorAll('.v14-dot').forEach(d=>d.className='v14-dot '+(online?'online':'offline'));document.querySelectorAll('[data-v14-connection-text]').forEach(t=>t.textContent=online?'متصل بقاعدة البيانات':'غير متصل بقاعدة البيانات')});
+    const activity=firebase.database().ref('adminActivity').limitToLast(20);
+    activity.on('value',snap=>renderActivity(snap.val()||{}),()=>renderActivity({}));
+   }catch(e){console.warn('تعذر تهيئة سجل النشاط',e)}
+ }
+ function renderActivity(data){const box=$('v14-admin-activity-list');if(!box)return;const rows=Object.entries(data||{}).map(([id,x])=>({id,...x})).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)).slice(0,20);box.innerHTML=rows.length?rows.map(x=>`<div class="v14-activity-row"><b>${safeText(x.action||'عملية إدارية')} · ${safeText(x.section||'النظام')}</b><small>${safeText(x.actor||'مدير المنصة')} · ${safeText(x.createdAt?new Date(x.createdAt).toLocaleString('ar-IQ'):'وقت غير متاح')}</small></div>`).join(''):'<div class="sd-empty">لا توجد عمليات إدارية مسجلة بعد.</div>'}
+ function setupAdminPages(){
+  const modal=$('admin-dashboard-modal');if(!modal||modal.dataset.v14Ready)return;modal.dataset.v14Ready='1';
+  const shell=modal.querySelector(':scope > .max-w-4xl');if(!shell)return;shell.classList.add('v14-admin-shell');
+  const closeBtn=shell.querySelector(':scope > button');
+  const header=shell.querySelector(':scope > div');
+  const home=document.createElement('div');home.className='v14-admin-home';home.innerHTML=`<div class="flex flex-wrap justify-between items-center gap-3 mt-4"><div><span class="text-[10px] tracking-[.2em] text-cyan-300 font-black">SALAH AL-DIN · ADMIN CONTROL</span><h2 class="text-2xl font-black text-yellow-100 mt-1">لوحة المدير</h2><p class="text-xs text-slate-300 mt-1">اختر القسم لفتح واجهته بصورة مستقلة</p></div><span class="v14-connection"><i class="v14-dot"></i><span data-v14-connection-text>جارٍ فحص الاتصال...</span></span></div><div class="v14-admin-nav" id="v14-admin-nav"></div><div id="v14-admin-activity"><div class="flex flex-wrap justify-between gap-2 items-center"><div><b class="text-yellow-100">🧾 سجل النشاط الإداري</b><p class="text-[10px] text-slate-300 mt-1">آخر عمليات النشر والتعديل والحذف، دون أسماء أو بيانات الطلاب.</p></div><span class="text-[10px] text-cyan-200">آخر 20 عملية</span></div><div id="v14-admin-activity-list" class="mt-2"><div class="sd-empty">جارٍ تحميل سجل النشاط...</div></div></div>`;
+  shell.insertBefore(home,closeBtn||null);
+  const pages={};
+  function makePage(id,title,icon,desc){const page=document.createElement('section');page.className='v14-admin-page';page.dataset.page=id;page.hidden=true;page.innerHTML=`<div class="v14-page-head"><div class="flex items-center gap-3"><span class="text-3xl">${icon}</span><div><h2 class="font-black text-yellow-100">${title}</h2><p class="text-[10px] text-slate-300">${desc}</p></div></div><button type="button" class="v14-back" data-v14-back>↩ العودة إلى لوحة المدير</button></div><div data-v14-content></div>`;modal.appendChild(page);page.querySelector('[data-v14-back]').addEventListener('click',()=>showPage('home'));pages[id]=page;return page.querySelector('[data-v14-content]')}
+  const groups=[
+   ['notices','التبليغات والإعلانات','📢','نشر ومراجعة التبليغات والبث الإداري'],
+   ['guidance','قسم المرشد التربوي','🧭','كتابة إرشاد تربوي منظم وإرفاق الصور ونشره للطلبة'],
+   ['students','سجل الطلاب','🎓','أدوات إدارة سجل الطلاب والهويات'],
+   ['resources','الموارد الدراسية','📚','المكتبة والكتب وبنك الأسئلة والمختبرات'],
+   ['timetable','الجداول والموارد الصفية','🗓️','الجداول الأسبوعية وموارد بوابة الطالب'],
+   ['messages','مراسلات الإدارة','✉️','صندوق الرسائل والردود الإدارية'],
+   ['reports','التقارير والأدوات','📊','التقارير والطباعة وأدوات الموقع'],
+   ['system','النظام والاتصال','⚙️','حالة Firebase والإعدادات والأدوات الحساسة'],
+   ['archive','الأرشيف','🗄️','حفظ النصوص والصور والمواد التي يرسلها المدير']
+  ];
+  groups.forEach(([id,title,icon,desc])=>{makePage(id,title,icon,desc);const b=document.createElement('button');b.type='button';b.className='v14-admin-tile';b.innerHTML=`<span class="v14-icon">${icon}</span><span><b>${title}</b><small>${desc}</small></span>`;b.addEventListener('click',()=>showPage(id));home.querySelector('#v14-admin-nav').appendChild(b)});
+  function move(node,id){if(node&&pages[id]&&!node.dataset.v14Moved){pages[id].appendChild(node);node.dataset.v14Moved='1'}}
+  // Retain every existing control and move complete feature blocks without rebuilding their forms.
+  const panelChildren=[...(header?[...header.children]:[]),...shell.children];
+  panelChildren.forEach(node=>{
+    if(node===header||node===home||node===closeBtn||node.tagName==='H2')return;
+    const txt=(node.innerText||'').trim();
+    if(node.id==='v7-admin-tools'){move(node,'resources');return}
+    if(node.id==='v7-admin-items'||node.id==='v7-admin-posts'||txt.includes('إدارة التبليغات والإعلانات')){move(node,'notices');return}
+    if(node.id==='v7-inbox'||txt.includes('صندوق رسائل الإدارة')){move(node,'messages');return}
+    if(txt.includes('تنظيف بيانات الأقسام القديمة')){move(node,'system');return}
+    if(/إدارة بوابة الطالب|إدارة سجل الطلاب|الطلاب المسجلون/.test(txt)){move(node,'students');return}
+  });
+  [...modal.children].forEach(node=>{
+    if(node===shell||node.classList.contains('v14-admin-page'))return;
+    const txt=(node.innerText||'').trim();
+    if(node.id==='sd-private-management'){move(node,'system');return}
+    if(txt.includes('اتصال Firebase السحابي')){move(node,'system');return}
+    if(txt.includes('تعديل نصوص الموقع بالكامل')){move(node,'reports');return}
+    if(txt.includes('البث الإداري العاجل')){move(node,'notices');return}
+    if(txt.includes('إدارة بنك الأسئلة والوزاريات')){move(node,'resources');return}
+    if(txt.includes('حماية سجلات الغياب والإنذارات')){move(node,'students');return}
+    if(txt.includes('إدارة ونشر تبليغات الإدارة')){move(node,'notices');return}
+    if(txt.includes('النشر في الأقسام والمختبرات')){move(node,'resources');return}
+    if(txt.includes('إدارة الكتب والملفات')){move(node,'resources');return}
+    if(txt.includes('تغيير الرمز السري للإدارة')){move(node,'system');return}
+    if(node.tagName==='SECTION'&&/التقرير|التصدير|الطباعة/.test(txt)){move(node,'reports');return}
+  });
+  // Move the standalone cloud-admin forms into their matching protected pages.
+  move($('v6-digital-library-admin'),'resources');
+  move($('v6-communication-admin'),'messages');
+  move($('v6-annual-report-admin'),'reports');
+  // Separate the weekly timetable form from the resource publishing form.
+  const adminTools=pages.resources.querySelector('#v7-admin-tools');
+  if(adminTools){
+    const toolCards=adminTools.querySelectorAll(':scope > .v7-grid > .v7-item');
+    if(toolCards[1]) pages.timetable.appendChild(toolCards[1]);
+  }
+  // Give the counselor's existing publishing form its own independent page without rebuilding it.
+  const guidanceCard=[...pages.notices.querySelectorAll('.theme-card')].find(el=>(el.innerText||'').includes('قسم الإرشاد')&&(el.innerText||'').includes('نشر فوري للإرشاد'));
+  if(guidanceCard){
+    const guidanceIntro=document.createElement('div');
+    guidanceIntro.className='sd-card space-y-2';
+    guidanceIntro.innerHTML='<h3 class="font-black text-emerald-200">إدارة منشورات المرشد التربوي</h3><p class="sd-muted">اكتب عنوان الإرشاد ومجاله والفئة المستهدفة والنص التربوي، وأرفق صورة اختيارية؛ تُرفع الصورة إلى Firebase Storage ويظهر المنشور في القسم العام.</p>';
+    pages.guidance.appendChild(guidanceIntro);
+    pages.guidance.appendChild(guidanceCard);
+  }else{
+    const guidanceFallback=document.createElement('div');
+    guidanceFallback.className='sd-card space-y-2';
+    guidanceFallback.innerHTML='<h3 class="font-black text-emerald-200">قسم المرشد التربوي</h3><p class="sd-muted">لم يتم العثور على استمارة النشر الأصلية أثناء تحميل لوحة الإدارة. راجع قسم التبليغات للتأكد من ظهور نموذج الإرشاد.</p>';
+    pages.guidance.appendChild(guidanceFallback);
+  }
+
+  // Guidance password is independent from the manager PIN and is stored as a salted SHA-256 hash.
+  const guidancePasswordCard=document.createElement('section');
+  guidancePasswordCard.className='sd-card space-y-3 mt-4';
+  guidancePasswordCard.innerHTML=`<div><h3 class="text-emerald-200">🔑 تغيير كلمة مرور قسم الإرشاد</h3><p class="sd-muted mt-1">كلمة مرور الإرشاد منفصلة عن رمز دخول المدير. تُحفظ بصيغة مشفّرة تجزئياً في Firebase ولا تُخزّن كنص مكشوف.</p></div><div class="grid sm:grid-cols-2 gap-2"><input id="v14-guidance-new-password" class="sd-field" type="password" minlength="6" autocomplete="new-password" placeholder="كلمة المرور الجديدة (6 أحرف على الأقل)"><input id="v14-guidance-confirm-password" class="sd-field" type="password" minlength="6" autocomplete="new-password" placeholder="تأكيد كلمة المرور الجديدة"></div><div class="flex flex-wrap items-center gap-2"><button type="button" class="sd-btn" id="v14-guidance-save-password">💾 حفظ كلمة المرور</button><span id="v14-guidance-password-status" class="sd-muted" aria-live="polite"></span></div>`;
+  pages.guidance.appendChild(guidancePasswordCard);
+  guidancePasswordCard.querySelector('#v14-guidance-save-password').addEventListener('click',async()=>{
+   if(!window.isAdminLoggedIn && !(typeof isAdminLoggedIn!=='undefined'&&isAdminLoggedIn)){toast('هذه العملية متاحة للمدير فقط',false);return}
+   const a=guidancePasswordCard.querySelector('#v14-guidance-new-password').value;
+   const b=guidancePasswordCard.querySelector('#v14-guidance-confirm-password').value;
+   const status=guidancePasswordCard.querySelector('#v14-guidance-password-status');
+   if(a.length<6){status.textContent='اجعل كلمة المرور 6 أحرف أو أكثر.';return}
+   if(a!==b){status.textContent='كلمتا المرور غير متطابقتين.';return}
+   try{
+    const salt=Array.from(crypto.getRandomValues(new Uint8Array(16))).map(x=>x.toString(16).padStart(2,'0')).join('');
+    const hash=await window.v14GuidanceDigest(a,salt);
+    await Promise.race([firebase.database().ref('guidanceAccess/credential').set({salt,hash,updatedAt:Date.now(),version:1}),new Promise((_,reject)=>setTimeout(()=>reject(new Error('انتهت مهلة الحفظ بعد 15 ثانية؛ تحقق من اتصال الإنترنت وقواعد Firebase.')),15000))]);
+    guidancePasswordCard.querySelector('#v14-guidance-new-password').value='';
+    guidancePasswordCard.querySelector('#v14-guidance-confirm-password').value='';
+    status.textContent='تم تحديث كلمة مرور الإرشاد وحفظها سحابياً.';
+    window.v7GuidanceUnlocked=false;
+    toast('تم حفظ كلمة مرور الإرشاد بنجاح');
+   }catch(e){status.textContent='تعذر الحفظ: '+(e.message||'تحقق من صلاحيات Firebase');toast('فشل حفظ كلمة المرور',false)}
+  });
+
+  // Cloud archive: text and image attachments are stored in Firebase Storage + Realtime Database.
+  const archiveHost=pages.archive;
+  archiveHost.innerHTML+=`<section class="sd-card space-y-3"><div><h3 class="text-cyan-100">🗄️ الأرشيف الإداري السحابي</h3><p class="sd-muted mt-1">أرسل إلى الأرشيف أي نص أو صورة تريد الاحتفاظ بها. النصوص تحفظ في Realtime Database والصور في Firebase Storage، وتظهر السجلات على الأجهزة التي تستخدم قاعدة البيانات نفسها.</p></div><input id="v14-archive-title" class="sd-field" maxlength="140" placeholder="عنوان المادة (اختياري للنصوص)"><textarea id="v14-archive-text" class="sd-field" rows="4" maxlength="12000" placeholder="اكتب النص أو الملاحظة التي تريد أرشفتها..."></textarea><label class="sd-muted block">إرفاق صورة (اختياري)<input id="v14-archive-image" class="sd-field mt-2" type="file" accept="image/*,.jpg,.jpeg,.png,.webp"></label><div class="flex flex-wrap items-center gap-2"><button type="button" id="v14-archive-save" class="sd-btn">📥 حفظ في الأرشيف</button><span id="v14-archive-status" class="sd-muted" aria-live="polite"></span></div></section><section class="sd-card space-y-3"><div class="flex flex-wrap items-center justify-between gap-2"><h3 class="text-cyan-100">📚 المواد المؤرشفة</h3><span id="v14-archive-count" class="sd-pill">جارٍ التحميل...</span></div><input id="v14-archive-search" class="sd-field" placeholder="بحث في الأرشيف..."><div id="v14-archive-list" class="sd-list"><div class="sd-empty">جارٍ تحميل الأرشيف...</div></div></section>`;
+  const archiveState={rows:{}};
+  const archiveList=archiveHost.querySelector('#v14-archive-list');
+  const archiveSearch=archiveHost.querySelector('#v14-archive-search');
+  function renderCloudArchive(){
+   const q=(archiveSearch.value||'').trim().toLowerCase();
+   const rows=Object.entries(archiveState.rows||{}).map(([id,x])=>({id,...x})).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)).filter(x=>[x.title,x.text,x.author].join(' ').toLowerCase().includes(q));
+   archiveHost.querySelector('#v14-archive-count').textContent=rows.length+' مادة';
+   archiveList.innerHTML=rows.length?rows.map(x=>`<article class="sd-list-item items-start"><div class="min-w-0 flex-1"><b>${safeText(x.title||'مادة مؤرشفة')}</b><small class="sd-muted block">${safeText(x.createdAt?new Date(x.createdAt).toLocaleString('ar-IQ'):'وقت غير محدد')} · ${safeText(x.author||'المدير')}</small>${x.text?`<p class="text-xs mt-2 whitespace-pre-wrap break-words">${safeText(x.text)}</p>`:''}${(x.imageDataUrl||x.imageUrl)?`<a href="${safeText(x.imageDataUrl||x.imageUrl)}" target="_blank" rel="noopener"><img src="${safeText(x.imageDataUrl||x.imageUrl)}" alt="صورة مؤرشفة" loading="lazy" style="max-width:100%;max-height:260px;object-fit:contain;border-radius:12px;margin-top:9px"></a>`:''}</div><button type="button" class="sd-btn" data-archive-delete="${safeText(x.id)}">حذف</button></article>`).join(''):'<div class="sd-empty">لا توجد مواد مؤرشفة مطابقة.</div>';
+  }
+  archiveSearch.addEventListener('input',renderCloudArchive);
+  archiveList.addEventListener('click',async ev=>{
+   const btn=ev.target.closest('[data-archive-delete]');if(!btn)return;
+   if(!(typeof isAdminLoggedIn!=='undefined'&&isAdminLoggedIn)||!confirm('هل تريد حذف هذه المادة من الأرشيف السحابي؟'))return;
+   const id=btn.dataset.archiveDelete,item=archiveState.rows[id];if(!item)return;
+   try{await firebase.database().ref('adminArchiveV14/'+id).remove();toast('تم حذف المادة من الأرشيف')}
+   catch(e){toast('تعذر حذف المادة: '+(e.message||''),false)}
+  });
+  // Archive-only image pipeline: compress in-browser and store with the record in Realtime Database.
+  // This deliberately avoids Firebase Storage, whose archive upload was stalling at 0% on the user's device.
+  async function v14CompressArchiveImage(file){
+   const maxInput=8*1024*1024;
+   if(!file||file.size>maxInput)throw new Error('حجم الصورة الأصلية يجب ألا يتجاوز 8MB.');
+   const ext=String(file.name||'').split('.').pop().toLowerCase();
+   const mime=(file.type||({jpg:'image/jpeg',jpeg:'image/jpeg',png:'image/png',webp:'image/webp'})[ext]||'').toLowerCase();
+   if(!['image/jpeg','image/png','image/webp'].includes(mime))throw new Error('الصيغ المدعومة JPG وPNG وWEBP فقط.');
+   let bitmap;
+   try{bitmap=await createImageBitmap(file)}catch(e){throw new Error('تعذر فتح الصورة على الهاتف. جرّب صورة JPG أو PNG أخرى.');}
+   try{
+    let width=bitmap.width,height=bitmap.height;
+    if(!width||!height)throw new Error('أبعاد الصورة غير صالحة.');
+    const maxEdge=1600,scale=Math.min(1,maxEdge/Math.max(width,height));
+    width=Math.max(1,Math.round(width*scale));height=Math.max(1,Math.round(height*scale));
+    const canvas=document.createElement('canvas');canvas.width=width;canvas.height=height;
+    const ctx=canvas.getContext('2d',{alpha:false});
+    if(!ctx)throw new Error('تعذر تجهيز الصورة في المتصفح.');
+    ctx.fillStyle='#ffffff';ctx.fillRect(0,0,width,height);ctx.drawImage(bitmap,0,0,width,height);
+    let quality=.82,blob=null;
+    for(let i=0;i<8;i++){
+     blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/jpeg',quality));
+     if(blob&&blob.size<=650*1024)break;
+     quality=Math.max(.42,quality-.07);
+     if(i===3&&blob&&blob.size>650*1024){const factor=.78;canvas.width=Math.max(1,Math.round(canvas.width*factor));canvas.height=Math.max(1,Math.round(canvas.height*factor));ctx.drawImage(bitmap,0,0,canvas.width,canvas.height);}
+    }
+    if(!blob)throw new Error('فشل ضغط الصورة.');
+    if(blob.size>850*1024)throw new Error('الصورة كبيرة جداً بعد الضغط. اختر صورة أصغر حجماً.');
+    const dataUrl=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result||''));reader.onerror=()=>reject(new Error('تعذرت قراءة الصورة بعد الضغط.'));reader.readAsDataURL(blob)});
+    return {dataUrl,size:blob.size,width:canvas.width,height:canvas.height,mime:'image/jpeg'};
+   }finally{try{bitmap.close()}catch(_){}}
+  }
+  archiveHost.querySelector('#v14-archive-save').addEventListener('click',async()=>{
+   if(!(typeof isAdminLoggedIn!=='undefined'&&isAdminLoggedIn)){toast('افتح جلسة المدير أولاً',false);return}
+   const title=archiveHost.querySelector('#v14-archive-title').value.trim();
+   const textValue=archiveHost.querySelector('#v14-archive-text').value.trim();
+   const file=archiveHost.querySelector('#v14-archive-image').files[0];
+   const status=archiveHost.querySelector('#v14-archive-status');
+   if(!textValue&&!file){status.textContent='اكتب نصاً أو اختر صورة قبل الحفظ.';return}
+   const btn=archiveHost.querySelector('#v14-archive-save');btn.disabled=true;
+   try{
+    let imageDataUrl='';let imageMeta=null;
+    if(file){status.textContent='جارٍ ضغط الصورة وتجهيزها للأرشفة...';imageMeta=await v14CompressArchiveImage(file);imageDataUrl=imageMeta.dataUrl;status.textContent='اكتمل تجهيز الصورة؛ جارٍ حفظها مع سجل الأرشيف...';}
+    const record={title:title||((file?'صورة مؤرشفة':'ملاحظة إدارية')+' · '+new Date().toLocaleDateString('ar-IQ')),text:textValue,imageDataUrl,imageMime:imageMeta?.mime||'',imageSize:imageMeta?.size||0,imageWidth:imageMeta?.width||0,imageHeight:imageMeta?.height||0,kind:file&&textValue?'نص وصورة':file?'صورة':'نص',author:'مدير المنصة',createdAt:Date.now()};
+    const saveRef=firebase.database().ref('adminArchiveV14').push();
+    status.textContent='جارٍ حفظ المادة في قاعدة البيانات...';
+    await Promise.race([saveRef.set(record),new Promise((_,reject)=>setTimeout(()=>reject(new Error('انتهت مهلة حفظ سجل الأرشيف. تحقق من اتصال الإنترنت وقواعد Realtime Database.')),30000))]);
+    archiveHost.querySelector('#v14-archive-title').value='';
+    archiveHost.querySelector('#v14-archive-text').value='';
+    archiveHost.querySelector('#v14-archive-image').value='';
+    status.textContent='تم حفظ المادة والصورة في الأرشيف السحابي بنجاح.';
+    toast('تمت الأرشفة بنجاح');
+   }catch(e){status.textContent='تعذر حفظ الأرشيف: '+(e.message||'تحقق من اتصال Firebase وقواعد Realtime Database');toast('فشل حفظ الأرشيف',false)}
+   finally{btn.disabled=false}
+  });
+  function startCloudArchiveListener(){
+   if(archiveHost.dataset.listenerAttached==='1')return;
+   archiveHost.dataset.listenerAttached='1';
+   try{firebase.database().ref('adminArchiveV14').on('value',snap=>{archiveState.rows=snap.val()||{};renderCloudArchive()},err=>{archiveHost.dataset.listenerAttached='';archiveList.innerHTML='<div class="sd-empty">تعذر تحميل الأرشيف: '+safeText(err.message)+'</div>';toast('تعذر قراءة الأرشيف السحابي',false)})}
+   catch(e){archiveHost.dataset.listenerAttached='';archiveList.innerHTML='<div class="sd-empty">خدمة Firebase غير متاحة حالياً.</div>'}
+  }
+
+  // Existing administration subtools are kept intact inside their corresponding independent pages.
+  const studentLaunch=document.createElement('div');studentLaunch.className='sd-card space-y-3';studentLaunch.innerHTML='<h3>سجل الطلاب المحمي</h3><p class="sd-muted">فتح نافذة سجل الطلاب الحالية مع الحفاظ على رمز الدخول ووظائف الإضافة والتعديل والحذف.</p><button type="button" class="sd-btn" id="v14-open-student-records">🎓 فتح سجل الطلاب</button>';pages.students.appendChild(studentLaunch);studentLaunch.querySelector('button').addEventListener('click',()=>{if(typeof openStudentsPinModal==='function')openStudentsPinModal();else toast('نافذة سجل الطلاب غير متاحة حالياً',false)});
+  showPage('home');initAudit();
+  function showPage(id){home.hidden=id!=='home';Object.entries(pages).forEach(([key,page])=>page.hidden=key!==id);if(id==='archive'&&typeof isAdminLoggedIn!=='undefined'&&isAdminLoggedIn)startCloudArchiveListener();if(id==='home')home.scrollIntoView({block:'start',behavior:'smooth'});else pages[id]?.scrollIntoView({block:'start',behavior:'smooth'});}
+  modal.dataset.v14ShowHome='1';modal._v14ShowHome=()=>showPage('home');
+ }
+ document.addEventListener('DOMContentLoaded',()=>{setupAdminPages();const modal=$('admin-dashboard-modal');if(modal){new MutationObserver(()=>{if(!modal.classList.contains('hidden')&&modal._v14ShowHome)modal._v14ShowHome()}).observe(modal,{attributes:true,attributeFilter:['class']})}});
+ // If the page was already parsed before this script, initialize immediately.
+ if(document.readyState!=='loading')setupAdminPages();
+})();
+</script>
+
+
+    <!-- V15 ROYAL DESIGN LAYER: visual-only; existing Firebase and application logic preserved -->
+    <style id="salah-v15-royal-edition">
+/* ==========================================================
+   SALAH AL-DIN V15 — ROYAL SAPPHIRE / IMPERIAL GOLD
+   Visual-only layer: preserves existing markup, IDs and logic.
+   ========================================================== */
+:root{
+  --royal-bg:#070d1c;
+  --royal-bg-2:#0c1730;
+  --royal-panel:rgba(13,25,49,.88);
+  --royal-panel-2:rgba(20,34,63,.82);
+  --royal-gold:#e7c477;
+  --royal-gold-bright:#ffe7a8;
+  --royal-gold-deep:#9d7434;
+  --royal-purple:#8e78d6;
+  --royal-cyan:#79cbd4;
+  --royal-text:#f4f0e7;
+  --royal-muted:#b8c3d7;
+  --royal-line:rgba(231,196,119,.27);
+  --royal-shadow:0 24px 65px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.075);
+}
+html{scroll-behavior:smooth;scroll-padding-top:18px;background:var(--royal-bg)}
+body,.dark body{
+  color:var(--royal-text)!important;
+  background:
+    radial-gradient(ellipse at 12% 7%,rgba(89,107,174,.22),transparent 34%),
+    radial-gradient(ellipse at 88% 18%,rgba(116,83,165,.18),transparent 31%),
+    radial-gradient(ellipse at 52% 83%,rgba(38,103,129,.13),transparent 38%),
+    linear-gradient(145deg,#070d1c 0%,#0b1730 48%,#080d1c 100%)!important;
+  background-attachment:fixed!important;
+}
+body{position:relative;isolation:isolate}
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.18;
+  background-image:linear-gradient(30deg,rgba(231,196,119,.11) 1px,transparent 1px),linear-gradient(150deg,rgba(121,203,212,.08) 1px,transparent 1px);
+  background-size:58px 58px;mask-image:linear-gradient(to bottom,black,transparent 92%);
+}
+body::after{
+  content:"";position:fixed;z-index:0;pointer-events:none;width:min(54vw,650px);aspect-ratio:1;right:-22vw;top:18vh;
+  border:1px solid rgba(231,196,119,.12);border-radius:31% 69% 58% 42%/42% 37% 63% 58%;
+  box-shadow:0 0 0 24px rgba(142,120,214,.025),0 0 0 58px rgba(231,196,119,.025),inset 0 0 70px rgba(121,203,212,.035);
+  transform:rotate(28deg);animation:royal-orbit 28s linear infinite;
+}
+@keyframes royal-orbit{to{transform:rotate(388deg)}}
+#particle-canvas{z-index:1!important;opacity:.52}
+#cursor-glow{background:radial-gradient(circle,rgba(231,196,119,.13),rgba(142,120,214,.07) 38%,transparent 72%)!important;z-index:2!important}
+header,.hero-stage,.identity-console,#platform-stats,#smart-portals,#v7-launch,main,footer,section{position:relative}
+.theme-panel,.theme-card,.identity-panel,.hero-shell,.hero-glass-card,.v7-panel,.sd-role-card,.v7-launch,.admin-card,.admin-panel,.admin-section,.glass-card{
+  color:var(--royal-text)!important;
+  border-color:var(--royal-line)!important;
+  background:linear-gradient(145deg,rgba(20,35,66,.91),rgba(8,17,35,.91))!important;
+  box-shadow:var(--royal-shadow)!important;
+  backdrop-filter:blur(22px) saturate(135%);-webkit-backdrop-filter:blur(22px) saturate(135%);
+}
+.theme-panel,.identity-panel,.hero-shell,.v7-panel{border-radius:26px!important}
+.theme-card,.sd-role-card,.v7-launch{border-radius:21px!important;transform-style:preserve-3d;transition:transform .35s cubic-bezier(.2,.75,.25,1),border-color .35s,box-shadow .35s,background .35s!important}
+@media(hover:hover) and (pointer:fine){
+ .theme-card:hover,.sd-role-card:hover,.v7-launch:hover{transform:translateY(-7px) perspective(900px) rotateX(2deg)!important;border-color:rgba(255,231,168,.7)!important;box-shadow:0 26px 55px rgba(0,0,0,.48),0 0 28px rgba(231,196,119,.12),inset 0 1px rgba(255,255,255,.13)!important}
+}
+.gold-gradient-text,.hero-heading,.identity-copy h2{
+ background:linear-gradient(115deg,#fff8df 0%,#f2d895 27%,#c99b4b 55%,#fff0c4 76%,#a77a38 100%)!important;
+ -webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important;
+ filter:drop-shadow(0 3px 12px rgba(231,196,119,.18))!important;
+}
+button,.v7-btn,.hero-primary,.sd-pill,.hero-badge{
+ transition:transform .22s ease,filter .22s ease,box-shadow .22s ease!important;
+}
+button:not(:disabled),.v7-btn:not(:disabled){cursor:pointer}
+button:not(.plain-button):not(.no-royal),.v7-btn:not(.alt),.hero-primary{
+ border-color:rgba(231,196,119,.48)!important;
+}
+button:hover,.v7-btn:hover,.hero-primary:hover{filter:brightness(1.1);}
+button:active,.v7-btn:active,.hero-primary:active{transform:translateY(1px) scale(.985)!important}
+input,textarea,select{
+ color:var(--royal-text)!important;background:rgba(4,11,25,.82)!important;
+ border:1px solid rgba(231,196,119,.25)!important;border-radius:14px!important;
+}
+input::placeholder,textarea::placeholder{color:#93a2bd!important;opacity:.9}
+input:focus,textarea:focus,select:focus{outline:none!important;border-color:var(--royal-gold)!important;box-shadow:0 0 0 3px rgba(231,196,119,.12),0 0 22px rgba(121,203,212,.09)!important}
+hr,.divider{border-color:rgba(231,196,119,.18)!important}
+.marquee-container{border-color:rgba(231,196,119,.24)}
+.marquee-container,.bg-gradient-to-r.from-yellow-600{color:#171321!important}
+.hero-shell{overflow:hidden;position:relative}
+.hero-shell::before,.identity-panel::before,.v7-panel::before{
+ content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;
+ background:linear-gradient(118deg,transparent 20%,rgba(255,255,255,.045) 48%,transparent 72%);
+}
+.hero-visual{filter:drop-shadow(0 24px 35px rgba(0,0,0,.4))}
+.hero-glass-card{border:1px solid rgba(255,231,168,.48)!important;box-shadow:0 30px 70px rgba(0,0,0,.5),0 0 35px rgba(231,196,119,.12)!important}
+.hero-ring,.seal-orbit{border-color:rgba(231,196,119,.36)!important}
+.identity-seal,.intro-emblem,.hero-crest{
+ background:radial-gradient(circle at 32% 25%,#fff0bf 0%,#d8b467 22%,#76552a 58%,#182746 100%)!important;
+ box-shadow:0 15px 38px rgba(0,0,0,.48),inset 0 2px 8px rgba(255,255,255,.35),0 0 28px rgba(231,196,119,.18)!important;
+ border:1px solid rgba(255,231,168,.72)!important;
+}
+.sd-kicker,.identity-eyebrow,.hero-overline{color:var(--royal-gold)!important;letter-spacing:.16em}
+.sd-muted,.sd-note,.hero-description,.identity-copy p{color:var(--royal-muted)!important}
+.sd-pill,.hero-badge{background:linear-gradient(135deg,rgba(231,196,119,.18),rgba(142,120,214,.14))!important;border:1px solid rgba(231,196,119,.32)!important;color:#f4dca7!important}
+.v7-launch-grid{gap:14px!important}
+.v7-launch span,.sd-role-card .big{filter:drop-shadow(0 7px 9px rgba(231,196,119,.18));transform:translateZ(18px)}
+#live-broadcast-banner>div{backdrop-filter:blur(18px)}
+#platform-stats .theme-card strong{color:var(--royal-gold-bright)!important;text-shadow:0 0 18px rgba(231,196,119,.2)}
+/* Harmonize old utility color classes without changing status meaning. */
+.text-yellow-400,.text-yellow-300,.text-amber-300{color:#f0d28e!important}
+.text-blue-400,.text-cyan-400{color:#8bd6df!important}
+.text-purple-400,.text-violet-400{color:#b9a8f0!important}
+.text-emerald-400,.text-green-400{color:#8bd9bd!important}
+.border-yellow-500\/40,.border-yellow-500\/30{border-color:rgba(231,196,119,.35)!important}
+::selection{background:rgba(231,196,119,.35);color:#fff}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:#081126}
+::-webkit-scrollbar-thumb{background:linear-gradient(#d9b86f,#7960a8);border:2px solid #081126;border-radius:20px}
+/* Keep motion refined and accessible. */
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+@media(max-width:640px){
+ body::after{width:85vw;right:-48vw;top:28vh;opacity:.65}
+ .theme-panel,.identity-panel,.hero-shell,.v7-panel{border-radius:19px!important}
+ .theme-card,.sd-role-card,.v7-launch{border-radius:17px!important}
+ #particle-canvas{opacity:.28}
+}
+
+    </style>
 </body>
 </html>
