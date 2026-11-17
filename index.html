@@ -2040,6 +2040,70 @@ button:disabled,input:disabled,select:disabled,textarea:disabled{cursor:not-allo
             const w=window.open('','_blank'); if(!w)return;
             w.document.write(`<!doctype html><html lang="ar" dir="rtl"><meta charset="utf-8"><title>${escapeHtml(r.title||'التقرير السنوي')}</title><body style="font-family:Arial;padding:32px;line-height:2"><h1>${escapeHtml(r.school||'إعدادية صلاح الدين للبنين')}</h1><h2>${escapeHtml(r.title||'التقرير السنوي')}</h2><p>السنة: ${Number(r.year)||'—'}</p><p>الإعلانات المنشورة: ${Number(r.metrics?.publishedAnnouncements)||0}</p><p>موارد المكتبة: ${Number(r.metrics?.libraryResources)||0}</p><p>سجلات المختبرات الرقمية: ${Number(r.metrics?.digitalLabRecords)||0}</p><p>${escapeHtml(r.note||'')}</p><hr><p>إدارة المدرسة</p><script>window.print()<\/script>
 
+
+<style id="salah-v62-quick-launch-style">
+#salah-v62-quick-launch{border:1px solid rgba(93,211,235,.35);border-radius:20px;padding:16px;background:linear-gradient(145deg,rgba(10,37,61,.96),rgba(15,23,42,.96));box-shadow:0 16px 38px #0004}
+#salah-v62-quick-launch .v62-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+#salah-v62-quick-launch .v62-link{display:flex;align-items:center;gap:9px;min-height:64px;padding:10px;border:1px solid rgba(148,197,220,.2);border-radius:13px;background:linear-gradient(145deg,rgba(21,55,83,.82),rgba(8,25,44,.92));color:#edf7ff;text-align:right;font-size:12px;font-weight:800;transition:transform .2s,border-color .2s}
+#salah-v62-quick-launch .v62-link:hover{transform:translateY(-2px);border-color:rgba(231,199,126,.7)}
+#salah-v62-quick-launch .v62-link span{font-size:21px;flex:0 0 26px;text-align:center}
+#salah-v62-quick-launch .v62-link small{display:block;color:#a9c3d8;font-size:9px;font-weight:500;margin-top:3px}
+@media(min-width:700px){#salah-v62-quick-launch .v62-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+html:not(.dark) #salah-v62-quick-launch{background:linear-gradient(145deg,#fff,#eef3f8);border-color:rgba(167,122,45,.3)}
+html:not(.dark) #salah-v62-quick-launch .v62-link{background:linear-gradient(145deg,#fff,#edf3f8);color:#1d3550;border-color:rgba(35,68,105,.16)}
+html:not(.dark) #salah-v62-quick-launch .v62-link small{color:#61748a}
+</style>
+<script id="salah-v62-quick-launch">
+(function(){
+  function mountV62QuickLaunch(){
+    const host=document.getElementById('v61-control-center');
+    if(!host||document.getElementById('salah-v62-quick-launch'))return;
+    const panel=document.createElement('section');
+    panel.id='salah-v62-quick-launch';
+    panel.innerHTML=`
+      <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+        <div><span class="text-[10px] tracking-widest text-cyan-300 font-black">V6.2 · ADMIN QUICK ACCESS</span><h4 class="font-black text-lg text-cyan-100">🚀 مركز الوصول السريع للإضافات</h4><p class="sd-muted text-xs">انتقل مباشرة إلى أدوات الإدارة المضافة داخل الخصوصية الإشرافية.</p></div>
+        <span class="text-[10px] rounded-full border border-cyan-300/30 px-3 py-2 text-cyan-100">لوحة المدير</span>
+      </div>
+      <div class="v62-grid">
+        <button class="v62-link" type="button" data-target="v61-admin-assistant"><span>🧠</span><div>المساعد الإداري الذكي<small>موجز المدير والتوصيات</small></div></button>
+        <button class="v62-link" type="button" data-target="v61-attendance-section"><span>🟢</span><div>الحضور والغياب<small>تسجيل يومي حسب الشعبة</small></div></button>
+        <button class="v62-link" type="button" data-target="v61-early-warning"><span>🚦</span><div>الإنذار الأكاديمي<small>متابعة التقييمات</small></div></button>
+        <button class="v62-link" type="button" data-target="v61-student-analytics"><span>📊</span><div>التحليل الإحصائي<small>توزيع الطلاب والمراحل</small></div></button>
+        <button class="v62-link" type="button" data-target="v61-assignment-tasks"><span>📌</span><div>المهام والتكليفات<small>المواعيد وحالة الإنجاز</small></div></button>
+        <button class="v62-link" type="button" data-target="v61-approvals-section"><span>📝</span><div>الموافقات الإدارية<small>مراجعة الطلبات</small></div></button>
+        <button class="v62-link" type="button" data-target="v61-archive-section"><span>🗄️</span><div>الأرشيف المدرسي<small>فهرسة الوثائق</small></div></button>
+        <button class="v62-link" type="button" data-target="sd-exam-lab"><span>🧪</span><div>مختبر الامتحانات<small>إنشاء النماذج والأسئلة</small></div></button>
+        <button class="v62-link" type="button" data-target="sd-certificate-factory"><span>🏅</span><div>مصنع الشهادات<small>المعاينة والطباعة</small></div></button>
+        <button class="v62-link" type="button" data-target="sd-school-map-3d"><span>🗺️</span><div>الخريطة المدرسية 3D<small>مخطط مرافق المدرسة</small></div></button>
+        <button class="v62-link" type="button" data-target="sd-smart-timetable"><span>🗓️</span><div>الجدول الذكي<small>الحصص وفحص التعارض</small></div></button>
+        <button class="v62-link" type="button" data-target="sd-private-calendar"><span>📅</span><div>التقويم والفعاليات<small>مواعيد المدرسة</small></div></button>
+        <button class="v62-link" type="button" data-target="sd-private-maintenance"><span>🛠️</span><div>سجل الصيانة<small>متابعة الأعمال</small></div></button>
+        <button class="v62-link" type="button" data-target="sd-private-suggestions"><span>💡</span><div>صندوق الاقتراحات<small>مراجعة الإدارة</small></div></button>
+        <button class="v62-link" type="button" data-target="sd-private-initiatives"><span>🤝</span><div>المبادرات والمساهمات<small>سجل الأنشطة</small></div></button>
+        <button class="v62-link" type="button" data-target="sd-private-achievements"><span>🏆</span><div>الإنجازات والفعاليات<small>لوحة الشرف المدرسية</small></div></button>
+        <button class="v62-link" type="button" data-target="sd-school-badges"><span>🪪</span><div>الباجات المدرسية<small>إدارة هوية الطالب</small></div></button>
+        <button class="v62-link" type="button" data-target="v61-control-center"><span>💾</span><div>النسخ الاحتياطي والتدقيق<small>تصدير ومراجعة السجلات</small></div></button>
+      </div>
+      <p class="text-[10px] text-amber-200/80 mt-3">ملاحظة: هذه لوحة وصول وتنظيم فقط؛ لم يتم تغيير أي إعداد تخزين أو مزامنة أو حذف بيانات. الأدوات التي كانت محلية بقيت محلية كما هي.</p>`;
+    panel.addEventListener('click',function(event){
+      const button=event.target.closest('[data-target]');
+      if(!button)return;
+      if(typeof requireAdmin==='function'&&!requireAdmin())return;
+      const target=document.getElementById(button.getAttribute('data-target'));
+      if(!target){if(typeof showAdminToast==='function')showAdminToast('هذه الوحدة غير متاحة في النسخة الحالية.');return;}
+      target.scrollIntoView({behavior:'smooth',block:'start'});
+      target.classList.add('v62-focus');
+      setTimeout(()=>target.classList.remove('v62-focus'),1300);
+    });
+    host.insertBefore(panel,host.firstChild);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mountV62QuickLaunch);
+  else mountV62QuickLaunch();
+})();
+</script>
+<style id="salah-v62-focus-style">.v62-focus{outline:2px solid rgba(103,232,249,.7);outline-offset:5px;border-radius:14px;transition:outline .2s}</style>
+
 </body></html>`); w.document.close();
         }
         function v6InitCloudPortal() {
