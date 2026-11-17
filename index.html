@@ -2588,18 +2588,8 @@ button:disabled,input:disabled,select:disabled,textarea:disabled{cursor:not-allo
             renderBooks();
         }
 
-        function publishAdminPost() {
-            if (!requireAdmin() || !firebaseReady()) return;
-            const text = document.getElementById('admin-post-text').value.trim();
-            const fileInput = document.getElementById('admin-image-file');
-            const file = fileInput.files[0];
-            if (!text && !file) { alert('اكتب نصاً أو اختر صورة أولاً'); return; }
-            if (file && !file.type.startsWith('image/')) { alert('قسم الإدارة يقبل الصور فقط.'); return; }
-            readMediaFile(file, media => savePostToFirebase('قسم الإدارة (أ. محمد أكرم الربيعي)', text, media, 'yellow', 'admin'));
-        }
+        async function publishAdminPost(){if(!requireAdmin()||!firebaseReady())return;const text=document.getElementById('admin-post-text').value.trim(),fileInput=document.getElementById('admin-image-file'),file=fileInput.files[0],button=document.querySelector('button[onclick="publishAdminPost()"]');if(!text&&!file){alert('اكتب نصاً أو اختر صورة أولاً');return}if(file&&!file.type.startsWith('image/')){alert('قسم الإدارة يقبل الصور فقط.');return}if(button)button.disabled=true;try{let media=null;if(file)media=(await window.uploadOriginalSchoolImage(file,'studentPortalFiles/general/notices')).url;savePostToFirebase('قسم الإدارة (أ. محمد أكرم الربيعي)',text,media,'yellow','admin')}catch(e){console.error('[Notice image upload]',e);alert('تعذر رفع الصورة الأصلية: '+(e.message||'خطأ غير معروف'))}finally{if(button)button.disabled=false}}
 
-        // V15 guidance image pipeline: compress locally and save image data with the post in Realtime Database.
-        // This mirrors the working archive approach and avoids Firebase Storage upload failures on mobile.
         function v15GuidanceImageMime(file) {
             const ext=String(file?.name||'').split('.').pop().toLowerCase();
             return String(file?.type||({jpg:'image/jpeg',jpeg:'image/jpeg',png:'image/png',webp:'image/webp'}[ext]||'')).toLowerCase();
@@ -2761,35 +2751,9 @@ button:disabled,input:disabled,select:disabled,textarea:disabled{cursor:not-allo
             }).catch(error => reportDbError('نشر التبليغ', error));
         }
 
-        function publishLabPost() {
-            if (!requireAdmin() || !firebaseReady()) return;
-            const labType = document.getElementById('lab-select').value;
-            const text = document.getElementById('lab-post-text').value.trim();
-            const file = document.getElementById('lab-media-file').files[0];
-            if (!ALLOWED_LABS.includes(labType)) { alert('القسم المحدد غير صالح.'); return; }
-            if (!text && !file) { alert('يرجى كتابة نص أو إرفاق ملف (صورة/فيديو)'); return; }
-            const labNames = {
-                computer: 'مختبر الحاسوب', physics: 'مختبر الفيزياء',
-                chemistry: 'مختبر الكيمياء', biology: 'مختبر الأحياء'
-            };
-            readMediaFile(file, (media, isVideo) =>
-                saveLabPostToFirebase(labType, labNames[labType], text, media, isVideo)
-            );
-        }
+        async function publishLabPost(){if(!requireAdmin()||!firebaseReady())return;const labType=document.getElementById('lab-select').value,text=document.getElementById('lab-post-text').value.trim(),file=document.getElementById('lab-media-file').files[0],button=document.querySelector('button[onclick="publishLabPost()"]');if(!ALLOWED_LABS.includes(labType)){alert('القسم المحدد غير صالح.');return}if(!text&&!file){alert('يرجى كتابة نص أو إرفاق ملف (صورة/فيديو)');return}const names={computer:'مختبر الحاسوب',physics:'مختبر الفيزياء',chemistry:'مختبر الكيمياء',biology:'مختبر الأحياء'};if(button)button.disabled=true;try{if(file&&file.type.startsWith('image/')){const uploaded=await window.uploadOriginalSchoolImage(file,'studentPortalFiles/general/labs-'+labType);saveLabPostToFirebase(labType,names[labType],text,uploaded.url,false)}else if(file){readMediaFile(file,(media,isVideo)=>saveLabPostToFirebase(labType,names[labType],text,media,isVideo))}else saveLabPostToFirebase(labType,names[labType],text,null,false)}catch(e){console.error('[Lab image upload]',e);alert('تعذر رفع الصورة الأصلية: '+(e.message||'خطأ غير معروف'))}finally{if(button)button.disabled=false}}
 
-        function saveLabPostToFirebase(labType, labTitle, text, mediaSrc, isVideo) {
-            if (!requireAdmin() || !firebaseReady() || !ALLOWED_LABS.includes(labType)) return;
-            db.ref('labs/' + labType).push({
-                title: labTitle, text: text, mediaSrc: mediaSrc || null,
-                isVideo: Boolean(isVideo), timestamp: Date.now()
-            }).then(() => {
-                alert('تم النشر في القسم بنجاح وتحديثه سحابياً للطلاب!');
-                document.getElementById('lab-post-text').value = '';
-                document.getElementById('lab-media-file').value = '';
-            }).catch(error => reportDbError('نشر محتوى المختبر', error));
-        }
-
-        function deleteLabPost(labType, postId) {
+            function deleteLabPost(labType, postId) {
             if (!requireAdmin() || !firebaseReady()) return;
             if (!ALLOWED_LABS.includes(labType) || !postId) return;
             if (confirm('هل أنت متأكد من حذف هذا المنشور من القسم؟')) {
@@ -3820,16 +3784,8 @@ const esc=x=>String(x??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'
 const ready=()=>typeof db!=='undefined'&&typeof firebase!=='undefined'&&firebase.apps?.length;
 const admin=()=>typeof isAdminLoggedIn!=='undefined'&&isAdminLoggedIn;
 function gate(){if(!admin()){alert('هذه العملية للإدارة فقط.');return false}if(!window.sdAdminSession){alert('انتهت جلسة المدير. سجّل الدخول مجدداً.');return false}if(!ready()){alert('Firebase غير متاح.');return false}return true}
-async function uploadImage(f,path,oldUrl=''){
- if(!f)return oldUrl||'';
- if(!f.type.startsWith('image/')||f.size>8*1024*1024)throw new Error('اختر صورة صالحة لا يتجاوز حجمها 8MB.');
- if(!firebase.storage)throw new Error('مكتبة Firebase Storage غير محمّلة.');
- const safeName=String(f.name||'image').replace(/[^a-zA-Z0-9._-]/g,'_').slice(-80);
- const ref=firebase.storage().ref().child(path+'/'+Date.now()+'_'+safeName);
- const snap=await ref.put(f,{contentType:f.type});
- const url=await snap.ref.getDownloadURL();
- return url;
-}
+async function uploadImage(f,path){if(!f)return null;const parts=String(path||'').split('/'),grade=parts[0]==='weeklyTimetables'?(parts[1]||'general'):'general',category=parts[0]==='weeklyTimetables'?'weekly-timetables':'badge-assets';return await window.uploadOriginalSchoolImage(f,'studentPortalFiles/'+grade+'/'+category)}
+async function cleanupUploadedImage(record,legacyUrl){if(record?.path&&record?.storage==='supabase')return schoolGateway('delete-file',{session:window.sdAdminSession,path:record.path});if(legacyUrl&&firebase.storage){try{return await firebase.storage().refFromURL(legacyUrl).delete()}catch(e){console.warn('تعذر حذف صورة قديمة:',e)}}}
 function v7UploadStatus(message,isError=false){const el=document.getElementById('v7-upload-status');if(el){el.textContent=message||'';el.classList.toggle('text-red-300',!!isError);el.classList.toggle('text-cyan-200',!isError)}}
 function v7StorageError(error){const code=String(error?.code||'');const map={
  'storage/unauthorized':'قواعد Firebase Storage تمنع الرفع. يجب السماح للمدير الموثّق بالكتابة إلى studentPortalFiles في Storage Rules.',
@@ -3869,6 +3825,7 @@ async function uploadStudentPdf(file,path,onProgress){
  if(typeof onProgress==='function')onProgress(100,{state:'success',bucket:SCHOOL_FILES_BUCKET});
  return {url:publicUrl,path:ticket.path,name:file.name,size:file.size,type:mime,storage:'supabase'};
 }
+window.uploadOriginalSchoolImage=async function(file,path,onProgress){if(!file)throw new Error('اختر صورة أولاً.');const mime=schoolFileMime(file);if(!['image/jpeg','image/png','image/webp'].includes(mime))throw new Error('الصيغ المدعومة JPG وPNG وWEBP. حوّل صور HEIC إلى JPG من الهاتف.');if(file.size>50*1024*1024)throw new Error('حجم الصورة الأصلية يتجاوز 50MB.');return await uploadStudentPdf(file,path,onProgress)};
 async function deleteStudentPortalFile(record){
  if(!record)return;
  if(record.fileStorage==='supabase'){
@@ -3942,7 +3899,7 @@ window.v7ReplaceResource=async(gr,ca,id,file)=>{if(!gate()||!file)return;const x
 window.v7Delete=async(gr,ca,id)=>{if(!gate()||!confirm('حذف المادة والملف المرتبط بها نهائياً؟'))return;const x=data[gr]?.[ca]?.[id];try{if(x?.fileStorage==='supabase')await deleteStudentPortalFile(x);await db.ref('studentPortal/'+gr+'/'+ca+'/'+id).remove();if(x&&x.fileStorage!=='supabase')try{await deleteStudentPortalFile(x)}catch(e){console.warn('تعذر حذف الملف القديم من Firebase Storage:',e)}alert('تم حذف المادة.')}catch(e){alert('تعذر حذف المادة أو الملف: '+(e.message||'خطأ غير معروف'))}};
 function renderTable(){ $('v7-table-grades').innerHTML=grades.map(x=>`<button onclick="v7ShowTable('${x}')">${x}</button>`).join('');window.v7ShowTable(g);renderAdmin()}
 window.v7ShowTable=x=>{g=x;let t=tables[x];$('v7-table-view').innerHTML=t?`<h3>${esc(t.title)}</h3><img style="max-width:100%;border-radius:12px" src="${t.image}" alt="جدول ${esc(x)}">`:'<p class="sd-muted">لم ينشر جدول لهذا الصف بعد.</p>'};
-window.v7PublishTable=async()=>{if(!gate())return;let gr=$('v7-table-grade').value,title=$('v7-table-title').value.trim(),f=$('v7-table-image').files[0];if(!f){alert('اختر صورة الجدول');return}try{let old=tables[gr]?.image||'',image=await uploadImage(f,'weeklyTimetables/'+gr);await db.ref('weeklyTimetables/'+gr).set({title:title||'الجدول الأسبوعي',image,updatedAt:Date.now()});if(old)try{await firebase.storage().refFromURL(old).delete()}catch(e){console.warn('تعذر حذف الجدول السابق:',e)}alert('تم نشر الجدول وحفظ صورته في Storage')}catch(e){alert('تعذر النشر: '+e.message)}};
+window.v7PublishTable=async()=>{if(!gate())return;const gr=$('v7-table-grade').value,title=$('v7-table-title').value.trim(),f=$('v7-table-image').files[0],btn=document.querySelector('#v7-admin-tools button[onclick="v7PublishTable()"]');if(!f){alert('اختر صورة الجدول');return}if(btn)btn.disabled=true;let fresh=null;try{v7UploadStatus('جارٍ رفع الصورة الأصلية كاملة الأبعاد…');fresh=await uploadImage(f,'weeklyTimetables/'+gr);const old=tables[gr]||{};await db.ref('weeklyTimetables/'+gr).set({title:title||'الجدول الأسبوعي',image:fresh.url,imagePath:fresh.path,imageStorage:'supabase',imageName:fresh.name,imageSize:fresh.size,updatedAt:Date.now()});if(old.imagePath&&old.imageStorage==='supabase')await cleanupUploadedImage({path:old.imagePath,storage:old.imageStorage});else if(old.image)await cleanupUploadedImage(null,old.image);$('v7-table-image').value='';v7UploadStatus('تم نشر الجدول بالصورة الأصلية دون ضغط أو تصغير.');alert('تم نشر الجدول وحفظ الصورة كاملة الدقة.')}catch(e){if(fresh?.path)try{await cleanupUploadedImage(fresh)}catch(cleanError){console.warn(cleanError)}v7UploadStatus('فشل رفع الجدول: '+(e.message||'خطأ غير معروف'),true);alert('تعذر النشر: '+(e.message||'خطأ غير معروف'))}finally{if(btn)btn.disabled=false}};
 window.v7Send=()=>{if(!ready()){alert('السحابة غير متاحة');return}let body=$('v7-msg-body').value.trim();if(body.length<5){$('v7-msg-status').textContent='اكتب الرسالة أولاً';return}db.ref('adminInbox').push({kind:$('v7-msg-kind').value,name:$('v7-msg-name').value.trim(),body,createdAt:Date.now()}).then(()=>{$('v7-msg-status').textContent='تم إرسال الرسالة إلى الإدارة';$('v7-msg-body').value=''}).catch(e=>$('v7-msg-status').textContent=e.message)};
 function renderInbox(){let h=$('v7-inbox');if(h)h.innerHTML=Object.entries(messages).reverse().map(([id,x])=>`<div class="v7-item"><b>${esc(x.kind)} · ${esc(x.name)}</b><p>${esc(x.body)}</p><button class="v7-btn alt" onclick="v7DeleteMessage('${id}')">حذف</button></div>`).join('')||'لا توجد رسائل'}
 window.v7DeleteMessage=id=>{if(gate()&&confirm('حذف الرسالة؟'))db.ref('adminInbox/'+id).remove()};
@@ -3950,12 +3907,12 @@ function renderGuidance(){let h=$('v7-guidance-items');if(h)h.innerHTML=Object.e
 window.v7EditGuidance=id=>{if(!gate())return;let x=guides[id];if(!x)return;let t=prompt('تعديل نص الإرشاد',x.text||'');if(t===null)return;db.ref('guidancePosts/'+id).update({text:t,updatedAt:Date.now()}).catch(e=>alert(e.message))};
 window.v7DeleteGuidance=async id=>{if(!gate()||!confirm('حذف منشور الإرشاد؟'))return;let x=guides[id];try{await db.ref('guidancePosts/'+id).remove();if(x?.image)try{await firebase.storage().refFromURL(x.image).delete()}catch(e){console.warn(e)}}catch(e){alert(e.message)}};
 window.v7EditTable=gr=>{if(!gate())return;let x=tables[gr];if(!x)return;let title=prompt('تعديل عنوان الجدول',x.title||'الجدول الأسبوعي');if(title!==null)db.ref('weeklyTimetables/'+gr).update({title,updatedAt:Date.now()})};
-window.v7DeleteTable=async gr=>{if(!gate()||!confirm('حذف جدول هذا الصف؟'))return;let x=tables[gr];try{await db.ref('weeklyTimetables/'+gr).remove();if(x?.image)try{await firebase.storage().refFromURL(x.image).delete()}catch(e){console.warn(e)}}catch(e){alert(e.message)}};
+window.v7DeleteTable=async gr=>{if(!gate()||!confirm('حذف جدول هذا الصف؟'))return;const x=tables[gr];try{await db.ref('weeklyTimetables/'+gr).remove();if(x?.imagePath&&x.imageStorage==='supabase')await cleanupUploadedImage({path:x.imagePath,storage:x.imageStorage});else if(x?.image)await cleanupUploadedImage(null,x.image)}catch(e){alert('حُذف السجل أو تعذر تنظيف الصورة: '+(e.message||e))}};
 window.v7GenerateQr=()=>{let value=$('v7-qr-value')?.value.trim(),host=$('v7-qr-preview');if(!value){alert('أدخل نصاً أو رقماً لإنشاء الباركود');return}if(typeof QRCode==='undefined'){alert('تعذر تحميل مكتبة إنشاء QR. تحقق من الاتصال ثم أعد المحاولة.');return}host.innerHTML='';new QRCode(host,{text:value,width:180,height:180,correctLevel:QRCode.CorrectLevel.H});let canvas=host.querySelector('canvas');setTimeout(()=>{let img=host.querySelector('img');let dataUrl=img?.src||(canvas?canvas.toDataURL('image/png'):'');if(dataUrl){window.v7GeneratedQr=dataUrl;let preview=$('v7-qr');if(preview)preview.src=dataUrl}},150)};
 
 function renderReports(){let h=$('v7-report-items');if(!h)return;h.innerHTML=Object.entries(data).map(([gr,cs])=>Object.entries(cs||{}).map(([ca,items])=>Object.entries(items||{}).map(([id,x])=>`<div class="v7-item"><b>${esc(gr)} · ${esc(ca)} · ${esc(x.title)}</b><button class="v7-btn" onclick="v7Print('${gr}','${ca}','${id}')">طباعة / PDF</button></div>`).join('')).join('')).join('')||'لا توجد موارد للطباعة'}
 window.v7Print=(gr,ca,id)=>{let x=data[gr]?.[ca]?.[id];if(!x)return;let w=window.open('','_blank');if(!w){alert('اسمح بالنوافذ المنبثقة');return}w.document.write(`<html lang="ar" dir="rtl"><meta charset="utf-8"><body style="font-family:Arial;padding:30px"><h2>${esc(x.title)}</h2><p>${esc(x.description)}</p>${x.image?`<img src="${x.image}" style="max-width:100%">`:''}${x.url?`<p><a href="${esc(x.url)}">${esc(x.url)}</a></p>`:''}</body></html>`);w.document.close();w.print()};
-window.v7SaveBadge=async()=>{if(!gate())return;try{let oldPhoto=badge.photo||'',oldQr=badge.qr||'',photo=await uploadImage($('v7-badge-photo-file').files[0],'badge/student-photo'),qrFile=$('v7-badge-qr-file').files[0],qr=qrFile?await uploadImage(qrFile,'badge/qr-code'):(window.v7GeneratedQr?await uploadImage(await (await fetch(window.v7GeneratedQr)).blob().then(b=>new File([b],'generated-qr.png',{type:'image/png'})),'badge/qr-code'):oldQr);await db.ref('badgeConfig').set({photo,qr,name:$('v7-badge-name-input').value.trim()||badge.name||'اسم الطالب',updatedAt:Date.now()});for(const old of [oldPhoto,oldQr])if(old)try{await firebase.storage().refFromURL(old).delete()}catch(e){console.warn('تعذر حذف صورة سابقة:',e)}alert('تم حفظ الهوية والباركود. يمكنك استبدال كل صورة بصورة جديدة بصورة مستقلة.')}catch(e){alert('تعذر حفظ الهوية: '+e.message)}};
+window.v7SaveBadge=async()=>{if(!gate())return;let photoUpload=null,qrUpload=null;try{const photoFile=$('v7-badge-photo-file').files[0],qrFile=$('v7-badge-qr-file').files[0],old=badge||{};if(photoFile)photoUpload=await uploadImage(photoFile,'badge/student-photo');if(qrFile)qrUpload=await uploadImage(qrFile,'badge/qr-code');else if(window.v7GeneratedQr){const blob=await(await fetch(window.v7GeneratedQr)).blob();qrUpload=await uploadImage(new File([blob],'generated-qr.png',{type:'image/png'}),'badge/qr-code')}const next={photo:photoUpload?.url||old.photo||'',qr:qrUpload?.url||old.qr||'',photoPath:photoUpload?.path||old.photoPath||'',photoStorage:photoUpload?'supabase':old.photoStorage||'',qrPath:qrUpload?.path||old.qrPath||'',qrStorage:qrUpload?'supabase':old.qrStorage||'',name:$('v7-badge-name-input').value.trim()||old.name||'اسم الطالب',updatedAt:Date.now()};await db.ref('badgeConfig').set(next);if(photoUpload&&old.photo)await cleanupUploadedImage({path:old.photoPath,storage:old.photoStorage},old.photo);if(qrUpload&&old.qr)await cleanupUploadedImage({path:old.qrPath,storage:old.qrStorage},old.qr);badge=next;$('v7-badge-photo-file').value='';$('v7-badge-qr-file').value='';alert('تم حفظ الصور الأصلية كاملة الدقة في التخزين السحابي.')}catch(e){for(const fresh of [photoUpload,qrUpload])if(fresh?.path)try{await cleanupUploadedImage(fresh)}catch(cleanError){console.warn(cleanError)}alert('تعذر حفظ الهوية: '+(e.message||e))}};
 function renderBadge(){};
 window.v7EditPost=id=>{if(!gate())return;let x=posts[id];if(!x)return;let t=prompt('تعديل المنشور',x.text||'');if(t!==null)db.ref('posts/'+id).update({text:t,updatedAt:Date.now()})};
 window.v7DeletePost=id=>{if(gate()&&confirm('حذف المنشور؟'))db.ref('posts/'+id).remove()};
