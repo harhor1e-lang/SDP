@@ -1283,27 +1283,6 @@ button:disabled,input:disabled,select:disabled,textarea:disabled{cursor:not-allo
                 <button onclick="closeStudentsDashboard()" class="px-4 py-2 rounded-xl bg-red-500/20 text-red-400 border border-red-500/30 text-xs font-bold">إغلاق السجل</button>
             </div>
 
-            <!-- مركز الهوية المدرسية: مدخل واضح ومباشر للنظام -->
-            <section class="relative overflow-hidden rounded-2xl border-2 border-amber-400/70 bg-gradient-to-l from-slate-950 via-sky-950 to-amber-950 p-4 md:p-5 shadow-xl" aria-label="مركز إصدار الهوية المدرسية">
-                <div class="absolute -left-8 -top-10 w-36 h-36 rounded-full border border-amber-300/20"></div>
-                <div class="relative flex flex-col md:flex-row md:items-center gap-4">
-                    <div class="w-16 h-20 shrink-0 rounded-xl border-2 border-amber-300 bg-gradient-to-b from-amber-200 to-amber-600 text-slate-950 grid place-items-center shadow-lg">
-                        <div class="text-center"><div class="text-2xl">★</div><b class="text-[10px]">1966</b></div>
-                    </div>
-                    <div class="flex-1">
-                        <div class="text-[10px] font-black tracking-widest text-amber-300">STUDENT IDENTITY CENTER</div>
-                        <h3 class="text-lg md:text-xl font-black text-white mt-1">🪪 نظام الهوية المدرسية</h3>
-                        <p class="text-xs text-slate-200 mt-1 leading-6">أصدر هوية الطالب باسم المدرسة، اسم الطالب، الصف والشعبة، مع صورته الشخصية وشعار المدرسة.</p>
-                        <div class="flex flex-wrap gap-2 mt-3 text-[10px] font-bold">
-                            <span class="rounded-full bg-white/10 border border-white/15 px-3 py-1 text-amber-100">رفع صورة الطالب</span>
-                            <span class="rounded-full bg-white/10 border border-white/15 px-3 py-1 text-amber-100">معاينة البطاقة</span>
-                            <span class="rounded-full bg-white/10 border border-white/15 px-3 py-1 text-amber-100">طباعة الهوية</span>
-                        </div>
-                    </div>
-                    <button type="button" onclick="document.getElementById('new-student-name').scrollIntoView({behavior:'smooth',block:'center'});document.getElementById('new-student-name').focus();" class="shrink-0 rounded-xl bg-amber-300 hover:bg-amber-200 text-slate-950 px-5 py-3 text-xs font-black shadow-lg">ابدأ إصدار هوية</button>
-                </div>
-            </section>
-
             <!-- أداة إضافة طالب جديد -->
             <div class="theme-card p-4 rounded-2xl space-y-3">
                 <h3 class="text-xs font-bold text-yellow-400">إضافة طالب جديد للسجل السحابي</h3>
@@ -1320,10 +1299,10 @@ button:disabled,input:disabled,select:disabled,textarea:disabled{cursor:not-allo
                     </select>
                     <input type="text" id="new-student-phone" placeholder="رقم ولي الأمر" class="bg-black/40 border border-white/10 rounded-xl px-3 py-2 text-xs outline-none">
                     <div class="sm:col-span-3 rounded-xl border border-yellow-500/30 p-3 bg-black/20">
-                      <label for="new-student-photo" class="block text-xs font-bold text-yellow-300 mb-2">📷 صورة الطالب للهوية المدرسية</label>
+                      <label for="new-student-photo" class="block text-xs font-bold text-yellow-300 mb-2">📷 صورة الطالب (تُستخدم في نظام الباجات)</label>
                       <input type="file" id="new-student-photo" accept="image/*" onchange="previewStudentPhoto(this)" class="w-full text-xs">
                       <img id="new-student-photo-preview" alt="معاينة صورة الطالب" class="hidden mt-3 w-24 h-28 object-cover rounded-xl border-2 border-yellow-500/50">
-                      <p class="text-[10px] opacity-60 mt-2">تُستخدم الصورة داخل بطاقة الهوية فقط. اختر صورة واضحة، وبحد أقصى 500 كيلوبايت.</p>
+                      <p class="text-[10px] opacity-60 mt-2">يمكن اعتماد الصورة في نظام الباجات المدرسية. اختر صورة واضحة، وبحد أقصى 500 كيلوبايت.</p>
                     </div>
                 </div>
                 <textarea id="new-student-behavior" placeholder="السلوك المدرسي والملاحظات الانضباطية..." class="w-full bg-black/40 border border-white/10 rounded-xl p-3 text-xs h-16 outline-none resize-none"></textarea>
@@ -3299,7 +3278,7 @@ button:disabled,input:disabled,select:disabled,textarea:disabled{cursor:not-allo
                 name, grade, section, photoData: photoData || '', guardianPhone: phone || 'غير محدد',
                 behaviorNotes: behavior || 'جيد جداً', timestamp: Date.now()
             }).then(() => {
-                alert('تمت إضافة الطالب بنجاح. يمكنك الآن طباعة هويته المدرسية.');
+                alert('تمت إضافة الطالب بنجاح. يمكنك الآن إصدار باجه الطالب من إدارة الباجات المدرسية.');
                 ['new-student-name', 'new-student-phone', 'new-student-behavior'].forEach(id => document.getElementById(id).value = '');
                 if (photoInput) photoInput.value='';
                 const preview=document.getElementById('new-student-photo-preview'); if(preview){preview.src='';preview.classList.add('hidden');}
@@ -3309,52 +3288,6 @@ button:disabled,input:disabled,select:disabled,textarea:disabled{cursor:not-allo
                 if (!file.type.startsWith('image/') || file.size > 500 * 1024) { alert('الصورة يجب أن تكون بصيغة صورة وحجمها لا يتجاوز 500 كيلوبايت.'); return; }
                 const reader = new FileReader(); reader.onload = () => saveStudent(reader.result); reader.onerror = () => alert('تعذرت قراءة الصورة.'); reader.readAsDataURL(file);
             } else saveStudent('');
-        }
-
-        window.updateStudentBadgeImage = function(studentId, kind, input) {
-            if (!requireAdmin() || !firebaseReady()) return;
-            const file = input && input.files && input.files[0];
-            if (!file) return;
-            if (!file.type.startsWith('image/') || file.size > 500 * 1024) {
-                alert('اختر صورة لا يتجاوز حجمها 500 كيلوبايت.'); input.value=''; return;
-            }
-            const reader = new FileReader();
-            reader.onload = () => {
-                const field = kind === 'photo' ? 'photoData' : 'qrData';
-                db.ref(`students/${studentId}`).update({[field]: reader.result, badgeUpdatedAt: Date.now()})
-                  .then(() => alert(kind === 'photo' ? 'تم تحديث صورة الطالب داخل الباج.' : 'تم تحديث صورة الباركود داخل الباج.'))
-                  .catch(error => reportDbError('تحديث صور الهوية', error));
-            };
-            reader.onerror = () => alert('تعذرت قراءة الصورة.');
-            reader.readAsDataURL(file);
-        };
-
-        window.generateStudentBadgeQr = function(studentId) {
-            if (!requireAdmin() || !firebaseReady()) return;
-            const st = globalStudentsData[studentId]; if (!st) return;
-            if (typeof QRCode === 'undefined') { alert('تعذر تحميل مولّد QR.'); return; }
-            const holder = document.createElement('div');
-            new QRCode(holder, {text: `SalahAlDin|${studentId}|${st.name}|${st.grade}|${st.section || ''}`, width: 240, height: 240, correctLevel: QRCode.CorrectLevel.H});
-            setTimeout(() => {
-                const canvas = holder.querySelector('canvas');
-                const img = holder.querySelector('img');
-                const data = canvas ? canvas.toDataURL('image/png') : (img ? img.src : '');
-                if (!data) { alert('تعذر إنشاء الباركود.'); return; }
-                db.ref(`students/${studentId}`).update({qrData: data, badgeUpdatedAt: Date.now()})
-                  .then(() => alert('تم إنشاء الباركود وحفظه في باج الطالب.'))
-                  .catch(error => reportDbError('إنشاء باركود الطالب', error));
-            }, 180);
-        };
-
-        function printStudentIdentity(studentId) {
-            const st = globalStudentsData[studentId]; if (!st) { alert('بيانات الطالب غير متاحة.'); return; }
-            const photo = st.photoData ? `<img src="${st.photoData}" class="photo">` : `<div class="photo empty">صورة الطالب</div>`;
-            const qr = st.qrData ? `<img src="${st.qrData}" class="qr">` : `<div class="qr empty">QR</div>`;
-            const logo = `<div class="crest"><div class="crest-star">★</div><div class="crest-title">صلاح الدين</div><div class="crest-sub">الإعدادية العلمية</div><div class="crest-year">1966</div></div>`;
-            const w = window.open('', '_blank', 'width=720,height=800');
-            if (!w) { alert('يرجى السماح بالنوافذ المنبثقة لطباعة الهوية.'); return; }
-            w.document.write(`<!doctype html><html lang="ar" dir="rtl"><meta charset="utf-8"><title>هوية الطالب</title><style>*{box-sizing:border-box}body{font-family:Tahoma,Arial;background:#eee;padding:25px}.id{width:340px;min-height:520px;margin:20px auto;background:linear-gradient(145deg,#071d32,#123c59 58%,#b28a3b);border:5px double #d8b65f;border-radius:22px;color:#fff;text-align:center;padding:20px;position:relative;overflow:hidden}.id:before{content:'';position:absolute;inset:9px;border:1px solid #d8b65f;border-radius:15px;pointer-events:none}.crest{margin:5px auto 14px;width:100px;height:112px;background:linear-gradient(#f5d77d,#a87925);clip-path:polygon(8% 0,92% 0,88% 72%,50% 100%,12% 72%);color:#09233a;padding-top:13px;text-shadow:none}.crest-star{font-size:23px}.crest-title{font-weight:900;font-size:15px}.crest-sub{font-size:9px;font-weight:bold}.crest-year{font-size:11px;font-weight:bold;margin-top:3px}.school{font-size:17px;font-weight:900;color:#f8df9a;margin:8px 0 3px}.sub{font-size:10px;letter-spacing:2px;color:#d9e5ee}.identity-images{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:18px 0 14px;direction:rtl}.photo{display:block;width:118px;height:145px;object-fit:cover;border:4px solid #e1c16d;border-radius:13px;background:#fff}.photo.empty{display:grid;place-items:center;color:#777;font-size:12px}.qr{display:block;width:58px;height:58px;object-fit:contain;border:2px solid #e1c16d;border-radius:8px;background:#fff;padding:3px}.qr.empty{display:grid;place-items:center;color:#777;font-size:10px}.name{font-size:19px;font-weight:900;margin:8px 0 15px}.details{display:flex;justify-content:center;gap:10px}.pill{background:#fff;color:#102c43;border-radius:9px;padding:9px 12px;font-weight:bold;font-size:12px}.footer{margin-top:24px;border-top:1px solid #d8b65f;padding-top:10px;font-size:10px;color:#f4dfaa}.print{display:block;margin:15px auto;padding:10px 22px;border:0;border-radius:8px;background:#123c59;color:#fff;font-weight:bold}@media print{body{background:white;padding:0}.id{margin:0 auto;print-color-adjust:exact;-webkit-print-color-adjust:exact}.print{display:none}}</style><body><article class="id">${logo}<div class="school">إعدادية صلاح الدين للبنين</div><div class="sub">الفرع العلمي · تأسست 1966</div><div class="identity-images">${qr}${photo}</div><div class="name">${escapeStudentHtml(st.name)}</div><div class="details"><div class="pill">${escapeStudentHtml(st.grade || '—')}</div><div class="pill">الشعبة ${escapeStudentHtml(st.section || '—')}</div></div><div class="footer">هوية مدرسية · تُستخدم للأغراض المدرسية</div></article><button class="print" onclick="window.print()">طباعة الهوية</button></body></html>`);
-            w.document.close();
         }
 
         function escapeStudentHtml(value) { return escapeHtml(value); }
@@ -3425,19 +3358,6 @@ button:disabled,input:disabled,select:disabled,textarea:disabled{cursor:not-allo
                 card.className = 'theme-card p-4 rounded-2xl space-y-3 border border-yellow-500/20 relative';
 
                 card.innerHTML = `
-                    <div class="rounded-2xl overflow-hidden border-2 border-yellow-500/50 bg-gradient-to-br from-slate-950 via-sky-950 to-amber-900 text-white p-3">
-                      <div class="flex items-center gap-3" dir="rtl">
-                        <div class="w-12 h-12 shrink-0 rounded-md border border-amber-300 overflow-hidden bg-white p-1">${student.qrData ? `<img src="${student.qrData}" alt="باركود الطالب" class="w-full h-full object-contain">` : `<div class="w-full h-full grid place-items-center text-[8px] text-slate-700">QR</div>`}</div>
-                        <div class="flex-1 min-w-0 text-center"><div class="text-[9px] text-amber-200 font-bold">✦ إعدادية صلاح الدين للبنين ✦</div><div class="text-[8px] opacity-70 mt-1">الفرع العلمي · تأسست 1966</div><div class="font-black text-sm mt-2">${escapeStudentHtml(student.name)}</div><div class="text-[10px] text-amber-100 mt-1">${escapeStudentHtml(student.grade)} · الشعبة ${escapeStudentHtml(student.section || '—')}</div></div>
-                        <div class="w-20 h-24 shrink-0 rounded-lg border-2 border-amber-300 overflow-hidden bg-white/10">${student.photoData ? `<img src="${student.photoData}" alt="صورة الطالب" class="w-full h-full object-cover">` : `<div class="w-full h-full grid place-items-center text-[9px] text-amber-200">صورة الطالب</div>`}</div>
-                      </div>
-                      <button type="button" onclick="printStudentIdentity('${key}')" class="w-full mt-3 py-2 rounded-lg bg-amber-300 text-slate-950 text-[11px] font-black">🪪 استخراج وطباعة الهوية</button>
-                      <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2 border-t border-amber-300/20 pt-3">
-                        <label class="text-[10px] text-amber-100">📷 تعديل صورة الطالب (يسار الهوية)<input type="file" accept="image/*" class="block w-full mt-1 text-[10px]" onchange="updateStudentBadgeImage('${key}','photo',this)"></label>
-                        <label class="text-[10px] text-amber-100">▦ تعديل صورة الباركود (يمين الهوية)<input type="file" accept="image/*" class="block w-full mt-1 text-[10px]" onchange="updateStudentBadgeImage('${key}','qr',this)"></label>
-                        <button type="button" onclick="generateStudentBadgeQr('${key}')" class="sm:col-span-2 py-1.5 rounded-lg bg-sky-700 text-white text-[10px] font-bold">إنشاء باركود لهذا الطالب</button>
-                      </div>
-                    </div>
                     <div class="flex justify-between items-start border-b border-current/10 pb-2">
                         <div>
                             <h4 class="font-extrabold text-sm text-yellow-400">${escapeStudentHtml(student.name)}</h4>
