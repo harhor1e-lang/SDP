@@ -1391,15 +1391,15 @@ button:disabled,input:disabled,select:disabled,textarea:disabled{cursor:not-allo
 #sd-school-badges .sdb-student{display:flex;align-items:center;gap:10px;text-align:right;width:100%;padding:10px;border:1px solid #d5ae5540;border-radius:12px;background:#071426;color:white}
 #sd-school-badges .sdb-student img{width:42px;height:48px;object-fit:cover;border-radius:7px;background:#fff}
 #sd-school-badges .sdb-preview-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start}
-#sd-school-badges .sdb-face{position:relative;width:100%;max-width:257px;aspect-ratio:2/3;margin:auto;background-size:100% 100%;background-repeat:no-repeat;overflow:hidden;border-radius:13px;box-shadow:0 12px 26px #0007}
-#sd-school-badges .sdb-photo{position:absolute;left:26.5%;top:34.7%;width:47%;height:28%;object-fit:cover;background:#fff;border:1px solid #8e6b26;border-radius:4px}
-#sd-school-badges .sdb-data{position:absolute;left:12%;width:64%;color:#171321;text-align:center;direction:rtl;font-weight:900;font-family:Tahoma,Arial,sans-serif;text-shadow:0 0 .2px #171321;line-height:1.35;overflow-wrap:anywhere}
-#sd-school-badges .sdb-name{top:65.5%;height:6.5%;font-size:clamp(7px,2.1vw,11px)}
-#sd-school-badges .sdb-grade{top:72.5%;height:6%;font-size:clamp(6px,1.9vw,10px)}
-#sd-school-badges .sdb-section{top:79.5%;height:6%;font-size:clamp(6px,1.9vw,10px)}
-#sd-school-badges .sdb-date{left:22%;width:56%;top:89%;font-size:clamp(7px,2vw,10px);text-align:center;color:#171321}
-#sd-school-badges .sdb-qr{position:absolute;left:32%;top:69%;width:36%;height:20%;object-fit:contain;background:#fff;padding:2px}
-#sd-school-badges .sdb-empty-qr{position:absolute;left:33.5%;top:61.5%;width:33%;height:19%;display:grid;place-items:center;background:#fff;color:#222;font-size:9px}
+#sd-school-badges .sdb-face{position:relative;width:100%;max-width:300px;aspect-ratio:2/3;margin:auto;background:linear-gradient(145deg,#211039,#563477 52%,#180d2c);overflow:hidden;border-radius:16px;box-shadow:0 16px 34px #0008;border:3px solid #d9b65d}
+#sd-school-badges .sdb-photo{position:absolute;left:26.5%;top:34.3%;width:47%;height:28%;object-fit:cover;background:#fff;border:3px solid #e7c66c;border-radius:9px}
+#sd-school-badges .sdb-data{position:absolute;left:12%;width:76%;color:#24143b;text-align:center;direction:rtl;font-weight:900;font-family:Tahoma,Arial,sans-serif;line-height:1.35;overflow-wrap:anywhere}
+#sd-school-badges .sdb-name{top:65.5%;height:6.5%;font-size:clamp(8px,2.4vw,13px)}
+#sd-school-badges .sdb-grade{top:72.5%;height:6%;font-size:clamp(7px,2.1vw,11px)}
+#sd-school-badges .sdb-section{top:79.5%;height:6%;font-size:clamp(7px,2.1vw,11px)}
+#sd-school-badges .sdb-date{left:18%;width:64%;top:91%;font-size:clamp(7px,2vw,10px);text-align:center;color:#fff3d0}
+#sd-school-badges .sdb-qr{position:absolute;left:33%;top:64%;width:34%;height:22%;object-fit:contain;background:#fff;padding:7px;border:2px solid #d9b65d;border-radius:8px}
+#sd-school-badges .sdb-empty-qr{position:absolute;left:33%;top:64%;width:34%;height:22%;display:grid;place-items:center;background:#fff;color:#38204d;border:2px solid #d9b65d;border-radius:8px;font-weight:900;font-size:10px}
 @media(max-width:640px){#sd-school-badges{padding:12px}#sd-school-badges .sdb-preview-grid{grid-template-columns:1fr;max-width:300px;margin:auto}}
 @media print{#sd-school-badges{display:none!important}}
 </style>
@@ -4537,7 +4537,7 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
  const imageUrl=st=>st?.badgePhotoData||st?.badgePhotoUrl||st?.photoData||'';
  function visible(){return !!$('sd-school-badges') && $('admin-dashboard-modal') && !$('admin-dashboard-modal').classList.contains('hidden')}
  function authorized(){if(typeof requireAdmin==='function'&&!requireAdmin()){alert('هذه الخدمة متاحة للمدير فقط.');return false}if(typeof db==='undefined'||typeof firebase==='undefined'||!firebase.apps?.length){alert('اتصال Firebase غير متاح حالياً.');return false}return true}
- function setBg(){$('sdb-front').style.backgroundImage=`url("${FRONT}")`;$('sdb-back').style.backgroundImage=`url("${BACK}")`}
+ function setBg(){['front','back'].forEach(which=>{const el=$('sdb-'+which);el.style.backgroundImage='radial-gradient(circle at 50% 18%,rgba(238,205,125,.22),transparent 25%),linear-gradient(145deg,#211039,#563477 52%,#180d2c)';el.style.border='3px solid #d9b65d';const frame=document.createElement('div');frame.style.cssText='position:absolute;inset:8px;border:2px solid rgba(245,217,138,.7);border-radius:12px;pointer-events:none';el.prepend(frame);const title=document.createElement('div');title.style.cssText='position:absolute;top:5%;left:5%;width:90%;text-align:center;color:#f7dfa0;font-weight:900;font-size:clamp(8px,2.8vw,13px);line-height:1.8;pointer-events:none';title.innerHTML=which==='front'?'★<br>إعدادية صلاح الدين للبنين<br><small>ROYAL STUDENT ID</small>':'★<br>بطاقة الطالب<br><small>تعليمات استخدام الباج</small>';el.prepend(title);if(which==='back'){const note=document.createElement('div');note.style.cssText='position:absolute;top:39%;left:8%;width:84%;text-align:center;color:#fff;font-size:clamp(7px,2vw,10px);line-height:2.1;pointer-events:none';note.textContent='تُحمل البطاقة داخل المدرسة • تُسلّم للإدارة عند العثور عليها • يمنع العبث بالرمز';el.prepend(note);}})}
  function fmtDate(v){if(!v)return '—';const p=String(v).split('-');return p.length===3?`${p[2]}/${p[1]}/${p[0]}`:v}
  function updatePreview(){
   const st=selectedId?students[selectedId]:null;
@@ -4597,7 +4597,7 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
    const photoFile=photoUploadFile;
    if(photoFile){status('جارٍ رفع صورة الطالب المضغوطة إلى Supabase…');freshPhoto=await uploadBadgeFile(photoFile,st.grade)}
    status('جارٍ رفع رمز QR إلى Supabase…');freshQr=await uploadBadgeFile(dataUrlFile(qrDataUrl,'student-'+selectedId+'-qr.png'),st.grade);
-   const patch={badgeIssuedAt:date,badgeQrUrl:freshQr.url,badgeQrPath:freshQr.path,badgeQrStorage:'supabase',badgeQrData:qrDataUrl,badgeUpdatedAt:Date.now(),badgeDesignVersion:2};
+   const patch={badgeIssuedAt:date,badgeQrUrl:freshQr.url,badgeQrPath:freshQr.path,badgeQrStorage:'supabase',badgeQrData:qrDataUrl,badgeUpdatedAt:Date.now(),badgeDesignVersion:3};
    if(freshPhoto){patch.badgePhotoUrl=freshPhoto.url;patch.badgePhotoPath=freshPhoto.path;patch.badgePhotoStorage='supabase';patch.badgePhotoData=photoPreviewUrl}
    status('تم الرفع. جارٍ حفظ بيانات الباج في سجل الطالب على Firebase…');
    await db.ref('students/'+selectedId).update(patch);
@@ -4611,14 +4611,14 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
  function loadImage(src){return new Promise((resolve,reject)=>{const im=new Image();if(!String(src).startsWith('data:'))im.crossOrigin='anonymous';im.onload=()=>resolve(im);im.onerror=()=>reject(new Error('تعذر تحميل صورة الباج أو صورة الطالب.'));im.src=src})}
  async function drawFace(which){
   if(!selectedId||!students[selectedId])throw new Error('اختر الطالب أولاً.');
-  const st=students[selectedId],canvas=document.createElement('canvas');canvas.width=680;canvas.height=1020;const ctx=canvas.getContext('2d');
-  const bg=await loadImage(which==='front'?FRONT:BACK);ctx.drawImage(bg,0,0,canvas.width,canvas.height);
+  const st=students[selectedId],canvas=document.createElement('canvas');canvas.width=1360;canvas.height=2040;const ctx=canvas.getContext('2d');ctx.scale(2,2);
+   const g=ctx.createLinearGradient(0,0,680,1020);g.addColorStop(0,'#211039');g.addColorStop(.52,'#563477');g.addColorStop(1,'#180d2c');ctx.fillStyle=g;ctx.fillRect(0,0,680,1020);ctx.strokeStyle='#d9b65d';ctx.lineWidth=9;ctx.strokeRect(22,22,636,976);ctx.strokeStyle='rgba(245,217,138,.7)';ctx.lineWidth=2;ctx.strokeRect(38,38,604,944);ctx.fillStyle='#f7dfa0';ctx.textAlign='center';ctx.direction='rtl';ctx.font='bold 30px Tahoma,Arial';ctx.fillText(which==='front'?'إعدادية صلاح الدين للبنين':'بطاقة الطالب',340,285);ctx.font='bold 22px Arial';ctx.fillText('ROYAL STUDENT ID · V20',340,330);if(which==='back'){ctx.fillStyle='#fff';ctx.font='bold 21px Tahoma,Arial';ctx.fillText('تُحمل البطاقة داخل المدرسة',340,440);ctx.fillText('تُسلّم للإدارة عند العثور عليها',340,485);ctx.fillText('يمنع العبث بالرمز أو البيانات',340,530);}
   if(which==='front'){
    const photoSrc=photoPreviewUrl||imageUrl(st);
-   if(photoSrc){const p=await loadImage(photoSrc);const x=180,y=354,w=320,h=286;const scale=Math.max(w/p.width,h/p.height),sw=w/scale,sh=h/scale,sx=(p.width-sw)/2,sy=(p.height-sh)/2;ctx.save();ctx.beginPath();ctx.rect(x,y,w,h);ctx.clip();ctx.drawImage(p,sx,sy,sw,sh,x,y,w,h);ctx.restore()}
+   if(photoSrc){const p=await loadImage(photoSrc);const x=180,y=350,w=320,h=286;const scale=Math.max(w/p.width,h/p.height),sw=w/scale,sh=h/scale,sx=(p.width-sw)/2,sy=(p.height-sh)/2;ctx.save();ctx.beginPath();ctx.rect(x,y,w,h);ctx.clip();ctx.drawImage(p,sx,sy,sw,sh,x,y,w,h);ctx.restore()}
    ctx.fillStyle='#171321';ctx.direction='rtl';ctx.textAlign='center';ctx.font='bold 21px Tahoma,Arial';ctx.fillText(st.name||'',340,698,420);ctx.font='bold 20px Tahoma,Arial';ctx.fillText(st.grade||'—',340,770,420);ctx.fillText(st.section||'—',340,842,420);
   }else{
-   const q=qrDataUrl||st.badgeQrUrl||st.qrData;if(q){const qi=await loadImage(q);ctx.fillStyle='#fff';ctx.fillRect(214,700,252,204);ctx.drawImage(qi,230,710,220,180)}
+   const q=qrDataUrl||st.badgeQrUrl||st.qrData;if(q){const qi=await loadImage(q);ctx.fillStyle='#fff';ctx.fillRect(214,630,252,252);ctx.drawImage(qi,230,646,220,220)}
    ctx.fillStyle='#171321';ctx.textAlign='center';ctx.font='bold 17px Tahoma,Arial';ctx.fillText(fmtDate($('sdb-date').value||st.badgeIssuedAt),340,946,330);
   }
   return canvas;
