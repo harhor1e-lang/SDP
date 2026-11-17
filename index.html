@@ -3906,6 +3906,9 @@ bind('weeklyTimetables',x=>tables=x,renderTable);bind('guidancePosts',x=>guides=
    ['timetable','الجداول والموارد الصفية','🗓️','الجداول الأسبوعية وموارد بوابة الطالب'],
    ['messages','مراسلات الإدارة','✉️','صندوق الرسائل والردود الإدارية'],
    ['reports','التقارير والأدوات','📊','التقارير والطباعة وأدوات الموقع'],
+   ['schoolops','إدارة شؤون المدرسة','🏫','المهام والتقويم والصيانة والمبادرات والإنجازات'],
+   ['timetable','الجداول المدرسية','🗓️','الجداول الأسبوعية والجدول الذكي وموارد الصفوف'],
+   ['smart','الأنظمة الذكية ومركز القيادة','🧭','المساعد التنفيذي والحضور والتحليل والإنذار والمختبرات والخريطة'],
    ['system','النظام والاتصال','⚙️','حالة Firebase والإعدادات والأدوات الحساسة'],
    ['archive','الأرشيف','🗄️','حفظ النصوص والصور والمواد التي يرسلها المدير']
   ];
@@ -3942,6 +3945,25 @@ bind('weeklyTimetables',x=>tables=x,renderTable);bind('guidancePosts',x=>guides=
   move($('v6-digital-library-admin'),'resources');
   move($('v6-communication-admin'),'messages');
   move($('v6-annual-report-admin'),'reports');
+
+  // Reorganize the existing private-management tools into dedicated pages.
+  // Only complete existing sections are moved; their controls, IDs and handlers remain unchanged.
+  [
+    ['sd-private-operations','schoolops'],
+    ['sd-private-calendar','schoolops'],
+    ['sd-private-maintenance','schoolops'],
+    ['sd-private-initiatives','schoolops'],
+    ['sd-private-achievements','schoolops'],
+    ['sd-private-suggestions','messages'],
+    ['sd-private-timetable','timetable'],
+    ['sd-smart-timetable','timetable'],
+    ['sd-exam-lab','smart'],
+    ['sd-certificate-factory','smart'],
+    ['sd-school-map-3d','smart'],
+    ['sd-private-security','system'],
+    ['v61-control-center','smart']
+  ].forEach(([id,page])=>move($(id),page));
+
   // Separate the weekly timetable form from the resource publishing form.
   const adminTools=pages.resources.querySelector('#v7-admin-tools');
   if(adminTools){
