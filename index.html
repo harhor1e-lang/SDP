@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إعدادية صلاح الدين للبنين | V20 Royal Edition</title>
+    <title>إعدادية صلاح الدين للبنين | V21 Royal Smart Platform</title>
     <script src="https://cdn.tailwindcss.com?v=2026.1">
 </script>
     <script>
@@ -1198,7 +1198,45 @@ button:disabled,input:disabled,select:disabled,textarea:disabled{cursor:not-allo
                 تم إنشاء الموقع من أحد أبناء أعدادية صلاح الدين الطالب <span class="font-semibold">"علي مصطفى عبدالله"</span>
             </div>
         </section>
-    </main>
+    
+<section id="school-services-v21" class="theme-panel max-w-7xl mx-auto my-8 p-5 md:p-8 space-y-6 relative z-10">
+ <div class="flex flex-wrap items-center justify-between gap-3">
+  <div><span class="text-xs tracking-widest text-amber-300 font-black">SALAH AL-DIN · DIGITAL SERVICES</span><h2 class="title-font text-2xl md:text-3xl font-black gold-gradient-text mt-2">مركز الخدمات المدرسية الإلكترونية</h2><p class="text-sm opacity-75 mt-2">الخدمات الرسمية والمواعيد والفعاليات المصوّرة لإعدادية صلاح الدين للبنين.</p></div>
+  <span class="rounded-full border border-amber-300/30 px-4 py-2 text-xs text-amber-100">جمهورية العراق</span>
+ </div>
+ <div id="school-urgent-public" class="hidden"></div>
+ <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+  <a href="#school-request-public" class="s21-public-card"><span>📨</span><b>الطلبات والمعاملات</b><small>إرسال طلب ومتابعة حالته برقم خاص.</small></a>
+  <a href="#school-calendar-public" class="s21-public-card"><span>📅</span><b>تقويم المدرسة</b><small>الامتحانات والعطل والاجتماعات والفعاليات.</small></a>
+  <a href="#school-gallery-public" class="s21-public-card"><span>🖼️</span><b>معرض النشاطات</b><small>صور الفعاليات وأرشيف السنوات الدراسية.</small></a>
+ </div>
+ <div id="school-request-public" class="s21-panel space-y-4">
+  <div><h3 class="text-lg font-black text-amber-100">مركز الطلبات والمعاملات الإلكترونية</h3><p class="text-xs opacity-70 mt-1">أرسل طلبك إلى الإدارة واحتفظ برقم المتابعة الذي يظهر بعد الإرسال.</p></div>
+  <form id="s21-request-form" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+   <label class="s21-label">نوع الطلب<select id="s21-request-type" class="s21-field" required><option value="طلب تأييد دراسي">طلب تأييد دراسي</option><option value="طلب وثيقة دراسية">طلب وثيقة دراسية</option><option value="طلب نقل طالب">طلب نقل طالب</option><option value="طلب استضافة طالب">طلب استضافة طالب</option><option value="استفسار إداري">استفسار إداري</option><option value="مقترح أو ملاحظة">مقترح أو ملاحظة</option></select></label>
+   <label class="s21-label">اسم مقدم الطلب<input id="s21-requester" class="s21-field" maxlength="90" required placeholder="الاسم الكامل"></label>
+   <label class="s21-label">اسم الطالب (إن وجد)<input id="s21-student" class="s21-field" maxlength="90" placeholder="اسم الطالب"></label>
+   <label class="s21-label">المرحلة الدراسية<select id="s21-grade" class="s21-field"><option value="">غير محدد</option><option>الرابع العلمي</option><option>الخامس العلمي</option><option>السادس العلمي</option></select></label>
+   <label class="s21-label">وسيلة تواصل اختيارية<input id="s21-contact" class="s21-field" maxlength="40" placeholder="رقم هاتف أو بريد إلكتروني (اختياري)"></label>
+   <label class="s21-label md:col-span-2">تفاصيل الطلب<textarea id="s21-request-details" class="s21-field" rows="4" maxlength="1200" required placeholder="اكتب تفاصيل طلبك بوضوح..."></textarea></label>
+   <div class="md:col-span-2 flex flex-wrap items-center gap-3"><button class="s21-btn" type="submit">إرسال الطلب واستلام رقم المتابعة</button><span id="s21-request-status" class="text-xs opacity-80" role="status" aria-live="polite"></span></div>
+  </form>
+  <div class="border-t border-white/10 pt-4 space-y-3">
+   <h4 class="font-bold text-amber-100">متابعة معاملة سابقة</h4>
+   <div class="flex flex-col sm:flex-row gap-2"><input id="s21-track-code" class="s21-field flex-1" placeholder="أدخل رقم المتابعة" autocomplete="off"><button id="s21-track-btn" class="s21-btn" type="button">استعلام عن المعاملة</button></div>
+   <div id="s21-track-result" class="text-sm" aria-live="polite"></div>
+  </div>
+ </div>
+ <div id="school-calendar-public" class="s21-panel space-y-4">
+  <div class="flex flex-wrap items-center justify-between gap-2"><div><h3 class="text-lg font-black text-amber-100">التقويم المدرسي العام</h3><p class="text-xs opacity-70 mt-1">المواعيد التي تعتمدها الإدارة وتنشرها للزوار.</p></div><span class="s21-chip">المواعيد القادمة</span></div>
+  <div id="s21-public-calendar" class="grid grid-cols-1 md:grid-cols-2 gap-3"><p class="text-xs opacity-60">جارٍ تحميل التقويم...</p></div>
+ </div>
+ <div id="school-gallery-public" class="s21-panel space-y-4">
+  <div class="flex flex-wrap items-center justify-between gap-2"><div><h3 class="text-lg font-black text-amber-100">معرض النشاطات المدرسية</h3><p class="text-xs opacity-70 mt-1">أرشيف مصوّر للفعاليات والأنشطة حسب السنة الدراسية.</p></div><span class="s21-chip">Original image dimensions</span></div>
+  <div id="s21-public-gallery" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"><p class="text-xs opacity-60">جارٍ تحميل المعرض...</p></div>
+ </div>
+</section>
+</main>
     <!-- أزرار الإدارة وسجل الطلاب مستقلة عن المربع المحذوف -->
     <nav class="essential-school-actions" aria-label="إدارة المدرسة وسجل الطلاب">
       <button type="button" onclick="openPinModal()" class="essential-action-btn">🔐 الإدارة</button>
@@ -1988,6 +2026,7 @@ button:disabled,input:disabled,select:disabled,textarea:disabled{cursor:not-allo
             const w=window.open('','_blank'); if(!w)return;
             w.document.write(`<!doctype html><html lang="ar" dir="rtl"><meta charset="utf-8"><title>${escapeHtml(r.title||'التقرير السنوي')}</title><body style="font-family:Arial;padding:32px;line-height:2"><h1>${escapeHtml(r.school||'إعدادية صلاح الدين للبنين')}</h1><h2>${escapeHtml(r.title||'التقرير السنوي')}</h2><p>السنة: ${Number(r.year)||'—'}</p><p>الإعلانات المنشورة: ${Number(r.metrics?.publishedAnnouncements)||0}</p><p>موارد المكتبة: ${Number(r.metrics?.libraryResources)||0}</p><p>سجلات المختبرات الرقمية: ${Number(r.metrics?.digitalLabRecords)||0}</p><p>${escapeHtml(r.note||'')}</p><hr><p>إدارة المدرسة</p><script>window.print()<\/script>
 
+<script src="./school-services-v21.js?v=21.1"></script>
 </body></html>`); w.document.close();
         }
         function v6InitCloudPortal() {
