@@ -15,6 +15,8 @@
   const ROOT = 'platformCloud/v1';
   const ORIGIN = 'sdp-' + Math.random().toString(36).slice(2, 10);
   const MAX_BYTES = 4 * 1024 * 1024;
+  const nativeSetItem = Storage.prototype.setItem;
+  const nativeRemoveItem = Storage.prototype.removeItem;
   const refs = Object.create(null);
   const initialSeen = new Set();
   const dirtyBeforeReady = new Set();
@@ -44,10 +46,10 @@
   }
 
   function rawSet(key, value) {
-    Storage.prototype.setItem.call(localStorage, key, value);
+    nativeSetItem.call(localStorage, key, value);
   }
   function rawRemove(key) {
-    Storage.prototype.removeItem.call(localStorage, key);
+    nativeRemoveItem.call(localStorage, key);
   }
 
   function refFor(key) {
@@ -86,8 +88,8 @@
 
   function installStorageHooks() {
     const proto = Storage.prototype;
-    const originalSet = proto.setItem;
-    const originalRemove = proto.removeItem;
+    const originalSet = nativeSetItem;
+    const originalRemove = nativeRemoveItem;
     proto.setItem = function (key, value) {
       originalSet.call(this, key, value);
       if (this === localStorage && KEYS.includes(String(key))) writeCloud(String(key));
@@ -166,8 +168,11 @@
     retry: function () {
       failures = 0;
       setState('إعادة محاولة المزامنة…', false);
-      if (!bootstrapped) KEYS.forEach(function (key) { if (!refs[key]) listen(key); });
-      else KEYS.forEach(writeCloud);
+      if (!bootstrapped) {
+        KEYS.forEach(function (key) { if (refs[key]) refs[key].off(); delete refs[key]; });
+        initialSeen.clear();
+        KEYS.forEach(listen);
+      } else KEYS.forEach(writeCloud);
     }
   };
 
