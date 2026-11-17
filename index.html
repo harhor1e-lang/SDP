@@ -121,58 +121,6 @@
         }
         .fade-out { opacity: 0; visibility: hidden; }
     .v7-page.active #average-calculator-section{display:block!important}
-
-/* Neon social links: continuous but subtle glow */
-.social-channel-btn {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  min-height: 38px;
-  border-width: 1px !important;
-  border-color: var(--social-neon, rgba(56,189,248,.7)) !important;
-  color: var(--social-neon, #38bdf8) !important;
-  background: linear-gradient(135deg, rgba(15,23,42,.92), rgba(8,15,30,.78)) !important;
-  box-shadow: 0 0 7px color-mix(in srgb, var(--social-neon, #38bdf8) 48%, transparent),
-              inset 0 0 8px color-mix(in srgb, var(--social-neon, #38bdf8) 13%, transparent);
-  animation: socialNeonPulse 2.8s ease-in-out infinite;
-  transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
-}
-.social-channel-btn[href*="t.me"] { --social-neon: #38bdf8; }
-.social-channel-btn[href*="whatsapp.com"] { --social-neon: #22c55e; }
-.social-channel-btn svg {
-  filter: drop-shadow(0 0 4px currentColor);
-  flex: 0 0 auto;
-}
-.social-channel-btn::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: linear-gradient(110deg, transparent 20%, rgba(255,255,255,.16) 48%, transparent 76%);
-  transform: translateX(-130%);
-  animation: socialNeonSweep 4.5s ease-in-out infinite;
-  pointer-events: none;
-}
-.social-channel-btn:hover,
-.social-channel-btn:focus-visible {
-  transform: translateY(-2px) scale(1.035);
-  box-shadow: 0 0 12px color-mix(in srgb, var(--social-neon, #38bdf8) 75%, transparent),
-              0 0 25px color-mix(in srgb, var(--social-neon, #38bdf8) 35%, transparent),
-              inset 0 0 10px color-mix(in srgb, var(--social-neon, #38bdf8) 18%, transparent);
-  filter: brightness(1.12);
-  outline: none;
-}
-@keyframes socialNeonPulse {
-  0%, 100% { box-shadow: 0 0 5px color-mix(in srgb, var(--social-neon, #38bdf8) 38%, transparent), inset 0 0 7px color-mix(in srgb, var(--social-neon, #38bdf8) 10%, transparent); }
-  50% { box-shadow: 0 0 11px color-mix(in srgb, var(--social-neon, #38bdf8) 70%, transparent), 0 0 20px color-mix(in srgb, var(--social-neon, #38bdf8) 24%, transparent), inset 0 0 10px color-mix(in srgb, var(--social-neon, #38bdf8) 16%, transparent); }
-}
-@keyframes socialNeonSweep {
-  0%, 20% { transform: translateX(-130%); }
-  65%, 100% { transform: translateX(130%); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .social-channel-btn, .social-channel-btn::after { animation: none !important; transition: none !important; }
-}
 </style>
 
     <style id="premium-school-theme">
@@ -824,13 +772,10 @@ button:disabled,input:disabled,select:disabled,textarea:disabled{cursor:not-allo
         </div>
 
         <div class="flex items-center gap-2.5 flex-wrap justify-center">
-            <a href="https://t.me/SD_Alerts" target="_blank" rel="noopener noreferrer" aria-label="قناة تيليغرام العامة" class="social-channel-btn px-3 py-2 rounded-full theme-card text-[11px] font-bold flex items-center gap-2 border border-sky-500/30 text-sky-400 hover:scale-105 transition"><svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" aria-hidden="true"><path d="M23.91 3.79 20.3 20.84c-.27 1.2-.98 1.5-1.98.94l-5.47-4.03-2.64 2.54c-.29.29-.53.53-1.09.53l.39-5.57L19.65 6.8c.43-.39-.09-.61-.66-.22L6.1 14.8.68 13.1c-1.18-.37-1.2-1.18.25-1.81L22.12 3.02c.98-.36 1.84.24 1.79.77Z"/></svg><span>العامة</span></a>
-            <a href="https://t.me/SD_6th" target="_blank" rel="noopener noreferrer" aria-label="قناة تيليغرام السادس" class="social-channel-btn px-3 py-2 rounded-full theme-card text-[11px] font-bold flex items-center gap-2 border border-sky-500/30 text-sky-400 hover:scale-105 transition"><svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" aria-hidden="true"><path d="M23.91 3.79 20.3 20.84c-.27 1.2-.98 1.5-1.98.94l-5.47-4.03-2.64 2.54c-.29.29-.53.53-1.09.53l.39-5.57L19.65 6.8c.43-.39-.09-.61-.66-.22L6.1 14.8.68 13.1c-1.18-.37-1.2-1.18.25-1.81L22.12 3.02c.98-.36 1.84.24 1.79.77Z"/></svg><span>السادس</span></a>
-            <a href="https://t.me/SD_5th" target="_blank" rel="noopener noreferrer" aria-label="قناة تيليغرام الخامس" class="social-channel-btn px-3 py-2 rounded-full theme-card text-[11px] font-bold flex items-center gap-2 border border-sky-500/30 text-sky-400 hover:scale-105 transition"><svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" aria-hidden="true"><path d="M23.91 3.79 20.3 20.84c-.27 1.2-.98 1.5-1.98.94l-5.47-4.03-2.64 2.54c-.29.29-.53.53-1.09.53l.39-5.57L19.65 6.8c.43-.39-.09-.61-.66-.22L6.1 14.8.68 13.1c-1.18-.37-1.2-1.18.25-1.81L22.12 3.02c.98-.36 1.84.24 1.79.77Z"/></svg><span>الخامس</span></a>
-            <a href="https://t.me/SD_4th" target="_blank" rel="noopener noreferrer" aria-label="قناة تيليغرام الرابع" class="social-channel-btn px-3 py-2 rounded-full theme-card text-[11px] font-bold flex items-center gap-2 border border-sky-500/30 text-sky-400 hover:scale-105 transition"><svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" aria-hidden="true"><path d="M23.91 3.79 20.3 20.84c-.27 1.2-.98 1.5-1.98.94l-5.47-4.03-2.64 2.54c-.29.29-.53.53-1.09.53l.39-5.57L19.65 6.8c.43-.39-.09-.61-.66-.22L6.1 14.8.68 13.1c-1.18-.37-1.2-1.18.25-1.81L22.12 3.02c.98-.36 1.84.24 1.79.77Z"/></svg><span>الرابع</span></a>
-            <a href="https://whatsapp.com/channel/0029Vb9JY3I8aKvAQoabMd0j" target="_blank" rel="noopener noreferrer" aria-label="قناة المدرسة على واتساب" class="social-channel-btn px-3 py-2 rounded-full theme-card text-[11px] font-bold flex items-center gap-2 border border-green-500/40 text-green-400 hover:scale-105 transition"><svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" aria-hidden="true"><path d="M20.52 3.48A11.82 11.82 0 0 0 12.08 0C5.5 0 .15 5.34.15 11.92c0 2.1.55 4.15 1.6 5.96L.05 24l6.27-1.64a11.9 11.9 0 0 0 5.75 1.47h.01c6.58 0 11.93-5.35 11.93-11.93 0-3.19-1.24-6.19-3.49-8.42ZM12.08 21.8a9.9 9.9 0 0 1-5.05-1.38l-.36-.21-3.72.98.99-3.63-.24-.37a9.86 9.86 0 0 1-1.52-5.27c0-5.47 4.45-9.92 9.92-9.92 2.65 0 5.14 1.03 7.02 2.91a9.87 9.87 0 0 1 2.9 7.02c0 5.47-4.45 9.92-9.94 9.92Zm5.45-7.43c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.47-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.49s1.07 2.89 1.22 3.09c.15.2 2.1 3.21 5.08 4.5.71.31 1.26.5 1.69.64.71.23 1.36.2 1.87.12.57-.08 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35Z"/></svg><span>قناة واتساب المدرسة</span></a>
-            <button type="button" onclick="v7Open('calculator')" class="px-3 py-2 rounded-full theme-card text-[11px] font-bold">🧮 الحاسبة</button>
-            <button type="button" onclick="v7Open('timetable')" class="px-3 py-2 rounded-full theme-card text-[11px] font-bold">🗓️ جدول الدروس</button>
+            <a href="https://t.me/SD_Alerts" target="_blank" class="px-3 py-1.5 rounded-full theme-card text-[11px] font-bold flex items-center gap-1.5 border border-blue-500/30 text-blue-400 hover:scale-105 transition"><span>📢</span> العامة</a>
+            <a href="https://t.me/SD_6th" target="_blank" class="px-3 py-1.5 rounded-full theme-card text-[11px] font-bold flex items-center gap-1.5 border border-yellow-500/40 text-yellow-400 hover:scale-105 transition"><span>✨</span> السادس</a>
+            <a href="https://t.me/SD_5th" target="_blank" class="px-3 py-1.5 rounded-full theme-card text-[11px] font-bold flex items-center gap-1.5 border border-purple-500/30 text-purple-400 hover:scale-105 transition"><span>📚</span> الخامس</a>
+            <a href="https://t.me/SD_4th" target="_blank" class="px-3 py-1.5 rounded-full theme-card text-[11px] font-bold flex items-center gap-1.5 border border-emerald-500/30 text-emerald-400 hover:scale-105 transition"><span>📖</span> الرابع</a><a href="https://whatsapp.com/channel/0029Vb9JY3I8aKvAQoabMd0j" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-full theme-card text-[11px] font-bold flex items-center gap-1.5 border border-green-500/40 text-green-400 hover:scale-105 transition"><span>🟢</span> انضم إلى قناة المدرسة على واتساب</a><button type="button" onclick="v7Open('calculator')" class="px-3 py-1.5 rounded-full theme-card text-[11px] font-bold">🧮 الحاسبة</button><button type="button" onclick="v7Open('timetable')" class="px-3 py-1.5 rounded-full theme-card text-[11px] font-bold">🗓️ جدول الدروس</button>
         </div>
     </header>
 
@@ -903,6 +848,22 @@ button:disabled,input:disabled,select:disabled,textarea:disabled{cursor:not-allo
         <p class="text-[9px] opacity-50 text-center mt-2">عداد الزيارات تقريبي ويحسب جلسات التصفح، والإحصائيات أرقام إجمالية لا تعرض بيانات شخصية.</p>
     </section>
 
+
+    <!-- بوابات المنظومة: واجهات وصول موحدة؛ تفعيل الصلاحيات الحقيقية يتطلب Firebase Authentication وقواعد آمنة -->
+    <section id="smart-portals" class="max-w-7xl mx-auto px-4 md:px-6 mt-7 relative z-10 sd-section">
+      <div class="theme-panel p-5 md:p-7 rounded-[2rem] space-y-5">
+        <div class="flex flex-wrap justify-between items-center gap-3">
+          <div><span class="sd-kicker">SALAH AL-DIN SMART SCHOOL</span><h2 class="title-font text-2xl md:text-3xl font-black gold-gradient-text">بوابات المنظومة الذكية</h2><p class="sd-muted mt-1">مساحة موحدة للإدارة والهيئة التدريسية والطلاب</p></div>
+          <span class="sd-pill">✦ PREMIUM · V6</span>
+        </div>
+        <div class="sd-role-grid">
+          <a class="sd-role-card" href="#admin-command-section"><div class="big">🏛️</div><h3>بوابة الإدارة</h3><p>مؤشرات المدرسة، المهام، المتابعة، التقارير والتنظيم الإداري.</p><span class="sd-pill mt-3">مركز القيادة ←</span></a>
+          <a class="sd-role-card" href="#teacher-portal-section"><div class="big">👨‍🏫</div><h3>بوابة المدرس</h3><p>الوصول إلى المواد والمختبرات وبنك الأسئلة والمهام التعليمية.</p><span class="sd-pill mt-3">مساحة التدريس ←</span></a>
+          <a class="sd-role-card" href="#student-portal-section"><div class="big">🎓</div><h3>بوابة الطالب</h3><p>الجداول والمكتبة والاختبارات وحاسبة المعدلات والإعلانات.</p><span class="sd-pill mt-3">مساحة التعلم ←</span></a>
+        </div>
+        <p class="sd-note">تنبيه: هذه البوابات تنظّم الوصول إلى أقسام الموقع، لكنها لا تُعد نظام تسجيل دخول أو صلاحيات آمناً بحد ذاتها. يجب ربطها لاحقاً بحسابات موثقة وقواعد Firebase قبل عرض أي بيانات شخصية أو درجات.</p>
+      </div>
+    </section>
 
     
 <section id="v7-launch" class="max-w-7xl mx-auto px-4 md:px-6 relative z-10"><div class="v7-panel text-center">
@@ -2039,70 +2000,6 @@ button:disabled,input:disabled,select:disabled,textarea:disabled{cursor:not-allo
             const r=v6CloudData.reports?.[id]; if(!r)return;
             const w=window.open('','_blank'); if(!w)return;
             w.document.write(`<!doctype html><html lang="ar" dir="rtl"><meta charset="utf-8"><title>${escapeHtml(r.title||'التقرير السنوي')}</title><body style="font-family:Arial;padding:32px;line-height:2"><h1>${escapeHtml(r.school||'إعدادية صلاح الدين للبنين')}</h1><h2>${escapeHtml(r.title||'التقرير السنوي')}</h2><p>السنة: ${Number(r.year)||'—'}</p><p>الإعلانات المنشورة: ${Number(r.metrics?.publishedAnnouncements)||0}</p><p>موارد المكتبة: ${Number(r.metrics?.libraryResources)||0}</p><p>سجلات المختبرات الرقمية: ${Number(r.metrics?.digitalLabRecords)||0}</p><p>${escapeHtml(r.note||'')}</p><hr><p>إدارة المدرسة</p><script>window.print()<\/script>
-
-
-<style id="salah-v62-quick-launch-style">
-#salah-v62-quick-launch{border:1px solid rgba(93,211,235,.35);border-radius:20px;padding:16px;background:linear-gradient(145deg,rgba(10,37,61,.96),rgba(15,23,42,.96));box-shadow:0 16px 38px #0004}
-#salah-v62-quick-launch .v62-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
-#salah-v62-quick-launch .v62-link{display:flex;align-items:center;gap:9px;min-height:64px;padding:10px;border:1px solid rgba(148,197,220,.2);border-radius:13px;background:linear-gradient(145deg,rgba(21,55,83,.82),rgba(8,25,44,.92));color:#edf7ff;text-align:right;font-size:12px;font-weight:800;transition:transform .2s,border-color .2s}
-#salah-v62-quick-launch .v62-link:hover{transform:translateY(-2px);border-color:rgba(231,199,126,.7)}
-#salah-v62-quick-launch .v62-link span{font-size:21px;flex:0 0 26px;text-align:center}
-#salah-v62-quick-launch .v62-link small{display:block;color:#a9c3d8;font-size:9px;font-weight:500;margin-top:3px}
-@media(min-width:700px){#salah-v62-quick-launch .v62-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
-html:not(.dark) #salah-v62-quick-launch{background:linear-gradient(145deg,#fff,#eef3f8);border-color:rgba(167,122,45,.3)}
-html:not(.dark) #salah-v62-quick-launch .v62-link{background:linear-gradient(145deg,#fff,#edf3f8);color:#1d3550;border-color:rgba(35,68,105,.16)}
-html:not(.dark) #salah-v62-quick-launch .v62-link small{color:#61748a}
-</style>
-<script id="salah-v62-quick-launch">
-(function(){
-  function mountV62QuickLaunch(){
-    const host=document.getElementById('v61-control-center');
-    if(!host||document.getElementById('salah-v62-quick-launch'))return;
-    const panel=document.createElement('section');
-    panel.id='salah-v62-quick-launch';
-    panel.innerHTML=`
-      <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
-        <div><span class="text-[10px] tracking-widest text-cyan-300 font-black">V6.2 · ADMIN QUICK ACCESS</span><h4 class="font-black text-lg text-cyan-100">🚀 مركز الوصول السريع للإضافات</h4><p class="sd-muted text-xs">انتقل مباشرة إلى أدوات الإدارة المضافة داخل الخصوصية الإشرافية.</p></div>
-        <span class="text-[10px] rounded-full border border-cyan-300/30 px-3 py-2 text-cyan-100">لوحة المدير</span>
-      </div>
-      <div class="v62-grid">
-        <button class="v62-link" type="button" data-target="v61-admin-assistant"><span>🧠</span><div>المساعد الإداري الذكي<small>موجز المدير والتوصيات</small></div></button>
-        <button class="v62-link" type="button" data-target="v61-attendance-section"><span>🟢</span><div>الحضور والغياب<small>تسجيل يومي حسب الشعبة</small></div></button>
-        <button class="v62-link" type="button" data-target="v61-early-warning"><span>🚦</span><div>الإنذار الأكاديمي<small>متابعة التقييمات</small></div></button>
-        <button class="v62-link" type="button" data-target="v61-student-analytics"><span>📊</span><div>التحليل الإحصائي<small>توزيع الطلاب والمراحل</small></div></button>
-        <button class="v62-link" type="button" data-target="v61-assignment-tasks"><span>📌</span><div>المهام والتكليفات<small>المواعيد وحالة الإنجاز</small></div></button>
-        <button class="v62-link" type="button" data-target="v61-approvals-section"><span>📝</span><div>الموافقات الإدارية<small>مراجعة الطلبات</small></div></button>
-        <button class="v62-link" type="button" data-target="v61-archive-section"><span>🗄️</span><div>الأرشيف المدرسي<small>فهرسة الوثائق</small></div></button>
-        <button class="v62-link" type="button" data-target="sd-exam-lab"><span>🧪</span><div>مختبر الامتحانات<small>إنشاء النماذج والأسئلة</small></div></button>
-        <button class="v62-link" type="button" data-target="sd-certificate-factory"><span>🏅</span><div>مصنع الشهادات<small>المعاينة والطباعة</small></div></button>
-        <button class="v62-link" type="button" data-target="sd-school-map-3d"><span>🗺️</span><div>الخريطة المدرسية 3D<small>مخطط مرافق المدرسة</small></div></button>
-        <button class="v62-link" type="button" data-target="sd-smart-timetable"><span>🗓️</span><div>الجدول الذكي<small>الحصص وفحص التعارض</small></div></button>
-        <button class="v62-link" type="button" data-target="sd-private-calendar"><span>📅</span><div>التقويم والفعاليات<small>مواعيد المدرسة</small></div></button>
-        <button class="v62-link" type="button" data-target="sd-private-maintenance"><span>🛠️</span><div>سجل الصيانة<small>متابعة الأعمال</small></div></button>
-        <button class="v62-link" type="button" data-target="sd-private-suggestions"><span>💡</span><div>صندوق الاقتراحات<small>مراجعة الإدارة</small></div></button>
-        <button class="v62-link" type="button" data-target="sd-private-initiatives"><span>🤝</span><div>المبادرات والمساهمات<small>سجل الأنشطة</small></div></button>
-        <button class="v62-link" type="button" data-target="sd-private-achievements"><span>🏆</span><div>الإنجازات والفعاليات<small>لوحة الشرف المدرسية</small></div></button>
-        <button class="v62-link" type="button" data-target="sd-school-badges"><span>🪪</span><div>الباجات المدرسية<small>إدارة هوية الطالب</small></div></button>
-        <button class="v62-link" type="button" data-target="v61-control-center"><span>💾</span><div>النسخ الاحتياطي والتدقيق<small>تصدير ومراجعة السجلات</small></div></button>
-      </div>
-      <p class="text-[10px] text-amber-200/80 mt-3">ملاحظة: هذه لوحة وصول وتنظيم فقط؛ لم يتم تغيير أي إعداد تخزين أو مزامنة أو حذف بيانات. الأدوات التي كانت محلية بقيت محلية كما هي.</p>`;
-    panel.addEventListener('click',function(event){
-      const button=event.target.closest('[data-target]');
-      if(!button)return;
-      if(typeof requireAdmin==='function'&&!requireAdmin())return;
-      const target=document.getElementById(button.getAttribute('data-target'));
-      if(!target){if(typeof showAdminToast==='function')showAdminToast('هذه الوحدة غير متاحة في النسخة الحالية.');return;}
-      target.scrollIntoView({behavior:'smooth',block:'start'});
-      target.classList.add('v62-focus');
-      setTimeout(()=>target.classList.remove('v62-focus'),1300);
-    });
-    host.insertBefore(panel,host.firstChild);
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mountV62QuickLaunch);
-  else mountV62QuickLaunch();
-})();
-</script>
-<style id="salah-v62-focus-style">.v62-focus{outline:2px solid rgba(103,232,249,.7);outline-offset:5px;border-radius:14px;transition:outline .2s}</style>
 
 </body></html>`); w.document.close();
         }
@@ -3967,11 +3864,9 @@ bind('weeklyTimetables',x=>tables=x,renderTable);bind('guidancePosts',x=>guides=
    ['students','سجل الطلاب','🎓','أدوات إدارة سجل الطلاب والهويات'],
    ['badges','إدارة الباجات المدرسية','🪪','إصدار ومعاينة وطباعة باجات الطلاب بصورة مستقلة'],
    ['resources','الموارد الدراسية','📚','المكتبة والكتب وبنك الأسئلة والمختبرات'],
+   ['timetable','الجداول والموارد الصفية','🗓️','الجداول الأسبوعية وموارد بوابة الطالب'],
    ['messages','مراسلات الإدارة','✉️','صندوق الرسائل والردود الإدارية'],
    ['reports','التقارير والأدوات','📊','التقارير والطباعة وأدوات الموقع'],
-   ['schoolops','إدارة شؤون المدرسة','🏫','المهام والتقويم والصيانة والمبادرات والإنجازات'],
-   ['timetable','الجداول المدرسية','🗓️','الجداول الأسبوعية والجدول الذكي وموارد الصفوف'],
-   ['smart','الأنظمة الذكية ومركز القيادة','🧭','المساعد التنفيذي والحضور والتحليل والإنذار والمختبرات والخريطة'],
    ['system','النظام والاتصال','⚙️','حالة Firebase والإعدادات والأدوات الحساسة'],
    ['archive','الأرشيف','🗄️','حفظ النصوص والصور والمواد التي يرسلها المدير']
   ];
@@ -4008,25 +3903,6 @@ bind('weeklyTimetables',x=>tables=x,renderTable);bind('guidancePosts',x=>guides=
   move($('v6-digital-library-admin'),'resources');
   move($('v6-communication-admin'),'messages');
   move($('v6-annual-report-admin'),'reports');
-
-  // Reorganize the existing private-management tools into dedicated pages.
-  // Only complete existing sections are moved; their controls, IDs and handlers remain unchanged.
-  [
-    ['sd-private-operations','schoolops'],
-    ['sd-private-calendar','schoolops'],
-    ['sd-private-maintenance','schoolops'],
-    ['sd-private-initiatives','schoolops'],
-    ['sd-private-achievements','schoolops'],
-    ['sd-private-suggestions','messages'],
-    ['sd-private-timetable','timetable'],
-    ['sd-smart-timetable','timetable'],
-    ['sd-exam-lab','smart'],
-    ['sd-certificate-factory','smart'],
-    ['sd-school-map-3d','smart'],
-    ['sd-private-security','system'],
-    ['v61-control-center','smart']
-  ].forEach(([id,page])=>move($(id),page));
-
   // Separate the weekly timetable form from the resource publishing form.
   const adminTools=pages.resources.querySelector('#v7-admin-tools');
   if(adminTools){
