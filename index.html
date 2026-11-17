@@ -4034,6 +4034,7 @@ bind('weeklyTimetables',x=>tables=x,renderTable);bind('guidancePosts',x=>guides=
    ['notices','التبليغات والإعلانات','📢','نشر ومراجعة التبليغات والبث الإداري'],
    ['guidance','قسم المرشد التربوي','🧭','كتابة إرشاد تربوي منظم وإرفاق الصور ونشره للطلبة'],
    ['students','سجل الطلاب','🎓','أدوات إدارة سجل الطلاب والهويات'],
+   ['badges','إدارة الباجات المدرسية','🪪','إصدار ومعاينة وطباعة باجات الطلاب بصورة مستقلة'],
    ['resources','الموارد الدراسية','📚','المكتبة والكتب وبنك الأسئلة والمختبرات'],
    ['timetable','الجداول والموارد الصفية','🗓️','الجداول الأسبوعية وموارد بوابة الطالب'],
    ['messages','مراسلات الإدارة','✉️','صندوق الرسائل والردود الإدارية'],
@@ -4048,6 +4049,7 @@ bind('weeklyTimetables',x=>tables=x,renderTable);bind('guidancePosts',x=>guides=
   panelChildren.forEach(node=>{
     if(node===header||node===home||node===closeBtn||node.tagName==='H2')return;
     const txt=(node.innerText||'').trim();
+    if(node.id==='sd-school-badges'){move(node,'badges');return}
     if(node.id==='v7-admin-tools'){move(node,'resources');return}
     if(node.id==='v7-admin-items'||node.id==='v7-admin-posts'||txt.includes('إدارة التبليغات والإعلانات')){move(node,'notices');return}
     if(node.id==='v7-inbox'||txt.includes('صندوق رسائل الإدارة')){move(node,'messages');return}
@@ -4203,7 +4205,7 @@ bind('weeklyTimetables',x=>tables=x,renderTable);bind('guidancePosts',x=>guides=
   // Existing administration subtools are kept intact inside their corresponding independent pages.
   const studentLaunch=document.createElement('div');studentLaunch.className='sd-card space-y-3';studentLaunch.innerHTML='<h3>سجل الطلاب المحمي</h3><p class="sd-muted">فتح نافذة سجل الطلاب الحالية مع الحفاظ على رمز الدخول ووظائف الإضافة والتعديل والحذف.</p><button type="button" class="sd-btn" id="v14-open-student-records">🎓 فتح سجل الطلاب</button>';pages.students.appendChild(studentLaunch);studentLaunch.querySelector('button').addEventListener('click',()=>{if(typeof openStudentsPinModal==='function')openStudentsPinModal();else toast('نافذة سجل الطلاب غير متاحة حالياً',false)});
   showPage('home');initAudit();
-  function showPage(id){home.hidden=id!=='home';Object.entries(pages).forEach(([key,page])=>page.hidden=key!==id);if(id==='archive'&&typeof isAdminLoggedIn!=='undefined'&&isAdminLoggedIn)startCloudArchiveListener();if(id==='home')home.scrollIntoView({block:'start',behavior:'smooth'});else pages[id]?.scrollIntoView({block:'start',behavior:'smooth'});}
+  function showPage(id){home.hidden=id!=='home';Object.entries(pages).forEach(([key,page])=>page.hidden=key!==id);if(id==='archive'&&typeof isAdminLoggedIn!=='undefined'&&isAdminLoggedIn)startCloudArchiveListener();if(id==='badges'&&typeof window.sdOpenSchoolBadges==='function')window.sdOpenSchoolBadges();if(id==='home')home.scrollIntoView({block:'start',behavior:'smooth'});else pages[id]?.scrollIntoView({block:'start',behavior:'smooth'});}
   modal.dataset.v14ShowHome='1';modal._v14ShowHome=()=>showPage('home');
  }
  document.addEventListener('DOMContentLoaded',()=>{setupAdminPages();const modal=$('admin-dashboard-modal');if(modal){new MutationObserver(()=>{if(!modal.classList.contains('hidden')&&modal._v14ShowHome)modal._v14ShowHome()}).observe(modal,{attributes:true,attributeFilter:['class']})}});
@@ -4528,8 +4530,9 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
  const today=()=>new Date().toISOString().slice(0,10);
  const status=t=>{const el=$('sdb-status');if(el)el.textContent=t};
  const imageUrl=st=>st?.badgePhotoData||st?.badgePhotoUrl||st?.photoData||'';
- function visible(){return !!$('sd-school-badges') && $('admin-dashboard-modal') && !$('admin-dashboard-modal').classList.contains('hidden')}
+ function visible(){const panel=$('sd-school-badges'),admin=$('admin-dashboard-modal'),page=panel?.closest('.v14-admin-page');return !!panel&&!!admin&&!admin.classList.contains('hidden')&&(!page||!page.hidden)}
  function authorized(){if(typeof requireAdmin==='function'&&!requireAdmin()){alert('هذه الخدمة متاحة للمدير فقط.');return false}if(typeof db==='undefined'||typeof firebase==='undefined'||!firebase.apps?.length){alert('اتصال Firebase غير متاح حالياً.');return false}return true}
+  window.sdOpenSchoolBadges=()=>{if(!authorized())return;if(!Object.keys(students).length)loadStudents()};
  function fmtDate(v){if(!v)return '—';const p=String(v).split('-');return p.length===3?`${p[2]}/${p[1]}/${p[0]}`:v}
  let previewRevision=0;
  function updatePreview(){
