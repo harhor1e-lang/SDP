@@ -4616,10 +4616,10 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
   if(which==='front'){
    const photoSrc=photoPreviewUrl||imageUrl(st);
    if(photoSrc){const p=await loadImage(photoSrc);const x=180,y=350,w=320,h=286;const scale=Math.max(w/p.width,h/p.height),sw=w/scale,sh=h/scale,sx=(p.width-sw)/2,sy=(p.height-sh)/2;ctx.save();ctx.beginPath();ctx.rect(x,y,w,h);ctx.clip();ctx.drawImage(p,sx,sy,sw,sh,x,y,w,h);ctx.restore()}
-   ctx.fillStyle='#171321';ctx.direction='rtl';ctx.textAlign='center';ctx.font='bold 21px Tahoma,Arial';ctx.fillText(st.name||'',340,698,420);ctx.font='bold 20px Tahoma,Arial';ctx.fillText(st.grade||'—',340,770,420);ctx.fillText(st.section||'—',340,842,420);
+   ctx.fillStyle='#171321';ctx.direction='rtl';ctx.textAlign='center';ctx.font='bold 21px Tahoma,Arial';ctx.fillText(st.name||'',340,712,420);ctx.font='bold 20px Tahoma,Arial';ctx.fillText('الصف: '+(st.grade||'—'),340,782,420);ctx.fillText('الشعبة: '+(st.section||'—'),340,850,420);
   }else{
    const q=qrDataUrl||st.badgeQrUrl||st.qrData;if(q){const qi=await loadImage(q);ctx.fillStyle='#fff';ctx.fillRect(214,630,252,252);ctx.drawImage(qi,230,646,220,220)}
-   ctx.fillStyle='#171321';ctx.textAlign='center';ctx.font='bold 17px Tahoma,Arial';ctx.fillText(fmtDate($('sdb-date').value||st.badgeIssuedAt),340,946,330);
+   ctx.fillStyle='#fff0b2';ctx.textAlign='center';ctx.font='bold 17px Tahoma,Arial';ctx.fillText('تاريخ الإصدار: '+fmtDate($('sdb-date').value||st.badgeIssuedAt),340,975,380);
   }
   return canvas;
  }
@@ -4627,7 +4627,7 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
  async function printBoth(){
   if(!selectedId||!students[selectedId]){alert('اختر الطالب أولاً.');return}
   try{status('جارٍ تجهيز الوجهين للطباعة…');const frontCanvas=await drawFace('front'),backCanvas=await drawFace('back');const frontUrl=frontCanvas.toDataURL('image/png'),backUrl=backCanvas.toDataURL('image/png');const w=window.open('','_blank','width=900,height=900');if(!w)throw new Error('اسمح بالنوافذ المنبثقة حتى تتمكن من الطباعة.');
-   w.document.write(`<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>باج الطالب</title><style>@page{size:54mm 81mm;margin:0}*{box-sizing:border-box}html,body{margin:0;padding:0}.face{width:54mm;height:81mm;page-break-after:always;break-after:page}.face:last-child{page-break-after:auto;break-after:auto}img{width:54mm;height:90mm;display:block}@media screen{body{background:#ddd;padding:20px}.face{margin:0 auto 20px;box-shadow:0 4px 20px #0004}img{width:54mm;height:90mm}}</style></head><body><div class="face"><img src="${frontUrl}"></div><div class="face"><img src="${backUrl}"></div><script>window.onload=()=>setTimeout(()=>window.print(),350)<\/script></body></html>`);w.document.close();status('تم فتح نافذة الطباعة؛ اختر الطابعة أو حفظ PDF.');
+   w.document.write(`<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>باج الطالب</title><style>@page{size:54mm 81mm;margin:0}*{box-sizing:border-box}html,body{margin:0;padding:0}.face{width:54mm;height:81mm;page-break-after:always;break-after:page}.face:last-child{page-break-after:auto;break-after:auto}img{width:54mm;height:81mm;display:block}@media screen{body{background:#ddd;padding:20px}.face{margin:0 auto 20px;box-shadow:0 4px 20px #0004}img{width:54mm;height:90mm}}</style></head><body><div class="face"><img src="${frontUrl}"></div><div class="face"><img src="${backUrl}"></div><script>window.onload=()=>setTimeout(()=>window.print(),350)<\/script></body></html>`);w.document.close();status('تم فتح نافذة الطباعة؛ اختر الطابعة أو حفظ PDF.');
   }catch(e){alert(e.message);status('تعذرت الطباعة: '+e.message)}
  }
  function init(){
