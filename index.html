@@ -723,6 +723,19 @@ button:disabled,input:disabled,select:disabled,textarea:disabled{cursor:not-allo
 }
 </style>
 
+
+<style id="v21-global-polish">
+:root{--s21-gold:#e4c477;--s21-blue:#102c49;--s21-ink:#07111f;--s21-cyan:#54c7d9}
+html{scroll-behavior:smooth;scroll-padding-top:22px}
+button,a,input,textarea,select{transition:background-color .22s ease,border-color .22s ease,box-shadow .25s ease,transform .25s ease,filter .25s ease}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--s21-gold);outline-offset:3px}
+.v14-admin-tile{background:linear-gradient(135deg,rgba(18,49,78,.96),rgba(7,18,34,.98));border-color:rgba(84,199,217,.25)}
+.v14-admin-tile:hover{border-color:var(--s21-gold);box-shadow:0 18px 40px rgba(0,0,0,.35),0 0 26px rgba(84,199,217,.12)}
+.v14-page-head{background:linear-gradient(110deg,rgba(17,48,76,.96),rgba(9,22,40,.96));border-color:rgba(84,199,217,.25)}
+.theme-panel,.theme-card,.v7-panel,.v7-launch{backdrop-filter:blur(18px) saturate(135%)}
+#school-services-v21{scroll-margin-top:20px}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}button,a,input,textarea,select{transition:none!important}}
+</style>
 </head>
 <body class="min-h-screen relative">
 <script>
@@ -863,6 +876,7 @@ button:disabled,input:disabled,select:disabled,textarea:disabled{cursor:not-allo
 <button class="v7-launch" onclick="v7Open('contact')"><span>✉️</span>مراسلة الإدارة</button>
 <button class="v7-launch" onclick="openPublicNoticeTab('admin')"><span>📢</span>تبليغات الإدارة<small>كل ما تنشره إدارة المدرسة</small></button>
 <button class="v7-launch" onclick="openPublicNoticeTab('guidance')"><span>🧭</span>الإرشاد التربوي<small>كل ما ينشره المرشد التربوي</small></button>
+<button class="v7-launch" onclick="document.getElementById('school-services-v21').scrollIntoView({behavior:'smooth'})"><span>🏛️</span>الخدمات الإلكترونية<small>الطلبات والتقويم والمعرض</small></button>
 
 
 </div></div></section>
@@ -1190,16 +1204,7 @@ button:disabled,input:disabled,select:disabled,textarea:disabled{cursor:not-allo
           <div class="sd-card"><p class="sd-muted">لا توجد إنجازات أو فعاليات منشورة في هذه النسخة. إضافة المحتوى ومراجعته واعتماده تتم من الخصوصية الإشرافية.</p></div>
         </section>
 
-        <!-- معلومات التواصل والاعتماد -->
-        <section id="school-info-section" class="theme-panel p-6 rounded-2xl text-center space-y-2 relative">
-            <p class="text-xs opacity-75">للتواصل الرسمي مع المدرسة: <a href="mailto:salahaldinsc600l@gmail.com" class="text-yellow-400 underline">salahaldinsc600l@gmail.com</a></p>
-            <p class="text-[10px] opacity-60">جميع الحقوق محفوظة © أعدادية صلاح الدين للبنين (تأسست 1966)</p>
-            <div class="pt-2 text-[9px] opacity-40 tracking-wider">
-                تم إنشاء الموقع من أحد أبناء أعدادية صلاح الدين الطالب <span class="font-semibold">"علي مصطفى عبدالله"</span>
-            </div>
-        </section>
-    
-<section id="school-services-v21" class="theme-panel max-w-7xl mx-auto my-8 p-5 md:p-8 space-y-6 relative z-10">
+        <section id="school-services-v21" class="theme-panel max-w-7xl mx-auto my-8 p-5 md:p-8 space-y-6 relative z-10">
  <div class="flex flex-wrap items-center justify-between gap-3">
   <div><span class="text-xs tracking-widest text-amber-300 font-black">SALAH AL-DIN · DIGITAL SERVICES</span><h2 class="title-font text-2xl md:text-3xl font-black gold-gradient-text mt-2">مركز الخدمات المدرسية الإلكترونية</h2><p class="text-sm opacity-75 mt-2">الخدمات الرسمية والمواعيد والفعاليات المصوّرة لإعدادية صلاح الدين للبنين.</p></div>
   <span class="rounded-full border border-amber-300/30 px-4 py-2 text-xs text-amber-100">جمهورية العراق</span>
@@ -1236,6 +1241,17 @@ button:disabled,input:disabled,select:disabled,textarea:disabled{cursor:not-allo
   <div id="s21-public-gallery" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"><p class="text-xs opacity-60">جارٍ تحميل المعرض...</p></div>
  </div>
 </section>
+
+        <!-- معلومات التواصل والاعتماد -->
+        <section id="school-info-section" class="theme-panel p-6 rounded-2xl text-center space-y-2 relative">
+            <p class="text-xs opacity-75">للتواصل الرسمي مع المدرسة: <a href="mailto:salahaldinsc600l@gmail.com" class="text-yellow-400 underline">salahaldinsc600l@gmail.com</a></p>
+            <p class="text-[10px] opacity-60">جميع الحقوق محفوظة © أعدادية صلاح الدين للبنين (تأسست 1966)</p>
+            <div class="pt-2 text-[9px] opacity-40 tracking-wider">
+                تم إنشاء الموقع من أحد أبناء أعدادية صلاح الدين الطالب <span class="font-semibold">"علي مصطفى عبدالله"</span>
+            </div>
+        </section>
+    
+
 </main>
     <!-- أزرار الإدارة وسجل الطلاب مستقلة عن المربع المحذوف -->
     <nav class="essential-school-actions" aria-label="إدارة المدرسة وسجل الطلاب">
