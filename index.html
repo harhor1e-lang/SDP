@@ -2073,196 +2073,8 @@ body.sd-desktop-mode .floating-command-dock{bottom:88px!important}
         function v6PrintAnnualReport(id) {
             const r=v6CloudData.reports?.[id]; if(!r)return;
             const w=window.open('','_blank'); if(!w)return;
-            w.document.write(`<!doctype html><html lang="ar" dir="rtl"><meta charset="utf-8"><title>${escapeHtml(r.title||'التقرير السنوي')}</title><body style="font-family:Arial;padding:32px;line-height:2"><h1>${escapeHtml(r.school||'إعدادية صلاح الدين للبنين')}</h1><h2>${escapeHtml(r.title||'التقرير السنوي')}</h2><p>السنة: ${Number(r.year)||'—'}</p><p>الإعلانات المنشورة: ${Number(r.metrics?.publishedAnnouncements)||0}</p><p>موارد المكتبة: ${Number(r.metrics?.libraryResources)||0}</p><p>سجلات المختبرات الرقمية: ${Number(r.metrics?.digitalLabRecords)||0}</p><p>${escapeHtml(r.note||'')}</p><hr><p>إدارة المدرسة</p><script>window.print()<\/script></body></html>`);
-        }
-</script>
-
-
-
-<script id="sd-school-e-services-v1">
-(()=>{
-'use strict';
-const API='https://hwkiujezomlvcbfhjdze.supabase.co/functions/v1/school-public-portal';
-const KEY='sb_publishable_1w8y0092CPVn1nT3QfXESQ_PClvh-bz';
-const $=id=>document.getElementById(id);
-async function call(action,payload={}){
- const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY},body:JSON.stringify({action,...payload})});
- let data={};try{data=await r.json()}catch(_){}
- if(!r.ok||data.error)throw new Error(data.error||'تعذر الاتصال بالخدمة ('+r.status+').');
- return data;
-}
-const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const types={document:'وثيقة أو تأييد',enrollment:'تسجيل أو قبول',inquiry:'استفسار عام',other:'طلب آخر'};
-const statuses={pending:'قيد الاستلام',in_review:'قيد المراجعة',needs_info:'يتطلب استكمال معلومات',approved:'مقبول',rejected:'مرفوض',completed:'مكتمل'};
-const eventTypes={exam:'امتحان',holiday:'عطلة',event:'فعالية',meeting:'اجتماع',other:'موعد مدرسي'};
-function fmt(v){if(!v)return '—';try{return new Date(v).toLocaleString('ar-IQ',{dateStyle:'medium',timeStyle:'short'})}catch(_){return v}}
-function localDateTimeInput(v){const d=new Date(v);return Number.isFinite(d.getTime())?new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,16):''}
-async function loadPublicCalendar(){
- const box=$('sd-public-calendar');if(!box)return;box.innerHTML='<p class="sd-muted">جارٍ تحديث المواعيد...</p>';
- try{const r=await call('calendar-public');box.innerHTML=(r.events||[]).length?(r.events||[]).map(e=>'<article class="sd-list-item"><b>'+esc(e.title)+'</b><p class="sd-muted text-xs mt-1">'+esc(eventTypes[e.event_type]||'موعد')+' · '+esc(fmt(e.starts_at))+(e.ends_at?' — '+esc(fmt(e.ends_at)):'')+'</p>'+(e.description?'<p class="text-sm mt-2">'+esc(e.description)+'</p>':'')+'</article>').join(''):'<p class="sd-muted">لا توجد مواعيد منشورة حالياً.</p>'}
- catch(e){box.innerHTML='<p class="text-rose-300">تعذر تحميل التقويم: '+esc(e.message)+'</p>'}
-}
-async function track(){
- const box=$('sd-track-result');if(!box)return;box.textContent='جارٍ التحقق...';
- try{const r=await call('track-request',{trackingCode:$('sd-track-code').value.trim(),trackingToken:$('sd-track-token').value.trim()});const x=r.request;box.innerHTML='<div class="sd-list-item space-y-1"><b>حالة الطلب: '+esc(statuses[x.status]||x.status)+'</b><p class="sd-muted text-xs">رقم المتابعة: '+esc(x.tracking_code)+' · '+esc(types[x.request_type]||x.request_type)+'</p><p class="sd-muted text-xs">آخر تحديث: '+esc(fmt(x.updated_at))+'</p>'+(x.public_message?'<p class="mt-2">'+esc(x.public_message)+'</p>':'<p class="sd-muted text-xs mt-2">لا توجد رسالة إضافية من الإدارة حالياً.</p>')+'</div>'}
- catch(e){box.textContent=e.message}
-}
-function initPublic(){
- const form=$('sd-public-request-form');if(!form||form.dataset.ready)return;form.dataset.ready='1';
- form.addEventListener('submit',async ev=>{
-  ev.preventDefault();const result=$('sd-req-result'),btn=form.querySelector('button[type="submit"]');btn.disabled=true;result.textContent='جارٍ إرسال الطلب بأمان...';
-  try{const r=await call('create-request',{applicantName:$('sd-req-name').value,contactPhone:$('sd-req-phone').value,requestType:$('sd-req-type').value,details:$('sd-req-details').value,website:$('sd-req-website').value});
-   result.innerHTML='<div class="sd-list-item space-y-2"><b class="text-emerald-300">تم استلام طلبك</b><p>رقم المتابعة: <b dir="ltr">'+esc(r.trackingCode)+'</b></p><p>رمز المتابعة السري: <b dir="ltr" class="break-all">'+esc(r.trackingToken)+'</b></p><p class="text-xs">احتفظ بالرقم والرمز معاً. لن نعرض الرمز مرة أخرى بعد مغادرة هذه الصفحة.</p><button type="button" id="sd-copy-tracking" class="sd-btn">نسخ بيانات المتابعة</button></div>';
-   $('sd-track-code').value=r.trackingCode;$('sd-track-token').value=r.trackingToken;
-   $('sd-copy-tracking')?.addEventListener('click',()=>navigator.clipboard?.writeText('رقم المتابعة: '+r.trackingCode+'\nرمز المتابعة: '+r.trackingToken));
-   form.reset();
-  }catch(e){result.textContent='تعذر إرسال الطلب: '+e.message}
-  finally{btn.disabled=false}
- });
- $('sd-track-submit')?.addEventListener('click',track);$('sd-calendar-refresh')?.addEventListener('click',loadPublicCalendar);loadPublicCalendar();
-}
-function adminSession(){return window.sdAdminSession||null}
-function addAdminInterfaces(){
- const reqPage=document.querySelector('.v14-admin-page[data-page="requests"] [data-v14-content]');
- const calPage=document.querySelector('.v14-admin-page[data-page="calendar"] [data-v14-content]');
- if(reqPage&&!reqPage.dataset.ready){
-  reqPage.dataset.ready='1';
-  reqPage.innerHTML='<div class="sd-card space-y-3"><div class="flex flex-wrap justify-between gap-2"><h3 class="font-black text-yellow-100">طلبات الزوار</h3><button id="sd-admin-requests-refresh" class="sd-btn" type="button">تحديث القائمة</button></div><p class="sd-muted text-xs">الطلبات خاصة بالإدارة ولا تظهر بيانات أصحابها للزوار.</p><div id="sd-admin-requests-list" class="space-y-3">اضغط تحديث القائمة لعرض الطلبات.</div></div>';
-  const list=$('sd-admin-requests-list');
-  async function loadRequests(){
-   if(!adminSession()){list.textContent='سجّل دخول المدير أولاً.';return}
-   list.textContent='جارٍ تحميل الطلبات...';
-   try{const r=await call('admin-list-requests',{session:adminSession()});const rows=r.requests||[];
-    list.innerHTML=rows.length?rows.map(x=>'<article class="sd-list-item space-y-2" data-request-id="'+esc(x.id)+'"><div class="flex flex-wrap justify-between gap-2"><b>'+esc(x.applicant_name)+'</b><span class="sd-pill">'+esc(x.tracking_code)+'</span></div><p class="sd-muted text-xs">'+esc(types[x.request_type]||x.request_type)+' · '+esc(fmt(x.created_at))+'</p><p class="text-sm whitespace-pre-wrap">'+esc(x.details)+'</p>'+(x.contact_phone?'<p class="sd-muted text-xs">الهاتف: '+esc(x.contact_phone)+'</p>':'')+'<label class="block text-xs">الحالة<select class="sd-field w-full mt-1" data-status>'+Object.entries(statuses).map(([k,v])=>'<option value="'+k+'" '+(x.status===k?'selected':'')+'>'+v+'</option>').join('')+'</select></label><label class="block text-xs">رسالة تظهر لصاحب الطلب<textarea class="sd-field w-full mt-1" rows="2" maxlength="1000" data-public-message>'+esc(x.public_message||'')+'</textarea></label><label class="block text-xs">ملاحظة إدارية داخلية<textarea class="sd-field w-full mt-1" rows="2" maxlength="4000" data-admin-note>'+esc(x.admin_note||'')+'</textarea></label><button type="button" class="sd-btn" data-save-request>حفظ قرار الإدارة</button></article>').join(''):'<p class="sd-muted">لا توجد طلبات واردة.</p>';
-   }catch(e){list.textContent='تعذر تحميل الطلبات: '+e.message}
-   const tile=document.querySelector('.v14-admin-tile[data-page="requests"]');
-   if(tile){
-    let badge=tile.querySelector('[data-request-count]');
-    if(!badge){badge=document.createElement('span');badge.dataset.requestCount='1';badge.className='sd-pill';tile.appendChild(badge)}
-    const pending=rows.filter(x=>x.status==='pending'||x.status==='in_review'||x.status==='needs_info').length;
-    badge.textContent=pending?('طلبات تحتاج متابعة: '+pending):'لا توجد طلبات معلقة';
-    badge.style.background=pending?'rgba(245,158,11,.18)':'rgba(16,185,129,.12)';
-    badge.style.color=pending?'#fbbf24':'#6ee7b7';
-   }
-  }
-  reqPage._sdRefreshRequests=loadRequests;
-  list.addEventListener('click',async ev=>{const b=ev.target.closest('[data-save-request]');if(!b)return;const card=b.closest('[data-request-id]');b.disabled=true;try{await call('admin-update-request',{session:adminSession(),id:card.dataset.requestId,status:card.querySelector('[data-status]').value,publicMessage:card.querySelector('[data-public-message]').value,adminNote:card.querySelector('[data-admin-note]').value});b.textContent='تم الحفظ';}catch(e){alert('تعذر حفظ القرار: '+e.message)}finally{b.disabled=false}});
-  $('sd-admin-requests-refresh').addEventListener('click',loadRequests);loadRequests();
- }
- if(calPage&&!calPage.dataset.ready){
-  calPage.dataset.ready='1';
-  calPage.innerHTML='<div class="sd-card space-y-3"><h3 class="font-black text-yellow-100">إضافة موعد أو تعديل موعد</h3><input id="sd-cal-id" type="hidden"><label class="block text-xs">عنوان الموعد<input id="sd-cal-title" class="sd-field w-full mt-1" maxlength="160" required></label><label class="block text-xs">الوصف<textarea id="sd-cal-description" class="sd-field w-full mt-1" rows="2" maxlength="2000"></textarea></label><label class="block text-xs">نوع الموعد<select id="sd-cal-type" class="sd-field w-full mt-1"><option value="exam">امتحان</option><option value="holiday">عطلة</option><option value="event">فعالية</option><option value="meeting">اجتماع</option><option value="other">موعد آخر</option></select></label><div class="grid sm:grid-cols-2 gap-2"><label class="block text-xs">يبدأ<input id="sd-cal-start" class="sd-field w-full mt-1" type="datetime-local" required></label><label class="block text-xs">ينتهي (اختياري)<input id="sd-cal-end" class="sd-field w-full mt-1" type="datetime-local"></label></div><label class="flex gap-2 items-center text-sm"><input id="sd-cal-allday" type="checkbox"> طوال اليوم</label><label class="flex gap-2 items-center text-sm"><input id="sd-cal-published" type="checkbox"> نشر الموعد للزوار</label><div class="flex gap-2 flex-wrap"><button id="sd-cal-save" class="sd-btn" type="button">حفظ الموعد</button><button id="sd-cal-clear" class="sd-btn" type="button">موعد جديد / مسح</button><button id="sd-cal-refresh" class="sd-btn" type="button">تحديث القائمة</button></div><p id="sd-cal-status" class="sd-muted text-xs" role="status"></p></div><div class="sd-card space-y-3"><h3 class="font-black text-yellow-100">كل المواعيد</h3><div id="sd-admin-calendar-list" class="space-y-2">جارٍ التحميل...</div></div>';
-  const list=$('sd-admin-calendar-list'),status=$('sd-cal-status');
-  function clearForm(){['sd-cal-id','sd-cal-title','sd-cal-description','sd-cal-start','sd-cal-end'].forEach(id=>$(id).value='');$('sd-cal-type').value='exam';$('sd-cal-allday').checked=false;$('sd-cal-published').checked=false}
-  async function loadEvents(){if(!adminSession()){list.textContent='سجّل دخول المدير أولاً.';return}list.textContent='جارٍ تحميل المواعيد...';try{const r=await call('calendar-admin-list',{session:adminSession()});list.innerHTML=(r.events||[]).length?r.events.map(e=>'<article class="sd-list-item flex flex-wrap items-center justify-between gap-2"><div><b>'+esc(e.title)+'</b><p class="sd-muted text-xs">'+esc(eventTypes[e.event_type]||'موعد')+' · '+esc(fmt(e.starts_at))+' · '+(e.is_published?'منشور':'مسودة')+'</p></div><div class="flex gap-2"><button class="sd-btn" type="button" data-edit-event="'+esc(e.id)+'">تعديل</button><button class="sd-btn" type="button" data-delete-event="'+esc(e.id)+'">حذف</button></div></article>').join(''):'<p class="sd-muted">لا توجد مواعيد مسجلة.</p>';list._events=r.events||[]}catch(e){list.textContent='تعذر تحميل المواعيد: '+e.message}}
-  $('sd-cal-save').addEventListener('click',async()=>{if(!adminSession()){status.textContent='سجّل دخول المدير أولاً.';return}const start=$('sd-cal-start').value,end=$('sd-cal-end').value;if(!$('sd-cal-title').value.trim()||!start){status.textContent='أدخل عنوان الموعد وتاريخه.';return}const b=$('sd-cal-save');b.disabled=true;try{await call('calendar-save',{session:adminSession(),id:$('sd-cal-id').value||undefined,title:$('sd-cal-title').value,description:$('sd-cal-description').value,eventType:$('sd-cal-type').value,startsAt:new Date(start).toISOString(),endsAt:end?new Date(end).toISOString():null,allDay:$('sd-cal-allday').checked,isPublished:$('sd-cal-published').checked});status.textContent='تم حفظ الموعد.';clearForm();await loadEvents();loadPublicCalendar()}catch(e){status.textContent='تعذر الحفظ: '+e.message}finally{b.disabled=false}});
-  $('sd-cal-clear').addEventListener('click',clearForm);$('sd-cal-refresh').addEventListener('click',loadEvents);
-  list.addEventListener('click',async ev=>{const edit=ev.target.closest('[data-edit-event]');const del=ev.target.closest('[data-delete-event]');if(edit){const e=(list._events||[]).find(x=>x.id===edit.dataset.editEvent);if(!e)return;$('sd-cal-id').value=e.id;$('sd-cal-title').value=e.title;$('sd-cal-description').value=e.description||'';$('sd-cal-type').value=e.event_type;$('sd-cal-start').value=localDateTimeInput(e.starts_at);$('sd-cal-end').value=e.ends_at?localDateTimeInput(e.ends_at):'';$('sd-cal-allday').checked=!!e.all_day;$('sd-cal-published').checked=!!e.is_published;status.textContent='يجري تعديل: '+e.title;return}if(del&&confirm('هل تريد حذف هذا الموعد؟')){try{await call('calendar-delete',{session:adminSession(),id:del.dataset.deleteEvent});await loadEvents();loadPublicCalendar()}catch(e){alert('تعذر حذف الموعد: '+e.message)}}});
-  loadEvents();
- }
-}
-function init(){
- initPublic();addAdminInterfaces();
- const modal=$('admin-dashboard-modal');
- if(modal)new MutationObserver(()=>{
-  addAdminInterfaces();
-  const page=document.querySelector('.v14-admin-page[data-page="requests"]');
-  if(!modal.classList.contains('hidden')&&adminSession()&&page?._sdRefreshRequests)page._sdRefreshRequests();
- }).observe(modal,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
- document.addEventListener('click',ev=>{
-  const tile=ev.target.closest('.v14-admin-tile[data-page="requests"]');
-  if(!tile)return;
-  setTimeout(()=>{const page=document.querySelector('.v14-admin-page[data-page="requests"]');if(adminSession()&&page?._sdRefreshRequests)page._sdRefreshRequests()},0);
- });
-}
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
-})();
-</script>
-
-
-<div id="sd-desktop-taskbar" role="region" aria-label="شريط سطح المكتب">
- <div class="sd-task-left"><div class="sd-task-brand"><span>ص</span><span class="sd-task-hide-mobile">صلاح الدين</span></div><button id="sd-desktop-toggle" class="sd-task-button primary" type="button">🖥️ تفعيل سطح المكتب</button></div>
- <div class="sd-task-right"><span class="sd-task-hide-mobile text-[10px] text-slate-400">منصة المدرسة الرقمية</span><button id="sd-standard-toggle" class="sd-task-button" type="button">الموقع القياسي</button></div>
-</div>
-<script id="sd-desktop-controller-v2">
-(function(){
- 'use strict';
- var KEY='salah-desktop-mode',body=document.body,home=document.getElementById('sd-desktop-home');
- var toggle=document.getElementById('sd-desktop-toggle'),standard=document.getElementById('sd-standard-toggle');
- var taskRight=document.querySelector('#sd-desktop-taskbar .sd-task-right');
- if(!home||!toggle||!standard||!taskRight)return;
- var windows=Object.create(null),z=1400,chipBox=document.createElement('div');
- chipBox.id='sd-desktop-window-chips';chipBox.className='sd-window-chips';taskRight.insertBefore(chipBox,standard);
- function setMode(on,save){
-  body.classList.toggle('sd-desktop-mode',!!on);
-  toggle.textContent=on?'🌐 إيقاف سطح المكتب':'🖥️ تفعيل سطح المكتب';
-  standard.textContent=on?'↩️ الموقع القياسي':'الموقع القياسي';
-  toggle.setAttribute('aria-pressed',on?'true':'false');
-  if(save!==false){try{localStorage.setItem(KEY,on?'on':'off')}catch(e){}}
-  if(on)home.scrollIntoView({behavior:'smooth',block:'start'});else window.scrollTo({top:0,behavior:'smooth'});
- }
- function focusWin(rec){z++;rec.el.style.zIndex=String(z);}
- function restore(rec){
-  if(!rec)return;rec.el.classList.remove('sd-desktop-window');
-  if(rec.bar&&rec.bar.parentNode)rec.bar.parentNode.removeChild(rec.bar);
-  if(rec.originalStyle===null)rec.el.removeAttribute('style');else rec.el.setAttribute('style',rec.originalStyle);
-  if(rec.chip&&rec.chip.parentNode)rec.chip.parentNode.removeChild(rec.chip);
-  delete windows[rec.id];
- }
- function setMax(rec,on){
-  rec.max=!!on;
-  if(on){rec.el.style.left='10px';rec.el.style.top='10px';rec.el.style.transform='none';rec.el.style.width='calc(100vw - 20px)';rec.el.style.height='calc(100vh - 94px)';rec.el.style.maxHeight='none';rec.el.style.maxWidth='none';rec.el.style.borderRadius='16px';rec.maxBtn.textContent='❐';}
-  else{rec.el.style.left='50%';rec.el.style.top='50%';rec.el.style.transform='translate(-50%,-50%)';rec.el.style.width='min(920px, calc(100vw - 28px))';rec.el.style.height='min(76vh, 760px)';rec.el.style.maxHeight='calc(100vh - 100px)';rec.el.style.maxWidth='calc(100vw - 28px)';rec.el.style.borderRadius='18px';rec.maxBtn.textContent='□';}
-  focusWin(rec);
- }
- function openWindow(button){
-  var id=button.getAttribute('data-sd-app'),el=document.getElementById(id);if(!el)return;
-  if(windows[id]){var old=windows[id];old.el.style.display='block';old.chip.setAttribute('aria-pressed','false');focusWin(old);return;}
-  var titleNode=button.querySelector('b'),title=titleNode?titleNode.textContent.trim():'تطبيق مدرسي';
-  var rec={id:id,el:el,originalStyle:el.getAttribute('style'),max:false};
-  var bar=document.createElement('div');bar.className='sd-window-titlebar';
-  var label=document.createElement('strong');label.textContent='▦  '+title;
-  var controls=document.createElement('div');controls.className='sd-window-controls';
-  var min=document.createElement('button'),max=document.createElement('button'),close=document.createElement('button');
-  [[min,'—','تصغير'],[max,'□','تكبير أو استعادة'],[close,'×','إغلاق']].forEach(function(x){x[0].type='button';x[0].textContent=x[1];x[0].title=x[2];x[0].setAttribute('aria-label',x[2]);});
-  controls.append(min,max,close);bar.append(label,controls);rec.bar=bar;rec.maxBtn=max;
-  el.classList.add('sd-desktop-window');el.insertBefore(bar,el.firstChild);
-  el.style.position='fixed';el.style.display='block';el.style.left='50%';el.style.top='50%';el.style.transform='translate(-50%,-50%)';
-  el.style.width='min(920px, calc(100vw - 28px))';el.style.height='min(76vh, 760px)';el.style.maxHeight='calc(100vh - 100px)';
-  el.style.maxWidth='calc(100vw - 28px)';el.style.overflow='auto';el.style.zIndex=String(++z);el.style.margin='0';el.style.boxSizing='border-box';el.style.borderRadius='18px';el.style.boxShadow='0 28px 90px rgba(0,0,0,.78)';
-  var chip=document.createElement('button');chip.type='button';chip.className='sd-window-chip';chip.textContent=title;chip.title='استعادة '+title;chip.setAttribute('aria-pressed','false');
-  chip.addEventListener('click',function(){el.style.display='block';chip.setAttribute('aria-pressed','false');focusWin(rec);});
-  chipBox.appendChild(chip);rec.chip=chip;windows[id]=rec;
-  min.addEventListener('click',function(){el.style.display='none';chip.setAttribute('aria-pressed','true');});
-  max.addEventListener('click',function(){setMax(rec,!rec.max);});
-  close.addEventListener('click',function(){restore(rec);});
-  bar.addEventListener('pointerdown',function(ev){
-   if(ev.target.closest('button')||rec.max)return;focusWin(rec);
-   var rect=el.getBoundingClientRect(),dx=ev.clientX-rect.left,dy=ev.clientY-rect.top;
-   try{bar.setPointerCapture(ev.pointerId)}catch(e){}
-   function move(e){el.style.left=Math.max(0,Math.min(window.innerWidth-90,e.clientX-dx))+'px';el.style.top=Math.max(0,Math.min(window.innerHeight-70,e.clientY-dy))+'px';el.style.transform='none';}
-   function stop(){bar.removeEventListener('pointermove',move);bar.removeEventListener('pointerup',stop);bar.removeEventListener('pointercancel',stop);}
-   bar.addEventListener('pointermove',move);bar.addEventListener('pointerup',stop);bar.addEventListener('pointercancel',stop);
-  });
-  el.addEventListener('pointerdown',function(){focusWin(rec);},{passive:true});
- }
- var saved='off';try{saved=localStorage.getItem(KEY)||'off'}catch(e){}
- setMode(saved==='on',false);
- toggle.addEventListener('click',function(){setMode(!body.classList.contains('sd-desktop-mode'),true)});
- standard.addEventListener('click',function(){setMode(false,true)});
- home.addEventListener('click',function(ev){
-  var app=ev.target.closest('[data-sd-app],[data-sd-action]');if(!app)return;
-  if(app.dataset.sdAction==='standard'){setMode(false,true);return;}
-  if(app.dataset.sdAction==='admin'){if(typeof window.openPinModal==='function')window.openPinModal();else{var adminButton=document.querySelector('[onclick*="openPinModal"]');if(adminButton)adminButton.click();}return;}
-  openWindow(app);
- });
- window.addEventListener('keydown',function(ev){
-  if(ev.key==='Escape'){var active=Object.keys(windows).map(function(k){return windows[k]}).filter(function(x){return x.el.style.display!=='none'}).sort(function(a,b){return Number(b.el.style.zIndex)-Number(a.el.style.zIndex)})[0];if(active)restore(active);}
- });
-})();
-</script>
-
-</body></html>`); w.document.close();
+            w.document.write(`<!doctype html><html lang="ar" dir="rtl"><meta charset="utf-8"><title>${escapeHtml(r.title||'التقرير السنوي')}</title><body style="font-family:Arial;padding:32px;line-height:2"><h1>${escapeHtml(r.school||'إعدادية صلاح الدين للبنين')}</h1><h2>${escapeHtml(r.title||'التقرير السنوي')}</h2><p>السنة: ${Number(r.year)||'—'}</p><p>الإعلانات المنشورة: ${Number(r.metrics?.publishedAnnouncements)||0}</p><p>موارد المكتبة: ${Number(r.metrics?.libraryResources)||0}</p><p>سجلات المختبرات الرقمية: ${Number(r.metrics?.digitalLabRecords)||0}</p><p>${escapeHtml(r.note||'')}</p><hr><p>إدارة المدرسة</p><script>window.print()<\\/script></body></html>`);
+            w.document.close();
         }
         function v6InitCloudPortal() {
             v6RenderCloudAuth();
@@ -4824,5 +4636,181 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
 })();
 </script>
 
+<script id="sd-school-e-services-v1">
+(()=>{
+'use strict';
+const API='https://hwkiujezomlvcbfhjdze.supabase.co/functions/v1/school-public-portal';
+const KEY='sb_publishable_1w8y0092CPVn1nT3QfXESQ_PClvh-bz';
+const $=id=>document.getElementById(id);
+async function call(action,payload={}){
+ const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY},body:JSON.stringify({action,...payload})});
+ let data={};try{data=await r.json()}catch(_){}
+ if(!r.ok||data.error)throw new Error(data.error||'تعذر الاتصال بالخدمة ('+r.status+').');
+ return data;
+}
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const types={document:'وثيقة أو تأييد',enrollment:'تسجيل أو قبول',inquiry:'استفسار عام',other:'طلب آخر'};
+const statuses={pending:'قيد الاستلام',in_review:'قيد المراجعة',needs_info:'يتطلب استكمال معلومات',approved:'مقبول',rejected:'مرفوض',completed:'مكتمل'};
+const eventTypes={exam:'امتحان',holiday:'عطلة',event:'فعالية',meeting:'اجتماع',other:'موعد مدرسي'};
+function fmt(v){if(!v)return '—';try{return new Date(v).toLocaleString('ar-IQ',{dateStyle:'medium',timeStyle:'short'})}catch(_){return v}}
+function localDateTimeInput(v){const d=new Date(v);return Number.isFinite(d.getTime())?new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,16):''}
+async function loadPublicCalendar(){
+ const box=$('sd-public-calendar');if(!box)return;box.innerHTML='<p class="sd-muted">جارٍ تحديث المواعيد...</p>';
+ try{const r=await call('calendar-public');box.innerHTML=(r.events||[]).length?(r.events||[]).map(e=>'<article class="sd-list-item"><b>'+esc(e.title)+'</b><p class="sd-muted text-xs mt-1">'+esc(eventTypes[e.event_type]||'موعد')+' · '+esc(fmt(e.starts_at))+(e.ends_at?' — '+esc(fmt(e.ends_at)):'')+'</p>'+(e.description?'<p class="text-sm mt-2">'+esc(e.description)+'</p>':'')+'</article>').join(''):'<p class="sd-muted">لا توجد مواعيد منشورة حالياً.</p>'}
+ catch(e){box.innerHTML='<p class="text-rose-300">تعذر تحميل التقويم: '+esc(e.message)+'</p>'}
+}
+async function track(){
+ const box=$('sd-track-result');if(!box)return;box.textContent='جارٍ التحقق...';
+ try{const r=await call('track-request',{trackingCode:$('sd-track-code').value.trim(),trackingToken:$('sd-track-token').value.trim()});const x=r.request;box.innerHTML='<div class="sd-list-item space-y-1"><b>حالة الطلب: '+esc(statuses[x.status]||x.status)+'</b><p class="sd-muted text-xs">رقم المتابعة: '+esc(x.tracking_code)+' · '+esc(types[x.request_type]||x.request_type)+'</p><p class="sd-muted text-xs">آخر تحديث: '+esc(fmt(x.updated_at))+'</p>'+(x.public_message?'<p class="mt-2">'+esc(x.public_message)+'</p>':'<p class="sd-muted text-xs mt-2">لا توجد رسالة إضافية من الإدارة حالياً.</p>')+'</div>'}
+ catch(e){box.textContent=e.message}
+}
+function initPublic(){
+ const form=$('sd-public-request-form');if(!form||form.dataset.ready)return;form.dataset.ready='1';
+ form.addEventListener('submit',async ev=>{
+  ev.preventDefault();const result=$('sd-req-result'),btn=form.querySelector('button[type="submit"]');btn.disabled=true;result.textContent='جارٍ إرسال الطلب بأمان...';
+  try{const r=await call('create-request',{applicantName:$('sd-req-name').value,contactPhone:$('sd-req-phone').value,requestType:$('sd-req-type').value,details:$('sd-req-details').value,website:$('sd-req-website').value});
+   result.innerHTML='<div class="sd-list-item space-y-2"><b class="text-emerald-300">تم استلام طلبك</b><p>رقم المتابعة: <b dir="ltr">'+esc(r.trackingCode)+'</b></p><p>رمز المتابعة السري: <b dir="ltr" class="break-all">'+esc(r.trackingToken)+'</b></p><p class="text-xs">احتفظ بالرقم والرمز معاً. لن نعرض الرمز مرة أخرى بعد مغادرة هذه الصفحة.</p><button type="button" id="sd-copy-tracking" class="sd-btn">نسخ بيانات المتابعة</button></div>';
+   $('sd-track-code').value=r.trackingCode;$('sd-track-token').value=r.trackingToken;
+   $('sd-copy-tracking')?.addEventListener('click',()=>navigator.clipboard?.writeText('رقم المتابعة: '+r.trackingCode+'\nرمز المتابعة: '+r.trackingToken));
+   form.reset();
+  }catch(e){result.textContent='تعذر إرسال الطلب: '+e.message}
+  finally{btn.disabled=false}
+ });
+ $('sd-track-submit')?.addEventListener('click',track);$('sd-calendar-refresh')?.addEventListener('click',loadPublicCalendar);loadPublicCalendar();
+}
+function adminSession(){return window.sdAdminSession||null}
+function addAdminInterfaces(){
+ const reqPage=document.querySelector('.v14-admin-page[data-page="requests"] [data-v14-content]');
+ const calPage=document.querySelector('.v14-admin-page[data-page="calendar"] [data-v14-content]');
+ if(reqPage&&!reqPage.dataset.ready){
+  reqPage.dataset.ready='1';
+  reqPage.innerHTML='<div class="sd-card space-y-3"><div class="flex flex-wrap justify-between gap-2"><h3 class="font-black text-yellow-100">طلبات الزوار</h3><button id="sd-admin-requests-refresh" class="sd-btn" type="button">تحديث القائمة</button></div><p class="sd-muted text-xs">الطلبات خاصة بالإدارة ولا تظهر بيانات أصحابها للزوار.</p><div id="sd-admin-requests-list" class="space-y-3">اضغط تحديث القائمة لعرض الطلبات.</div></div>';
+  const list=$('sd-admin-requests-list');
+  async function loadRequests(){
+   if(!adminSession()){list.textContent='سجّل دخول المدير أولاً.';return}
+   list.textContent='جارٍ تحميل الطلبات...';
+   try{const r=await call('admin-list-requests',{session:adminSession()});const rows=r.requests||[];
+    list.innerHTML=rows.length?rows.map(x=>'<article class="sd-list-item space-y-2" data-request-id="'+esc(x.id)+'"><div class="flex flex-wrap justify-between gap-2"><b>'+esc(x.applicant_name)+'</b><span class="sd-pill">'+esc(x.tracking_code)+'</span></div><p class="sd-muted text-xs">'+esc(types[x.request_type]||x.request_type)+' · '+esc(fmt(x.created_at))+'</p><p class="text-sm whitespace-pre-wrap">'+esc(x.details)+'</p>'+(x.contact_phone?'<p class="sd-muted text-xs">الهاتف: '+esc(x.contact_phone)+'</p>':'')+'<label class="block text-xs">الحالة<select class="sd-field w-full mt-1" data-status>'+Object.entries(statuses).map(([k,v])=>'<option value="'+k+'" '+(x.status===k?'selected':'')+'>'+v+'</option>').join('')+'</select></label><label class="block text-xs">رسالة تظهر لصاحب الطلب<textarea class="sd-field w-full mt-1" rows="2" maxlength="1000" data-public-message>'+esc(x.public_message||'')+'</textarea></label><label class="block text-xs">ملاحظة إدارية داخلية<textarea class="sd-field w-full mt-1" rows="2" maxlength="4000" data-admin-note>'+esc(x.admin_note||'')+'</textarea></label><button type="button" class="sd-btn" data-save-request>حفظ قرار الإدارة</button></article>').join(''):'<p class="sd-muted">لا توجد طلبات واردة.</p>';
+   }catch(e){list.textContent='تعذر تحميل الطلبات: '+e.message}
+   const tile=document.querySelector('.v14-admin-tile[data-page="requests"]');
+   if(tile){
+    let badge=tile.querySelector('[data-request-count]');
+    if(!badge){badge=document.createElement('span');badge.dataset.requestCount='1';badge.className='sd-pill';tile.appendChild(badge)}
+    const pending=rows.filter(x=>x.status==='pending'||x.status==='in_review'||x.status==='needs_info').length;
+    badge.textContent=pending?('طلبات تحتاج متابعة: '+pending):'لا توجد طلبات معلقة';
+    badge.style.background=pending?'rgba(245,158,11,.18)':'rgba(16,185,129,.12)';
+    badge.style.color=pending?'#fbbf24':'#6ee7b7';
+   }
+  }
+  reqPage._sdRefreshRequests=loadRequests;
+  list.addEventListener('click',async ev=>{const b=ev.target.closest('[data-save-request]');if(!b)return;const card=b.closest('[data-request-id]');b.disabled=true;try{await call('admin-update-request',{session:adminSession(),id:card.dataset.requestId,status:card.querySelector('[data-status]').value,publicMessage:card.querySelector('[data-public-message]').value,adminNote:card.querySelector('[data-admin-note]').value});b.textContent='تم الحفظ';}catch(e){alert('تعذر حفظ القرار: '+e.message)}finally{b.disabled=false}});
+  $('sd-admin-requests-refresh').addEventListener('click',loadRequests);loadRequests();
+ }
+ if(calPage&&!calPage.dataset.ready){
+  calPage.dataset.ready='1';
+  calPage.innerHTML='<div class="sd-card space-y-3"><h3 class="font-black text-yellow-100">إضافة موعد أو تعديل موعد</h3><input id="sd-cal-id" type="hidden"><label class="block text-xs">عنوان الموعد<input id="sd-cal-title" class="sd-field w-full mt-1" maxlength="160" required></label><label class="block text-xs">الوصف<textarea id="sd-cal-description" class="sd-field w-full mt-1" rows="2" maxlength="2000"></textarea></label><label class="block text-xs">نوع الموعد<select id="sd-cal-type" class="sd-field w-full mt-1"><option value="exam">امتحان</option><option value="holiday">عطلة</option><option value="event">فعالية</option><option value="meeting">اجتماع</option><option value="other">موعد آخر</option></select></label><div class="grid sm:grid-cols-2 gap-2"><label class="block text-xs">يبدأ<input id="sd-cal-start" class="sd-field w-full mt-1" type="datetime-local" required></label><label class="block text-xs">ينتهي (اختياري)<input id="sd-cal-end" class="sd-field w-full mt-1" type="datetime-local"></label></div><label class="flex gap-2 items-center text-sm"><input id="sd-cal-allday" type="checkbox"> طوال اليوم</label><label class="flex gap-2 items-center text-sm"><input id="sd-cal-published" type="checkbox"> نشر الموعد للزوار</label><div class="flex gap-2 flex-wrap"><button id="sd-cal-save" class="sd-btn" type="button">حفظ الموعد</button><button id="sd-cal-clear" class="sd-btn" type="button">موعد جديد / مسح</button><button id="sd-cal-refresh" class="sd-btn" type="button">تحديث القائمة</button></div><p id="sd-cal-status" class="sd-muted text-xs" role="status"></p></div><div class="sd-card space-y-3"><h3 class="font-black text-yellow-100">كل المواعيد</h3><div id="sd-admin-calendar-list" class="space-y-2">جارٍ التحميل...</div></div>';
+  const list=$('sd-admin-calendar-list'),status=$('sd-cal-status');
+  function clearForm(){['sd-cal-id','sd-cal-title','sd-cal-description','sd-cal-start','sd-cal-end'].forEach(id=>$(id).value='');$('sd-cal-type').value='exam';$('sd-cal-allday').checked=false;$('sd-cal-published').checked=false}
+  async function loadEvents(){if(!adminSession()){list.textContent='سجّل دخول المدير أولاً.';return}list.textContent='جارٍ تحميل المواعيد...';try{const r=await call('calendar-admin-list',{session:adminSession()});list.innerHTML=(r.events||[]).length?r.events.map(e=>'<article class="sd-list-item flex flex-wrap items-center justify-between gap-2"><div><b>'+esc(e.title)+'</b><p class="sd-muted text-xs">'+esc(eventTypes[e.event_type]||'موعد')+' · '+esc(fmt(e.starts_at))+' · '+(e.is_published?'منشور':'مسودة')+'</p></div><div class="flex gap-2"><button class="sd-btn" type="button" data-edit-event="'+esc(e.id)+'">تعديل</button><button class="sd-btn" type="button" data-delete-event="'+esc(e.id)+'">حذف</button></div></article>').join(''):'<p class="sd-muted">لا توجد مواعيد مسجلة.</p>';list._events=r.events||[]}catch(e){list.textContent='تعذر تحميل المواعيد: '+e.message}}
+  $('sd-cal-save').addEventListener('click',async()=>{if(!adminSession()){status.textContent='سجّل دخول المدير أولاً.';return}const start=$('sd-cal-start').value,end=$('sd-cal-end').value;if(!$('sd-cal-title').value.trim()||!start){status.textContent='أدخل عنوان الموعد وتاريخه.';return}const b=$('sd-cal-save');b.disabled=true;try{await call('calendar-save',{session:adminSession(),id:$('sd-cal-id').value||undefined,title:$('sd-cal-title').value,description:$('sd-cal-description').value,eventType:$('sd-cal-type').value,startsAt:new Date(start).toISOString(),endsAt:end?new Date(end).toISOString():null,allDay:$('sd-cal-allday').checked,isPublished:$('sd-cal-published').checked});status.textContent='تم حفظ الموعد.';clearForm();await loadEvents();loadPublicCalendar()}catch(e){status.textContent='تعذر الحفظ: '+e.message}finally{b.disabled=false}});
+  $('sd-cal-clear').addEventListener('click',clearForm);$('sd-cal-refresh').addEventListener('click',loadEvents);
+  list.addEventListener('click',async ev=>{const edit=ev.target.closest('[data-edit-event]');const del=ev.target.closest('[data-delete-event]');if(edit){const e=(list._events||[]).find(x=>x.id===edit.dataset.editEvent);if(!e)return;$('sd-cal-id').value=e.id;$('sd-cal-title').value=e.title;$('sd-cal-description').value=e.description||'';$('sd-cal-type').value=e.event_type;$('sd-cal-start').value=localDateTimeInput(e.starts_at);$('sd-cal-end').value=e.ends_at?localDateTimeInput(e.ends_at):'';$('sd-cal-allday').checked=!!e.all_day;$('sd-cal-published').checked=!!e.is_published;status.textContent='يجري تعديل: '+e.title;return}if(del&&confirm('هل تريد حذف هذا الموعد؟')){try{await call('calendar-delete',{session:adminSession(),id:del.dataset.deleteEvent});await loadEvents();loadPublicCalendar()}catch(e){alert('تعذر حذف الموعد: '+e.message)}}});
+  loadEvents();
+ }
+}
+function init(){
+ initPublic();addAdminInterfaces();
+ const modal=$('admin-dashboard-modal');
+ if(modal)new MutationObserver(()=>{
+  addAdminInterfaces();
+  const page=document.querySelector('.v14-admin-page[data-page="requests"]');
+  if(!modal.classList.contains('hidden')&&adminSession()&&page?._sdRefreshRequests)page._sdRefreshRequests();
+ }).observe(modal,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
+ document.addEventListener('click',ev=>{
+  const tile=ev.target.closest('.v14-admin-tile[data-page="requests"]');
+  if(!tile)return;
+  setTimeout(()=>{const page=document.querySelector('.v14-admin-page[data-page="requests"]');if(adminSession()&&page?._sdRefreshRequests)page._sdRefreshRequests()},0);
+ });
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
+</script>
+<script id="sd-desktop-controller-v2">
+(function(){
+ 'use strict';
+ var KEY='salah-desktop-mode',body=document.body,home=document.getElementById('sd-desktop-home');
+ var toggle=document.getElementById('sd-desktop-toggle'),standard=document.getElementById('sd-standard-toggle');
+ var taskRight=document.querySelector('#sd-desktop-taskbar .sd-task-right');
+ if(!home||!toggle||!standard||!taskRight)return;
+ var windows=Object.create(null),z=1400,chipBox=document.createElement('div');
+ chipBox.id='sd-desktop-window-chips';chipBox.className='sd-window-chips';taskRight.insertBefore(chipBox,standard);
+ function setMode(on,save){
+  body.classList.toggle('sd-desktop-mode',!!on);
+  toggle.textContent=on?'🌐 إيقاف سطح المكتب':'🖥️ تفعيل سطح المكتب';
+  standard.textContent=on?'↩️ الموقع القياسي':'الموقع القياسي';
+  toggle.setAttribute('aria-pressed',on?'true':'false');
+  if(save!==false){try{localStorage.setItem(KEY,on?'on':'off')}catch(e){}}
+  if(on)home.scrollIntoView({behavior:'smooth',block:'start'});else window.scrollTo({top:0,behavior:'smooth'});
+ }
+ function focusWin(rec){z++;rec.el.style.zIndex=String(z);}
+ function restore(rec){
+  if(!rec)return;rec.el.classList.remove('sd-desktop-window');
+  if(rec.bar&&rec.bar.parentNode)rec.bar.parentNode.removeChild(rec.bar);
+  if(rec.originalStyle===null)rec.el.removeAttribute('style');else rec.el.setAttribute('style',rec.originalStyle);
+  if(rec.chip&&rec.chip.parentNode)rec.chip.parentNode.removeChild(rec.chip);
+  delete windows[rec.id];
+ }
+ function setMax(rec,on){
+  rec.max=!!on;
+  if(on){rec.el.style.left='10px';rec.el.style.top='10px';rec.el.style.transform='none';rec.el.style.width='calc(100vw - 20px)';rec.el.style.height='calc(100vh - 94px)';rec.el.style.maxHeight='none';rec.el.style.maxWidth='none';rec.el.style.borderRadius='16px';rec.maxBtn.textContent='❐';}
+  else{rec.el.style.left='50%';rec.el.style.top='50%';rec.el.style.transform='translate(-50%,-50%)';rec.el.style.width='min(920px, calc(100vw - 28px))';rec.el.style.height='min(76vh, 760px)';rec.el.style.maxHeight='calc(100vh - 100px)';rec.el.style.maxWidth='calc(100vw - 28px)';rec.el.style.borderRadius='18px';rec.maxBtn.textContent='□';}
+  focusWin(rec);
+ }
+ function openWindow(button){
+  var id=button.getAttribute('data-sd-app'),el=document.getElementById(id);if(!el)return;
+  if(windows[id]){var old=windows[id];old.el.style.display='block';old.chip.setAttribute('aria-pressed','false');focusWin(old);return;}
+  var titleNode=button.querySelector('b'),title=titleNode?titleNode.textContent.trim():'تطبيق مدرسي';
+  var rec={id:id,el:el,originalStyle:el.getAttribute('style'),max:false};
+  var bar=document.createElement('div');bar.className='sd-window-titlebar';
+  var label=document.createElement('strong');label.textContent='▦  '+title;
+  var controls=document.createElement('div');controls.className='sd-window-controls';
+  var min=document.createElement('button'),max=document.createElement('button'),close=document.createElement('button');
+  [[min,'—','تصغير'],[max,'□','تكبير أو استعادة'],[close,'×','إغلاق']].forEach(function(x){x[0].type='button';x[0].textContent=x[1];x[0].title=x[2];x[0].setAttribute('aria-label',x[2]);});
+  controls.append(min,max,close);bar.append(label,controls);rec.bar=bar;rec.maxBtn=max;
+  el.classList.add('sd-desktop-window');el.insertBefore(bar,el.firstChild);
+  el.style.position='fixed';el.style.display='block';el.style.left='50%';el.style.top='50%';el.style.transform='translate(-50%,-50%)';
+  el.style.width='min(920px, calc(100vw - 28px))';el.style.height='min(76vh, 760px)';el.style.maxHeight='calc(100vh - 100px)';
+  el.style.maxWidth='calc(100vw - 28px)';el.style.overflow='auto';el.style.zIndex=String(++z);el.style.margin='0';el.style.boxSizing='border-box';el.style.borderRadius='18px';el.style.boxShadow='0 28px 90px rgba(0,0,0,.78)';
+  var chip=document.createElement('button');chip.type='button';chip.className='sd-window-chip';chip.textContent=title;chip.title='استعادة '+title;chip.setAttribute('aria-pressed','false');
+  chip.addEventListener('click',function(){el.style.display='block';chip.setAttribute('aria-pressed','false');focusWin(rec);});
+  chipBox.appendChild(chip);rec.chip=chip;windows[id]=rec;
+  min.addEventListener('click',function(){el.style.display='none';chip.setAttribute('aria-pressed','true');});
+  max.addEventListener('click',function(){setMax(rec,!rec.max);});
+  close.addEventListener('click',function(){restore(rec);});
+  bar.addEventListener('pointerdown',function(ev){
+   if(ev.target.closest('button')||rec.max)return;focusWin(rec);
+   var rect=el.getBoundingClientRect(),dx=ev.clientX-rect.left,dy=ev.clientY-rect.top;
+   try{bar.setPointerCapture(ev.pointerId)}catch(e){}
+   function move(e){el.style.left=Math.max(0,Math.min(window.innerWidth-90,e.clientX-dx))+'px';el.style.top=Math.max(0,Math.min(window.innerHeight-70,e.clientY-dy))+'px';el.style.transform='none';}
+   function stop(){bar.removeEventListener('pointermove',move);bar.removeEventListener('pointerup',stop);bar.removeEventListener('pointercancel',stop);}
+   bar.addEventListener('pointermove',move);bar.addEventListener('pointerup',stop);bar.addEventListener('pointercancel',stop);
+  });
+  el.addEventListener('pointerdown',function(){focusWin(rec);},{passive:true});
+ }
+ var saved='off';try{saved=localStorage.getItem(KEY)||'off'}catch(e){}
+ setMode(saved==='on',false);
+ toggle.addEventListener('click',function(){setMode(!body.classList.contains('sd-desktop-mode'),true)});
+ standard.addEventListener('click',function(){setMode(false,true)});
+ home.addEventListener('click',function(ev){
+  var app=ev.target.closest('[data-sd-app],[data-sd-action]');if(!app)return;
+  if(app.dataset.sdAction==='standard'){setMode(false,true);return;}
+  if(app.dataset.sdAction==='admin'){if(typeof window.openPinModal==='function')window.openPinModal();else{var adminButton=document.querySelector('[onclick*="openPinModal"]');if(adminButton)adminButton.click();}return;}
+  openWindow(app);
+ });
+ window.addEventListener('keydown',function(ev){
+  if(ev.key==='Escape'){var active=Object.keys(windows).map(function(k){return windows[k]}).filter(function(x){return x.el.style.display!=='none'}).sort(function(a,b){return Number(b.el.style.zIndex)-Number(a.el.style.zIndex)})[0];if(active)restore(active);}
+ });
+})();
+</script>
 </body>
 </html>
