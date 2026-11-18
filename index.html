@@ -1190,6 +1190,35 @@ button:disabled,input:disabled,select:disabled,textarea:disabled{cursor:not-allo
           <div class="sd-card"><p class="sd-muted">لا توجد إنجازات أو فعاليات منشورة في هذه النسخة. إضافة المحتوى ومراجعته واعتماده تتم من الخصوصية الإشرافية.</p></div>
         </section>
 
+
+        <section id="school-e-services-section" class="theme-panel p-5 md:p-8 space-y-5 sd-section">
+          <div class="sd-heading"><div class="sd-icon">📝</div><div><span class="sd-kicker">SCHOOL E-SERVICES</span><h2 class="title-font text-2xl font-black gold-gradient-text">الخدمات والطلبات الإلكترونية</h2><p class="sd-muted">قدّم طلبك للإدارة وتابع حالته إلكترونياً باستخدام بيانات المتابعة الخاصة بك.</p></div></div>
+          <div class="grid lg:grid-cols-2 gap-4">
+            <form id="sd-public-request-form" class="sd-card space-y-3">
+              <h3 class="font-black text-yellow-100">إرسال طلب جديد</h3>
+              <label class="block text-sm">الاسم الكامل<input id="sd-req-name" class="sd-field w-full mt-1" maxlength="100" required autocomplete="name"></label>
+              <label class="block text-sm">رقم الهاتف (اختياري)<input id="sd-req-phone" class="sd-field w-full mt-1" maxlength="40" inputmode="tel" autocomplete="tel"></label>
+              <label class="block text-sm">نوع الطلب<select id="sd-req-type" class="sd-field w-full mt-1" required><option value="document">طلب وثيقة أو تأييد</option><option value="enrollment">استفسار تسجيل أو قبول</option><option value="inquiry">استفسار عام</option><option value="other">طلب آخر</option></select></label>
+              <label class="block text-sm">تفاصيل الطلب<textarea id="sd-req-details" class="sd-field w-full mt-1" rows="4" maxlength="3000" required placeholder="اكتب تفاصيل طلبك بوضوح (10 أحرف على الأقل)"></textarea></label>
+              <input id="sd-req-website" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-10000px;opacity:0" />
+              <button class="sd-btn w-full" type="submit">إرسال الطلب للإدارة</button>
+              <p id="sd-req-result" class="sd-muted text-sm" role="status" aria-live="polite">سيظهر رقم المتابعة ورمزها بعد نجاح الإرسال. احتفظ بهما بسرية.</p>
+            </form>
+            <div class="sd-card space-y-3">
+              <h3 class="font-black text-yellow-100">متابعة طلب سابق</h3>
+              <label class="block text-sm">رقم المتابعة<input id="sd-track-code" class="sd-field w-full mt-1" maxlength="24" placeholder="SD-XXXXXXXXXX" autocomplete="off"></label>
+              <label class="block text-sm">رمز المتابعة السري<input id="sd-track-token" class="sd-field w-full mt-1" maxlength="64" placeholder="الرمز الذي ظهر عند إرسال الطلب" autocomplete="off"></label>
+              <button id="sd-track-submit" class="sd-btn w-full" type="button">التحقق من حالة الطلب</button>
+              <div id="sd-track-result" class="sd-muted text-sm" role="status" aria-live="polite">لا يمكن الاطلاع على الطلب دون رقم المتابعة ورمزها معاً.</div>
+            </div>
+          </div>
+          <div class="sd-card space-y-3">
+            <div class="flex flex-wrap justify-between items-center gap-2"><h3 class="font-black text-yellow-100">التقويم المدرسي العام</h3><button id="sd-calendar-refresh" type="button" class="sd-btn">تحديث المواعيد</button></div>
+            <p class="sd-muted text-xs">تظهر هنا المواعيد التي تعتمدها الإدارة للنشر فقط.</p>
+            <div id="sd-public-calendar" class="grid md:grid-cols-2 gap-3"><p class="sd-muted">جارٍ تحميل التقويم...</p></div>
+          </div>
+        </section>
+
         <!-- معلومات التواصل والاعتماد -->
         <section id="school-info-section" class="theme-panel p-6 rounded-2xl text-center space-y-2 relative">
             <p class="text-xs opacity-75">للتواصل الرسمي مع المدرسة: <a href="mailto:salahaldinsc600l@gmail.com" class="text-yellow-400 underline">salahaldinsc600l@gmail.com</a></p>
@@ -1987,6 +2016,83 @@ button:disabled,input:disabled,select:disabled,textarea:disabled{cursor:not-allo
             const r=v6CloudData.reports?.[id]; if(!r)return;
             const w=window.open('','_blank'); if(!w)return;
             w.document.write(`<!doctype html><html lang="ar" dir="rtl"><meta charset="utf-8"><title>${escapeHtml(r.title||'التقرير السنوي')}</title><body style="font-family:Arial;padding:32px;line-height:2"><h1>${escapeHtml(r.school||'إعدادية صلاح الدين للبنين')}</h1><h2>${escapeHtml(r.title||'التقرير السنوي')}</h2><p>السنة: ${Number(r.year)||'—'}</p><p>الإعلانات المنشورة: ${Number(r.metrics?.publishedAnnouncements)||0}</p><p>موارد المكتبة: ${Number(r.metrics?.libraryResources)||0}</p><p>سجلات المختبرات الرقمية: ${Number(r.metrics?.digitalLabRecords)||0}</p><p>${escapeHtml(r.note||'')}</p><hr><p>إدارة المدرسة</p><script>window.print()<\/script>
+
+
+<script id="sd-school-e-services-v1">
+(()=>{
+'use strict';
+const API='https://hwkiujezomlvcbfhjdze.supabase.co/functions/v1/school-public-portal';
+const KEY='sb_publishable_1w8y0092CPVn1nT3QfXESQ_PClvh-bz';
+const $=id=>document.getElementById(id);
+async function call(action,payload={}){
+ const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY},body:JSON.stringify({action,...payload})});
+ let data={};try{data=await r.json()}catch(_){}
+ if(!r.ok||data.error)throw new Error(data.error||'تعذر الاتصال بالخدمة ('+r.status+').');
+ return data;
+}
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const types={document:'وثيقة أو تأييد',enrollment:'تسجيل أو قبول',inquiry:'استفسار عام',other:'طلب آخر'};
+const statuses={pending:'قيد الاستلام',in_review:'قيد المراجعة',needs_info:'يتطلب استكمال معلومات',approved:'مقبول',rejected:'مرفوض',completed:'مكتمل'};
+const eventTypes={exam:'امتحان',holiday:'عطلة',event:'فعالية',meeting:'اجتماع',other:'موعد مدرسي'};
+function fmt(v){if(!v)return '—';try{return new Date(v).toLocaleString('ar-IQ',{dateStyle:'medium',timeStyle:'short'})}catch(_){return v}}
+async function loadPublicCalendar(){
+ const box=$('sd-public-calendar');if(!box)return;box.innerHTML='<p class="sd-muted">جارٍ تحديث المواعيد...</p>';
+ try{const r=await call('calendar-public');box.innerHTML=(r.events||[]).length?(r.events||[]).map(e=>'<article class="sd-list-item"><b>'+esc(e.title)+'</b><p class="sd-muted text-xs mt-1">'+esc(eventTypes[e.event_type]||'موعد')+' · '+esc(fmt(e.starts_at))+(e.ends_at?' — '+esc(fmt(e.ends_at)):'')+'</p>'+(e.description?'<p class="text-sm mt-2">'+esc(e.description)+'</p>':'')+'</article>').join(''):'<p class="sd-muted">لا توجد مواعيد منشورة حالياً.</p>'}
+ catch(e){box.innerHTML='<p class="text-rose-300">تعذر تحميل التقويم: '+esc(e.message)+'</p>'}
+}
+async function track(){
+ const box=$('sd-track-result');if(!box)return;box.textContent='جارٍ التحقق...';
+ try{const r=await call('track-request',{trackingCode:$('sd-track-code').value.trim(),trackingToken:$('sd-track-token').value.trim()});const x=r.request;box.innerHTML='<div class="sd-list-item space-y-1"><b>حالة الطلب: '+esc(statuses[x.status]||x.status)+'</b><p class="sd-muted text-xs">رقم المتابعة: '+esc(x.tracking_code)+' · '+esc(types[x.request_type]||x.request_type)+'</p><p class="sd-muted text-xs">آخر تحديث: '+esc(fmt(x.updated_at))+'</p>'+(x.public_message?'<p class="mt-2">'+esc(x.public_message)+'</p>':'<p class="sd-muted text-xs mt-2">لا توجد رسالة إضافية من الإدارة حالياً.</p>')+'</div>'}
+ catch(e){box.textContent=e.message}
+}
+function initPublic(){
+ const form=$('sd-public-request-form');if(!form||form.dataset.ready)return;form.dataset.ready='1';
+ form.addEventListener('submit',async ev=>{
+  ev.preventDefault();const result=$('sd-req-result'),btn=form.querySelector('button[type="submit"]');btn.disabled=true;result.textContent='جارٍ إرسال الطلب بأمان...';
+  try{const r=await call('create-request',{applicantName:$('sd-req-name').value,contactPhone:$('sd-req-phone').value,requestType:$('sd-req-type').value,details:$('sd-req-details').value,website:$('sd-req-website').value});
+   result.innerHTML='<div class="sd-list-item space-y-2"><b class="text-emerald-300">تم استلام طلبك</b><p>رقم المتابعة: <b dir="ltr">'+esc(r.trackingCode)+'</b></p><p>رمز المتابعة السري: <b dir="ltr" class="break-all">'+esc(r.trackingToken)+'</b></p><p class="text-xs">احتفظ بالرقم والرمز معاً. لن نعرض الرمز مرة أخرى بعد مغادرة هذه الصفحة.</p><button type="button" id="sd-copy-tracking" class="sd-btn">نسخ بيانات المتابعة</button></div>';
+   $('sd-track-code').value=r.trackingCode;$('sd-track-token').value=r.trackingToken;
+   $('sd-copy-tracking')?.addEventListener('click',()=>navigator.clipboard?.writeText('رقم المتابعة: '+r.trackingCode+'\nرمز المتابعة: '+r.trackingToken));
+   form.reset();
+  }catch(e){result.textContent='تعذر إرسال الطلب: '+e.message}
+  finally{btn.disabled=false}
+ });
+ $('sd-track-submit')?.addEventListener('click',track);$('sd-calendar-refresh')?.addEventListener('click',loadPublicCalendar);loadPublicCalendar();
+}
+function adminSession(){return window.sdAdminSession||null}
+function addAdminInterfaces(){
+ const reqPage=document.querySelector('.v14-admin-page[data-page="requests"] [data-v14-content]');
+ const calPage=document.querySelector('.v14-admin-page[data-page="calendar"] [data-v14-content]');
+ if(reqPage&&!reqPage.dataset.ready){
+  reqPage.dataset.ready='1';
+  reqPage.innerHTML='<div class="sd-card space-y-3"><div class="flex flex-wrap justify-between gap-2"><h3 class="font-black text-yellow-100">طلبات الزوار</h3><button id="sd-admin-requests-refresh" class="sd-btn" type="button">تحديث القائمة</button></div><p class="sd-muted text-xs">الطلبات خاصة بالإدارة ولا تظهر بيانات أصحابها للزوار.</p><div id="sd-admin-requests-list" class="space-y-3">اضغط تحديث القائمة لعرض الطلبات.</div></div>';
+  const list=$('sd-admin-requests-list');
+  async function loadRequests(){
+   if(!adminSession()){list.textContent='سجّل دخول المدير أولاً.';return}
+   list.textContent='جارٍ تحميل الطلبات...';
+   try{const r=await call('admin-list-requests',{session:adminSession()});const rows=r.requests||[];
+    list.innerHTML=rows.length?rows.map(x=>'<article class="sd-list-item space-y-2" data-request-id="'+esc(x.id)+'"><div class="flex flex-wrap justify-between gap-2"><b>'+esc(x.applicant_name)+'</b><span class="sd-pill">'+esc(x.tracking_code)+'</span></div><p class="sd-muted text-xs">'+esc(types[x.request_type]||x.request_type)+' · '+esc(fmt(x.created_at))+'</p><p class="text-sm whitespace-pre-wrap">'+esc(x.details)+'</p>'+(x.contact_phone?'<p class="sd-muted text-xs">الهاتف: '+esc(x.contact_phone)+'</p>':'')+'<label class="block text-xs">الحالة<select class="sd-field w-full mt-1" data-status>'+Object.entries(statuses).map(([k,v])=>'<option value="'+k+'" '+(x.status===k?'selected':'')+'>'+v+'</option>').join('')+'</select></label><label class="block text-xs">رسالة تظهر لصاحب الطلب<textarea class="sd-field w-full mt-1" rows="2" maxlength="1000" data-public-message>'+esc(x.public_message||'')+'</textarea></label><label class="block text-xs">ملاحظة إدارية داخلية<textarea class="sd-field w-full mt-1" rows="2" maxlength="4000" data-admin-note>'+esc(x.admin_note||'')+'</textarea></label><button type="button" class="sd-btn" data-save-request>حفظ قرار الإدارة</button></article>').join(''):'<p class="sd-muted">لا توجد طلبات واردة.</p>';
+   }catch(e){list.textContent='تعذر تحميل الطلبات: '+e.message}
+  }
+  list.addEventListener('click',async ev=>{const b=ev.target.closest('[data-save-request]');if(!b)return;const card=b.closest('[data-request-id]');b.disabled=true;try{await call('admin-update-request',{session:adminSession(),id:card.dataset.requestId,status:card.querySelector('[data-status]').value,publicMessage:card.querySelector('[data-public-message]').value,adminNote:card.querySelector('[data-admin-note]').value});b.textContent='تم الحفظ';}catch(e){alert('تعذر حفظ القرار: '+e.message)}finally{b.disabled=false}});
+  $('sd-admin-requests-refresh').addEventListener('click',loadRequests);loadRequests();
+ }
+ if(calPage&&!calPage.dataset.ready){
+  calPage.dataset.ready='1';
+  calPage.innerHTML='<div class="sd-card space-y-3"><h3 class="font-black text-yellow-100">إضافة موعد أو تعديل موعد</h3><input id="sd-cal-id" type="hidden"><label class="block text-xs">عنوان الموعد<input id="sd-cal-title" class="sd-field w-full mt-1" maxlength="160" required></label><label class="block text-xs">الوصف<textarea id="sd-cal-description" class="sd-field w-full mt-1" rows="2" maxlength="2000"></textarea></label><label class="block text-xs">نوع الموعد<select id="sd-cal-type" class="sd-field w-full mt-1"><option value="exam">امتحان</option><option value="holiday">عطلة</option><option value="event">فعالية</option><option value="meeting">اجتماع</option><option value="other">موعد آخر</option></select></label><div class="grid sm:grid-cols-2 gap-2"><label class="block text-xs">يبدأ<input id="sd-cal-start" class="sd-field w-full mt-1" type="datetime-local" required></label><label class="block text-xs">ينتهي (اختياري)<input id="sd-cal-end" class="sd-field w-full mt-1" type="datetime-local"></label></div><label class="flex gap-2 items-center text-sm"><input id="sd-cal-allday" type="checkbox"> طوال اليوم</label><label class="flex gap-2 items-center text-sm"><input id="sd-cal-published" type="checkbox"> نشر الموعد للزوار</label><div class="flex gap-2 flex-wrap"><button id="sd-cal-save" class="sd-btn" type="button">حفظ الموعد</button><button id="sd-cal-clear" class="sd-btn" type="button">موعد جديد / مسح</button><button id="sd-cal-refresh" class="sd-btn" type="button">تحديث القائمة</button></div><p id="sd-cal-status" class="sd-muted text-xs" role="status"></p></div><div class="sd-card space-y-3"><h3 class="font-black text-yellow-100">كل المواعيد</h3><div id="sd-admin-calendar-list" class="space-y-2">جارٍ التحميل...</div></div>';
+  const list=$('sd-admin-calendar-list'),status=$('sd-cal-status');
+  function clearForm(){['sd-cal-id','sd-cal-title','sd-cal-description','sd-cal-start','sd-cal-end'].forEach(id=>$(id).value='');$('sd-cal-type').value='exam';$('sd-cal-allday').checked=false;$('sd-cal-published').checked=false}
+  async function loadEvents(){if(!adminSession()){list.textContent='سجّل دخول المدير أولاً.';return}list.textContent='جارٍ تحميل المواعيد...';try{const r=await call('calendar-admin-list',{session:adminSession()});list.innerHTML=(r.events||[]).length?r.events.map(e=>'<article class="sd-list-item flex flex-wrap items-center justify-between gap-2"><div><b>'+esc(e.title)+'</b><p class="sd-muted text-xs">'+esc(eventTypes[e.event_type]||'موعد')+' · '+esc(fmt(e.starts_at))+' · '+(e.is_published?'منشور':'مسودة')+'</p></div><div class="flex gap-2"><button class="sd-btn" type="button" data-edit-event="'+esc(e.id)+'">تعديل</button><button class="sd-btn" type="button" data-delete-event="'+esc(e.id)+'">حذف</button></div></article>').join(''):'<p class="sd-muted">لا توجد مواعيد مسجلة.</p>';list._events=r.events||[]}catch(e){list.textContent='تعذر تحميل المواعيد: '+e.message}}
+  $('sd-cal-save').addEventListener('click',async()=>{if(!adminSession()){status.textContent='سجّل دخول المدير أولاً.';return}const start=$('sd-cal-start').value,end=$('sd-cal-end').value;if(!$('sd-cal-title').value.trim()||!start){status.textContent='أدخل عنوان الموعد وتاريخه.';return}const b=$('sd-cal-save');b.disabled=true;try{await call('calendar-save',{session:adminSession(),id:$('sd-cal-id').value||undefined,title:$('sd-cal-title').value,description:$('sd-cal-description').value,eventType:$('sd-cal-type').value,startsAt:new Date(start).toISOString(),endsAt:end?new Date(end).toISOString():null,allDay:$('sd-cal-allday').checked,isPublished:$('sd-cal-published').checked});status.textContent='تم حفظ الموعد.';clearForm();await loadEvents();loadPublicCalendar()}catch(e){status.textContent='تعذر الحفظ: '+e.message}finally{b.disabled=false}});
+  $('sd-cal-clear').addEventListener('click',clearForm);$('sd-cal-refresh').addEventListener('click',loadEvents);
+  list.addEventListener('click',async ev=>{const edit=ev.target.closest('[data-edit-event]');const del=ev.target.closest('[data-delete-event]');if(edit){const e=(list._events||[]).find(x=>x.id===edit.dataset.editEvent);if(!e)return;$('sd-cal-id').value=e.id;$('sd-cal-title').value=e.title;$('sd-cal-description').value=e.description||'';$('sd-cal-type').value=e.event_type;$('sd-cal-start').value=new Date(e.starts_at).toISOString().slice(0,16);$('sd-cal-end').value=e.ends_at?new Date(e.ends_at).toISOString().slice(0,16):'';$('sd-cal-allday').checked=!!e.all_day;$('sd-cal-published').checked=!!e.is_published;status.textContent='يجري تعديل: '+e.title;return}if(del&&confirm('هل تريد حذف هذا الموعد؟')){try{await call('calendar-delete',{session:adminSession(),id:del.dataset.deleteEvent});await loadEvents();loadPublicCalendar()}catch(e){alert('تعذر حذف الموعد: '+e.message)}}});
+  loadEvents();
+ }
+}
+function init(){initPublic();addAdminInterfaces();const modal=$('admin-dashboard-modal');if(modal)new MutationObserver(()=>addAdminInterfaces()).observe(modal,{childList:true,subtree:true});}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
+</script>
 
 </body></html>`); w.document.close();
         }
@@ -3855,7 +3961,9 @@ bind('weeklyTimetables',x=>tables=x,renderTable);bind('guidancePosts',x=>guides=
    ['messages','مراسلات الإدارة','✉️','صندوق الرسائل والردود الإدارية'],
    ['reports','التقارير والأدوات','📊','التقارير والطباعة وأدوات الموقع'],
    ['system','النظام والاتصال','⚙️','حالة Firebase والإعدادات والأدوات الحساسة'],
-   ['archive','الأرشيف','🗄️','حفظ النصوص والصور والمواد التي يرسلها المدير']
+   ['archive','الأرشيف','🗄️','حفظ النصوص والصور والمواد التي يرسلها المدير'],
+   ['requests','الطلبات الإلكترونية','📝','مراجعة طلبات الزوار وتحديث حالاتها ورسائل المتابعة'],
+   ['calendar','التقويم المدرسي','📅','إدارة الامتحانات والعطل والاجتماعات والفعاليات']
   ];
   groups.forEach(([id,title,icon,desc])=>{makePage(id,title,icon,desc);const b=document.createElement('button');b.type='button';b.className='v14-admin-tile';b.innerHTML=`<span class="v14-icon">${icon}</span><span><b>${title}</b><small>${desc}</small></span>`;b.addEventListener('click',()=>showPage(id));home.querySelector('#v14-admin-nav').appendChild(b)});
   function move(node,id){if(node&&pages[id]&&!node.dataset.v14Moved){pages[id].appendChild(node);node.dataset.v14Moved='1'}}
