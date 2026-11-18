@@ -3976,18 +3976,45 @@ bind('weeklyTimetables',x=>tables=x,renderTable);bind('guidancePosts',x=>guides=
   const pages={};
   function makePage(id,title,icon,desc){const page=document.createElement('section');page.className='v14-admin-page';page.dataset.page=id;page.hidden=true;page.innerHTML=`<div class="v14-page-head"><div class="flex items-center gap-3"><span class="text-3xl">${icon}</span><div><h2 class="font-black text-yellow-100">${title}</h2><p class="text-[10px] text-slate-300">${desc}</p></div></div><button type="button" class="v14-back" data-v14-back>↩ العودة إلى لوحة المدير</button></div><div data-v14-content></div>`;modal.appendChild(page);page.querySelector('[data-v14-back]').addEventListener('click',()=>showPage('home'));pages[id]=page;return page.querySelector('[data-v14-content]')}
   const groups=[
-   ['notices','التبليغات والإعلانات','📢','نشر ومراجعة التبليغات والبث الإداري'],
-   ['guidance','قسم المرشد التربوي','🧭','كتابة إرشاد تربوي منظم وإرفاق الصور ونشره للطلبة'],
-   ['students','سجل الطلاب','🎓','أدوات إدارة سجل الطلاب والهويات'],
-   ['badges','إدارة الباجات المدرسية','🪪','إصدار ومعاينة وطباعة باجات الطلاب بصورة مستقلة'],
-   ['resources','الموارد الدراسية','📚','المكتبة والكتب وبنك الأسئلة والمختبرات'],
-   ['timetable','الجداول والموارد الصفية','🗓️','الجداول الأسبوعية وموارد بوابة الطالب'],
-   ['messages','مراسلات الإدارة','✉️','صندوق الرسائل والردود الإدارية'],
-   ['reports','التقارير والأدوات','📊','التقارير والطباعة وأدوات الموقع'],
-   ['system','النظام والاتصال','⚙️','حالة Firebase والإعدادات والأدوات الحساسة'],
-   ['archive','الأرشيف','🗄️','حفظ النصوص والصور والمواد التي يرسلها المدير'],
-   ['requests','الطلبات الإلكترونية','📝','مراجعة طلبات الزوار وتحديث حالاتها ورسائل المتابعة'],
-   ['calendar','التقويم المدرسي','📅','إدارة الامتحانات والعطل والاجتماعات والفعاليات']
+   ['notices','التبليغات والإعلانات','📢','إدارة الإعلانات والمنشورات ومراجعتها'],
+   ['broadcast','البث الإداري العاجل','🚨','إدارة التنبيهات والبث المباشر'],
+   ['guidance','الإرشاد التربوي','🧭','منشورات المرشد ومتابعتها'],
+   ['students','سجل الطلاب والهويات','🎓','إضافة الطلاب واستيرادهم وتحديث سجلاتهم'],
+   ['attendance','الحضور والغياب','🟢','السجل اليومي وتقارير الحضور'],
+   ['discipline','الغياب والإنذارات','📋','متابعة السجلات التأديبية المحمية'],
+   ['badges','الباجات المدرسية','🪪','إصدار الباجات ومعاينتها وطباعتها'],
+   ['question-bank','بنك الأسئلة والوزاريات','❓','إدارة الأسئلة والمحتوى العلمي'],
+   ['labs','الأقسام والمختبرات','🧪','نشر ومراجعة محتوى المختبرات'],
+   ['books','الكتب والملفات','📁','إدارة ملفات وكتب المدرسة'],
+   ['digital-library','المكتبة الرقمية','📚','إدارة موارد المكتبة الرقمية'],
+   ['messages','صندوق الرسائل','✉️','مراجعة رسائل الطلبة والرد عليها'],
+   ['school-messages','مراسلات المدرسة','📣','نشر الرسائل العامة للطلبة'],
+   ['requests','الطلبات الإلكترونية','📝','مراجعة طلبات الزوار وتحديث حالاتها'],
+   ['calendar','التقويم المدرسي','📅','إدارة الامتحانات والعطل والاجتماعات والفعاليات'],
+   ['timetable','الجداول الدراسية','🗓️','إدارة الجداول الأسبوعية وروابطها'],
+   ['smart-timetable','الجدول الذكي','⏱️','إدارة الحصص وفحص التعارضات'],
+   ['tasks','المهام والتكليفات','📌','إسناد المهام ومتابعة الإنجاز'],
+   ['approvals','الموافقات الإدارية','📝','مراجعة العناصر التي تنتظر اعتماد المدير'],
+   ['archive','الأرشيف المدرسي','🗄️','فهرسة الوثائق والقرارات والمحاضر'],
+   ['backup','النسخ الاحتياطي','💾','تصدير واستعادة نسخ أدوات الإدارة المحلية'],
+   ['audit','سجل التدقيق الإداري','🧾','مراجعة سجل عمليات الإدارة'],
+   ['assistant','المساعد التنفيذي','🧠','موجز المدير ومساندة المتابعة'],
+   ['command','مركز القيادة الذكي','🌐','مؤشرات لوحة القيادة الإدارية'],
+   ['analytics','التحليل الطلابي','📊','تحليل سجل الطلاب المتاح'],
+   ['early-warning','الإنذار الأكاديمي المبكر','⚠️','متابعة مؤشرات الإنذار المتاحة'],
+   ['exams','مختبر الامتحانات','🧪','إعداد ومراجعة الامتحانات الإلكترونية'],
+   ['certificates','الشهادات والتكريم','🏅','إعداد الشهادات وحفظ سجلاتها'],
+   ['campus-map','الخريطة المدرسية 3D','🗺️','إدارة عرض مرافق المدرسة'],
+   ['security','الدرع الأمني','🛡️','فحص حالة حماية المنصة'],
+   ['maintenance','الصيانة والنظافة','🛠️','تسجيل ومتابعة أعمال الصيانة'],
+   ['suggestions','صندوق الاقتراحات','💡','تسجيل الاقتراحات ومراجعتها'],
+   ['initiatives','المبادرات والمساهمات','🤝','إدارة المبادرات المدرسية'],
+   ['achievements','الإنجازات ولوحة الشرف','🏆','توثيق الإنجازات والفعاليات'],
+   ['annual-report','التقرير السنوي','📈','إعداد التقرير السنوي ومراجعته'],
+   ['site-editor','محرر نصوص الموقع','✏️','إدارة النصوص الثابتة للموقع'],
+   ['operations','العمليات المدرسية','🏫','إدارة شؤون وعمليات المدرسة'],
+   ['reports','التقارير والطباعة','📊','إعداد التقارير والتصدير والطباعة'],
+   ['system','النظام والاتصال','⚙️','حالة الاتصال والإعدادات الحساسة']
   ];
   groups.forEach(([id,title,icon,desc])=>{makePage(id,title,icon,desc);const b=document.createElement('button');b.type='button';b.className='v14-admin-tile';b.dataset.page=id;b.innerHTML=`<span class="v14-icon">${icon}</span><span><b>${title}</b><small>${desc}</small></span>`;b.addEventListener('click',()=>showPage(id));home.querySelector('#v14-admin-nav').appendChild(b)});
   function move(node,id){if(node&&pages[id]&&!node.dataset.v14Moved){pages[id].appendChild(node);node.dataset.v14Moved='1'}}
@@ -4017,6 +4044,55 @@ bind('weeklyTimetables',x=>tables=x,renderTable);bind('guidancePosts',x=>guides=
     if(txt.includes('إدارة الكتب والملفات')){move(node,'resources');return}
     if(txt.includes('تغيير الرمز السري للإدارة')){move(node,'system');return}
     if(node.tagName==='SECTION'&&/التقرير|التصدير|الطباعة/.test(txt)){move(node,'reports');return}
+  });
+  // Move existing administrative modules into their own tabs without rebuilding or discarding controls.
+  const moveById=(id,page)=>move($(id),page);
+  [
+   ['sd-private-operations','tasks'],['sd-private-calendar','calendar'],
+   ['sd-private-maintenance','maintenance'],['sd-private-suggestions','suggestions'],
+   ['sd-private-timetable','timetable'],['sd-smart-timetable','smart-timetable'],
+   ['sd-private-initiatives','initiatives'],['sd-private-achievements','achievements'],
+   ['sd-exam-lab','exams'],['sd-certificate-factory','certificates'],
+   ['sd-school-map-3d','campus-map'],['sd-private-security','security'],
+   ['v6-digital-library-admin','digital-library'],['v6-communication-admin','school-messages'],
+   ['v6-annual-report-admin','annual-report']
+  ].forEach(([id,page])=>moveById(id,page));
+  const controlCenter=$('v61-control-center');
+  if(controlCenter){
+   [...controlCenter.children].forEach(node=>{
+    const id=node.id||'';
+    if(id==='v61-admin-assistant')move(node,'assistant');
+    else if(id==='v61-attendance-section')move(node,'attendance');
+    else if(id==='v61-assignment-tasks')move(node,'tasks');
+    else if(id==='v61-approvals-section')move(node,'approvals');
+    else if(id==='v61-archive-section')move(node,'archive');
+    else if(id==='v61-student-analytics')move(node,'analytics');
+    else if(id==='v61-early-warning')move(node,'early-warning');
+    else if(node.classList.contains('v61-command3d'))move(node,'command');
+    else if(/النسخ الاحتياطي والاستعادة/.test(node.innerText||''))move(node,'backup');
+    else if(/سجل التدقيق الإداري/.test(node.innerText||''))move(node,'audit');
+   });
+  }
+  const privateHost=$('sd-private-management');
+  if(privateHost){const nav=privateHost.querySelector(':scope > .grid.grid-cols-2');if(nav)nav.remove();}
+  const resourceItems=[...modal.querySelectorAll('#v7-admin-tools .v7-item')];
+  resourceItems.forEach(item=>{
+   const t=item.innerText||'';
+   if(/بنك الأسئلة/.test(t))move(item,'question-bank');
+   else if(/المختبر|الأقسام العلمية/.test(t))move(item,'labs');
+   else if(/الكتب والملفات/.test(t))move(item,'books');
+   else if(/صندوق رسائل الإدارة/.test(t))move(item,'messages');
+   else if(/إدارة التبليغات والإعلانات/.test(t))move(item,'notices');
+  });
+  [...modal.querySelectorAll(':scope > .theme-card, :scope > section')].forEach(node=>{
+   if(node.classList.contains('v14-admin-page')||node===shell||node.id==='sd-private-management')return;
+   const t=node.innerText||'';
+   if(/البث الإداري العاجل/.test(t))move(node,'broadcast');
+   else if(/إدارة بنك الأسئلة والوزاريات/.test(t))move(node,'question-bank');
+   else if(/حماية سجلات الغياب والإنذارات/.test(t))move(node,'discipline');
+   else if(/تعديل نصوص الموقع بالكامل/.test(t))move(node,'site-editor');
+   else if(/إدارة ونشر تبليغات الإدارة/.test(t))move(node,'notices');
+   else if(/النشر في الأقسام والمختبرات/.test(t))move(node,'labs');
   });
   // Move the standalone cloud-admin forms into their matching protected pages.
   move($('v6-digital-library-admin'),'resources');
