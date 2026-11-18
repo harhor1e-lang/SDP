@@ -4745,6 +4745,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
  var windows=Object.create(null),z=1400,chipBox=document.createElement('div');
  chipBox.id='sd-desktop-window-chips';chipBox.className='sd-window-chips';taskRight.insertBefore(chipBox,standard);
  function setMode(on,save){
+  if(!on){Object.keys(windows).forEach(function(k){restore(windows[k]);});}
   body.classList.toggle('sd-desktop-mode',!!on);
   toggle.textContent=on?'🌐 إيقاف سطح المكتب':'🖥️ تفعيل سطح المكتب';
   standard.textContent=on?'↩️ الموقع القياسي':'الموقع القياسي';
