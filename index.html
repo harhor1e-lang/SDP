@@ -3982,7 +3982,7 @@ bind('weeklyTimetables',x=>tables=x,renderTable);bind('guidancePosts',x=>guides=
     const txt=(node.innerText||'').trim();
     if(node.id==='sd-school-badges'){move(node,'badges');return}
     if(node.id==='v7-admin-tools'){move(node,'student-portal');return}
-    if(node.id==='v7-admin-items'||node.id==='v7-admin-posts'||txt.includes('إدارة التبليغات والإعلانات')){move(node,'notices');return}
+    if(node.id==='v7-admin-items'||node.id==='v7-admin-posts'||txt.includes('إدارة التبليغات والإعلانات')){move(node,'student-portal');return}
     if(node.id==='v7-inbox'||txt.includes('صندوق رسائل الإدارة')){move(node,'student-portal');return}
     if(txt.includes('تنظيف بيانات الأقسام القديمة')){move(node,'system');return}
     if(/إدارة بوابة الطالب|إدارة سجل الطلاب|الطلاب المسجلون/.test(txt)){move(node,'students');return}
@@ -4011,7 +4011,6 @@ bind('weeklyTimetables',x=>tables=x,renderTable);bind('guidancePosts',x=>guides=
    ['sd-private-initiatives','initiatives'],['sd-private-achievements','achievements'],
    ['sd-exam-lab','exams'],['sd-certificate-factory','certificates'],
    ['sd-school-map-3d','campus-map'],['sd-private-security','security'],
-   ['v6-digital-library-admin','digital-library'],['v6-communication-admin','school-messages'],
    ['v6-annual-report-admin','annual-report']
   ].forEach(([id,page])=>moveById(id,page));
   const controlCenter=$('v61-control-center');
@@ -4042,9 +4041,7 @@ bind('weeklyTimetables',x=>tables=x,renderTable);bind('guidancePosts',x=>guides=
    else if(/إدارة ونشر تبليغات الإدارة/.test(t))move(node,'notices');
    else if(/النشر في الأقسام والمختبرات/.test(t))move(node,'labs');
   });
-  // Move the standalone cloud-admin forms into their matching protected pages.
-  move($('v6-digital-library-admin'),'student-portal');
-  move($('v6-communication-admin'),'student-portal');
+  // Legacy V6 cards are retired by the existing cleanup routine; keep the live portal tools above intact.
   move($('v6-annual-report-admin'),'reports');
   // Give the counselor's existing publishing form its own independent page without rebuilding it.
   const guidanceCard=[...pages.notices.querySelectorAll('.theme-card')].find(el=>(el.innerText||'').includes('قسم الإرشاد')&&(el.innerText||'').includes('نشر فوري للإرشاد'));
