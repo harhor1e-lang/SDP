@@ -4013,6 +4013,11 @@ bind('weeklyTimetables',x=>tables=x,renderTable);bind('guidancePosts',x=>guides=
    ['sd-school-map-3d','campus-map'],['sd-private-security','security'],
    ['v6-annual-report-admin','annual-report']
   ].forEach(([id,page])=>moveById(id,page));
+  // Restore the existing V6 library and school-message forms to their dedicated admin tabs.
+  const legacyLibraryList=$('v6-library-admin-list');
+  const legacyLibraryCard=legacyLibraryList?.closest('section')||legacyLibraryList?.closest('.theme-card');
+  move(legacyLibraryCard,'digital-library');
+  move($('v6-communication-admin'),'school-messages');
   const controlCenter=$('v61-control-center');
   if(controlCenter){
    [...controlCenter.children].forEach(node=>{
