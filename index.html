@@ -723,6 +723,32 @@ button:disabled,input:disabled,select:disabled,textarea:disabled{cursor:not-allo
 }
 </style>
 
+
+<style id="sd-desktop-mode-v1">
+#sd-desktop-home{display:none}
+body.sd-desktop-mode{padding-bottom:96px!important;background:radial-gradient(ellipse at 15% 10%,rgba(26,86,130,.35),transparent 35%),radial-gradient(ellipse at 85% 18%,rgba(190,145,55,.2),transparent 32%),linear-gradient(145deg,#050a14,#101b2c 58%,#080d17)!important;background-attachment:fixed!important}
+body.sd-desktop-mode main{max-width:1480px!important;margin:22px auto 110px!important;padding:clamp(14px,2.5vw,32px)!important;border:1px solid rgba(216,180,90,.24);border-radius:28px;background:rgba(5,12,24,.66);box-shadow:0 28px 90px #0008,inset 0 1px #ffffff12;backdrop-filter:blur(18px)}
+body.sd-desktop-mode header{max-width:1480px;margin-inline:auto;padding-inline:clamp(14px,2.5vw,32px)}
+body.sd-desktop-mode #sd-desktop-home{display:block;max-width:1480px;margin:16px auto 0;padding:0 clamp(14px,2.5vw,32px)}
+.sd-desktop-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.sd-desktop-head strong{font-size:clamp(16px,2vw,22px);color:#f5dda0}
+.sd-desktop-head small{display:block;color:#a9bad0;font-size:11px;margin-top:3px}
+.sd-desktop-apps{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:10px}
+.sd-desktop-app{display:flex;align-items:center;gap:10px;min-height:66px;padding:12px;border:1px solid rgba(216,180,90,.25);border-radius:16px;background:linear-gradient(145deg,rgba(23,48,75,.92),rgba(9,19,34,.92));color:#edf4ff;text-align:right;box-shadow:0 9px 24px #0004;transition:transform .2s,border-color .2s,background .2s}
+.sd-desktop-app:hover{transform:translateY(-3px);border-color:#e5c477;background:linear-gradient(145deg,rgba(39,70,101,.95),rgba(15,27,45,.96))}
+.sd-desktop-app i{font-style:normal;display:grid;place-items:center;flex:0 0 38px;height:38px;border-radius:12px;background:linear-gradient(145deg,#f5df9d,#b98b3d);color:#102039;font-size:20px}
+.sd-desktop-app b{display:block;font-size:11px}.sd-desktop-app small{display:block;color:#9fb0c6;font-size:9px;margin-top:3px}
+#sd-desktop-taskbar{position:fixed;z-index:1200;left:12px;right:12px;bottom:12px;min-height:62px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 12px;border:1px solid rgba(230,195,112,.42);border-radius:20px;background:rgba(5,12,23,.9);box-shadow:0 18px 55px #0009,inset 0 1px #ffffff18;backdrop-filter:blur(24px)}
+.sd-task-left,.sd-task-right{display:flex;align-items:center;gap:8px;min-width:0}
+.sd-task-brand{display:flex;align-items:center;gap:8px;color:#f4dda0;font-size:11px;font-weight:900;white-space:nowrap}
+.sd-task-brand span{display:grid;place-items:center;width:34px;height:34px;border-radius:11px;background:linear-gradient(145deg,#f4dda0,#a8792f);color:#102039;font-size:18px}
+.sd-task-button{border:1px solid rgba(216,180,90,.28);border-radius:12px;padding:9px 12px;color:#f5e5bd;background:#ffffff0b;font-size:11px;font-weight:800;white-space:nowrap}
+.sd-task-button.primary{background:linear-gradient(110deg,#f4dda0,#c49645);color:#111c2d;border:0}
+.sd-task-button:focus-visible,.sd-desktop-app:focus-visible{outline:3px solid #f5d98a;outline-offset:3px}
+body.sd-desktop-mode .floating-command-dock{bottom:88px!important}
+@media(max-width:640px){body.sd-desktop-mode main{margin:14px 10px 100px!important;padding:12px!important;border-radius:18px!important}body.sd-desktop-mode header{padding-inline:12px!important}.sd-desktop-apps{grid-template-columns:repeat(2,minmax(0,1fr))}.sd-desktop-app{min-height:60px;padding:9px}.sd-desktop-app i{flex-basis:32px;height:32px;font-size:17px}#sd-desktop-taskbar{left:7px;right:7px;bottom:7px;padding:7px 8px;min-height:56px}.sd-task-brand{font-size:9px}.sd-task-brand span{width:30px;height:30px}.sd-task-button{padding:8px 9px;font-size:10px}.sd-task-hide-mobile{display:none}}
+@media(prefers-reduced-motion:reduce){.sd-desktop-app{transition:none}}
+</style>
 </head>
 <body class="min-h-screen relative">
 <script>
@@ -874,6 +900,24 @@ button:disabled,input:disabled,select:disabled,textarea:disabled{cursor:not-allo
 <section id="v7-admin-feed" class="v7-page"><div class="v7-panel"><button class="v7-btn alt" onclick="v7Back()">رجوع</button><h2 class="title-font text-2xl font-black gold-gradient-text">📢 تبليغات الإدارة</h2><p class="sd-muted mb-4">منشورات إدارة المدرسة فقط.</p><div id="v7-admin-feed-slot"></div></div></section>
 <section id="v7-guidance-feed" class="v7-page"><div class="v7-panel"><button class="v7-btn alt" onclick="v7Back()">رجوع</button><h2 class="title-font text-2xl font-black text-emerald-200">🧭 الإرشاد التربوي</h2><p class="sd-muted mb-4">إرشادات المرشد التربوي فقط.</p><div id="v7-guidance-feed-slot"></div></div></section>
 <!-- حُذف تبويب الإرشاد وتبويب الهوية المستقلان؛ إدارة الهوية أصبحت داخل سجل الطلاب -->
+
+<section id="sd-desktop-home" aria-label="تطبيقات سطح المكتب">
+ <div class="sd-desktop-head"><div><strong>سطح مكتب إعدادية صلاح الدين</strong><small>مساحة عمل رقمية موحدة — افتح أي تطبيق للانتقال إلى خدمته الأصلية</small></div><span class="text-xs text-amber-200">● النظام جاهز</span></div>
+ <div class="sd-desktop-apps">
+  <button class="sd-desktop-app" type="button" data-sd-app="notices-section"><i>📢</i><span><b>الإعلانات</b><small>آخر الإعلانات المدرسية</small></span></button>
+  <button class="sd-desktop-app" type="button" data-sd-app="school-timetable-section"><i>🗓️</i><span><b>الجدول الدراسي</b><small>الجداول والمواعيد</small></span></button>
+  <button class="sd-desktop-app" type="button" data-sd-app="labs-section"><i>🧪</i><span><b>المختبرات</b><small>المواد والتجارب</small></span></button>
+  <button class="sd-desktop-app" type="button" data-sd-app="library-section"><i>📚</i><span><b>المكتبة الرقمية</b><small>المصادر والكتب</small></span></button>
+  <button class="sd-desktop-app" type="button" data-sd-app="question-bank-section"><i>✍️</i><span><b>بنك الأسئلة</b><small>المراجعة والتدريب</small></span></button>
+  <button class="sd-desktop-app" type="button" data-sd-app="school-communication-portal"><i>💬</i><span><b>التواصل المدرسي</b><small>الرسائل والخدمات</small></span></button>
+  <button class="sd-desktop-app" type="button" data-sd-app="school-e-services-section"><i>🧾</i><span><b>الخدمات الإلكترونية</b><small>الطلبات والمتابعة</small></span></button>
+  <button class="sd-desktop-app" type="button" data-sd-app="sd-public-calendar"><i>📅</i><span><b>التقويم المدرسي</b><small>الفعاليات والمواعيد</small></span></button>
+  <button class="sd-desktop-app" type="button" data-sd-app="school-initiatives-section"><i>🌱</i><span><b>المبادرات</b><small>الأنشطة المدرسية</small></span></button>
+  <button class="sd-desktop-app" type="button" data-sd-app="report-center-section"><i>🖨️</i><span><b>مركز التقارير</b><small>الطباعة والتقارير</small></span></button>
+  <button class="sd-desktop-app" type="button" data-sd-action="admin"><i>🔐</i><span><b>الإدارة</b><small>دخول المدير بالرمز</small></span></button>
+  <button class="sd-desktop-app" type="button" data-sd-action="standard"><i>↩️</i><span><b>الموقع القياسي</b><small>العودة للتصميم الأصلي</small></span></button>
+ </div>
+</section>
 <main class="max-w-7xl mx-auto px-4 md:px-6 py-6 space-y-8 relative z-10 mb-28">
 
         <!-- الأقسام الأربعة الجديدة والمخصصة للمختبرات (حاسوب، فيزياء، كيمياء، أحياء) -->
@@ -2115,6 +2159,44 @@ function init(){
  });
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
+</script>
+
+
+<div id="sd-desktop-taskbar" role="region" aria-label="شريط سطح المكتب">
+ <div class="sd-task-left"><div class="sd-task-brand"><span>ص</span><span class="sd-task-hide-mobile">صلاح الدين</span></div><button id="sd-desktop-toggle" class="sd-task-button primary" type="button">🖥️ تفعيل سطح المكتب</button></div>
+ <div class="sd-task-right"><span class="sd-task-hide-mobile text-[10px] text-slate-400">منصة المدرسة الرقمية</span><button id="sd-standard-toggle" class="sd-task-button" type="button">الموقع القياسي</button></div>
+</div>
+<script id="sd-desktop-controller-v1">
+(function(){
+ 'use strict';
+ var KEY='salah-desktop-mode';
+ var body=document.body;
+ var desktopHome=document.getElementById('sd-desktop-home');
+ var toggle=document.getElementById('sd-desktop-toggle');
+ var standard=document.getElementById('sd-standard-toggle');
+ if(!desktopHome||!toggle||!standard)return;
+ function setMode(on,save){
+  body.classList.toggle('sd-desktop-mode',!!on);
+  toggle.textContent=on?'🌐 إيقاف سطح المكتب':'🖥️ تفعيل سطح المكتب';
+  standard.textContent=on?'↩️ الموقع القياسي':'الموقع القياسي';
+  toggle.setAttribute('aria-pressed',on?'true':'false');
+  if(save!==false){try{localStorage.setItem(KEY,on?'on':'off')}catch(e){}}
+  if(on){desktopHome.scrollIntoView({behavior:'smooth',block:'start'});}
+  else{window.scrollTo({top:0,behavior:'smooth'});}
+ }
+ var saved='off';try{saved=localStorage.getItem(KEY)||'off'}catch(e){}
+ setMode(saved==='on',false);
+ toggle.addEventListener('click',function(){setMode(!body.classList.contains('sd-desktop-mode'),true)});
+ standard.addEventListener('click',function(){setMode(false,true)});
+ desktopHome.addEventListener('click',function(ev){
+  var app=ev.target.closest('[data-sd-app],[data-sd-action]');if(!app)return;
+  if(app.dataset.sdAction==='standard'){setMode(false,true);return;}
+  if(app.dataset.sdAction==='admin'){if(typeof window.openPinModal==='function')window.openPinModal();else{var adminButton=document.querySelector('[onclick*="openPinModal"]');if(adminButton)adminButton.click();}return;}
+  var target=document.getElementById(app.dataset.sdApp);if(!target)return;
+  target.scrollIntoView({behavior:'smooth',block:'start'});
+  target.setAttribute('tabindex','-1');try{target.focus({preventScroll:true})}catch(e){}
+ });
 })();
 </script>
 
