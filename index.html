@@ -3936,6 +3936,7 @@ bind('weeklyTimetables',x=>tables=x,renderTable);bind('guidancePosts',x=>guides=
    ['broadcast','البث الإداري العاجل','🚨','إدارة التنبيهات والبث المباشر'],
    ['guidance','الإرشاد التربوي','🧭','منشورات المرشد ومتابعتها'],
    ['students','سجل الطلاب والهويات','🎓','إضافة الطلاب واستيرادهم وتحديث سجلاتهم'],
+   ['student-portal','إدارة بوابة الطلاب والملفات والجداول والرسائل','🗂️','إدارة محتوى بوابة الطلبة والملفات والجداول والرسائل من مكان واحد'],
    ['attendance','الحضور والغياب','🟢','السجل اليومي وتقارير الحضور'],
    ['discipline','الغياب والإنذارات','📋','متابعة السجلات التأديبية المحمية'],
    ['badges','الباجات المدرسية','🪪','إصدار الباجات ومعاينتها وطباعتها'],
@@ -3980,9 +3981,9 @@ bind('weeklyTimetables',x=>tables=x,renderTable);bind('guidancePosts',x=>guides=
     if(node===header||node===home||node===closeBtn||node.tagName==='H2')return;
     const txt=(node.innerText||'').trim();
     if(node.id==='sd-school-badges'){move(node,'badges');return}
-    if(node.id==='v7-admin-tools'){move(node,'resources');return}
+    if(node.id==='v7-admin-tools'){move(node,'student-portal');return}
     if(node.id==='v7-admin-items'||node.id==='v7-admin-posts'||txt.includes('إدارة التبليغات والإعلانات')){move(node,'notices');return}
-    if(node.id==='v7-inbox'||txt.includes('صندوق رسائل الإدارة')){move(node,'messages');return}
+    if(node.id==='v7-inbox'||txt.includes('صندوق رسائل الإدارة')){move(node,'student-portal');return}
     if(txt.includes('تنظيف بيانات الأقسام القديمة')){move(node,'system');return}
     if(/إدارة بوابة الطالب|إدارة سجل الطلاب|الطلاب المسجلون/.test(txt)){move(node,'students');return}
   });
@@ -4031,15 +4032,6 @@ bind('weeklyTimetables',x=>tables=x,renderTable);bind('guidancePosts',x=>guides=
   }
   const privateHost=$('sd-private-management');
   if(privateHost){const nav=privateHost.querySelector(':scope > .grid.grid-cols-2');if(nav)nav.remove();}
-  const resourceItems=[...modal.querySelectorAll('#v7-admin-tools .v7-item')];
-  resourceItems.forEach(item=>{
-   const t=item.innerText||'';
-   if(/بنك الأسئلة/.test(t))move(item,'question-bank');
-   else if(/المختبر|الأقسام العلمية/.test(t))move(item,'labs');
-   else if(/الكتب والملفات/.test(t))move(item,'books');
-   else if(/صندوق رسائل الإدارة/.test(t))move(item,'messages');
-   else if(/إدارة التبليغات والإعلانات/.test(t))move(item,'notices');
-  });
   [...modal.querySelectorAll(':scope > .theme-card, :scope > section')].forEach(node=>{
    if(node.classList.contains('v14-admin-page')||node===shell||node.id==='sd-private-management')return;
    const t=node.innerText||'';
@@ -4051,15 +4043,9 @@ bind('weeklyTimetables',x=>tables=x,renderTable);bind('guidancePosts',x=>guides=
    else if(/النشر في الأقسام والمختبرات/.test(t))move(node,'labs');
   });
   // Move the standalone cloud-admin forms into their matching protected pages.
-  move($('v6-digital-library-admin'),'resources');
-  move($('v6-communication-admin'),'messages');
+  move($('v6-digital-library-admin'),'student-portal');
+  move($('v6-communication-admin'),'student-portal');
   move($('v6-annual-report-admin'),'reports');
-  // Separate the weekly timetable form from the resource publishing form.
-  const adminTools=pages.resources.querySelector('#v7-admin-tools');
-  if(adminTools){
-    const toolCards=adminTools.querySelectorAll(':scope > .v7-grid > .v7-item');
-    if(toolCards[1]) pages.timetable.appendChild(toolCards[1]);
-  }
   // Give the counselor's existing publishing form its own independent page without rebuilding it.
   const guidanceCard=[...pages.notices.querySelectorAll('.theme-card')].find(el=>(el.innerText||'').includes('قسم الإرشاد')&&(el.innerText||'').includes('نشر فوري للإرشاد'));
   if(guidanceCard){
