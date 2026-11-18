@@ -723,6 +723,46 @@ button:disabled,input:disabled,select:disabled,textarea:disabled{cursor:not-allo
 }
 </style>
 
+
+<style id="sd-desktop-mode-v1">
+#sd-desktop-home{display:none}
+body.sd-desktop-mode{padding-bottom:96px!important;background:radial-gradient(ellipse at 15% 10%,rgba(26,86,130,.35),transparent 35%),radial-gradient(ellipse at 85% 18%,rgba(190,145,55,.2),transparent 32%),linear-gradient(145deg,#050a14,#101b2c 58%,#080d17)!important;background-attachment:fixed!important}
+body.sd-desktop-mode main{max-width:1480px!important;margin:22px auto 110px!important;padding:clamp(14px,2.5vw,32px)!important;border:1px solid rgba(216,180,90,.24);border-radius:28px;background:rgba(5,12,24,.66);box-shadow:0 28px 90px #0008,inset 0 1px #ffffff12;backdrop-filter:blur(18px)}
+body.sd-desktop-mode header{max-width:1480px;margin-inline:auto;padding-inline:clamp(14px,2.5vw,32px)}
+body.sd-desktop-mode #sd-desktop-home{display:block;max-width:1480px;margin:16px auto 0;padding:0 clamp(14px,2.5vw,32px)}
+.sd-desktop-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.sd-desktop-head strong{font-size:clamp(16px,2vw,22px);color:#f5dda0}
+.sd-desktop-head small{display:block;color:#a9bad0;font-size:11px;margin-top:3px}
+.sd-desktop-apps{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:10px}
+.sd-desktop-app{display:flex;align-items:center;gap:10px;min-height:66px;padding:12px;border:1px solid rgba(216,180,90,.25);border-radius:16px;background:linear-gradient(145deg,rgba(23,48,75,.92),rgba(9,19,34,.92));color:#edf4ff;text-align:right;box-shadow:0 9px 24px #0004;transition:transform .2s,border-color .2s,background .2s}
+.sd-desktop-app:hover{transform:translateY(-3px);border-color:#e5c477;background:linear-gradient(145deg,rgba(39,70,101,.95),rgba(15,27,45,.96))}
+.sd-desktop-app i{font-style:normal;display:grid;place-items:center;flex:0 0 38px;height:38px;border-radius:12px;background:linear-gradient(145deg,#f5df9d,#b98b3d);color:#102039;font-size:20px}
+.sd-desktop-app b{display:block;font-size:11px}.sd-desktop-app small{display:block;color:#9fb0c6;font-size:9px;margin-top:3px}
+#sd-desktop-taskbar{position:fixed;z-index:1200;left:12px;right:12px;bottom:12px;min-height:62px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 12px;border:1px solid rgba(230,195,112,.42);border-radius:20px;background:rgba(5,12,23,.9);box-shadow:0 18px 55px #0009,inset 0 1px #ffffff18;backdrop-filter:blur(24px)}
+.sd-task-left,.sd-task-right{display:flex;align-items:center;gap:8px;min-width:0}
+.sd-task-brand{display:flex;align-items:center;gap:8px;color:#f4dda0;font-size:11px;font-weight:900;white-space:nowrap}
+.sd-task-brand span{display:grid;place-items:center;width:34px;height:34px;border-radius:11px;background:linear-gradient(145deg,#f4dda0,#a8792f);color:#102039;font-size:18px}
+.sd-task-button{border:1px solid rgba(216,180,90,.28);border-radius:12px;padding:9px 12px;color:#f5e5bd;background:#ffffff0b;font-size:11px;font-weight:800;white-space:nowrap}
+.sd-task-button.primary{background:linear-gradient(110deg,#f4dda0,#c49645);color:#111c2d;border:0}
+.sd-task-button:focus-visible,.sd-desktop-app:focus-visible{outline:3px solid #f5d98a;outline-offset:3px}
+body.sd-desktop-mode .floating-command-dock{bottom:88px!important}
+@media(max-width:640px){body.sd-desktop-mode main{margin:14px 10px 100px!important;padding:12px!important;border-radius:18px!important}body.sd-desktop-mode header{padding-inline:12px!important}.sd-desktop-apps{grid-template-columns:repeat(2,minmax(0,1fr))}.sd-desktop-app{min-height:60px;padding:9px}.sd-desktop-app i{flex-basis:32px;height:32px;font-size:17px}#sd-desktop-taskbar{left:7px;right:7px;bottom:7px;padding:7px 8px;min-height:56px}.sd-task-brand{font-size:9px}.sd-task-brand span{width:30px;height:30px}.sd-task-button{padding:8px 9px;font-size:10px}.sd-task-hide-mobile{display:none}}
+@media(prefers-reduced-motion:reduce){.sd-desktop-app{transition:none}}
+
+/* Desktop window manager v2 */
+.sd-desktop-window{display:block!important;background:#071323!important;color:#edf4ff!important;border:1px solid rgba(230,195,112,.62)!important;z-index:1400;overscroll-behavior:contain;isolation:isolate}
+.sd-window-titlebar{position:sticky;top:0;z-index:8;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:48px;padding:7px 10px;background:linear-gradient(110deg,#142b45,#091523);border-bottom:1px solid rgba(230,195,112,.35);color:#f4dda0;cursor:move;touch-action:none}
+.sd-window-titlebar strong{font-size:12px;font-weight:900;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sd-window-controls{display:flex;gap:6px;flex-shrink:0}
+.sd-window-controls button{width:32px;height:30px;border:1px solid #ffffff28;border-radius:8px;background:#ffffff0d;color:#f5e8c6;font-weight:900;cursor:pointer;touch-action:manipulation}
+.sd-window-controls button:last-child{color:#ffb4b4;border-color:#ff777755}
+.sd-window-controls button:focus-visible,.sd-window-chip:focus-visible{outline:2px solid #f4dda0;outline-offset:2px}
+.sd-window-chips{display:flex;gap:5px;max-width:min(42vw,420px);overflow-x:auto;align-items:center}
+.sd-window-chip{max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:8px 10px;border:1px solid #d9b96b55;border-radius:10px;background:#ffffff0c;color:#f4dda0;font-size:10px;font-weight:800}
+.sd-window-chip[aria-pressed="true"]{background:#d9b96b;color:#101a29}
+@media(max-width:640px){.sd-window-chips{max-width:32vw}.sd-window-chip{max-width:90px;padding:7px 8px;font-size:9px}.sd-window-titlebar{min-height:44px;padding:6px 8px}.sd-window-controls button{width:30px;height:28px}}
+@media(prefers-reduced-motion:reduce){.sd-window-controls button,.sd-window-chip{transition:none!important}}
+</style>
 </head>
 <body class="min-h-screen relative">
 <script>
@@ -874,6 +914,24 @@ button:disabled,input:disabled,select:disabled,textarea:disabled{cursor:not-allo
 <section id="v7-admin-feed" class="v7-page"><div class="v7-panel"><button class="v7-btn alt" onclick="v7Back()">رجوع</button><h2 class="title-font text-2xl font-black gold-gradient-text">📢 تبليغات الإدارة</h2><p class="sd-muted mb-4">منشورات إدارة المدرسة فقط.</p><div id="v7-admin-feed-slot"></div></div></section>
 <section id="v7-guidance-feed" class="v7-page"><div class="v7-panel"><button class="v7-btn alt" onclick="v7Back()">رجوع</button><h2 class="title-font text-2xl font-black text-emerald-200">🧭 الإرشاد التربوي</h2><p class="sd-muted mb-4">إرشادات المرشد التربوي فقط.</p><div id="v7-guidance-feed-slot"></div></div></section>
 <!-- حُذف تبويب الإرشاد وتبويب الهوية المستقلان؛ إدارة الهوية أصبحت داخل سجل الطلاب -->
+
+<section id="sd-desktop-home" aria-label="تطبيقات سطح المكتب">
+ <div class="sd-desktop-head"><div><strong>سطح مكتب إعدادية صلاح الدين</strong><small>مساحة عمل رقمية موحدة — افتح أي تطبيق للانتقال إلى خدمته الأصلية</small></div><span class="text-xs text-amber-200">● النظام جاهز</span></div>
+ <div class="sd-desktop-apps">
+  <button class="sd-desktop-app" type="button" data-sd-app="notices-section"><i>📢</i><span><b>الإعلانات</b><small>آخر الإعلانات المدرسية</small></span></button>
+  <button class="sd-desktop-app" type="button" data-sd-app="school-timetable-section"><i>🗓️</i><span><b>الجدول الدراسي</b><small>الجداول والمواعيد</small></span></button>
+  <button class="sd-desktop-app" type="button" data-sd-app="labs-section"><i>🧪</i><span><b>المختبرات</b><small>المواد والتجارب</small></span></button>
+  <button class="sd-desktop-app" type="button" data-sd-app="library-section"><i>📚</i><span><b>المكتبة الرقمية</b><small>المصادر والكتب</small></span></button>
+  <button class="sd-desktop-app" type="button" data-sd-app="question-bank-section"><i>✍️</i><span><b>بنك الأسئلة</b><small>المراجعة والتدريب</small></span></button>
+  <button class="sd-desktop-app" type="button" data-sd-app="school-communication-portal"><i>💬</i><span><b>التواصل المدرسي</b><small>الرسائل والخدمات</small></span></button>
+  <button class="sd-desktop-app" type="button" data-sd-app="school-e-services-section"><i>🧾</i><span><b>الخدمات الإلكترونية</b><small>الطلبات والمتابعة</small></span></button>
+  <button class="sd-desktop-app" type="button" data-sd-app="sd-public-calendar"><i>📅</i><span><b>التقويم المدرسي</b><small>الفعاليات والمواعيد</small></span></button>
+  <button class="sd-desktop-app" type="button" data-sd-app="school-initiatives-section"><i>🌱</i><span><b>المبادرات</b><small>الأنشطة المدرسية</small></span></button>
+  <button class="sd-desktop-app" type="button" data-sd-app="report-center-section"><i>🖨️</i><span><b>مركز التقارير</b><small>الطباعة والتقارير</small></span></button>
+  <button class="sd-desktop-app" type="button" data-sd-action="admin"><i>🔐</i><span><b>الإدارة</b><small>دخول المدير بالرمز</small></span></button>
+  <button class="sd-desktop-app" type="button" data-sd-action="standard"><i>↩️</i><span><b>الموقع القياسي</b><small>العودة للتصميم الأصلي</small></span></button>
+ </div>
+</section>
 <main class="max-w-7xl mx-auto px-4 md:px-6 py-6 space-y-8 relative z-10 mb-28">
 
         <!-- الأقسام الأربعة الجديدة والمخصصة للمختبرات (حاسوب، فيزياء، كيمياء، أحياء) -->
@@ -1188,6 +1246,35 @@ button:disabled,input:disabled,select:disabled,textarea:disabled{cursor:not-allo
         <section id="school-achievements-section" class="theme-panel p-5 md:p-8 space-y-4 sd-section">
           <div class="sd-heading"><div class="sd-icon">🏆</div><div><span class="sd-kicker">ACHIEVEMENTS & HONOR ROLL</span><h2 class="title-font text-2xl font-black gold-gradient-text">إنجازات المدرسة والفعاليات ولوحة الشرف</h2><p class="sd-muted">توثيق ونشر الإنجازات والفعاليات بعد اعتمادها من الإدارة.</p></div></div>
           <div class="sd-card"><p class="sd-muted">لا توجد إنجازات أو فعاليات منشورة في هذه النسخة. إضافة المحتوى ومراجعته واعتماده تتم من الخصوصية الإشرافية.</p></div>
+        </section>
+
+
+        <section id="school-e-services-section" class="theme-panel p-5 md:p-8 space-y-5 sd-section">
+          <div class="sd-heading"><div class="sd-icon">📝</div><div><span class="sd-kicker">SCHOOL E-SERVICES</span><h2 class="title-font text-2xl font-black gold-gradient-text">الخدمات والطلبات الإلكترونية</h2><p class="sd-muted">قدّم طلبك للإدارة وتابع حالته إلكترونياً باستخدام بيانات المتابعة الخاصة بك.</p></div></div>
+          <div class="grid lg:grid-cols-2 gap-4">
+            <form id="sd-public-request-form" class="sd-card space-y-3">
+              <h3 class="font-black text-yellow-100">إرسال طلب جديد</h3>
+              <label class="block text-sm">الاسم الكامل<input id="sd-req-name" class="sd-field w-full mt-1" maxlength="100" required autocomplete="name"></label>
+              <label class="block text-sm">رقم الهاتف (اختياري)<input id="sd-req-phone" class="sd-field w-full mt-1" maxlength="40" inputmode="tel" autocomplete="tel"></label>
+              <label class="block text-sm">نوع الطلب<select id="sd-req-type" class="sd-field w-full mt-1" required><option value="document">طلب وثيقة أو تأييد</option><option value="enrollment">استفسار تسجيل أو قبول</option><option value="inquiry">استفسار عام</option><option value="other">طلب آخر</option></select></label>
+              <label class="block text-sm">تفاصيل الطلب<textarea id="sd-req-details" class="sd-field w-full mt-1" rows="4" maxlength="3000" required placeholder="اكتب تفاصيل طلبك بوضوح (10 أحرف على الأقل)"></textarea></label>
+              <input id="sd-req-website" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-10000px;opacity:0" />
+              <button class="sd-btn w-full" type="submit">إرسال الطلب للإدارة</button>
+              <p id="sd-req-result" class="sd-muted text-sm" role="status" aria-live="polite">سيظهر رقم المتابعة ورمزها بعد نجاح الإرسال. احتفظ بهما بسرية.</p>
+            </form>
+            <div class="sd-card space-y-3">
+              <h3 class="font-black text-yellow-100">متابعة طلب سابق</h3>
+              <label class="block text-sm">رقم المتابعة<input id="sd-track-code" class="sd-field w-full mt-1" maxlength="24" placeholder="SD-XXXXXXXXXX" autocomplete="off"></label>
+              <label class="block text-sm">رمز المتابعة السري<input id="sd-track-token" class="sd-field w-full mt-1" maxlength="64" placeholder="الرمز الذي ظهر عند إرسال الطلب" autocomplete="off"></label>
+              <button id="sd-track-submit" class="sd-btn w-full" type="button">التحقق من حالة الطلب</button>
+              <div id="sd-track-result" class="sd-muted text-sm" role="status" aria-live="polite">لا يمكن الاطلاع على الطلب دون رقم المتابعة ورمزها معاً.</div>
+            </div>
+          </div>
+          <div class="sd-card space-y-3">
+            <div class="flex flex-wrap justify-between items-center gap-2"><h3 class="font-black text-yellow-100">التقويم المدرسي العام</h3><button id="sd-calendar-refresh" type="button" class="sd-btn">تحديث المواعيد</button></div>
+            <p class="sd-muted text-xs">تظهر هنا المواعيد التي تعتمدها الإدارة للنشر فقط.</p>
+            <div id="sd-public-calendar" class="grid md:grid-cols-2 gap-3"><p class="sd-muted">جارٍ تحميل التقويم...</p></div>
+          </div>
         </section>
 
         <!-- معلومات التواصل والاعتماد -->
@@ -1986,9 +2073,8 @@ button:disabled,input:disabled,select:disabled,textarea:disabled{cursor:not-allo
         function v6PrintAnnualReport(id) {
             const r=v6CloudData.reports?.[id]; if(!r)return;
             const w=window.open('','_blank'); if(!w)return;
-            w.document.write(`<!doctype html><html lang="ar" dir="rtl"><meta charset="utf-8"><title>${escapeHtml(r.title||'التقرير السنوي')}</title><body style="font-family:Arial;padding:32px;line-height:2"><h1>${escapeHtml(r.school||'إعدادية صلاح الدين للبنين')}</h1><h2>${escapeHtml(r.title||'التقرير السنوي')}</h2><p>السنة: ${Number(r.year)||'—'}</p><p>الإعلانات المنشورة: ${Number(r.metrics?.publishedAnnouncements)||0}</p><p>موارد المكتبة: ${Number(r.metrics?.libraryResources)||0}</p><p>سجلات المختبرات الرقمية: ${Number(r.metrics?.digitalLabRecords)||0}</p><p>${escapeHtml(r.note||'')}</p><hr><p>إدارة المدرسة</p><script>window.print()<\/script>
-
-</body></html>`); w.document.close();
+            w.document.write(`<!doctype html><html lang="ar" dir="rtl"><meta charset="utf-8"><title>${escapeHtml(r.title||'التقرير السنوي')}</title><body style="font-family:Arial;padding:32px;line-height:2"><h1>${escapeHtml(r.school||'إعدادية صلاح الدين للبنين')}</h1><h2>${escapeHtml(r.title||'التقرير السنوي')}</h2><p>السنة: ${Number(r.year)||'—'}</p><p>الإعلانات المنشورة: ${Number(r.metrics?.publishedAnnouncements)||0}</p><p>موارد المكتبة: ${Number(r.metrics?.libraryResources)||0}</p><p>سجلات المختبرات الرقمية: ${Number(r.metrics?.digitalLabRecords)||0}</p><p>${escapeHtml(r.note||'')}</p><hr><p>إدارة المدرسة</p><script>window.print()<\\/script></body></html>`);
+            w.document.close();
         }
         function v6InitCloudPortal() {
             v6RenderCloudAuth();
@@ -3846,18 +3932,47 @@ bind('weeklyTimetables',x=>tables=x,renderTable);bind('guidancePosts',x=>guides=
   const pages={};
   function makePage(id,title,icon,desc){const page=document.createElement('section');page.className='v14-admin-page';page.dataset.page=id;page.hidden=true;page.innerHTML=`<div class="v14-page-head"><div class="flex items-center gap-3"><span class="text-3xl">${icon}</span><div><h2 class="font-black text-yellow-100">${title}</h2><p class="text-[10px] text-slate-300">${desc}</p></div></div><button type="button" class="v14-back" data-v14-back>↩ العودة إلى لوحة المدير</button></div><div data-v14-content></div>`;modal.appendChild(page);page.querySelector('[data-v14-back]').addEventListener('click',()=>showPage('home'));pages[id]=page;return page.querySelector('[data-v14-content]')}
   const groups=[
-   ['notices','التبليغات والإعلانات','📢','نشر ومراجعة التبليغات والبث الإداري'],
-   ['guidance','قسم المرشد التربوي','🧭','كتابة إرشاد تربوي منظم وإرفاق الصور ونشره للطلبة'],
-   ['students','سجل الطلاب','🎓','أدوات إدارة سجل الطلاب والهويات'],
-   ['badges','إدارة الباجات المدرسية','🪪','إصدار ومعاينة وطباعة باجات الطلاب بصورة مستقلة'],
-   ['resources','الموارد الدراسية','📚','المكتبة والكتب وبنك الأسئلة والمختبرات'],
-   ['timetable','الجداول والموارد الصفية','🗓️','الجداول الأسبوعية وموارد بوابة الطالب'],
-   ['messages','مراسلات الإدارة','✉️','صندوق الرسائل والردود الإدارية'],
-   ['reports','التقارير والأدوات','📊','التقارير والطباعة وأدوات الموقع'],
-   ['system','النظام والاتصال','⚙️','حالة Firebase والإعدادات والأدوات الحساسة'],
-   ['archive','الأرشيف','🗄️','حفظ النصوص والصور والمواد التي يرسلها المدير']
+   ['notices','التبليغات والإعلانات','📢','إدارة الإعلانات والمنشورات ومراجعتها'],
+   ['broadcast','البث الإداري العاجل','🚨','إدارة التنبيهات والبث المباشر'],
+   ['guidance','الإرشاد التربوي','🧭','منشورات المرشد ومتابعتها'],
+   ['students','سجل الطلاب والهويات','🎓','إضافة الطلاب واستيرادهم وتحديث سجلاتهم'],
+   ['attendance','الحضور والغياب','🟢','السجل اليومي وتقارير الحضور'],
+   ['discipline','الغياب والإنذارات','📋','متابعة السجلات التأديبية المحمية'],
+   ['badges','الباجات المدرسية','🪪','إصدار الباجات ومعاينتها وطباعتها'],
+   ['question-bank','بنك الأسئلة والوزاريات','❓','إدارة الأسئلة والمحتوى العلمي'],
+   ['labs','الأقسام والمختبرات','🧪','نشر ومراجعة محتوى المختبرات'],
+   ['books','الكتب والملفات','📁','إدارة ملفات وكتب المدرسة'],
+   ['digital-library','المكتبة الرقمية','📚','إدارة موارد المكتبة الرقمية'],
+   ['messages','صندوق الرسائل','✉️','مراجعة رسائل الطلبة والرد عليها'],
+   ['school-messages','مراسلات المدرسة','📣','نشر الرسائل العامة للطلبة'],
+   ['requests','الطلبات الإلكترونية','📝','مراجعة طلبات الزوار وتحديث حالاتها'],
+   ['calendar','التقويم المدرسي','📅','إدارة الامتحانات والعطل والاجتماعات والفعاليات'],
+   ['timetable','الجداول الدراسية','🗓️','إدارة الجداول الأسبوعية وروابطها'],
+   ['smart-timetable','الجدول الذكي','⏱️','إدارة الحصص وفحص التعارضات'],
+   ['tasks','المهام والتكليفات','📌','إسناد المهام ومتابعة الإنجاز'],
+   ['approvals','الموافقات الإدارية','📝','مراجعة العناصر التي تنتظر اعتماد المدير'],
+   ['archive','الأرشيف المدرسي','🗄️','فهرسة الوثائق والقرارات والمحاضر'],
+   ['backup','النسخ الاحتياطي','💾','تصدير واستعادة نسخ أدوات الإدارة المحلية'],
+   ['audit','سجل التدقيق الإداري','🧾','مراجعة سجل عمليات الإدارة'],
+   ['assistant','المساعد التنفيذي','🧠','موجز المدير ومساندة المتابعة'],
+   ['command','مركز القيادة الذكي','🌐','مؤشرات لوحة القيادة الإدارية'],
+   ['analytics','التحليل الطلابي','📊','تحليل سجل الطلاب المتاح'],
+   ['early-warning','الإنذار الأكاديمي المبكر','⚠️','متابعة مؤشرات الإنذار المتاحة'],
+   ['exams','مختبر الامتحانات','🧪','إعداد ومراجعة الامتحانات الإلكترونية'],
+   ['certificates','الشهادات والتكريم','🏅','إعداد الشهادات وحفظ سجلاتها'],
+   ['campus-map','الخريطة المدرسية 3D','🗺️','إدارة عرض مرافق المدرسة'],
+   ['security','الدرع الأمني','🛡️','فحص حالة حماية المنصة'],
+   ['maintenance','الصيانة والنظافة','🛠️','تسجيل ومتابعة أعمال الصيانة'],
+   ['suggestions','صندوق الاقتراحات','💡','تسجيل الاقتراحات ومراجعتها'],
+   ['initiatives','المبادرات والمساهمات','🤝','إدارة المبادرات المدرسية'],
+   ['achievements','الإنجازات ولوحة الشرف','🏆','توثيق الإنجازات والفعاليات'],
+   ['annual-report','التقرير السنوي','📈','إعداد التقرير السنوي ومراجعته'],
+   ['site-editor','محرر نصوص الموقع','✏️','إدارة النصوص الثابتة للموقع'],
+   ['operations','العمليات المدرسية','🏫','إدارة شؤون وعمليات المدرسة'],
+   ['reports','التقارير والطباعة','📊','إعداد التقارير والتصدير والطباعة'],
+   ['system','النظام والاتصال','⚙️','حالة الاتصال والإعدادات الحساسة']
   ];
-  groups.forEach(([id,title,icon,desc])=>{makePage(id,title,icon,desc);const b=document.createElement('button');b.type='button';b.className='v14-admin-tile';b.innerHTML=`<span class="v14-icon">${icon}</span><span><b>${title}</b><small>${desc}</small></span>`;b.addEventListener('click',()=>showPage(id));home.querySelector('#v14-admin-nav').appendChild(b)});
+  groups.forEach(([id,title,icon,desc])=>{makePage(id,title,icon,desc);const b=document.createElement('button');b.type='button';b.className='v14-admin-tile';b.dataset.page=id;b.innerHTML=`<span class="v14-icon">${icon}</span><span><b>${title}</b><small>${desc}</small></span>`;b.addEventListener('click',()=>showPage(id));home.querySelector('#v14-admin-nav').appendChild(b)});
   function move(node,id){if(node&&pages[id]&&!node.dataset.v14Moved){pages[id].appendChild(node);node.dataset.v14Moved='1'}}
   // Retain every existing control and move complete feature blocks without rebuilding their forms.
   const panelChildren=[...(header?[...header.children]:[]),...shell.children];
@@ -3876,15 +3991,64 @@ bind('weeklyTimetables',x=>tables=x,renderTable);bind('guidancePosts',x=>guides=
     const txt=(node.innerText||'').trim();
     if(node.id==='sd-private-management'){move(node,'system');return}
     if(txt.includes('اتصال Firebase السحابي')){move(node,'system');return}
-    if(txt.includes('تعديل نصوص الموقع بالكامل')){move(node,'reports');return}
-    if(txt.includes('البث الإداري العاجل')){move(node,'notices');return}
-    if(txt.includes('إدارة بنك الأسئلة والوزاريات')){move(node,'resources');return}
-    if(txt.includes('حماية سجلات الغياب والإنذارات')){move(node,'students');return}
+    if(txt.includes('تعديل نصوص الموقع بالكامل')){move(node,'site-editor');return}
+    if(txt.includes('البث الإداري العاجل')){move(node,'broadcast');return}
+    if(txt.includes('إدارة بنك الأسئلة والوزاريات')){move(node,'question-bank');return}
+    if(txt.includes('حماية سجلات الغياب والإنذارات')){move(node,'discipline');return}
     if(txt.includes('إدارة ونشر تبليغات الإدارة')){move(node,'notices');return}
-    if(txt.includes('النشر في الأقسام والمختبرات')){move(node,'resources');return}
-    if(txt.includes('إدارة الكتب والملفات')){move(node,'resources');return}
+    if(txt.includes('النشر في الأقسام والمختبرات')){move(node,'labs');return}
+    if(txt.includes('إدارة الكتب والملفات')){move(node,'books');return}
     if(txt.includes('تغيير الرمز السري للإدارة')){move(node,'system');return}
-    if(node.tagName==='SECTION'&&/التقرير|التصدير|الطباعة/.test(txt)){move(node,'reports');return}
+    if(node.tagName==='SECTION'&&/التقرير السنوي التلقائي/.test(txt)){move(node,'annual-report');return} if(node.tagName==='SECTION'&&/التقرير|التصدير|الطباعة/.test(txt)){move(node,'reports');return}
+  });
+  // Move existing administrative modules into their own tabs without rebuilding or discarding controls.
+  const moveById=(id,page)=>move($(id),page);
+  [
+   ['sd-private-operations','tasks'],['sd-private-calendar','calendar'],
+   ['sd-private-maintenance','maintenance'],['sd-private-suggestions','suggestions'],
+   ['sd-private-timetable','timetable'],['sd-smart-timetable','smart-timetable'],
+   ['sd-private-initiatives','initiatives'],['sd-private-achievements','achievements'],
+   ['sd-exam-lab','exams'],['sd-certificate-factory','certificates'],
+   ['sd-school-map-3d','campus-map'],['sd-private-security','security'],
+   ['v6-digital-library-admin','digital-library'],['v6-communication-admin','school-messages'],
+   ['v6-annual-report-admin','annual-report']
+  ].forEach(([id,page])=>moveById(id,page));
+  const controlCenter=$('v61-control-center');
+  if(controlCenter){
+   [...controlCenter.children].forEach(node=>{
+    const id=node.id||'';
+    if(id==='v61-admin-assistant')move(node,'assistant');
+    else if(id==='v61-attendance-section')move(node,'attendance');
+    else if(id==='v61-assignment-tasks')move(node,'tasks');
+    else if(id==='v61-approvals-section')move(node,'approvals');
+    else if(id==='v61-archive-section')move(node,'archive');
+    else if(id==='v61-student-analytics')move(node,'analytics');
+    else if(id==='v61-early-warning')move(node,'early-warning');
+    else if(node.classList.contains('v61-command3d'))move(node,'command');
+    else if(/النسخ الاحتياطي والاستعادة/.test(node.innerText||''))move(node,'backup');
+    else if(/سجل التدقيق الإداري/.test(node.innerText||''))move(node,'audit');
+   });
+  }
+  const privateHost=$('sd-private-management');
+  if(privateHost){const nav=privateHost.querySelector(':scope > .grid.grid-cols-2');if(nav)nav.remove();}
+  const resourceItems=[...modal.querySelectorAll('#v7-admin-tools .v7-item')];
+  resourceItems.forEach(item=>{
+   const t=item.innerText||'';
+   if(/بنك الأسئلة/.test(t))move(item,'question-bank');
+   else if(/المختبر|الأقسام العلمية/.test(t))move(item,'labs');
+   else if(/الكتب والملفات/.test(t))move(item,'books');
+   else if(/صندوق رسائل الإدارة/.test(t))move(item,'messages');
+   else if(/إدارة التبليغات والإعلانات/.test(t))move(item,'notices');
+  });
+  [...modal.querySelectorAll(':scope > .theme-card, :scope > section')].forEach(node=>{
+   if(node.classList.contains('v14-admin-page')||node===shell||node.id==='sd-private-management')return;
+   const t=node.innerText||'';
+   if(/البث الإداري العاجل/.test(t))move(node,'broadcast');
+   else if(/إدارة بنك الأسئلة والوزاريات/.test(t))move(node,'question-bank');
+   else if(/حماية سجلات الغياب والإنذارات/.test(t))move(node,'discipline');
+   else if(/تعديل نصوص الموقع بالكامل/.test(t))move(node,'site-editor');
+   else if(/إدارة ونشر تبليغات الإدارة/.test(t))move(node,'notices');
+   else if(/النشر في الأقسام والمختبرات/.test(t))move(node,'labs');
   });
   // Move the standalone cloud-admin forms into their matching protected pages.
   move($('v6-digital-library-admin'),'resources');
@@ -4472,5 +4636,182 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
 })();
 </script>
 
+<script id="sd-school-e-services-v1">
+(()=>{
+'use strict';
+const API='https://hwkiujezomlvcbfhjdze.supabase.co/functions/v1/school-public-portal';
+const KEY='sb_publishable_1w8y0092CPVn1nT3QfXESQ_PClvh-bz';
+const $=id=>document.getElementById(id);
+async function call(action,payload={}){
+ const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY},body:JSON.stringify({action,...payload})});
+ let data={};try{data=await r.json()}catch(_){}
+ if(!r.ok||data.error)throw new Error(data.error||'تعذر الاتصال بالخدمة ('+r.status+').');
+ return data;
+}
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const types={document:'وثيقة أو تأييد',enrollment:'تسجيل أو قبول',inquiry:'استفسار عام',other:'طلب آخر'};
+const statuses={pending:'قيد الاستلام',in_review:'قيد المراجعة',needs_info:'يتطلب استكمال معلومات',approved:'مقبول',rejected:'مرفوض',completed:'مكتمل'};
+const eventTypes={exam:'امتحان',holiday:'عطلة',event:'فعالية',meeting:'اجتماع',other:'موعد مدرسي'};
+function fmt(v){if(!v)return '—';try{return new Date(v).toLocaleString('ar-IQ',{dateStyle:'medium',timeStyle:'short'})}catch(_){return v}}
+function localDateTimeInput(v){const d=new Date(v);return Number.isFinite(d.getTime())?new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,16):''}
+async function loadPublicCalendar(){
+ const box=$('sd-public-calendar');if(!box)return;box.innerHTML='<p class="sd-muted">جارٍ تحديث المواعيد...</p>';
+ try{const r=await call('calendar-public');box.innerHTML=(r.events||[]).length?(r.events||[]).map(e=>'<article class="sd-list-item"><b>'+esc(e.title)+'</b><p class="sd-muted text-xs mt-1">'+esc(eventTypes[e.event_type]||'موعد')+' · '+esc(fmt(e.starts_at))+(e.ends_at?' — '+esc(fmt(e.ends_at)):'')+'</p>'+(e.description?'<p class="text-sm mt-2">'+esc(e.description)+'</p>':'')+'</article>').join(''):'<p class="sd-muted">لا توجد مواعيد منشورة حالياً.</p>'}
+ catch(e){box.innerHTML='<p class="text-rose-300">تعذر تحميل التقويم: '+esc(e.message)+'</p>'}
+}
+async function track(){
+ const box=$('sd-track-result');if(!box)return;box.textContent='جارٍ التحقق...';
+ try{const r=await call('track-request',{trackingCode:$('sd-track-code').value.trim(),trackingToken:$('sd-track-token').value.trim()});const x=r.request;box.innerHTML='<div class="sd-list-item space-y-1"><b>حالة الطلب: '+esc(statuses[x.status]||x.status)+'</b><p class="sd-muted text-xs">رقم المتابعة: '+esc(x.tracking_code)+' · '+esc(types[x.request_type]||x.request_type)+'</p><p class="sd-muted text-xs">آخر تحديث: '+esc(fmt(x.updated_at))+'</p>'+(x.public_message?'<p class="mt-2">'+esc(x.public_message)+'</p>':'<p class="sd-muted text-xs mt-2">لا توجد رسالة إضافية من الإدارة حالياً.</p>')+'</div>'}
+ catch(e){box.textContent=e.message}
+}
+function initPublic(){
+ const form=$('sd-public-request-form');if(!form||form.dataset.ready)return;form.dataset.ready='1';
+ form.addEventListener('submit',async ev=>{
+  ev.preventDefault();const result=$('sd-req-result'),btn=form.querySelector('button[type="submit"]');btn.disabled=true;result.textContent='جارٍ إرسال الطلب بأمان...';
+  try{const r=await call('create-request',{applicantName:$('sd-req-name').value,contactPhone:$('sd-req-phone').value,requestType:$('sd-req-type').value,details:$('sd-req-details').value,website:$('sd-req-website').value});
+   result.innerHTML='<div class="sd-list-item space-y-2"><b class="text-emerald-300">تم استلام طلبك</b><p>رقم المتابعة: <b dir="ltr">'+esc(r.trackingCode)+'</b></p><p>رمز المتابعة السري: <b dir="ltr" class="break-all">'+esc(r.trackingToken)+'</b></p><p class="text-xs">احتفظ بالرقم والرمز معاً. لن نعرض الرمز مرة أخرى بعد مغادرة هذه الصفحة.</p><button type="button" id="sd-copy-tracking" class="sd-btn">نسخ بيانات المتابعة</button></div>';
+   $('sd-track-code').value=r.trackingCode;$('sd-track-token').value=r.trackingToken;
+   $('sd-copy-tracking')?.addEventListener('click',()=>navigator.clipboard?.writeText('رقم المتابعة: '+r.trackingCode+'\nرمز المتابعة: '+r.trackingToken));
+   form.reset();
+  }catch(e){result.textContent='تعذر إرسال الطلب: '+e.message}
+  finally{btn.disabled=false}
+ });
+ $('sd-track-submit')?.addEventListener('click',track);$('sd-calendar-refresh')?.addEventListener('click',loadPublicCalendar);loadPublicCalendar();
+}
+function adminSession(){return window.sdAdminSession||null}
+function addAdminInterfaces(){
+ const reqPage=document.querySelector('.v14-admin-page[data-page="requests"] [data-v14-content]');
+ const calPage=document.querySelector('.v14-admin-page[data-page="calendar"] [data-v14-content]');
+ if(reqPage&&!reqPage.dataset.ready){
+  reqPage.dataset.ready='1';
+  reqPage.innerHTML='<div class="sd-card space-y-3"><div class="flex flex-wrap justify-between gap-2"><h3 class="font-black text-yellow-100">طلبات الزوار</h3><button id="sd-admin-requests-refresh" class="sd-btn" type="button">تحديث القائمة</button></div><p class="sd-muted text-xs">الطلبات خاصة بالإدارة ولا تظهر بيانات أصحابها للزوار.</p><div id="sd-admin-requests-list" class="space-y-3">اضغط تحديث القائمة لعرض الطلبات.</div></div>';
+  const list=$('sd-admin-requests-list');
+  async function loadRequests(){
+   if(!adminSession()){list.textContent='سجّل دخول المدير أولاً.';return}
+   list.textContent='جارٍ تحميل الطلبات...';
+   try{const r=await call('admin-list-requests',{session:adminSession()});const rows=r.requests||[];
+    list.innerHTML=rows.length?rows.map(x=>'<article class="sd-list-item space-y-2" data-request-id="'+esc(x.id)+'"><div class="flex flex-wrap justify-between gap-2"><b>'+esc(x.applicant_name)+'</b><span class="sd-pill">'+esc(x.tracking_code)+'</span></div><p class="sd-muted text-xs">'+esc(types[x.request_type]||x.request_type)+' · '+esc(fmt(x.created_at))+'</p><p class="text-sm whitespace-pre-wrap">'+esc(x.details)+'</p>'+(x.contact_phone?'<p class="sd-muted text-xs">الهاتف: '+esc(x.contact_phone)+'</p>':'')+'<label class="block text-xs">الحالة<select class="sd-field w-full mt-1" data-status>'+Object.entries(statuses).map(([k,v])=>'<option value="'+k+'" '+(x.status===k?'selected':'')+'>'+v+'</option>').join('')+'</select></label><label class="block text-xs">رسالة تظهر لصاحب الطلب<textarea class="sd-field w-full mt-1" rows="2" maxlength="1000" data-public-message>'+esc(x.public_message||'')+'</textarea></label><label class="block text-xs">ملاحظة إدارية داخلية<textarea class="sd-field w-full mt-1" rows="2" maxlength="4000" data-admin-note>'+esc(x.admin_note||'')+'</textarea></label><button type="button" class="sd-btn" data-save-request>حفظ قرار الإدارة</button></article>').join(''):'<p class="sd-muted">لا توجد طلبات واردة.</p>';
+   }catch(e){list.textContent='تعذر تحميل الطلبات: '+e.message}
+   const tile=document.querySelector('.v14-admin-tile[data-page="requests"]');
+   if(tile){
+    let badge=tile.querySelector('[data-request-count]');
+    if(!badge){badge=document.createElement('span');badge.dataset.requestCount='1';badge.className='sd-pill';tile.appendChild(badge)}
+    const pending=rows.filter(x=>x.status==='pending'||x.status==='in_review'||x.status==='needs_info').length;
+    badge.textContent=pending?('طلبات تحتاج متابعة: '+pending):'لا توجد طلبات معلقة';
+    badge.style.background=pending?'rgba(245,158,11,.18)':'rgba(16,185,129,.12)';
+    badge.style.color=pending?'#fbbf24':'#6ee7b7';
+   }
+  }
+  reqPage._sdRefreshRequests=loadRequests;
+  list.addEventListener('click',async ev=>{const b=ev.target.closest('[data-save-request]');if(!b)return;const card=b.closest('[data-request-id]');b.disabled=true;try{await call('admin-update-request',{session:adminSession(),id:card.dataset.requestId,status:card.querySelector('[data-status]').value,publicMessage:card.querySelector('[data-public-message]').value,adminNote:card.querySelector('[data-admin-note]').value});b.textContent='تم الحفظ';}catch(e){alert('تعذر حفظ القرار: '+e.message)}finally{b.disabled=false}});
+  $('sd-admin-requests-refresh').addEventListener('click',loadRequests);loadRequests();
+ }
+ if(calPage&&!calPage.dataset.ready){
+  calPage.dataset.ready='1';
+  calPage.innerHTML='<div class="sd-card space-y-3"><h3 class="font-black text-yellow-100">إضافة موعد أو تعديل موعد</h3><input id="sd-cal-id" type="hidden"><label class="block text-xs">عنوان الموعد<input id="sd-cal-title" class="sd-field w-full mt-1" maxlength="160" required></label><label class="block text-xs">الوصف<textarea id="sd-cal-description" class="sd-field w-full mt-1" rows="2" maxlength="2000"></textarea></label><label class="block text-xs">نوع الموعد<select id="sd-cal-type" class="sd-field w-full mt-1"><option value="exam">امتحان</option><option value="holiday">عطلة</option><option value="event">فعالية</option><option value="meeting">اجتماع</option><option value="other">موعد آخر</option></select></label><div class="grid sm:grid-cols-2 gap-2"><label class="block text-xs">يبدأ<input id="sd-cal-start" class="sd-field w-full mt-1" type="datetime-local" required></label><label class="block text-xs">ينتهي (اختياري)<input id="sd-cal-end" class="sd-field w-full mt-1" type="datetime-local"></label></div><label class="flex gap-2 items-center text-sm"><input id="sd-cal-allday" type="checkbox"> طوال اليوم</label><label class="flex gap-2 items-center text-sm"><input id="sd-cal-published" type="checkbox"> نشر الموعد للزوار</label><div class="flex gap-2 flex-wrap"><button id="sd-cal-save" class="sd-btn" type="button">حفظ الموعد</button><button id="sd-cal-clear" class="sd-btn" type="button">موعد جديد / مسح</button><button id="sd-cal-refresh" class="sd-btn" type="button">تحديث القائمة</button></div><p id="sd-cal-status" class="sd-muted text-xs" role="status"></p></div><div class="sd-card space-y-3"><h3 class="font-black text-yellow-100">كل المواعيد</h3><div id="sd-admin-calendar-list" class="space-y-2">جارٍ التحميل...</div></div>';
+  const list=$('sd-admin-calendar-list'),status=$('sd-cal-status');
+  function clearForm(){['sd-cal-id','sd-cal-title','sd-cal-description','sd-cal-start','sd-cal-end'].forEach(id=>$(id).value='');$('sd-cal-type').value='exam';$('sd-cal-allday').checked=false;$('sd-cal-published').checked=false}
+  async function loadEvents(){if(!adminSession()){list.textContent='سجّل دخول المدير أولاً.';return}list.textContent='جارٍ تحميل المواعيد...';try{const r=await call('calendar-admin-list',{session:adminSession()});list.innerHTML=(r.events||[]).length?r.events.map(e=>'<article class="sd-list-item flex flex-wrap items-center justify-between gap-2"><div><b>'+esc(e.title)+'</b><p class="sd-muted text-xs">'+esc(eventTypes[e.event_type]||'موعد')+' · '+esc(fmt(e.starts_at))+' · '+(e.is_published?'منشور':'مسودة')+'</p></div><div class="flex gap-2"><button class="sd-btn" type="button" data-edit-event="'+esc(e.id)+'">تعديل</button><button class="sd-btn" type="button" data-delete-event="'+esc(e.id)+'">حذف</button></div></article>').join(''):'<p class="sd-muted">لا توجد مواعيد مسجلة.</p>';list._events=r.events||[]}catch(e){list.textContent='تعذر تحميل المواعيد: '+e.message}}
+  $('sd-cal-save').addEventListener('click',async()=>{if(!adminSession()){status.textContent='سجّل دخول المدير أولاً.';return}const start=$('sd-cal-start').value,end=$('sd-cal-end').value;if(!$('sd-cal-title').value.trim()||!start){status.textContent='أدخل عنوان الموعد وتاريخه.';return}const b=$('sd-cal-save');b.disabled=true;try{await call('calendar-save',{session:adminSession(),id:$('sd-cal-id').value||undefined,title:$('sd-cal-title').value,description:$('sd-cal-description').value,eventType:$('sd-cal-type').value,startsAt:new Date(start).toISOString(),endsAt:end?new Date(end).toISOString():null,allDay:$('sd-cal-allday').checked,isPublished:$('sd-cal-published').checked});status.textContent='تم حفظ الموعد.';clearForm();await loadEvents();loadPublicCalendar()}catch(e){status.textContent='تعذر الحفظ: '+e.message}finally{b.disabled=false}});
+  $('sd-cal-clear').addEventListener('click',clearForm);$('sd-cal-refresh').addEventListener('click',loadEvents);
+  list.addEventListener('click',async ev=>{const edit=ev.target.closest('[data-edit-event]');const del=ev.target.closest('[data-delete-event]');if(edit){const e=(list._events||[]).find(x=>x.id===edit.dataset.editEvent);if(!e)return;$('sd-cal-id').value=e.id;$('sd-cal-title').value=e.title;$('sd-cal-description').value=e.description||'';$('sd-cal-type').value=e.event_type;$('sd-cal-start').value=localDateTimeInput(e.starts_at);$('sd-cal-end').value=e.ends_at?localDateTimeInput(e.ends_at):'';$('sd-cal-allday').checked=!!e.all_day;$('sd-cal-published').checked=!!e.is_published;status.textContent='يجري تعديل: '+e.title;return}if(del&&confirm('هل تريد حذف هذا الموعد؟')){try{await call('calendar-delete',{session:adminSession(),id:del.dataset.deleteEvent});await loadEvents();loadPublicCalendar()}catch(e){alert('تعذر حذف الموعد: '+e.message)}}});
+  loadEvents();
+ }
+}
+function init(){
+ initPublic();addAdminInterfaces();
+ const modal=$('admin-dashboard-modal');
+ if(modal)new MutationObserver(()=>{
+  addAdminInterfaces();
+  const page=document.querySelector('.v14-admin-page[data-page="requests"]');
+  if(!modal.classList.contains('hidden')&&adminSession()&&page?._sdRefreshRequests)page._sdRefreshRequests();
+ }).observe(modal,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
+ document.addEventListener('click',ev=>{
+  const tile=ev.target.closest('.v14-admin-tile[data-page="requests"]');
+  if(!tile)return;
+  setTimeout(()=>{const page=document.querySelector('.v14-admin-page[data-page="requests"]');if(adminSession()&&page?._sdRefreshRequests)page._sdRefreshRequests()},0);
+ });
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
+</script>
+<script id="sd-desktop-controller-v2">
+(function(){
+ 'use strict';
+ var KEY='salah-desktop-mode',body=document.body,home=document.getElementById('sd-desktop-home');
+ var toggle=document.getElementById('sd-desktop-toggle'),standard=document.getElementById('sd-standard-toggle');
+ var taskRight=document.querySelector('#sd-desktop-taskbar .sd-task-right');
+ if(!home||!toggle||!standard||!taskRight)return;
+ var windows=Object.create(null),z=1400,chipBox=document.createElement('div');
+ chipBox.id='sd-desktop-window-chips';chipBox.className='sd-window-chips';taskRight.insertBefore(chipBox,standard);
+ function setMode(on,save){
+  if(!on){Object.keys(windows).forEach(function(k){restore(windows[k]);});}
+  body.classList.toggle('sd-desktop-mode',!!on);
+  toggle.textContent=on?'🌐 إيقاف سطح المكتب':'🖥️ تفعيل سطح المكتب';
+  standard.textContent=on?'↩️ الموقع القياسي':'الموقع القياسي';
+  toggle.setAttribute('aria-pressed',on?'true':'false');
+  if(save!==false){try{localStorage.setItem(KEY,on?'on':'off')}catch(e){}}
+  if(on)home.scrollIntoView({behavior:'smooth',block:'start'});else window.scrollTo({top:0,behavior:'smooth'});
+ }
+ function focusWin(rec){z++;rec.el.style.zIndex=String(z);}
+ function restore(rec){
+  if(!rec)return;rec.el.classList.remove('sd-desktop-window');
+  if(rec.bar&&rec.bar.parentNode)rec.bar.parentNode.removeChild(rec.bar);
+  if(rec.originalStyle===null)rec.el.removeAttribute('style');else rec.el.setAttribute('style',rec.originalStyle);
+  if(rec.chip&&rec.chip.parentNode)rec.chip.parentNode.removeChild(rec.chip);
+  delete windows[rec.id];
+ }
+ function setMax(rec,on){
+  rec.max=!!on;
+  if(on){rec.el.style.left='10px';rec.el.style.top='10px';rec.el.style.transform='none';rec.el.style.width='calc(100vw - 20px)';rec.el.style.height='calc(100vh - 94px)';rec.el.style.maxHeight='none';rec.el.style.maxWidth='none';rec.el.style.borderRadius='16px';rec.maxBtn.textContent='❐';}
+  else{rec.el.style.left='50%';rec.el.style.top='50%';rec.el.style.transform='translate(-50%,-50%)';rec.el.style.width='min(920px, calc(100vw - 28px))';rec.el.style.height='min(76vh, 760px)';rec.el.style.maxHeight='calc(100vh - 100px)';rec.el.style.maxWidth='calc(100vw - 28px)';rec.el.style.borderRadius='18px';rec.maxBtn.textContent='□';}
+  focusWin(rec);
+ }
+ function openWindow(button){
+  var id=button.getAttribute('data-sd-app'),el=document.getElementById(id);if(!el)return;
+  if(windows[id]){var old=windows[id];old.el.style.display='block';old.chip.setAttribute('aria-pressed','false');focusWin(old);return;}
+  var titleNode=button.querySelector('b'),title=titleNode?titleNode.textContent.trim():'تطبيق مدرسي';
+  var rec={id:id,el:el,originalStyle:el.getAttribute('style'),max:false};
+  var bar=document.createElement('div');bar.className='sd-window-titlebar';
+  var label=document.createElement('strong');label.textContent='▦  '+title;
+  var controls=document.createElement('div');controls.className='sd-window-controls';
+  var min=document.createElement('button'),max=document.createElement('button'),close=document.createElement('button');
+  [[min,'—','تصغير'],[max,'□','تكبير أو استعادة'],[close,'×','إغلاق']].forEach(function(x){x[0].type='button';x[0].textContent=x[1];x[0].title=x[2];x[0].setAttribute('aria-label',x[2]);});
+  controls.append(min,max,close);bar.append(label,controls);rec.bar=bar;rec.maxBtn=max;
+  el.classList.add('sd-desktop-window');el.insertBefore(bar,el.firstChild);
+  el.style.position='fixed';el.style.display='block';el.style.left='50%';el.style.top='50%';el.style.transform='translate(-50%,-50%)';
+  el.style.width='min(920px, calc(100vw - 28px))';el.style.height='min(76vh, 760px)';el.style.maxHeight='calc(100vh - 100px)';
+  el.style.maxWidth='calc(100vw - 28px)';el.style.overflow='auto';el.style.zIndex=String(++z);el.style.margin='0';el.style.boxSizing='border-box';el.style.borderRadius='18px';el.style.boxShadow='0 28px 90px rgba(0,0,0,.78)';
+  var chip=document.createElement('button');chip.type='button';chip.className='sd-window-chip';chip.textContent=title;chip.title='استعادة '+title;chip.setAttribute('aria-pressed','false');
+  chip.addEventListener('click',function(){el.style.display='block';chip.setAttribute('aria-pressed','false');focusWin(rec);});
+  chipBox.appendChild(chip);rec.chip=chip;windows[id]=rec;
+  min.addEventListener('click',function(){el.style.display='none';chip.setAttribute('aria-pressed','true');});
+  max.addEventListener('click',function(){setMax(rec,!rec.max);});
+  close.addEventListener('click',function(){restore(rec);});
+  bar.addEventListener('pointerdown',function(ev){
+   if(ev.target.closest('button')||rec.max)return;focusWin(rec);
+   var rect=el.getBoundingClientRect(),dx=ev.clientX-rect.left,dy=ev.clientY-rect.top;
+   try{bar.setPointerCapture(ev.pointerId)}catch(e){}
+   function move(e){el.style.left=Math.max(0,Math.min(window.innerWidth-90,e.clientX-dx))+'px';el.style.top=Math.max(0,Math.min(window.innerHeight-70,e.clientY-dy))+'px';el.style.transform='none';}
+   function stop(){bar.removeEventListener('pointermove',move);bar.removeEventListener('pointerup',stop);bar.removeEventListener('pointercancel',stop);}
+   bar.addEventListener('pointermove',move);bar.addEventListener('pointerup',stop);bar.addEventListener('pointercancel',stop);
+  });
+  el.addEventListener('pointerdown',function(){focusWin(rec);},{passive:true});
+ }
+ var saved='off';try{saved=localStorage.getItem(KEY)||'off'}catch(e){}
+ setMode(saved==='on',false);
+ toggle.addEventListener('click',function(){setMode(!body.classList.contains('sd-desktop-mode'),true)});
+ standard.addEventListener('click',function(){setMode(false,true)});
+ home.addEventListener('click',function(ev){
+  var app=ev.target.closest('[data-sd-app],[data-sd-action]');if(!app)return;
+  if(app.dataset.sdAction==='standard'){setMode(false,true);return;}
+  if(app.dataset.sdAction==='admin'){if(typeof window.openPinModal==='function')window.openPinModal();else{var adminButton=document.querySelector('[onclick*="openPinModal"]');if(adminButton)adminButton.click();}return;}
+  openWindow(app);
+ });
+ window.addEventListener('keydown',function(ev){
+  if(ev.key==='Escape'){var active=Object.keys(windows).map(function(k){return windows[k]}).filter(function(x){return x.el.style.display!=='none'}).sort(function(a,b){return Number(b.el.style.zIndex)-Number(a.el.style.zIndex)})[0];if(active)restore(active);}
+ });
+})();
+</script>
 </body>
 </html>
