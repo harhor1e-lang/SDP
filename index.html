@@ -748,6 +748,20 @@ body.sd-desktop-mode #sd-desktop-home{display:block;max-width:1480px;margin:16px
 body.sd-desktop-mode .floating-command-dock{bottom:88px!important}
 @media(max-width:640px){body.sd-desktop-mode main{margin:14px 10px 100px!important;padding:12px!important;border-radius:18px!important}body.sd-desktop-mode header{padding-inline:12px!important}.sd-desktop-apps{grid-template-columns:repeat(2,minmax(0,1fr))}.sd-desktop-app{min-height:60px;padding:9px}.sd-desktop-app i{flex-basis:32px;height:32px;font-size:17px}#sd-desktop-taskbar{left:7px;right:7px;bottom:7px;padding:7px 8px;min-height:56px}.sd-task-brand{font-size:9px}.sd-task-brand span{width:30px;height:30px}.sd-task-button{padding:8px 9px;font-size:10px}.sd-task-hide-mobile{display:none}}
 @media(prefers-reduced-motion:reduce){.sd-desktop-app{transition:none}}
+
+/* Desktop window manager v2 */
+.sd-desktop-window{display:block!important;background:#071323!important;color:#edf4ff!important;border:1px solid rgba(230,195,112,.62)!important;z-index:1400;overscroll-behavior:contain;isolation:isolate}
+.sd-window-titlebar{position:sticky;top:0;z-index:8;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:48px;padding:7px 10px;background:linear-gradient(110deg,#142b45,#091523);border-bottom:1px solid rgba(230,195,112,.35);color:#f4dda0;cursor:move;touch-action:none}
+.sd-window-titlebar strong{font-size:12px;font-weight:900;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sd-window-controls{display:flex;gap:6px;flex-shrink:0}
+.sd-window-controls button{width:32px;height:30px;border:1px solid #ffffff28;border-radius:8px;background:#ffffff0d;color:#f5e8c6;font-weight:900;cursor:pointer;touch-action:manipulation}
+.sd-window-controls button:last-child{color:#ffb4b4;border-color:#ff777755}
+.sd-window-controls button:focus-visible,.sd-window-chip:focus-visible{outline:2px solid #f4dda0;outline-offset:2px}
+.sd-window-chips{display:flex;gap:5px;max-width:min(42vw,420px);overflow-x:auto;align-items:center}
+.sd-window-chip{max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:8px 10px;border:1px solid #d9b96b55;border-radius:10px;background:#ffffff0c;color:#f4dda0;font-size:10px;font-weight:800}
+.sd-window-chip[aria-pressed="true"]{background:#d9b96b;color:#101a29}
+@media(max-width:640px){.sd-window-chips{max-width:32vw}.sd-window-chip{max-width:90px;padding:7px 8px;font-size:9px}.sd-window-titlebar{min-height:44px;padding:6px 8px}.sd-window-controls button{width:30px;height:28px}}
+@media(prefers-reduced-motion:reduce){.sd-window-controls button,.sd-window-chip{transition:none!important}}
 </style>
 </head>
 <body class="min-h-screen relative">
@@ -2167,35 +2181,80 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
  <div class="sd-task-left"><div class="sd-task-brand"><span>ص</span><span class="sd-task-hide-mobile">صلاح الدين</span></div><button id="sd-desktop-toggle" class="sd-task-button primary" type="button">🖥️ تفعيل سطح المكتب</button></div>
  <div class="sd-task-right"><span class="sd-task-hide-mobile text-[10px] text-slate-400">منصة المدرسة الرقمية</span><button id="sd-standard-toggle" class="sd-task-button" type="button">الموقع القياسي</button></div>
 </div>
-<script id="sd-desktop-controller-v1">
+<script id="sd-desktop-controller-v2">
 (function(){
  'use strict';
- var KEY='salah-desktop-mode';
- var body=document.body;
- var desktopHome=document.getElementById('sd-desktop-home');
- var toggle=document.getElementById('sd-desktop-toggle');
- var standard=document.getElementById('sd-standard-toggle');
- if(!desktopHome||!toggle||!standard)return;
+ var KEY='salah-desktop-mode',body=document.body,home=document.getElementById('sd-desktop-home');
+ var toggle=document.getElementById('sd-desktop-toggle'),standard=document.getElementById('sd-standard-toggle');
+ var taskRight=document.querySelector('#sd-desktop-taskbar .sd-task-right');
+ if(!home||!toggle||!standard||!taskRight)return;
+ var windows=Object.create(null),z=1400,chipBox=document.createElement('div');
+ chipBox.id='sd-desktop-window-chips';chipBox.className='sd-window-chips';taskRight.insertBefore(chipBox,standard);
  function setMode(on,save){
   body.classList.toggle('sd-desktop-mode',!!on);
   toggle.textContent=on?'🌐 إيقاف سطح المكتب':'🖥️ تفعيل سطح المكتب';
   standard.textContent=on?'↩️ الموقع القياسي':'الموقع القياسي';
   toggle.setAttribute('aria-pressed',on?'true':'false');
   if(save!==false){try{localStorage.setItem(KEY,on?'on':'off')}catch(e){}}
-  if(on){desktopHome.scrollIntoView({behavior:'smooth',block:'start'});}
-  else{window.scrollTo({top:0,behavior:'smooth'});}
+  if(on)home.scrollIntoView({behavior:'smooth',block:'start'});else window.scrollTo({top:0,behavior:'smooth'});
+ }
+ function focusWin(rec){z++;rec.el.style.zIndex=String(z);}
+ function restore(rec){
+  if(!rec)return;rec.el.classList.remove('sd-desktop-window');
+  if(rec.bar&&rec.bar.parentNode)rec.bar.parentNode.removeChild(rec.bar);
+  if(rec.originalStyle===null)rec.el.removeAttribute('style');else rec.el.setAttribute('style',rec.originalStyle);
+  if(rec.chip&&rec.chip.parentNode)rec.chip.parentNode.removeChild(rec.chip);
+  delete windows[rec.id];
+ }
+ function setMax(rec,on){
+  rec.max=!!on;
+  if(on){rec.el.style.left='10px';rec.el.style.top='10px';rec.el.style.transform='none';rec.el.style.width='calc(100vw - 20px)';rec.el.style.height='calc(100vh - 94px)';rec.el.style.maxHeight='none';rec.el.style.maxWidth='none';rec.el.style.borderRadius='16px';rec.maxBtn.textContent='❐';}
+  else{rec.el.style.left='50%';rec.el.style.top='50%';rec.el.style.transform='translate(-50%,-50%)';rec.el.style.width='min(920px, calc(100vw - 28px))';rec.el.style.height='min(76vh, 760px)';rec.el.style.maxHeight='calc(100vh - 100px)';rec.el.style.maxWidth='calc(100vw - 28px)';rec.el.style.borderRadius='18px';rec.maxBtn.textContent='□';}
+  focusWin(rec);
+ }
+ function openWindow(button){
+  var id=button.getAttribute('data-sd-app'),el=document.getElementById(id);if(!el)return;
+  if(windows[id]){var old=windows[id];old.el.style.display='block';old.chip.setAttribute('aria-pressed','false');focusWin(old);return;}
+  var titleNode=button.querySelector('b'),title=titleNode?titleNode.textContent.trim():'تطبيق مدرسي';
+  var rec={id:id,el:el,originalStyle:el.getAttribute('style'),max:false};
+  var bar=document.createElement('div');bar.className='sd-window-titlebar';
+  var label=document.createElement('strong');label.textContent='▦  '+title;
+  var controls=document.createElement('div');controls.className='sd-window-controls';
+  var min=document.createElement('button'),max=document.createElement('button'),close=document.createElement('button');
+  [[min,'—','تصغير'],[max,'□','تكبير أو استعادة'],[close,'×','إغلاق']].forEach(function(x){x[0].type='button';x[0].textContent=x[1];x[0].title=x[2];x[0].setAttribute('aria-label',x[2]);});
+  controls.append(min,max,close);bar.append(label,controls);rec.bar=bar;rec.maxBtn=max;
+  el.classList.add('sd-desktop-window');el.insertBefore(bar,el.firstChild);
+  el.style.position='fixed';el.style.display='block';el.style.left='50%';el.style.top='50%';el.style.transform='translate(-50%,-50%)';
+  el.style.width='min(920px, calc(100vw - 28px))';el.style.height='min(76vh, 760px)';el.style.maxHeight='calc(100vh - 100px)';
+  el.style.maxWidth='calc(100vw - 28px)';el.style.overflow='auto';el.style.zIndex=String(++z);el.style.margin='0';el.style.boxSizing='border-box';el.style.borderRadius='18px';el.style.boxShadow='0 28px 90px rgba(0,0,0,.78)';
+  var chip=document.createElement('button');chip.type='button';chip.className='sd-window-chip';chip.textContent=title;chip.title='استعادة '+title;chip.setAttribute('aria-pressed','false');
+  chip.addEventListener('click',function(){el.style.display='block';chip.setAttribute('aria-pressed','false');focusWin(rec);});
+  chipBox.appendChild(chip);rec.chip=chip;windows[id]=rec;
+  min.addEventListener('click',function(){el.style.display='none';chip.setAttribute('aria-pressed','true');});
+  max.addEventListener('click',function(){setMax(rec,!rec.max);});
+  close.addEventListener('click',function(){restore(rec);});
+  bar.addEventListener('pointerdown',function(ev){
+   if(ev.target.closest('button')||rec.max)return;focusWin(rec);
+   var rect=el.getBoundingClientRect(),dx=ev.clientX-rect.left,dy=ev.clientY-rect.top;
+   try{bar.setPointerCapture(ev.pointerId)}catch(e){}
+   function move(e){el.style.left=Math.max(0,Math.min(window.innerWidth-90,e.clientX-dx))+'px';el.style.top=Math.max(0,Math.min(window.innerHeight-70,e.clientY-dy))+'px';el.style.transform='none';}
+   function stop(){bar.removeEventListener('pointermove',move);bar.removeEventListener('pointerup',stop);bar.removeEventListener('pointercancel',stop);}
+   bar.addEventListener('pointermove',move);bar.addEventListener('pointerup',stop);bar.addEventListener('pointercancel',stop);
+  });
+  el.addEventListener('pointerdown',function(){focusWin(rec);},{passive:true});
  }
  var saved='off';try{saved=localStorage.getItem(KEY)||'off'}catch(e){}
  setMode(saved==='on',false);
  toggle.addEventListener('click',function(){setMode(!body.classList.contains('sd-desktop-mode'),true)});
  standard.addEventListener('click',function(){setMode(false,true)});
- desktopHome.addEventListener('click',function(ev){
+ home.addEventListener('click',function(ev){
   var app=ev.target.closest('[data-sd-app],[data-sd-action]');if(!app)return;
   if(app.dataset.sdAction==='standard'){setMode(false,true);return;}
   if(app.dataset.sdAction==='admin'){if(typeof window.openPinModal==='function')window.openPinModal();else{var adminButton=document.querySelector('[onclick*="openPinModal"]');if(adminButton)adminButton.click();}return;}
-  var target=document.getElementById(app.dataset.sdApp);if(!target)return;
-  target.scrollIntoView({behavior:'smooth',block:'start'});
-  target.setAttribute('tabindex','-1');try{target.focus({preventScroll:true})}catch(e){}
+  openWindow(app);
+ });
+ window.addEventListener('keydown',function(ev){
+  if(ev.key==='Escape'){var active=Object.keys(windows).map(function(k){return windows[k]}).filter(function(x){return x.el.style.display!=='none'}).sort(function(a,b){return Number(b.el.style.zIndex)-Number(a.el.style.zIndex)})[0];if(active)restore(active);}
  });
 })();
 </script>
