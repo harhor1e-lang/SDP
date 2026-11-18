@@ -4035,15 +4035,15 @@ bind('weeklyTimetables',x=>tables=x,renderTable);bind('guidancePosts',x=>guides=
     const txt=(node.innerText||'').trim();
     if(node.id==='sd-private-management'){move(node,'system');return}
     if(txt.includes('اتصال Firebase السحابي')){move(node,'system');return}
-    if(txt.includes('تعديل نصوص الموقع بالكامل')){move(node,'reports');return}
-    if(txt.includes('البث الإداري العاجل')){move(node,'notices');return}
-    if(txt.includes('إدارة بنك الأسئلة والوزاريات')){move(node,'resources');return}
-    if(txt.includes('حماية سجلات الغياب والإنذارات')){move(node,'students');return}
+    if(txt.includes('تعديل نصوص الموقع بالكامل')){move(node,'site-editor');return}
+    if(txt.includes('البث الإداري العاجل')){move(node,'broadcast');return}
+    if(txt.includes('إدارة بنك الأسئلة والوزاريات')){move(node,'question-bank');return}
+    if(txt.includes('حماية سجلات الغياب والإنذارات')){move(node,'discipline');return}
     if(txt.includes('إدارة ونشر تبليغات الإدارة')){move(node,'notices');return}
-    if(txt.includes('النشر في الأقسام والمختبرات')){move(node,'resources');return}
-    if(txt.includes('إدارة الكتب والملفات')){move(node,'resources');return}
+    if(txt.includes('النشر في الأقسام والمختبرات')){move(node,'labs');return}
+    if(txt.includes('إدارة الكتب والملفات')){move(node,'books');return}
     if(txt.includes('تغيير الرمز السري للإدارة')){move(node,'system');return}
-    if(node.tagName==='SECTION'&&/التقرير|التصدير|الطباعة/.test(txt)){move(node,'reports');return}
+    if(node.tagName==='SECTION'&&/التقرير السنوي التلقائي/.test(txt)){move(node,'annual-report');return} if(node.tagName==='SECTION'&&/التقرير|التصدير|الطباعة/.test(txt)){move(node,'reports');return}
   });
   // Move existing administrative modules into their own tabs without rebuilding or discarding controls.
   const moveById=(id,page)=>move($(id),page);
