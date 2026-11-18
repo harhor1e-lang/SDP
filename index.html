@@ -2074,7 +2074,17 @@ function addAdminInterfaces(){
    try{const r=await call('admin-list-requests',{session:adminSession()});const rows=r.requests||[];
     list.innerHTML=rows.length?rows.map(x=>'<article class="sd-list-item space-y-2" data-request-id="'+esc(x.id)+'"><div class="flex flex-wrap justify-between gap-2"><b>'+esc(x.applicant_name)+'</b><span class="sd-pill">'+esc(x.tracking_code)+'</span></div><p class="sd-muted text-xs">'+esc(types[x.request_type]||x.request_type)+' · '+esc(fmt(x.created_at))+'</p><p class="text-sm whitespace-pre-wrap">'+esc(x.details)+'</p>'+(x.contact_phone?'<p class="sd-muted text-xs">الهاتف: '+esc(x.contact_phone)+'</p>':'')+'<label class="block text-xs">الحالة<select class="sd-field w-full mt-1" data-status>'+Object.entries(statuses).map(([k,v])=>'<option value="'+k+'" '+(x.status===k?'selected':'')+'>'+v+'</option>').join('')+'</select></label><label class="block text-xs">رسالة تظهر لصاحب الطلب<textarea class="sd-field w-full mt-1" rows="2" maxlength="1000" data-public-message>'+esc(x.public_message||'')+'</textarea></label><label class="block text-xs">ملاحظة إدارية داخلية<textarea class="sd-field w-full mt-1" rows="2" maxlength="4000" data-admin-note>'+esc(x.admin_note||'')+'</textarea></label><button type="button" class="sd-btn" data-save-request>حفظ قرار الإدارة</button></article>').join(''):'<p class="sd-muted">لا توجد طلبات واردة.</p>';
    }catch(e){list.textContent='تعذر تحميل الطلبات: '+e.message}
+   const tile=document.querySelector('.v14-admin-tile[data-page="requests"]');
+   if(tile){
+    let badge=tile.querySelector('[data-request-count]');
+    if(!badge){badge=document.createElement('span');badge.dataset.requestCount='1';badge.className='sd-pill';tile.appendChild(badge)}
+    const pending=rows.filter(x=>x.status==='pending'||x.status==='in_review'||x.status==='needs_info').length;
+    badge.textContent=pending?('طلبات تحتاج متابعة: '+pending):'لا توجد طلبات معلقة';
+    badge.style.background=pending?'rgba(245,158,11,.18)':'rgba(16,185,129,.12)';
+    badge.style.color=pending?'#fbbf24':'#6ee7b7';
+   }
   }
+  reqPage._sdRefreshRequests=loadRequests;
   list.addEventListener('click',async ev=>{const b=ev.target.closest('[data-save-request]');if(!b)return;const card=b.closest('[data-request-id]');b.disabled=true;try{await call('admin-update-request',{session:adminSession(),id:card.dataset.requestId,status:card.querySelector('[data-status]').value,publicMessage:card.querySelector('[data-public-message]').value,adminNote:card.querySelector('[data-admin-note]').value});b.textContent='تم الحفظ';}catch(e){alert('تعذر حفظ القرار: '+e.message)}finally{b.disabled=false}});
   $('sd-admin-requests-refresh').addEventListener('click',loadRequests);loadRequests();
  }
@@ -2090,7 +2100,20 @@ function addAdminInterfaces(){
   loadEvents();
  }
 }
-function init(){initPublic();addAdminInterfaces();const modal=$('admin-dashboard-modal');if(modal)new MutationObserver(()=>addAdminInterfaces()).observe(modal,{childList:true,subtree:true});}
+function init(){
+ initPublic();addAdminInterfaces();
+ const modal=$('admin-dashboard-modal');
+ if(modal)new MutationObserver(()=>{
+  addAdminInterfaces();
+  const page=document.querySelector('.v14-admin-page[data-page="requests"]');
+  if(!modal.classList.contains('hidden')&&adminSession()&&page?._sdRefreshRequests)page._sdRefreshRequests();
+ }).observe(modal,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
+ document.addEventListener('click',ev=>{
+  const tile=ev.target.closest('.v14-admin-tile[data-page="requests"]');
+  if(!tile)return;
+  setTimeout(()=>{const page=document.querySelector('.v14-admin-page[data-page="requests"]');if(adminSession()&&page?._sdRefreshRequests)page._sdRefreshRequests()},0);
+ });
+}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
 </script>
@@ -3966,7 +3989,7 @@ bind('weeklyTimetables',x=>tables=x,renderTable);bind('guidancePosts',x=>guides=
    ['requests','الطلبات الإلكترونية','📝','مراجعة طلبات الزوار وتحديث حالاتها ورسائل المتابعة'],
    ['calendar','التقويم المدرسي','📅','إدارة الامتحانات والعطل والاجتماعات والفعاليات']
   ];
-  groups.forEach(([id,title,icon,desc])=>{makePage(id,title,icon,desc);const b=document.createElement('button');b.type='button';b.className='v14-admin-tile';b.innerHTML=`<span class="v14-icon">${icon}</span><span><b>${title}</b><small>${desc}</small></span>`;b.addEventListener('click',()=>showPage(id));home.querySelector('#v14-admin-nav').appendChild(b)});
+  groups.forEach(([id,title,icon,desc])=>{makePage(id,title,icon,desc);const b=document.createElement('button');b.type='button';b.className='v14-admin-tile';b.dataset.page=id;b.innerHTML=`<span class="v14-icon">${icon}</span><span><b>${title}</b><small>${desc}</small></span>`;b.addEventListener('click',()=>showPage(id));home.querySelector('#v14-admin-nav').appendChild(b)});
   function move(node,id){if(node&&pages[id]&&!node.dataset.v14Moved){pages[id].appendChild(node);node.dataset.v14Moved='1'}}
   // Retain every existing control and move complete feature blocks without rebuilding their forms.
   const panelChildren=[...(header?[...header.children]:[]),...shell.children];
