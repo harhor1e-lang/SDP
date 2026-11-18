@@ -1,0 +1,70 @@
+name: Validate inline JavaScript
+
+on:
+  push:
+    branches:
+      - development/v21-complete-platform
+    paths:
+      - 'index.html'
+      - '.github/workflows/validate-inline-js.yml'
+  workflow_dispatch:
+
+jobs:
+  syntax:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Extract and validate inline scripts
+        run: |
+          python3 - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          import subprocess, sys
+
+          class Scripts(HTMLParser):
+              def __init__(self):
+                  super().__init__(convert_charrefs=False)
+                  self.items = []
+                  self.current = None
+              def handle_starttag(self, tag, attrs):
+                  if tag.lower() == "script":
+                      attrs = dict(attrs)
+                      if "src" not in attrs:
+                          self.current = {"type": attrs.get("type", "").lower(), "parts": []}
+              def handle_data(self, data):
+                  if self.current is not None:
+                      self.current["parts"].append(data)
+              def handle_endtag(self, tag):
+                  if tag.lower() == "script" and self.current is not None:
+                      self.items.append(self.current)
+                      self.current = None
+
+          parser = Scripts()
+          parser.feed(Path("index.html").read_text(encoding="utf-8"))
+          checked = 0
+          failed = False
+          for i, item in enumerate(parser.items, 1):
+              source = "".join(item["parts"])
+              if not source.strip():
+                  continue
+              script_type = item["type"]
+              if script_type and script_type not in ("text/javascript", "application/javascript", "module"):
+                  continue
+              mode = "module" if script_type == "module" else "commonjs"
+              result = subprocess.run(
+                  ["node", "--check", "--input-type=" + mode],
+                  input=source, text=True, capture_output=True
+              )
+              checked += 1
+              if result.returncode:
+                  failed = True
+                  print(f"FAIL inline script #{i}:")
+                  print(result.stderr)
+              else:
+                  print(f"PASS inline script #{i}")
+          print(f"Checked {checked} inline JavaScript scripts.")
+          sys.exit(1 if failed else 0)
+          PY
