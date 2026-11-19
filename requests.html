@@ -32,18 +32,7 @@ main{max-width:980px;margin:auto}.top{display:flex;align-items:center;justify-co
 <div class="grid"><label>رقم الطلب<input id="trackCode" class="field" placeholder="SD-XXXXXXXXXX" dir="ltr"></label><label>رمز المتابعة<input id="trackToken" class="field" placeholder="رمز المتابعة" dir="ltr"></label></div>
 <button class="btn" id="trackBtn" onclick="trackRequest()">عرض حالة الطلب</button><div id="trackResult" class="notice hidden" role="status"></div>
 </section>
-<section class="panel">
-<h2>🔐 بوابة الإدارة — متابعة الطلبات</h2>
-<p class="sub">هذه المساحة مخصصة للمدير. سجّل الدخول برمز الإدارة نفسه المستخدم في البوابة.</p>
-<div id="adminLogin">
-<label>الرمز السري للإدارة<input id="adminPin" type="password" inputmode="numeric" class="field" autocomplete="current-password"></label>
-<button class="btn" onclick="adminLogin()">دخول الإدارة</button>
-</div>
-<div id="adminArea" class="hidden">
-<div class="admin-grid"><input id="adminSearch" class="field" placeholder="ابحث برقم الطلب أو اسم مقدم الطلب" oninput="renderAdmin()"><button class="btn alt" onclick="loadAdmin()">تحديث قائمة الطلبات</button><button class="btn alt" onclick="adminLogout()">خروج</button></div>
-<div id="adminList" class="notice">لم يتم تحميل الطلبات بعد.</div>
-</div><div id="adminMsg" class="notice hidden" role="status"></div>
-</section>
+
 <p class="small">ملاحظة: هذه المنظومة لاستلام ومتابعة الطلبات الإدارية، ولا تُعد الوثيقة أو التأييد صادراً رسمياً إلا بعد مراجعته واعتماده من إدارة المدرسة.</p>
 </main>
 <script>
