@@ -555,7 +555,7 @@ nav,.nav,.section-header{
 #admin-dashboard-modal .v14-admin-shell{max-width:1180px!important;border:1px solid rgba(42,177,230,.35)!important;background:linear-gradient(145deg,rgba(10,28,51,.98),rgba(4,12,25,.98))!important;box-shadow:0 25px 90px #000b,0 0 45px #0b74b533!important}
 .v14-admin-home,.v14-admin-page{animation:v14Enter .32s ease both}
 @keyframes v14Enter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-.v14-admin-nav{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:12px;margin:18px 0}
+.v14-admin-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:20px 0;align-items:stretch}
 .v14-admin-tile{display:flex;align-items:center;gap:12px;text-align:right;min-height:88px;padding:15px;border-radius:18px;color:#eff8ff;background:linear-gradient(145deg,rgba(18,53,88,.86),rgba(7,19,37,.92));border:1px solid rgba(54,190,235,.28);box-shadow:inset 0 1px #ffffff12,0 12px 28px #0005;transition:transform .28s,border-color .28s,box-shadow .28s;}
 .v14-admin-tile:hover{transform:translateY(-5px);border-color:#e4c36d;box-shadow:0 15px 34px #0008,0 0 24px #1aaed733}
 .v14-admin-tile .v14-icon{width:43px;height:43px;flex:0 0 43px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(145deg,#f4d98e,#b88a35);color:#0a1b30;font-size:22px;box-shadow:0 0 20px #e5bf5a33}
@@ -3839,22 +3839,22 @@ bind('weeklyTimetables',x=>tables=x,renderTable);bind('guidancePosts',x=>guides=
   const shell=modal.querySelector(':scope > .max-w-4xl');if(!shell)return;shell.classList.add('v14-admin-shell');
   const closeBtn=shell.querySelector(':scope > button');
   const header=shell.querySelector(':scope > div');
-  const home=document.createElement('div');home.className='v14-admin-home';home.innerHTML=`<div class="flex flex-wrap justify-between items-center gap-3 mt-4"><div><span class="text-[10px] tracking-[.2em] text-cyan-300 font-black">SALAH AL-DIN · ADMIN CONTROL</span><h2 class="text-2xl font-black text-yellow-100 mt-1">لوحة المدير</h2><p class="text-xs text-slate-300 mt-1">اختر القسم لفتح واجهته بصورة مستقلة</p></div><span class="v14-connection"><i class="v14-dot"></i><span data-v14-connection-text>جارٍ فحص الاتصال...</span></span></div><div class="v14-admin-nav" id="v14-admin-nav"></div><div id="v14-admin-activity"><div class="flex flex-wrap justify-between gap-2 items-center"><div><b class="text-yellow-100">🧾 سجل النشاط الإداري</b><p class="text-[10px] text-slate-300 mt-1">آخر عمليات النشر والتعديل والحذف، دون أسماء أو بيانات الطلاب.</p></div><span class="text-[10px] text-cyan-200">آخر 20 عملية</span></div><div id="v14-admin-activity-list" class="mt-2"><div class="sd-empty">جارٍ تحميل سجل النشاط...</div></div></div>`;
+  const home=document.createElement('div');home.className='v14-admin-home';home.innerHTML=`<div class="flex flex-wrap justify-between items-center gap-3 mt-4"><div><span class="text-[10px] tracking-[.2em] text-cyan-300 font-black">SALAH AL-DIN · ADMIN CONTROL</span><h2 class="text-2xl font-black text-yellow-100 mt-1">لوحة المدير</h2><p class="text-xs text-slate-300 mt-1">اختر القسم لفتح واجهته بصورة مستقلة</p></div><span class="v14-connection"><i class="v14-dot"></i><span data-v14-connection-text>جارٍ فحص الاتصال...</span></span></div><div class="v14-admin-nav" id="v14-admin-nav"></div>`;
   shell.insertBefore(home,closeBtn||null);
   const pages={};
   function makePage(id,title,icon,desc){const page=document.createElement('section');page.className='v14-admin-page';page.dataset.page=id;page.hidden=true;page.innerHTML=`<div class="v14-page-head"><div class="flex items-center gap-3"><span class="text-3xl">${icon}</span><div><h2 class="font-black text-yellow-100">${title}</h2><p class="text-[10px] text-slate-300">${desc}</p></div></div><button type="button" class="v14-back" data-v14-back>↩ العودة إلى لوحة المدير</button></div><div data-v14-content></div>`;modal.appendChild(page);page.querySelector('[data-v14-back]').addEventListener('click',()=>showPage('home'));pages[id]=page;return page.querySelector('[data-v14-content]')}
   const groups=[
-   ['notices','التبليغات والإعلانات','📢','نشر ومراجعة التبليغات والبث الإداري'],
-   ['guidance','قسم المرشد التربوي','🧭','كتابة إرشاد تربوي منظم وإرفاق الصور ونشره للطلبة'],
    ['students','سجل الطلاب','🎓','أدوات إدارة سجل الطلاب والهويات'],
    ['badges','إدارة الباجات المدرسية','🪪','إصدار ومعاينة وطباعة باجات الطلاب بصورة مستقلة'],
-   ['resources','الموارد الدراسية','📚','المكتبة والكتب وبنك الأسئلة والمختبرات'],
-   ['timetable','الجداول والموارد الصفية','🗓️','الجداول الأسبوعية وموارد بوابة الطالب'],
+   ['guidance','قسم المرشد التربوي','🧭','كتابة إرشاد تربوي منظم وإرفاق الصور ونشره للطلبة'],
+   ['notices','التبليغات والإعلانات','📢','نشر ومراجعة التبليغات والبث الإداري'],
    ['messages','مراسلات الإدارة','✉️','صندوق الرسائل والردود الإدارية'],
+   ['requests','طلبات الإدارة','🧾','متابعة الرسائل والطلبات الواردة إلى الإدارة'],
+   ['timetable','الجداول والموارد الصفية','🗓️','الجداول الأسبوعية وموارد بوابة الطالب'],
+   ['resources','الموارد الدراسية','📚','المكتبة والكتب وبنك الأسئلة والمختبرات'],
    ['reports','التقارير والأدوات','📊','التقارير والطباعة وأدوات الموقع'],
-   ['system','النظام والاتصال','⚙️','حالة Firebase والإعدادات والأدوات الحساسة'],
    ['archive','الأرشيف','🗄️','حفظ النصوص والصور والمواد التي يرسلها المدير'],
-   ['requests','طلبات الإدارة','🧾','متابعة الرسائل والطلبات الواردة إلى الإدارة']
+   ['system','النظام والاتصال','⚙️','حالة Firebase والإعدادات والأدوات الحساسة']
   ];
   groups.forEach(([id,title,icon,desc])=>{makePage(id,title,icon,desc);const b=document.createElement('button');b.type='button';b.className='v14-admin-tile';b.innerHTML=`<span class="v14-icon">${icon}</span><span><b>${title}</b><small>${desc}</small></span>`;b.addEventListener('click',()=>showPage(id));home.querySelector('#v14-admin-nav').appendChild(b)});
   function move(node,id){if(node&&pages[id]&&!node.dataset.v14Moved){pages[id].appendChild(node);node.dataset.v14Moved='1'}}
