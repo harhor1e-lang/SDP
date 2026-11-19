@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#081426"><title>الإدارة | الطلبات والنماذج</title>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#081426"><title>الإدارة | متابعة الطلبات</title>
 <style>
 :root{color-scheme:dark;--bg:#071326;--panel:#10243d;--gold:#e7c477;--muted:#b8c6d8;--line:#ffffff25}
 *{box-sizing:border-box}body{margin:0;padding:16px;font-family:Tahoma,Arial,sans-serif;background:radial-gradient(circle at 15% 5%,#18385a,transparent 34%),linear-gradient(145deg,#06101f,#0b1c33 60%,#090f1e);color:#f5f2e9;min-height:100vh}
@@ -8,18 +8,10 @@ main{max-width:1100px;margin:auto}.top{display:flex;justify-content:space-betwee
 @media print{body{background:#fff!important;color:#111!important;padding:0}.no-print{display:none!important}#previewPanel{display:block!important;background:#fff!important;border:0!important;box-shadow:none!important;padding:0!important;margin:0!important}#printPaper{display:block!important;background:#fff!important;color:#111!important;border:0!important;box-shadow:none!important;border-radius:0!important;padding:20mm!important;min-height:0!important}main{max-width:none}.panel{display:none!important}}
 </style></head>
 <body><main>
-<div class="top no-print"><div><div class="brand">🔐 الخصوصية الإشرافية | إعدادية صلاح الدين للبنين</div><div class="muted">مركز متابعة الطلبات ومحرر النماذج الرسمية</div></div><button class="btn alt" onclick="location.href='index.html'">العودة إلى لوحة الموقع</button></div>
+<div class="top no-print"><div><div class="brand">🔐 الخصوصية الإشرافية | إعدادية صلاح الدين للبنين</div><div class="muted">مركز متابعة الرسائل والطلبات الواردة من الطلاب وأولياء الأمور</div></div><button class="btn alt" onclick="location.href='index.html'">العودة إلى لوحة الموقع</button></div>
 <section class="panel no-print" id="loginPanel"><h2>دخول الإدارة</h2><p class="muted">استخدم رمز الإدارة الحالي نفسه. لا نغيّر الرمز ولا ننشئ صلاحية جديدة.</p><label>الرمز السري<input id="pin" class="field" type="password" inputmode="numeric" autocomplete="current-password"></label><button class="btn" onclick="login()">دخول</button><div id="loginMsg" class="notice hidden"></div></section>
 <div id="adminContent" class="hidden">
 <section class="panel no-print"><div class="top"><div><h2>📥 متابعة الطلبات الواردة</h2><p class="muted">مراجعة الطلبات وتحديث حالتها ورسالة الرد.</p></div><button class="btn alt" onclick="loadRequests()">تحديث القائمة</button></div><input id="search" class="field" placeholder="بحث برقم الطلب أو اسم مقدم الطلب" oninput="renderRequests()"><div id="requestList" class="notice">جارٍ التحميل...</div></section>
-<section class="panel no-print"><h2>📝 محرر النماذج الإدارية</h2><p class="muted">اختر نموذجاً، عدّل النص والبيانات بحرية، ثم اعرض النسخة النهائية واطبعها أو احفظها PDF من نافذة الطباعة.</p>
-<div class="grid"><label>نوع النموذج<select id="templateType" class="field" onchange="loadTemplate()"><option value="transfer">طلب نقل أو استضافة</option><option value="endorsement">طلب تأييد استمرار بالدراسة</option><option value="document">طلب وثيقة أو مستند</option><option value="correction">طلب تصحيح بيانات</option><option value="meeting">طلب مقابلة الإدارة</option><option value="inquiry">استفسار إداري</option><option value="other">طلب إداري آخر</option></select></label>
-<label>اسم مقدم الطلب<input id="docName" class="field" placeholder="الاسم الثلاثي أو الرباعي"></label><label>الصف والشعبة<input id="docGrade" class="field" placeholder="مثال: السادس العلمي / أ"></label><label>التاريخ<input id="docDate" class="field" type="date"></label></div>
-<label style="display:block;margin-top:12px">عنوان الموضوع<input id="docSubject" class="field"></label>
-<label style="display:block;margin-top:12px">نص النموذج — قابل للتعديل بالكامل<textarea id="docBody" class="field" rows="10"></textarea></label>
-<div class="tabs"><button class="btn" onclick="previewDoc()">معاينة النسخة النهائية</button><button class="btn alt" onclick="window.print()">طباعة / حفظ PDF</button><button class="btn alt" onclick="resetTemplate()">استعادة النص الافتراضي</button></div>
-<p class="hint">ملاحظة: هذه مسودات طلبات وليست تأييدات أو وثائق رسمية صادرة. لا تعتمد الوثيقة إلا بعد مراجعة الإدارة وتوقيعها وختمها حسب الأصول.</p>
-</section>
 <section class="panel" id="previewPanel"><h2>معاينة المستند للطباعة</h2><div id="printPaper" class="paper">ستظهر المعاينة هنا بعد الضغط على «معاينة النسخة النهائية».</div></section>
 </div></main>
 <script>
