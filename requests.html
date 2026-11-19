@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#081426"><title>طلبات ومراجعات الإدارة | إعدادية صلاح الدين</title>
+<style>
+:root{color-scheme:dark;--bg:#071326;--panel:#10243d;--gold:#e7c477;--muted:#b8c6d8;--line:#ffffff22}
+*{box-sizing:border-box}body{margin:0;font-family:Tahoma,Arial,sans-serif;background:radial-gradient(circle at 15% 5%,#18385a 0,transparent 34%),linear-gradient(145deg,#06101f,#0b1c33 60%,#090f1e);color:#f5f2e9;min-height:100vh;padding:20px}
+main{max-width:980px;margin:auto}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:20px}.brand{color:var(--gold);font-weight:900}.panel{background:linear-gradient(145deg,#112945ed,#09182bed);border:1px solid #d8b45a55;border-radius:20px;padding:20px;margin:14px 0;box-shadow:0 18px 45px #0005}.sub{color:var(--muted);font-size:13px;line-height:1.8}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.field{width:100%;padding:12px;border-radius:11px;border:1px solid var(--line);background:#061426;color:white;margin-top:6px;font:inherit}.field:focus{outline:1px solid var(--gold)}label{font-size:13px;color:#f2dfad;font-weight:700}.btn{border:0;border-radius:12px;padding:12px 17px;background:linear-gradient(120deg,#f0d58f,#b88739);color:#101a28;font-weight:900;font-size:14px;cursor:pointer;margin:4px}.btn.alt{background:#ffffff12;color:#f2dfad;border:1px solid #ffffff30}.btn:disabled{opacity:.55;cursor:wait}.notice{padding:12px;border-radius:12px;background:#ffffff0b;border:1px solid var(--line);margin-top:12px;white-space:pre-wrap;line-height:1.8}.hidden{display:none!important}.code{font-size:24px;font-weight:900;letter-spacing:1px;color:#ffe3a0;direction:ltr;text-align:center;padding:10px}.status{display:inline-block;padding:5px 10px;border-radius:20px;background:#ffffff15;color:#ffe3a0;font-size:12px}.request{border:1px solid var(--line);border-radius:14px;padding:14px;margin:10px 0;background:#ffffff08}.request p{line-height:1.8;white-space:pre-wrap;overflow-wrap:anywhere}.admin-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}.small{font-size:11px;color:var(--muted)}a{color:var(--gold)}@media(max-width:520px){body{padding:12px}.panel{padding:15px}.code{font-size:19px}}
+</style></head>
+<body><main>
+<div class="top"><div><div class="brand">جمهورية العراق | إعدادية صلاح الدين للبنين</div><div class="sub">مركز الطلبات والمتابعة الإدارية</div></div><button class="btn alt" onclick="location.href='index.html'">العودة إلى البوابة</button></div>
+<section class="panel">
+<h2>📄 تقديم طلب إلى الإدارة</h2>
+<p class="sub">اختر نوع المعاملة، أكمل البيانات، ثم احتفظ برقم المتابعة ورمز المتابعة الخاصين بك. لا تشارك رمز المتابعة مع الآخرين.</p>
+<div class="grid">
+<label>نوع الطلب<select id="kind" class="field">
+<option value="endorsement">طلب تأييد استمرار بالدراسة</option><option value="document">طلب وثيقة أو مستند مدرسي</option><option value="correction">طلب تصحيح بيانات طالب</option><option value="transfer">طلب نقل أو استضافة</option><option value="meeting">طلب مقابلة الإدارة</option><option value="inquiry">استفسار إداري</option><option value="other">طلب آخر</option></select></label>
+<label>اسم مقدم الطلب<input id="name" class="field" maxlength="100" autocomplete="name" placeholder="الاسم الثلاثي أو الرباعي"></label>
+<label>رقم الهاتف (اختياري)<input id="phone" class="field" maxlength="40" inputmode="tel" placeholder="رقم للتواصل عند الحاجة"></label>
+<label>الصف والشعبة (إن كان الطلب لطالب)<input id="grade" class="field" maxlength="60" placeholder="مثال: السادس العلمي / أ"></label>
+</div>
+<label style="display:block;margin-top:12px">عنوان الطلب<input id="subject" class="field" maxlength="160" placeholder="اكتب عنواناً واضحاً للطلب"></label>
+<label style="display:block;margin-top:12px">تفاصيل الطلب<textarea id="details" class="field" rows="5" maxlength="3000" placeholder="اكتب التفاصيل والمعلومات الضرورية..."></textarea></label>
+<input id="website" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
+<button id="send" class="btn" onclick="createRequest()">إرسال الطلب واستلام رقم المتابعة</button>
+<div id="sendResult" class="notice hidden" role="status"></div>
+</section>
+<section class="panel">
+<h2>🔎 متابعة حالة طلب سابق</h2>
+<p class="sub">أدخل رقم الطلب ورمز المتابعة اللذين استلمتهما عند الإرسال. الرمز الإضافي يحمي تفاصيل معاملتك من اطلاع الآخرين عليها.</p>
+<div class="grid"><label>رقم الطلب<input id="trackCode" class="field" placeholder="SD-XXXXXXXXXX" dir="ltr"></label><label>رمز المتابعة<input id="trackToken" class="field" placeholder="رمز المتابعة" dir="ltr"></label></div>
+<button class="btn" id="trackBtn" onclick="trackRequest()">عرض حالة الطلب</button><div id="trackResult" class="notice hidden" role="status"></div>
+</section>
+<section class="panel">
+<h2>🔐 بوابة الإدارة — متابعة الطلبات</h2>
+<p class="sub">هذه المساحة مخصصة للمدير. سجّل الدخول برمز الإدارة نفسه المستخدم في البوابة.</p>
+<div id="adminLogin">
+<label>الرمز السري للإدارة<input id="adminPin" type="password" inputmode="numeric" class="field" autocomplete="current-password"></label>
+<button class="btn" onclick="adminLogin()">دخول الإدارة</button>
+</div>
+<div id="adminArea" class="hidden">
+<div class="admin-grid"><input id="adminSearch" class="field" placeholder="ابحث برقم الطلب أو اسم مقدم الطلب" oninput="renderAdmin()"><button class="btn alt" onclick="loadAdmin()">تحديث قائمة الطلبات</button><button class="btn alt" onclick="adminLogout()">خروج</button></div>
+<div id="adminList" class="notice">لم يتم تحميل الطلبات بعد.</div>
+</div><div id="adminMsg" class="notice hidden" role="status"></div>
+</section>
+<p class="small">ملاحظة: هذه المنظومة لاستلام ومتابعة الطلبات الإدارية، ولا تُعد الوثيقة أو التأييد صادراً رسمياً إلا بعد مراجعته واعتماده من إدارة المدرسة.</p>
+</main>
+<script>
+const SUPA_URL='https://hwkiujezomlvcbfhjdze.supabase.co';
+const PUB_KEY='sb_publishable_1w8y0092CPVn1nT3QfXESQ_PClvh-bz';
+const ADMIN_URL=SUPA_URL+'/functions/v1/school-admin-gateway';
+const PORTAL_URL=SUPA_URL+'/functions/v1/school-public-portal';
+let adminSession=null, adminRequests=[];
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+async function call(url,body){if(!navigator.onLine)throw new Error('لا يوجد اتصال بالإنترنت.');const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json','apikey':PUB_KEY},body:JSON.stringify(body)});let d={};try{d=await r.json()}catch{}if(!r.ok||d.error)throw new Error(d.error||'تعذر إكمال العملية.');return d}
+const templates={
+endorsement:'إلى إدارة إعدادية صلاح الدين للبنين\nالموضوع: طلب تأييد استمرار بالدراسة\nأرجو التفضل بالموافقة على إصدار تأييد يثبت استمراري بالدراسة، مع بيان الصف والشعبة للعام الدراسي الحالي.\nمع التقدير.',
+document:'إلى إدارة إعدادية صلاح الدين للبنين\nالموضوع: طلب وثيقة أو مستند مدرسي\nأرجو التفضل بالنظر في طلبي وإرشادي إلى إجراءات إصدار الوثيقة المطلوبة.',
+correction:'إلى إدارة إعدادية صلاح الدين للبنين\nالموضوع: طلب تصحيح بيانات\nأرجو التفضل بمراجعة البيانات المدرسية المذكورة وتصحيحها بعد التحقق من المستندات المؤيدة.',
+transfer:'إلى إدارة إعدادية صلاح الدين للبنين\nالموضوع: طلب نقل أو استضافة\nأرجو التفضل بدراسة طلبي وإعلامي بالإجراءات والمستندات المطلوبة.',
+meeting:'إلى إدارة إعدادية صلاح الدين للبنين\nالموضوع: طلب مقابلة الإدارة\nأرجو تحديد موعد مناسب لمراجعة الإدارة بشأن الموضوع الموضح أدناه.',
+inquiry:'إلى إدارة إعدادية صلاح الدين للبنين\nالموضوع: استفسار إداري\nأرجو التفضل بالإجابة عن الاستفسار الموضح أدناه.',
+other:'إلى إدارة إعدادية صلاح الدين للبنين\nالموضوع: طلب إداري\nأرجو التفضل بالنظر في طلبي الموضح أدناه.'
+};
+$('kind').addEventListener('change',()=>{if(!$('details').value.trim())$('details').value=templates[$('kind').value]||''});
+$('kind').dispatchEvent(new Event('change'));
+async function createRequest(){
+ const btn=$('send'),out=$('sendResult');const name=$('name').value.trim(),subject=$('subject').value.trim(),details=$('details').value.trim(),grade=$('grade').value.trim();
+ if(name.length<2||subject.length<3||details.length<10){out.classList.remove('hidden');out.textContent='يرجى إدخال الاسم وعنوان الطلب وتفاصيل كافية.';return}
+ btn.disabled=true;btn.textContent='جارٍ إرسال الطلب...';
+ try{
+ const k=$('kind').value;const type=['endorsement','document','correction'].includes(k)?'document':['transfer'].includes(k)?'enrollment':['meeting','inquiry'].includes(k)?'inquiry':'other';
+ const payload={action:'create-request',applicantName:name,contactPhone:$('phone').value.trim(),requestType:type,details:'نوع المعاملة: '+$('kind').selectedOptions[0].text+'\nعنوان الطلب: '+subject+'\nالصف والشعبة: '+(grade||'غير محدد')+'\n\n'+details,website:$('website').value};
+ const data=await call(PORTAL_URL,payload);
+ out.classList.remove('hidden');out.innerHTML='<b>تم استلام طلبك بنجاح.</b><div class="code">'+esc(data.trackingCode)+'</div><p>رمز المتابعة الخاص (احتفظ به مع رقم الطلب):</p><div class="code" style="font-size:14px;overflow-wrap:anywhere">'+esc(data.trackingToken)+'</div><p>احتفظ بالرقمين في مكان آمن. سيبقى بإمكانك متابعة حالة الطلب بعد مراجعة الإدارة.</p><button class="btn" onclick="copyTracking()">نسخ بيانات المتابعة</button>';
+ window.lastTracking='رقم الطلب: '+data.trackingCode+'\nرمز المتابعة: '+data.trackingToken;
+ }catch(e){out.classList.remove('hidden');out.textContent='لم يتم إرسال الطلب: '+e.message}
+ finally{btn.disabled=false;btn.textContent='إرسال الطلب واستلام رقم المتابعة'}
+}
+function copyTracking(){if(window.lastTracking)navigator.clipboard?.writeText(window.lastTracking).then(()=>alert('تم نسخ بيانات المتابعة.')).catch(()=>alert(window.lastTracking))}
+async function trackRequest(){const out=$('trackResult');out.classList.remove('hidden');out.textContent='جارٍ البحث...';try{const d=await call(PORTAL_URL,{action:'track-request',trackingCode:$('trackCode').value.trim(),trackingToken:$('trackToken').value.trim()});const r=d.request;const labels={pending:'لم تتم المراجعة بعد',in_review:'قيد المراجعة',needs_info:'يتطلب استكمال معلومات',approved:'تمت الموافقة',rejected:'لم تتم الموافقة',completed:'مكتمل'};out.innerHTML='<b>حالة الطلب: </b><span class="status">'+esc(labels[r.status]||r.status)+'</span><p>رقم الطلب: '+esc(r.tracking_code)+'</p><p>نوع المعاملة: '+esc(r.request_type)+'</p><p>آخر تحديث: '+esc(new Date(r.updated_at).toLocaleString('ar-IQ'))+'</p><p>رسالة الإدارة: '+esc(r.public_message||'لا توجد ملاحظات منشورة حالياً.')+'</p>'}catch(e){out.textContent=e.message}}
+async function adminLogin(){const msg=$('adminMsg');msg.classList.remove('hidden');msg.textContent='جارٍ التحقق...';try{const d=await call(ADMIN_URL,{action:'login',pin:$('adminPin').value});if(!d.ok||!d.session)throw new Error('تعذر إنشاء جلسة إدارية.');adminSession=d.session;$('adminLogin').classList.add('hidden');$('adminArea').classList.remove('hidden');msg.textContent='تم تسجيل الدخول.';await loadAdmin()}catch(e){msg.textContent='تعذر الدخول: '+e.message}}
+function adminLogout(){adminSession=null;adminRequests=[];$('adminArea').classList.add('hidden');$('adminLogin').classList.remove('hidden');$('adminPin').value='';$('adminList').textContent='تم تسجيل الخروج.'}
+async function loadAdmin(){if(!adminSession)return;const host=$('adminList');host.textContent='جارٍ تحميل الطلبات...';try{const d=await call(PORTAL_URL,{action:'admin-list-requests',session:adminSession});adminRequests=d.requests||[];renderAdmin()}catch(e){host.textContent='تعذر تحميل الطلبات: '+e.message}}
+function renderAdmin(){const host=$('adminList'),q=$('adminSearch').value.trim().toLowerCase();const rows=adminRequests.filter(r=>(r.tracking_code+' '+r.applicant_name).toLowerCase().includes(q));if(!rows.length){host.textContent='لا توجد طلبات مطابقة.';return}host.innerHTML=rows.map(r=>'<article class="request"><div><b>'+esc(r.tracking_code)+'</b> <span class="status">'+esc(r.status)+'</span></div><p><b>مقدم الطلب:</b> '+esc(r.applicant_name)+' | <b>الهاتف:</b> '+esc(r.contact_phone||'—')+'</p><p>'+esc(r.details)+'</p><div class="grid"><label>تحديث الحالة<select class="field" id="st-'+r.id+'"><option value="pending">لم تتم المراجعة بعد</option><option value="in_review">قيد المراجعة</option><option value="needs_info">يتطلب استكمال معلومات</option><option value="approved">تمت الموافقة</option><option value="rejected">لم تتم الموافقة</option><option value="completed">مكتمل</option></select></label><label>رسالة تظهر لصاحب الطلب<input class="field" id="pm-'+r.id+'" maxlength="1000" value="'+esc(r.public_message||'')+'" placeholder="مثال: يرجى مراجعة الإدارة"></label></div><label>ملاحظة داخلية للإدارة<textarea class="field" id="an-'+r.id+'" rows="2" maxlength="4000">'+esc(r.admin_note||'')+'</textarea></label><button class="btn" onclick="updateRequest(\''+r.id+'\')">حفظ التحديث</button><div class="small">تاريخ التقديم: '+esc(new Date(r.created_at).toLocaleString('ar-IQ'))+' | آخر تحديث: '+esc(new Date(r.updated_at).toLocaleString('ar-IQ'))+'</div></article>').join('');rows.forEach(r=>{const el=$('st-'+r.id);if(el)el.value=r.status})}
+async function updateRequest(id){const status=$('st-'+id).value,publicMessage=$('pm-'+id).value,adminNote=$('an-'+id).value;try{await call(PORTAL_URL,{action:'admin-update-request',session:adminSession,id,status,publicMessage,adminNote});alert('تم تحديث حالة الطلب.');await loadAdmin()}catch(e){alert('تعذر تحديث الطلب: '+e.message)}}
+</script></body></html>
