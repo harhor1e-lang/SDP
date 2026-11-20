@@ -765,6 +765,30 @@ button:disabled,input:disabled,select:disabled,textarea:disabled{cursor:not-allo
 }
 </style>
 
+
+<style id="salah-mobile-performance-v2">
+@media (max-width: 900px), (pointer: coarse) {
+  body::after { animation: none !important; }
+  #live-broadcast-banner>div { -webkit-backdrop-filter:none!important;backdrop-filter:none!important; }
+  .theme-panel,.theme-card,.floating-command-dock,.hero-shell,.hero-glass-card,
+  .hero-float-chip,.identity-panel,.sd-role-card,.v7-panel,.v7-launch,
+  .admin-card,.admin-panel,.admin-section,.glass-card {
+    -webkit-backdrop-filter:none!important;
+    backdrop-filter:none!important;
+    filter:none;
+  }
+  .theme-card,.sd-role-card,.v7-launch,.hero-shell,.hero-glass-card,
+  .theme-panel,.floating-command-dock {
+    animation:none!important;
+    transition:none!important;
+  }
+  .hero-shell::before,.hero-shell::after,.theme-panel::before,.theme-panel::after {display:none!important}
+  .hero-ring,.hero-float-chip,.intro-orbit,.intro-grid,.hero-scroll-hint span::after,
+  .gold-gradient-text,.marquee-content {animation-play-state:paused!important}
+  #particle-canvas,#cursor-glow {display:none!important}
+}
+</style>
+
 </head>
 <body class="min-h-screen relative">
 <script>
@@ -2034,7 +2058,7 @@ button:disabled,input:disabled,select:disabled,textarea:disabled{cursor:not-allo
             v6RenderCloudAuth();
             if(!v6CloudReady()) return;
             v6RenderCloudAuth();
-            db.ref('digitalLibrary').on('value',snap=>{v6CloudData.library=snap.val()||{};v6RenderLibrary(v6CloudData.library);},err=>console.warn('digitalLibrary read:',err));
+            db.ref('digitalLibrary').on('value',snap=>{v6CloudData.library=snap.val()||{};globalDigitalLibraryData=v6CloudData.library;v6RenderLibrary(v6CloudData.library);updatePublicBookCount(globalBooksData);},err=>console.warn('digitalLibrary read:',err));
             db.ref('schoolMessages').on('value',snap=>{v6CloudData.messages=snap.val()||{};v6RenderMessages(v6CloudData.messages);},err=>console.warn('schoolMessages read:',err));
             db.ref('annualReports').on('value',snap=>{v6CloudData.reports=snap.val()||{};v6RenderAnnualReports(v6CloudData.reports);},err=>console.warn('annualReports read:',err));
         }
@@ -2371,6 +2395,7 @@ button:disabled,input:disabled,select:disabled,textarea:disabled{cursor:not-allo
         let globalPostsData = {};
         let globalLabsData = { computer: {}, physics: {}, chemistry: {}, biology: {} };
         let globalBooksData = {};
+        let globalDigitalLibraryData = {};
         let globalStudentsData = {};
         let globalQuestionBankData = {};
         let currentDisciplineStudentId = null;
@@ -3390,7 +3415,13 @@ button:disabled,input:disabled,select:disabled,textarea:disabled{cursor:not-allo
 
         // ====== إحصائيات مجمّعة ======
         function updateStat(id,value){const el=document.getElementById(id);if(el)el.textContent=Number.isFinite(Number(value))?Number(value).toLocaleString('ar-IQ'):'—';}
-        function updatePublicBookCount(data){const count=Object.keys(data||{}).length;updateStat('stat-books',count);}
+        function updatePublicBookCount(data){
+            const legacy = data && typeof data === 'object' ? data : (globalBooksData||{});
+            const digital = globalDigitalLibraryData && typeof globalDigitalLibraryData === 'object' ? globalDigitalLibraryData : {};
+            const legacyCount = Object.keys(legacy).length;
+            const digitalCount = Object.values(digital).filter(item=>item && item.published!==false).length;
+            updateStat('stat-books',legacyCount+digitalCount);
+        }
         function recordSessionVisit(){
             try{if(sessionStorage.getItem('salah_visit_counted_v1'))return;sessionStorage.setItem('salah_visit_counted_v1','1');
                 // عداد جلسات تقريبي؛ لا يخزن عنوان IP أو بيانات تعريفية.
