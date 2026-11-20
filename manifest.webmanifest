@@ -1,0 +1,25 @@
+{
+  "name": "إعدادية صلاح الدين للبنين",
+  "short_name": "صلاح الدين",
+  "description": "المنصة الرقمية الرسمية لإعدادية صلاح الدين للبنين",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": [
+    "standalone",
+    "minimal-ui"
+  ],
+  "orientation": "portrait-primary",
+  "background_color": "#07101f",
+  "theme_color": "#081426",
+  "icons": [
+    {
+      "src": "./app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
