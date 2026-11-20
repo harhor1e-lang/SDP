@@ -5239,7 +5239,7 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
           'Content-Type':'application/json',
           'apikey':SCHOOL_SUPABASE_PUBLISHABLE_KEY
         },
-        body:JSON.stringify({messages:(function(){var outgoing=assistantHistory.slice();var last=outgoing.length-1;var context=getSchoolAssistantContext();if(last>=0&&outgoing[last].role==='user'){outgoing[last]={role:'user',content:'أنت المساعد الذكي الرسمي لإعدادية صلاح الدين للبنين. أجب عن أسئلة المدرسة اعتماداً على معلومات الموقع التالية فقط، وإذا لم تجد المعلومة فقل إنها غير منشورة ولا تخمّن.\n[معلومات الموقع المنشورة]\n'+context+'\n[سؤال المستخدم]\n'+outgoing[last].content};}return outgoing;})()})
+        body:JSON.stringify({messages:(function(){var outgoing=assistantHistory.slice();var last=outgoing.length-1;var context=getSchoolAssistantContext();if(last>=0&&outgoing[last].role==='user'){outgoing[last]={role:'user',content:'أنت مساعد ذكاء اصطناعي عام ومتعدد الاستخدامات، وتعمل أيضاً كمساعد رسمي لإعدادية صلاح الدين للبنين. أجب عن الأسئلة العامة والعلمية والتقنية والثقافية والكتابة وغيرها اعتماداً على معرفتك العامة بشكل طبيعي، ولا تقل إن المعلومة غير منشورة لمجرد أن السؤال عام. إذا كان السؤال عن المدرسة أو إدارتها أو مدرسيها أو تبليغاتها أو إرشادها أو بثها أو جداولها، فاستخدم معلومات الموقع المرفقة أولاً، ولا تخمّن أي معلومة مدرسية غير موجودة فيها؛ عندها فقط وضّح أن المعلومة غير ظاهرة ضمن المحتوى المتاح.\n[معلومات الموقع المنشورة]\n'+context+'\n[سؤال المستخدم]\n'+outgoing[last].content};}return outgoing;})()})
       });
       var data={};
       try{data=await response.json();}catch(_){}
