@@ -4,6 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>إعدادية صلاح الدين للبنين | V20 Royal Edition</title>
+    <link rel="manifest" href="./manifest.webmanifest">
+    <link rel="icon" type="image/svg+xml" href="./app-icon.svg">
+    <meta name="theme-color" content="#081426">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="صلاح الدين">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="./app-icon.svg">
     <script src="https://cdn.tailwindcss.com?v=2026.1">
 </script>
     <script>
@@ -1289,6 +1297,20 @@ body.sd-intro-active > #cinematic-intro{
 /* تحديث الصفحة يتجاوز الانترو لمرة واحدة فقط */
 html.sd-skip-intro-once #cinematic-intro{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important}
 </style>
+    <style id="sd-pwa-and-assistant-ui">
+      #sd-notify-btn,#sd-install-btn{white-space:nowrap}
+      #sd-notify-btn.is-enabled{border-color:rgba(52,211,153,.65)!important;color:#6ee7b7!important}
+      #sd-assistant-modal{position:fixed;inset:0;z-index:2147482000;background:rgba(2,7,18,.78);backdrop-filter:blur(12px);display:none;align-items:center;justify-content:center;padding:16px}
+      #sd-assistant-modal.open{display:flex}
+      #sd-assistant-panel{width:min(100%,620px);max-height:min(82vh,760px);display:flex;flex-direction:column;border:1px solid rgba(121,203,212,.35);border-radius:26px;background:linear-gradient(145deg,#101d34,#07101f);box-shadow:0 28px 90px #000b,0 0 35px #38bdf822;overflow:hidden}
+      #sd-assistant-messages{overflow:auto;min-height:180px;max-height:48vh;padding:16px;display:flex;flex-direction:column;gap:10px}
+      .sd-ai-msg{max-width:90%;padding:11px 14px;border-radius:16px;line-height:1.8;font-size:13px;white-space:pre-wrap}
+      .sd-ai-msg.system{align-self:flex-start;background:#ffffff10;border:1px solid #ffffff18;color:#dbeafe}
+      .sd-ai-msg.user{align-self:flex-end;background:linear-gradient(120deg,#155e75,#3730a3);color:white}
+      #sd-assistant-input{width:100%;min-height:48px;max-height:120px;resize:vertical;border-radius:14px;background:#071426;border:1px solid #ffffff25;color:white;padding:12px;font:inherit;outline:none}
+      #sd-assistant-input:focus{border-color:#67e8f9;box-shadow:0 0 0 3px #22d3ee22}
+      @media(max-width:600px){#sd-assistant-modal{padding:8px}#sd-assistant-panel{max-height:90dvh;border-radius:20px}#sd-assistant-messages{max-height:52dvh}}
+    </style>
 </head>
 <body class="min-h-screen relative">
 <script>
@@ -1341,6 +1363,8 @@ html.sd-skip-intro-once #cinematic-intro{display:none!important;visibility:hidde
         </div>
 
         <div class="flex items-center gap-2.5 flex-wrap justify-center">
+            <button type="button" id="sd-notify-btn" onclick="enableSchoolNotifications()" class="px-3 py-1.5 rounded-full theme-card text-[11px] font-black flex items-center gap-1.5 border border-cyan-400/40 text-cyan-300 hover:scale-105 transition shadow-md" aria-label="تفعيل إشعارات المدرسة">🔔 الإشعارات</button>
+            <button type="button" id="sd-install-btn" onclick="installSchoolApp()" class="px-3 py-1.5 rounded-full theme-card text-[11px] font-black flex items-center gap-1.5 border border-violet-400/40 text-violet-300 hover:scale-105 transition shadow-md" aria-label="تثبيت تطبيق المدرسة" hidden>📲 تثبيت التطبيق</button>
             <button type="button" onclick="refreshSiteWithoutIntro()" class="px-3 py-1.5 rounded-full theme-card text-[11px] font-black flex items-center gap-1.5 border border-emerald-400/50 text-emerald-300 hover:scale-105 transition shadow-md" aria-label="تحديث الموقع">♻ تحديث</button>
             <a href="requests.html" class="px-3 py-1.5 rounded-full theme-card text-[11px] font-bold flex items-center gap-1.5 border border-yellow-400/50 text-yellow-300 hover:scale-105 transition shadow-md" aria-label="تقديم طلب إلى إدارة المدرسة">📝 طلب إلى الإدارة</a>
             <a href="https://t.me/SD_Alerts" target="_blank" class="px-3 py-1.5 rounded-full theme-card text-[11px] font-bold flex items-center gap-1.5 border border-blue-500/30 text-blue-400 hover:scale-105 transition"><svg viewBox="0 0 24 24" aria-hidden="true" class="w-4 h-4 shrink-0" fill="currentColor"><path d="M21.0 4.4 17.9 19c-.23 1.03-.84 1.28-1.7.8l-4.7-3.47-2.27 2.18c-.25.25-.46.46-.94.46l.34-4.8 8.73-7.89c.38-.34-.08-.53-.59-.19L6.0 12.96l-4.63-1.45c-1.01-.32-1.03-1.01.21-1.5L19.7 3.1c.84-.31 1.58.2 1.3 1.3Z"/></svg> العامة</a>
@@ -1672,6 +1696,16 @@ html.sd-skip-intro-once #cinematic-intro{display:none!important;visibility:hidde
                 </div>
                 <span class="text-sm font-bold text-yellow-400 whitespace-nowrap">عرض الموقع ←</span>
             </a>
+            <button type="button" onclick="openGeneralAssistant()" class="w-full mt-3 theme-panel p-5 rounded-2xl flex items-center justify-between gap-4 text-right transition-all hover:-translate-y-1 hover:shadow-xl border border-cyan-400/30" aria-label="فتح المساعد الذكي العام">
+                <div class="flex items-center gap-3">
+                    <span class="text-3xl" aria-hidden="true">✦</span>
+                    <div>
+                        <h3 class="title-font text-lg font-black text-cyan-300">المساعد الذكي العام</h3>
+                        <p class="text-xs opacity-75">اسأل عن التقنية والمعرفة والكتابة وأي موضوع عام</p>
+                    </div>
+                </div>
+                <span class="text-sm font-bold text-cyan-300 whitespace-nowrap">ابدأ المحادثة ←</span>
+            </button>
         </section>
 
 
@@ -3962,7 +3996,7 @@ html.sd-skip-intro-once #cinematic-intro{display:none!important;visibility:hidde
         // مستمعات Firebase الفورية للأقسام العامة — ضرورية لتحديث الواجهة عند تغير البيانات.
         function initializeRealtimeData(){
             if(!firebaseReady())return;
-            db.ref('posts').on('value',snap=>{globalPostsData=snap.val()||{};renderPosts();},err=>reportDbError('مزامنة التبليغات',err));
+            db.ref('posts').on('value',snap=>{globalPostsData=snap.val()||{};renderPosts();if(typeof window.sdNotifyNewSchoolPost==='function')window.sdNotifyNewSchoolPost(globalPostsData);},err=>reportDbError('مزامنة التبليغات',err));
             db.ref('books').on('value',snap=>{globalBooksData=snap.val()||{};renderBooks();updatePublicBookCount(globalBooksData);},err=>reportDbError('مزامنة الكتب',err));
             ['computer','physics','chemistry','biology'].forEach(lab=>db.ref('labs/'+lab).on('value',snap=>{globalLabsData[lab]=snap.val()||{};renderLab(lab);if(isAdminLoggedIn)renderAdminLabs();},err=>reportDbError('مزامنة المختبرات',err)));
             db.ref('liveBroadcast').on('value',snap=>renderLiveBroadcast(snap.val()),err=>console.warn('broadcast listener unavailable',err));
@@ -5079,5 +5113,98 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
 })();
 </script>
 
+ 
+<div id="sd-assistant-modal" role="dialog" aria-modal="true" aria-labelledby="sd-assistant-title" onclick="if(event.target===this)closeGeneralAssistant()">
+  <div id="sd-assistant-panel">
+    <div class="flex items-center justify-between gap-3 p-4 border-b border-white/10">
+      <div><div class="text-[10px] tracking-widest text-cyan-300 font-black">GENERAL AI ASSISTANT</div><h2 id="sd-assistant-title" class="title-font text-xl font-black text-white">المساعد الذكي العام</h2><p class="text-[11px] text-slate-400 mt-1">مساعد متعدد الاستخدامات — ليس محصوراً بالدراسة</p></div>
+      <button type="button" onclick="closeGeneralAssistant()" class="rounded-full px-3 py-2 bg-white/10 text-white" aria-label="إغلاق">✕</button>
+    </div>
+    <div id="sd-assistant-messages"><div class="sd-ai-msg system">أهلاً بك. هذه واجهة المساعد العام، ويمكن تخصيصه للأسئلة العامة والشرح والكتابة والتقنية والأفكار. ربط محرك الذكاء الاصطناعي بالخادم ما زال مطلوباً قبل تفعيل الإجابات الحقيقية.</div></div>
+    <div class="p-3 border-t border-white/10 space-y-2">
+      <textarea id="sd-assistant-input" rows="2" placeholder="اكتب سؤالك هنا..." aria-label="رسالتك للمساعد"></textarea>
+      <div class="flex items-center justify-between gap-2"><span id="sd-assistant-status" class="text-[10px] text-amber-300">واجهة جاهزة — بانتظار ربط محرك الذكاء الاصطناعي</span><button type="button" onclick="sendGeneralAssistantMessage()" class="rounded-xl px-5 py-2.5 font-black text-sm bg-cyan-500/20 border border-cyan-300/40 text-cyan-200">إرسال</button></div>
+    </div>
+  </div>
+</div>
+
+<script id="sd-pwa-notifications-assistant">
+(function(){
+  var deferredInstallPrompt=null;
+  var swRegistration=null;
+  var firstPostsSnapshot=true;
+  var knownPostIds=new Set();
+
+  window.addEventListener('beforeinstallprompt',function(event){
+    event.preventDefault();deferredInstallPrompt=event;
+    var btn=document.getElementById('sd-install-btn');if(btn)btn.hidden=false;
+  });
+  window.addEventListener('appinstalled',function(){
+    deferredInstallPrompt=null;var btn=document.getElementById('sd-install-btn');if(btn)btn.hidden=true;
+    if(typeof toast==='function')toast('تم تثبيت تطبيق المدرسة بنجاح');
+  });
+  window.installSchoolApp=async function(){
+    if(!deferredInstallPrompt){if(typeof toast==='function')toast('إذا كان التطبيق مثبتاً فلا حاجة لإعادة التثبيت. على iPhone استخدم مشاركة ثم إضافة إلى الشاشة الرئيسية.');return;}
+    deferredInstallPrompt.prompt();await deferredInstallPrompt.userChoice;deferredInstallPrompt=null;
+    var btn=document.getElementById('sd-install-btn');if(btn)btn.hidden=true;
+  };
+
+  async function registerSchoolSW(){
+    if(!('serviceWorker' in navigator)||!window.isSecureContext)throw new Error('التثبيت والإشعارات يتطلبان اتصالاً آمناً HTTPS.');
+    swRegistration=await navigator.serviceWorker.register('./sw.js',{scope:'./'});
+    return swRegistration;
+  }
+  window.enableSchoolNotifications=async function(){
+    var btn=document.getElementById('sd-notify-btn');
+    try{
+      if(!('Notification' in window)){if(typeof toast==='function')toast('هذا المتصفح لا يدعم إشعارات الويب.',false);return;}
+      await registerSchoolSW();
+      var permission=Notification.permission;
+      if(permission!=='granted')permission=await Notification.requestPermission();
+      if(permission!=='granted'){if(typeof toast==='function')toast('لم يتم السماح بالإشعارات. يمكنك تفعيلها من إعدادات المتصفح.',false);return;}
+      if(btn){btn.classList.add('is-enabled');btn.textContent='✓ الإشعارات مفعّلة';}
+      if(typeof toast==='function')toast('تم السماح بإشعارات المدرسة على هذا الجهاز.');
+      if(!window.__sdPushServerConfigured&&typeof toast==='function'){
+        setTimeout(()=>toast('تنبيه: الإشعارات أثناء فتح الموقع تعمل عند وصول تبليغ جديد. وللإرسال بالخلفية بعد إغلاق التطبيق نحتاج إعداد مفتاح Web Push وخدمة الإرسال.',false),900);
+      }
+    }catch(error){console.error('School notifications setup:',error);if(typeof toast==='function')toast(error.message||'تعذر تفعيل الإشعارات.',false);}
+  };
+  window.__sdShowSchoolNotification=async function(title,body){
+    try{
+      if(!('Notification' in window)||Notification.permission!=='granted')return;
+      var reg=swRegistration||await registerSchoolSW();
+      await reg.showNotification(title,{body:body||'تم نشر تحديث جديد في منصة المدرسة',icon:'./app-icon.svg',badge:'./app-icon.svg',tag:'school-update-'+Date.now(),renotify:false,data:{url:'./'}});
+    }catch(e){console.warn('Notification display unavailable:',e);}
+  };
+  window.sdNotifyNewSchoolPost=function(posts){
+    var entries=posts&&typeof posts==='object'?Object.entries(posts):[];
+    var current=new Set(entries.map(([id])=>String(id)));
+    if(firstPostsSnapshot){knownPostIds=current;firstPostsSnapshot=false;return;}
+    var added=entries.filter(([id])=>!knownPostIds.has(String(id)));
+    knownPostIds=current;
+    if(added.length&&document.visibilityState!=='visible'){
+      var item=added[added.length-1][1]||{};
+      var title=String(item.title||item.name||'تبليغ جديد من إدارة المدرسة').slice(0,100);
+      window.__sdShowSchoolNotification('إعدادية صلاح الدين للبنين',title);
+    }
+  };
+  document.addEventListener('DOMContentLoaded',function(){
+    registerSchoolSW().catch(e=>console.warn('PWA service worker:',e));
+    if('Notification' in window&&Notification.permission==='granted'){
+      var b=document.getElementById('sd-notify-btn');if(b){b.classList.add('is-enabled');b.textContent='✓ الإشعارات مفعّلة';}
+    }
+  });
+  window.openGeneralAssistant=function(){var m=document.getElementById('sd-assistant-modal');if(m){m.classList.add('open');setTimeout(()=>document.getElementById('sd-assistant-input')?.focus(),80);}};
+  window.closeGeneralAssistant=function(){document.getElementById('sd-assistant-modal')?.classList.remove('open');};
+  window.sendGeneralAssistantMessage=function(){
+    var input=document.getElementById('sd-assistant-input'),messages=document.getElementById('sd-assistant-messages'),status=document.getElementById('sd-assistant-status');
+    var value=(input?.value||'').trim();if(!value)return;
+    var bubble=document.createElement('div');bubble.className='sd-ai-msg user';bubble.textContent=value;messages.appendChild(bubble);input.value='';
+    var reply=document.createElement('div');reply.className='sd-ai-msg system';reply.textContent='وصل سؤالك إلى واجهة المساعد. حتى أجيبك بإجابات ذكاء اصطناعي فعلية، يلزم ربط محرك AI آمن بالخادم. لم أضع مفتاحاً سرياً داخل كود الموقع.';messages.appendChild(reply);messages.scrollTop=messages.scrollHeight;
+    if(status)status.textContent='بانتظار ربط محرك AI بالخادم';
+  };
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')window.closeGeneralAssistant();});
+})();
+</script>
 </body>
 </html>
