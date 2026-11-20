@@ -5195,7 +5195,7 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
   });
   var assistantHistory=[];
   var assistantBusy=false;
-  var assistantEndpoint=SCHOOL_SUPABASE_URL+'/functions/v1/school-ai-chat';
+  var assistantEndpoint=SCHOOL_SUPABASE_URL+'/functions/v1/bright-api';
   function addAssistantMessage(text,kind){
     var box=document.getElementById('sd-assistant-messages');if(!box)return;
     var item=document.createElement('div');item.className='sd-ai-msg '+kind;item.textContent=text;box.appendChild(item);box.scrollTop=box.scrollHeight;
