@@ -1,0 +1,10 @@
+{
+  "appId": "net.salahaldin.school",
+  "appName": "إعدادية صلاح الدين 1966",
+  "webDir": "www",
+  "server": {
+    "url": "https://harhor1e-lang.github.io/SDP/",
+    "cleartext": false,
+    "androidScheme": "https"
+  }
+}
