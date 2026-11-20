@@ -789,6 +789,74 @@ button:disabled,input:disabled,select:disabled,textarea:disabled{cursor:not-allo
 }
 </style>
 
+
+<style id="salah-visual-polish-2026">
+/* Visual-only refinement: royal midnight, restrained champagne gold */
+:root{
+  --sd-gold:#d9b86b;
+  --sd-gold-soft:#f4dfa7;
+  --sd-midnight:#081525;
+}
+html{scrollbar-color:rgba(217,184,107,.55) #081525}
+body{background-attachment:fixed!important}
+#cinematic-intro{
+  background:
+    radial-gradient(ellipse at 50% 38%,rgba(36,69,101,.58),transparent 43%),
+    radial-gradient(ellipse at 50% 100%,rgba(184,139,58,.12),transparent 45%),
+    linear-gradient(145deg,#050b14 0%,#0b1b2d 52%,#030811 100%)!important;
+}
+#cinematic-intro::before{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.28;
+  background:radial-gradient(1px 1px at 14% 22%,#f4dfa7 99%,transparent),
+    radial-gradient(1px 1px at 82% 18%,#f4dfa7 99%,transparent),
+    radial-gradient(1px 1px at 72% 72%,#f4dfa7 99%,transparent),
+    radial-gradient(1px 1px at 23% 78%,#f4dfa7 99%,transparent),
+    radial-gradient(1px 1px at 48% 12%,#fff 99%,transparent);
+}
+.intro-emblem{
+  position:relative;
+  box-shadow:0 0 0 10px rgba(216,180,90,.055),0 0 0 22px rgba(216,180,90,.025),
+    0 0 75px rgba(216,180,90,.28),inset 0 2px 3px rgba(255,255,255,.65)!important;
+  animation:sdEmblemFloat 4.8s ease-in-out infinite,emblemIn 1s cubic-bezier(.2,.8,.2,1) both!important;
+}
+.intro-emblem::after{
+  content:"";position:absolute;inset:-13px;border:1px solid rgba(244,216,151,.24);
+  border-radius:32px;transform:rotate(45deg);animation:sdSealOrbit 18s linear infinite;
+}
+@keyframes sdEmblemFloat{50%{translate:0 -7px;filter:brightness(1.08)}}
+@keyframes sdSealOrbit{to{transform:rotate(405deg)}}
+.intro-title{text-shadow:0 8px 35px rgba(0,0,0,.55),0 0 28px rgba(216,180,90,.13)!important}
+.intro-kicker{letter-spacing:3px!important}
+.intro-progress{height:3px!important;border-radius:99px;box-shadow:0 0 18px rgba(240,213,142,.13)}
+.intro-progress span{box-shadow:0 0 16px rgba(240,213,142,.8)}
+.hero-shell{
+  box-shadow:0 35px 90px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.16),0 0 0 1px rgba(216,180,90,.045)!important;
+}
+.hero-shell::after{border-color:rgba(245,217,138,.11)!important}
+.identity-panel,.average-calc-shell{
+  box-shadow:0 25px 70px rgba(0,0,0,.32),inset 0 1px 0 rgba(255,255,255,.11)!important;
+}
+.quick-access a:focus-visible,.quick-access button:focus-visible{
+  outline:2px solid #f5df9d!important;outline-offset:4px;
+}
+.marquee-container{
+  box-shadow:0 5px 20px rgba(0,0,0,.16),inset 0 1px rgba(255,255,255,.28);
+}
+.theme-panel,.theme-card,.sd-card{
+  box-shadow:0 14px 36px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.055);
+}
+@media(max-width:640px){
+  #cinematic-intro .intro-copy{margin-top:25px}
+  .intro-emblem{width:76px;height:76px;border-radius:23px}
+  .intro-emblem span{font-size:51px}
+  .intro-title{line-height:1.55}
+  .hero-shell{box-shadow:0 20px 50px rgba(0,0,0,.3)!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .intro-emblem,.intro-emblem::after{animation:none!important}
+}
+</style>
+
 </head>
 <body class="min-h-screen relative">
 <script>
