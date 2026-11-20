@@ -1268,6 +1268,25 @@ td,th{border-color:rgba(99,197,255,.16)!important}
  html{scroll-behavior:auto!important}
  @media(max-width:760px){#cinematic-intro{padding:20px 14px!important}#skip-cinematic-intro{margin-top:22px!important;width:min(190px,68vw);min-height:50px}}
 </style>
+
+<style id="sd-intro-isolation-and-remove-ad-strip">
+/* اخفاء شريط الإعلانات العلوي */
+.marquee-container, marquee, #top-announcement-bar, #announcement-ticker,
+.top-announcement-bar, .announcement-ticker, body > .bg-gradient-to-r.from-yellow-600{
+ display:none!important;
+}
+/* الانترو طبقة مستقلة: لا يظهر أي جزء من الموقع خلفها قبل الضغط */
+body.sd-intro-active{overflow:hidden!important;min-height:100vh!important}
+body.sd-intro-active > :not(#cinematic-intro){visibility:hidden!important;pointer-events:none!important}
+body.sd-intro-active > #cinematic-intro{
+ visibility:visible!important;opacity:1!important;pointer-events:auto!important;
+ position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;
+ z-index:2147483647!important;display:flex!important;
+}
+#cinematic-intro{isolation:isolate;contain:layout paint;overscroll-behavior:contain}
+#cinematic-intro.fade-out{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
+#skip-cinematic-intro{z-index:2147483647!important}
+</style>
 </head>
 <body class="min-h-screen relative">
 <script>document.body.classList.add('sd-intro-active');</script>
