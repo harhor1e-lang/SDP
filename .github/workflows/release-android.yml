@@ -66,7 +66,7 @@ jobs:
             echo "android {"
             echo "    signingConfigs {"
             echo "        release {"
-            echo "            storeFile file('../release-key.jks')"
+            echo "            storeFile file('../../release-key.jks')"
             echo "            storePassword System.getenv('KEYSTORE_PASSWORD')"
             echo "            keyAlias System.getenv('KEY_ALIAS')"
             echo "            keyPassword System.getenv('KEY_PASSWORD')"
