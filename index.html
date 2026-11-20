@@ -5198,10 +5198,11 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
   var assistantEndpoint=SCHOOL_SUPABASE_URL+'/functions/v1/bright-api';
   // يجمع المعلومات المنشورة للطلاب فقط من أقسام الموقع، دون لوحة الإدارة أو سجلات الطلاب.
   function getSchoolAssistantContext(){
+    // أعطِ بيانات المدرسين أولوية حتى لا تُقصّ قبل وصولها إلى نموذج الذكاء الاصطناعي.
     var publicSections=[
-      'live-broadcast-banner','notices-section','guidance-public-section',
-      'labs-section','teachers-section','school-info-section',
-      'v7-timetable','v7-guidance-feed','v7-reports','v7-contact'
+      'teachers-section','school-info-section','notices-section',
+      'guidance-public-section','live-broadcast-banner','v7-timetable',
+      'v7-guidance-feed','v7-reports','v7-contact','labs-section'
     ];
     var parts=[];
     publicSections.forEach(function(id){
@@ -5210,7 +5211,7 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
       var value=(el.innerText||el.textContent||'').replace(/\\s+/g,' ').trim();
       if(value)parts.push(value);
     });
-    return parts.join('\\n').slice(0,2100);
+    return parts.join('\\n').slice(0,3300);
   }
   function addAssistantMessage(text,kind){
     var box=document.getElementById('sd-assistant-messages');if(!box)return;
