@@ -344,6 +344,21 @@
         @media (prefers-reduced-motion:reduce) {
             *,*::before,*::after {animation-duration:.01ms !important;animation-iteration-count:1 !important;scroll-behavior:auto !important;transition-duration:.01ms !important;}
         }
+    
+        #skip-cinematic-intro{
+            position:absolute;z-index:5;bottom:66px;left:50%;transform:translateX(-50%);
+            display:inline-flex;align-items:center;gap:12px;padding:11px 20px;border-radius:999px;
+            border:1px solid rgba(245,217,138,.48);background:rgba(12,22,36,.72);
+            color:#f4dfa7;font:800 11px 'Cairo',sans-serif;letter-spacing:.4px;
+            box-shadow:0 10px 28px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.12);
+            backdrop-filter:blur(16px);cursor:pointer;transition:background .25s,border-color .25s,box-shadow .25s;
+        }
+        #skip-cinematic-intro span{font-size:16px;line-height:1;transition:transform .25s}
+        #skip-cinematic-intro:hover{background:rgba(216,180,90,.18);border-color:#f5df9d;box-shadow:0 12px 34px rgba(216,180,90,.16)}
+        #skip-cinematic-intro:hover span{transform:translate(-3px,-2px)}
+        #skip-cinematic-intro:focus-visible{outline:2px solid #f5df9d;outline-offset:4px}
+        html:not(.dark) #skip-cinematic-intro{background:rgba(255,255,255,.8);color:#76551f;border-color:rgba(167,122,45,.5)}
+        @media(max-width:480px){#skip-cinematic-intro{bottom:68px;padding:10px 17px;font-size:10px}}
     </style>
 
     <style id="salah-identity-system-v2">
@@ -881,6 +896,7 @@ body{background-attachment:fixed!important}
             <div class="intro-progress"><span></span></div>
             <p class="intro-enter">نحو المعرفة والمستقبل</p>
         </div>
+        <button id="skip-cinematic-intro" type="button" onclick="skipCinematicIntro()" aria-label="تخطي المقدمة">تخطي المقدمة <span aria-hidden="true">↗</span></button>
         <div class="intro-bottom">SALAH AL-DIN BOYS PREPARATORY SCHOOL</div>
     </div>
 
@@ -2620,10 +2636,16 @@ body{background-attachment:fixed!important}
             }, { passive: true });
         } else if (cursorGlow) { cursorGlow.style.display = 'none'; }
 
+        let cinematicIntroTimer;
+        function skipCinematicIntro() {
+            const intro = document.getElementById('cinematic-intro');
+            if (!intro || intro.classList.contains('fade-out')) return;
+            clearTimeout(cinematicIntroTimer);
+            intro.classList.add('fade-out');
+        }
+        window.skipCinematicIntro = skipCinematicIntro;
         window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.getElementById('cinematic-intro').classList.add('fade-out');
-            }, 2600);
+            cinematicIntroTimer = setTimeout(skipCinematicIntro, 2600);
         });
 
         function openPinModal() {
