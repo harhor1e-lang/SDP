@@ -1137,6 +1137,7 @@ body{background-attachment:fixed!important}
 
 </head>
 <body class="min-h-screen relative">
+<script>document.body.classList.add('sd-intro-active');</script>
 <script>
 (function(){
   function applyMode(mode){var dark=mode!=='light';document.documentElement.classList.toggle('dark',dark);try{localStorage.setItem('salah-theme-mode',dark?'dark':'light')}catch(e){}var b=document.getElementById('theme-mode-toggle');if(b){b.textContent=dark?'☀️ الوضع الفاتح':'🌙 الوضع الداكن';b.setAttribute('aria-label',dark?'تفعيل الوضع الفاتح':'تفعيل الوضع الداكن')}}
@@ -1161,15 +1162,6 @@ body{background-attachment:fixed!important}
         </div>
         <button id="skip-cinematic-intro" type="button" onclick="skipCinematicIntro()" aria-label="الدخول إلى الموقع">الدخول <span aria-hidden="true">↗</span></button>
         <div class="intro-bottom">SALAH AL-DIN BOYS PREPARATORY SCHOOL</div>
-    </div>
-
-    <!-- شريط ترحيبي متحرك علوي -->
-    <div class="bg-gradient-to-r from-yellow-600 via-yellow-500 to-yellow-600 text-black py-2 font-bold text-xs shadow-md relative z-10">
-        <div class="marquee-container">
-            <div class="marquee-content">
-                <span>🌟 أهلاً بكم في المنصة السحابية الرسمية لإعدادية صلاح الدين للبنين (تأسست 1966) • إدارة أ. محمد أكرم الربيعي 🌟 رابط قناة السادس: t.me/SD_6th • قناة الخامس: t.me/SD_5th • قناة الرابع: t.me/SD_4th 🌟</span>
-            </div>
-        </div>
     </div>
 
     <!-- الهيدر العلوي -->
@@ -2148,10 +2140,11 @@ body{background-attachment:fixed!important}
         let particleRunning = false;
         const isSmallScreen = window.matchMedia('(max-width: 700px)').matches;
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        const particleEnabled = !isSmallScreen && !prefersReducedMotion && !!ctx;
+        // تعطيل محرك الجزيئات المستمر لتقليل استهلاك المعالج وتحسين السلاسة.
+        const particleEnabled = false;
 
         function resizeCanvas() {
-            if (!canvas || !ctx) return;
+            if (!particleEnabled || !canvas || !ctx) return;
             const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
             canvas.width = Math.round(window.innerWidth * dpr);
             canvas.height = Math.round(window.innerHeight * dpr);
@@ -2905,6 +2898,7 @@ body{background-attachment:fixed!important}
             if (!intro || intro.classList.contains('fade-out')) return;
             clearTimeout(cinematicIntroTimer);
             intro.classList.add('fade-out');
+            document.body.classList.remove('sd-intro-active');
         }
         window.skipCinematicIntro = skipCinematicIntro;
         // تبقى المقدمة ظاهرة إلى أن يضغط المستخدم زر «الدخول».
@@ -4899,7 +4893,57 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
  async function printBoth(){
   if(!selectedId||!students[selectedId]){alert('اختر الطالب أولاً.');return}
   try{status('جارٍ تجهيز الوجهين للطباعة…');const frontCanvas=await drawFace('front'),backCanvas=await drawFace('back');const frontUrl=frontCanvas.toDataURL('image/png'),backUrl=backCanvas.toDataURL('image/png');const w=window.open('','_blank','width=900,height=900');if(!w)throw new Error('اسمح بالنوافذ المنبثقة حتى تتمكن من الطباعة.');
-   w.document.write(`<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>باج الطالب</title><style>@page{size:54mm 81mm;margin:0}*{box-sizing:border-box}html,body{margin:0;padding:0}.face{width:54mm;height:81mm;page-break-after:always;break-after:page}.face:last-child{page-break-after:auto;break-after:auto}img{width:54mm;height:81mm;display:block}@media screen{body{background:#ddd;padding:20px}.face{margin:0 auto 20px;box-shadow:0 4px 20px #0004}img{width:54mm;height:90mm}}</style></head><body><div class="face"><img src="${frontUrl}"></div><div class="face"><img src="${backUrl}"></div><script>window.onload=()=>setTimeout(()=>window.print(),350)<\/script></body></html>`);w.document.close();status('تم فتح نافذة الطباعة؛ اختر الطابعة أو حفظ PDF.');
+   w.document.write(`<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>باج الطالب</title><style>@page{size:54mm 81mm;margin:0}*{box-sizing:border-box}html,body{margin:0;padding:0}.face{width:54mm;height:81mm;page-break-after:always;break-after:page}.face:last-child{page-break-after:auto;break-after:auto}img{width:54mm;height:81mm;display:block}@media screen{body{background:#ddd;padding:20px}.face{margin:0 auto 20px;box-shadow:0 4px 20px #0004}img{width:54mm;height:90mm}}</style>    <style id="sd-smooth-intro-refine-2026">
+      /* طبقة المقدمة مستقلة تماماً عن تخطيط الموقع */
+      body.sd-intro-active{overflow:hidden!important}
+      #cinematic-intro{
+        position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;
+        min-height:100vh;z-index:2147483000!important;isolation:isolate;
+        display:flex!important;align-items:center!important;justify-content:center!important;
+        opacity:1;visibility:visible;
+        transition:opacity .32s ease,visibility .32s ease!important;
+        contain:layout paint style;
+      }
+      #cinematic-intro.fade-out{
+        opacity:0!important;visibility:hidden!important;pointer-events:none!important;
+        transition:opacity .32s ease,visibility .32s ease!important;
+      }
+      #cinematic-intro .intro-copy{margin:0!important;max-width:min(92vw,850px)}
+      #skip-cinematic-intro{
+        position:relative!important;top:auto!important;right:auto!important;bottom:auto!important;left:auto!important;
+        transform:none!important;display:flex!important;align-items:center;justify-content:center;
+        width:min(210px,64vw);min-height:54px;margin:26px auto 0!important;
+        z-index:8;font-size:15px!important;letter-spacing:.04em;
+        transition:filter .18s ease,box-shadow .18s ease,background .18s ease!important;
+      }
+      #skip-cinematic-intro:active{transform:scale(.97)!important}
+      #cinematic-intro .intro-bottom{position:absolute;bottom:max(18px,env(safe-area-inset-bottom));left:12px;right:12px;text-align:center}
+      /* تحسين السلاسة: إيقاف المؤثرات المكلفة وتقليل إعادة الرسم */
+      #particle-canvas,#cursor-glow{display:none!important}
+      html{scroll-behavior:auto!important}
+      .theme-panel,.theme-card,.sd-card,.sd-role-card,.floating-command-dock,
+      .hero-glass-card,.hero-float-chip,.identity-panel,.v7-panel{
+        -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+      }
+      .theme-panel,.theme-card,.sd-card,.sd-role-card,.hero-shell,.hero-glass-card,
+      .hero-float-chip,.identity-panel,.v7-panel{
+        box-shadow:0 6px 20px rgba(0,0,0,.24)!important;
+      }
+      .theme-card,.sd-card,.sd-role-card,button,a{
+        transition-duration:.16s!important;
+      }
+      .hero-shell::before,.theme-panel::after{animation:none!important;display:none!important}
+      @media(max-width:760px){
+        #cinematic-intro{padding:20px 14px!important}
+        #cinematic-intro .intro-copy{margin:0!important}
+        #skip-cinematic-intro{margin-top:22px!important;width:min(190px,68vw);min-height:50px}
+        .hero-shell,.theme-panel,.theme-card,.sd-card,.sd-role-card{transform:none!important}
+      }
+      @media(prefers-reduced-motion:reduce){
+        #cinematic-intro,#skip-cinematic-intro,*{scroll-behavior:auto!important;animation:none!important;transition-duration:.01ms!important}
+      }
+    </style>
+</head><body><div class="face"><img src="${frontUrl}"></div><div class="face"><img src="${backUrl}"></div><script>window.onload=()=>setTimeout(()=>window.print(),350)<\/script></body></html>`);w.document.close();status('تم فتح نافذة الطباعة؛ اختر الطابعة أو حفظ PDF.');
   }catch(e){alert(e.message);status('تعذرت الطباعة: '+e.message)}
  }
  function init(){
