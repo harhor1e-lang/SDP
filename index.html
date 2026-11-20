@@ -5193,14 +5193,61 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
       var b=document.getElementById('sd-notify-btn');if(b){b.classList.add('is-enabled');b.textContent='✓ الإشعارات مفعّلة';}
     }
   });
+  var assistantHistory=[];
+  var assistantBusy=false;
+  var assistantEndpoint=SCHOOL_SUPABASE_URL+'/functions/v1/school-ai-chat';
+  function addAssistantMessage(text,kind){
+    var box=document.getElementById('sd-assistant-messages');if(!box)return;
+    var item=document.createElement('div');item.className='sd-ai-msg '+kind;item.textContent=text;box.appendChild(item);box.scrollTop=box.scrollHeight;
+  }
   window.openGeneralAssistant=function(){var m=document.getElementById('sd-assistant-modal');if(m){m.classList.add('open');setTimeout(()=>document.getElementById('sd-assistant-input')?.focus(),80);}};
   window.closeGeneralAssistant=function(){document.getElementById('sd-assistant-modal')?.classList.remove('open');};
-  window.sendGeneralAssistantMessage=function(){
-    var input=document.getElementById('sd-assistant-input'),messages=document.getElementById('sd-assistant-messages'),status=document.getElementById('sd-assistant-status');
-    var value=(input?.value||'').trim();if(!value)return;
-    var bubble=document.createElement('div');bubble.className='sd-ai-msg user';bubble.textContent=value;messages.appendChild(bubble);input.value='';
-    var reply=document.createElement('div');reply.className='sd-ai-msg system';reply.textContent='وصل سؤالك إلى واجهة المساعد. حتى أجيبك بإجابات ذكاء اصطناعي فعلية، يلزم ربط محرك AI آمن بالخادم. لم أضع مفتاحاً سرياً داخل كود الموقع.';messages.appendChild(reply);messages.scrollTop=messages.scrollHeight;
-    if(status)status.textContent='بانتظار ربط محرك AI بالخادم';
+  window.sendGeneralAssistantMessage=async function(){
+    var input=document.getElementById('sd-assistant-input');
+    var status=document.getElementById('sd-assistant-status');
+    var sendButton=document.querySelector('#sd-assistant-modal button[onclick="sendGeneralAssistantMessage()"]');
+    var value=(input?.value||'').trim();
+    if(!value||assistantBusy)return;
+    if(value.length>4000){addAssistantMessage('الرسالة طويلة. اختصرها إلى 4000 حرف كحد أقصى.','system');return;}
+    assistantBusy=true;
+    if(sendButton)sendButton.disabled=true;
+    if(status)status.textContent='جاري التفكير والرد...';
+    addAssistantMessage(value,'user');
+    input.value='';
+    assistantHistory.push({role:'user',content:value});
+    assistantHistory=assistantHistory.slice(-12);
+    try{
+      var response=await fetch(assistantEndpoint,{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json',
+          'apikey':SCHOOL_SUPABASE_PUBLISHABLE_KEY
+        },
+        body:JSON.stringify({messages:assistantHistory})
+      });
+      var data={};
+      try{data=await response.json();}catch(_){}
+      if(!response.ok||!data.reply){
+        var message=response.status===401||response.status===403
+          ?'الخادم رفض الاتصال. نحتاج مراجعة إعداد التحقق من JWT للوظيفة.'
+          :response.status===429
+          ?'وصل المساعد إلى حد الاستخدام المؤقت. حاول لاحقاً.'
+          :'تعذر الحصول على إجابة حالياً. تحقق من إعدادات الوظيفة ومفتاح الخدمة.';
+        throw new Error(message);
+      }
+      var answer=String(data.reply).slice(0,12000);
+      assistantHistory.push({role:'assistant',content:answer});
+      assistantHistory=assistantHistory.slice(-12);
+      addAssistantMessage(answer,'system');
+      if(status)status.textContent='المساعد متصل';
+    }catch(error){
+      addAssistantMessage(error.message||'حدث خطأ بالاتصال. حاول مرة أخرى.','system');
+      if(status)status.textContent='تعذر الاتصال بالمساعد';
+    }finally{
+      assistantBusy=false;
+      if(sendButton)sendButton.disabled=false;
+      input?.focus();
+    }
   };
   document.addEventListener('keydown',function(e){if(e.key==='Escape')window.closeGeneralAssistant();});
 })();
