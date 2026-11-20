@@ -5173,7 +5173,7 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
     try{
       if(!('Notification' in window)||Notification.permission!=='granted')return;
       var reg=swRegistration||await registerSchoolSW();
-      await reg.showNotification(title,{body:body||'تم نشر تحديث جديد في منصة المدرسة',icon:'./app-icon.svg',badge:'./app-icon.svg',tag:'school-update-'+Date.now(),renotify:false,data:{url:'./'}});
+      await reg.showNotification(title,{body:body||'تم نشر تحديث جديد في منصة المدرسة',tag:'school-update-'+Date.now(),renotify:false,data:{url:'./'}});
     }catch(e){console.warn('Notification display unavailable:',e);}
   };
   window.sdNotifyNewSchoolPost=function(posts){
