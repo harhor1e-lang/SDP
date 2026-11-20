@@ -684,6 +684,9 @@ html:not(.dark) ::-webkit-scrollbar-thumb{border-color:#e5ebf2}
 .theme-mode-toggle{position:fixed;top:12px;left:12px;z-index:10050;border:1px solid rgba(216,180,90,.55);border-radius:999px;padding:9px 13px;background:rgba(8,22,41,.92);color:#f4dfad;font:900 11px Cairo,sans-serif;box-shadow:0 8px 24px rgba(0,0,0,.2);backdrop-filter:blur(14px);cursor:pointer}
 html:not(.dark) .theme-mode-toggle{background:rgba(255,255,255,.95);color:#76551f;border-color:rgba(167,122,45,.4);box-shadow:0 8px 24px rgba(29,52,80,.14)}
 @media(max-width:640px){.theme-mode-toggle{top:8px;left:8px;padding:8px 10px;font-size:10px}}
+/* Keep the day/night switch clear of the main hamburger menu. */
+.theme-mode-toggle{top:auto!important;bottom:18px!important;left:14px!important;right:auto!important;z-index:10050}
+@media(max-width:640px){.theme-mode-toggle{top:auto!important;bottom:14px!important;left:10px!important;padding:8px 10px;font-size:10px}}
 </style>
 
 <style id="cross-browser-compatibility-layer">
