@@ -1299,6 +1299,12 @@ html.sd-skip-intro-once #cinematic-intro{display:none!important;visibility:hidde
 </style>
     <style id="sd-pwa-and-assistant-ui">
       #sd-notify-btn,#sd-install-btn{white-space:nowrap}
+      #sd-main-header{isolation:isolate}
+      #sd-header-menu{display:none;position:absolute;top:calc(100% - 2px);right:16px;left:16px;z-index:10040;padding:14px;border:1px solid rgba(216,180,90,.42);border-radius:18px;background:rgba(7,19,36,.97);box-shadow:0 22px 55px #0009;backdrop-filter:blur(16px);max-height:min(72vh,560px);overflow-y:auto;align-items:stretch}
+      #sd-header-menu.open{display:flex}
+      #sd-header-menu>*{justify-content:center}
+      #sd-header-menu-toggle[aria-expanded="true"]{border-color:#67e8f9;color:#67e8f9;background:rgba(8,47,73,.85)}
+      @media(min-width:768px){#sd-header-menu{left:auto;right:0;width:min(760px,calc(100vw - 32px));justify-content:flex-end}}
       #sd-notify-btn.is-enabled{border-color:rgba(52,211,153,.65)!important;color:#6ee7b7!important}
       #sd-assistant-modal{position:fixed;inset:0;z-index:2147482000;background:rgba(2,7,18,.78);backdrop-filter:blur(12px);display:none;align-items:center;justify-content:center;padding:16px}
       #sd-assistant-modal.open{display:flex}
@@ -1351,7 +1357,7 @@ html.sd-skip-intro-once #cinematic-intro{display:none!important;visibility:hidde
     </div>
 
     <!-- الهيدر العلوي -->
-    <header class="max-w-7xl mx-auto px-4 md:px-6 pt-6 pb-4 flex flex-col md:flex-row justify-between items-center gap-4 relative z-10">
+    <header id="sd-main-header" class="max-w-7xl mx-auto px-4 md:px-6 pt-6 pb-4 flex flex-row justify-between items-center gap-3 relative z-30">
         <div class="flex items-center gap-4">
             <div class="w-12 h-12 rounded-2xl theme-panel border border-yellow-500/40 flex items-center justify-center shadow-lg animate-bounce">
                 <span class="title-font text-2xl font-black gold-gradient-text">س</span>
@@ -1362,7 +1368,7 @@ html.sd-skip-intro-once #cinematic-intro{display:none!important;visibility:hidde
             </div>
         </div>
 
-        <div class="flex items-center gap-2.5 flex-wrap justify-center">
+        <button type="button" id="sd-header-menu-toggle" onclick="toggleSchoolHeaderMenu()" aria-expanded="false" aria-controls="sd-header-menu" class="shrink-0 w-11 h-11 rounded-xl theme-card border border-yellow-400/50 text-yellow-300 flex flex-col items-center justify-center gap-1.5 shadow-lg hover:scale-105 transition" aria-label="فتح قائمة الهيدر"><span class="block w-5 h-0.5 bg-current rounded"></span><span class="block w-5 h-0.5 bg-current rounded"></span><span class="block w-5 h-0.5 bg-current rounded"></span></button>\n        <div id="sd-header-menu" class="flex items-center gap-2.5 flex-wrap justify-center">
             <button type="button" id="sd-install-btn" onclick="installSchoolApp()" class="px-3 py-1.5 rounded-full theme-card text-[11px] font-black flex items-center gap-1.5 border border-violet-400/40 text-violet-300 hover:scale-105 transition shadow-md" aria-label="تثبيت تطبيق المدرسة" hidden>📲 تثبيت التطبيق</button>
             <button type="button" onclick="refreshSiteWithoutIntro()" class="px-3 py-1.5 rounded-full theme-card text-[11px] font-black flex items-center gap-1.5 border border-emerald-400/50 text-emerald-300 hover:scale-105 transition shadow-md" aria-label="تحديث الموقع">♻ تحديث</button>
             <a href="requests.html" class="px-3 py-1.5 rounded-full theme-card text-[11px] font-bold flex items-center gap-1.5 border border-yellow-400/50 text-yellow-300 hover:scale-105 transition shadow-md" aria-label="تقديم طلب إلى إدارة المدرسة">📝 طلب إلى الإدارة</a>
@@ -5124,6 +5130,24 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
   var swRegistration=null;
   var firstPostsSnapshot=true;
   var knownPostIds=new Set();
+  window.toggleSchoolHeaderMenu=function(){
+    var menu=document.getElementById('sd-header-menu');
+    var toggle=document.getElementById('sd-header-menu-toggle');
+    if(!menu||!toggle)return;
+    var open=menu.classList.toggle('open');
+    toggle.setAttribute('aria-expanded',open?'true':'false');
+    toggle.setAttribute('aria-label',open?'إغلاق قائمة الهيدر':'فتح قائمة الهيدر');
+  };
+  document.addEventListener('click',function(event){
+    var menu=document.getElementById('sd-header-menu');
+    var toggle=document.getElementById('sd-header-menu-toggle');
+    if(!menu||!toggle||!menu.classList.contains('open'))return;
+    if(menu.contains(event.target)||toggle.contains(event.target)){
+      if(menu.contains(event.target)&&event.target.closest('a,button')){menu.classList.remove('open');toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','فتح قائمة الهيدر');}
+      return;
+    }
+    menu.classList.remove('open');toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','فتح قائمة الهيدر');
+  });
 
   window.addEventListener('beforeinstallprompt',function(event){
     event.preventDefault();deferredInstallPrompt=event;
