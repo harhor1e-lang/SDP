@@ -723,6 +723,48 @@ button:disabled,input:disabled,select:disabled,textarea:disabled{cursor:not-allo
 }
 </style>
 
+
+<style id="salah-mobile-performance-v1">
+/* Mobile/WebView performance profile: retain layout, colors and features; reduce costly paint/compositing. */
+@media (max-width: 900px), (pointer: coarse) {
+  html { scroll-behavior: auto !important; }
+  #particle-canvas, #cursor-glow { display: none !important; }
+  .theme-panel, .theme-card, .floating-command-dock,
+  .hero-glass-card, .hero-float-chip, .identity-panel,
+  .sd-role-card, .v7-panel {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+  .theme-panel, .theme-card, .floating-command-dock,
+  .hero-shell, .hero-glass-card, .hero-float-chip,
+  .identity-panel, .sd-role-card {
+    box-shadow: 0 5px 16px rgba(0,0,0,.22) !important;
+  }
+  .theme-card, .theme-panel, .hero-shell, .hero-glass-card {
+    transform-style: flat !important;
+  }
+  .theme-card, .theme-panel, button, a, .floating-command-dock {
+    transition-property: color, background-color, border-color !important;
+    transition-duration: .12s !important;
+  }
+  .theme-card:hover, .theme-panel:hover, .hero-shell:hover .hero-glass-card,
+  .quick-access a:hover, .quick-access button:hover {
+    transform: none !important;
+    filter: none !important;
+  }
+  .theme-panel::after, .theme-panel::before,
+  .hero-shell::before, .hero-shell::after { display: none !important; }
+  .hero-ring, .hero-float-chip, .intro-orbit, .intro-grid,
+  .hero-scroll-hint span::after { animation: none !important; }
+  .gold-gradient-text { animation: none !important; background-size: auto !important; }
+  main > section, main > div {
+    animation: none !important;
+    animation-timeline: auto !important;
+  }
+  .marquee-content { animation-duration: 55s !important; }
+}
+</style>
+
 </head>
 <body class="min-h-screen relative">
 <script>
