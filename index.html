@@ -2584,7 +2584,7 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
             if(incompleteDocs.length)priorities.push({level:'تنظيم',text:`استكمال رقم أو تاريخ ${incompleteDocs.length} وثيقة في الأرشيف.`,target:'v61-archive-section'});
             if(!priorities.length)priorities.push({level:'مستقر',text:'لا تظهر أولويات معلقة ضمن السجلات المحلية المتاحة حالياً. يُستحسن مراجعة التحديثات الواردة يدوياً.',target:null});
             const safe=priorities.map((p,i)=>`<div class="flex gap-2 items-start rounded-lg border border-white/10 p-2"><span class="text-xs rounded-md px-2 py-1 ${p.level==='عاجل'?'bg-rose-500/20 text-rose-200':p.level==='متابعة'?'bg-amber-500/20 text-amber-200':'bg-cyan-500/20 text-cyan-200'}">${p.level}</span><span class="text-sm flex-1">${escapeHtml(p.text)}</span>${p.target?`<button class="sd-btn" type="button" onclick="document.getElementById('${p.target}')?.scrollIntoView({behavior:'smooth',block:'center'})">فتح</button>`:''}</div>`).join('');
-            box.innerHTML=`<b class="text-cyan-100">موجز المدير التنفيذي · ${new Date().toLocaleString('ar-IQ')}</b><div class="grid grid-cols-3 gap-2 text-center"><div class="rounded-lg bg-white/5 p-2"><b class="block text-lg">${pending.length}</b><small class="sd-muted">موافقات معلقة</small></div><div class="rounded-lg bg-white/5 p-2"><b class="block text-lg">${overdue.length}</b><small class="sd-muted">مهام مستحقة</small></div><div class="rounded-lg bg-white/5 p-2"><b class="block text-lg">${events.length}</b><small class="sd-muted">مواعيد محلية</small></div></div><b class="text-sm text-violet-100">أولويات مقترحة للمدير</b>${safe}<p class="text-[10px] text-amber-200/80">الموجز مبني حصراً على السجلات المحلية الموجودة في هذا المتصفح، ولا يثبت اكتمال بيانات المدرسة أو مزامنتها.</p>`;
+            box.innerHTML=`<b class="text-cyan-100">موجز المدير التنفيذي · ${new Date().toLocaleString('ar-IQ')}</b><div class="grid grid-cols-3 gap-2 text-center"><div class="rounded-lg bg-white/5 p-2"><b class="block text-lg">${pending.length}</b><small class="sd-muted">موافقات معلقة</small></div><div class="rounded-lg bg-white/5 p-2"><b class="block text-lg">${overdue.length}</b><small class="sd-muted">مهام مستحقة</small></div><div class="rounded-lg bg-white/5 p-2"><b class="block text-lg">${Number(window.sdCalendarCount||0)}</b><small class="sd-muted">مواعيد التقويم السحابي</small></div></div><b class="text-sm text-violet-100">أولويات مقترحة للمدير</b>${safe}<p class="text-[10px] text-amber-200/80">الموجز مبني حصراً على السجلات المحلية الموجودة في هذا المتصفح، ولا يثبت اكتمال بيانات المدرسة أو مزامنتها.</p>`;
             v61Audit('إعداد موجز المدير التنفيذي','تحليل أولويات المتابعة المحلية');
         }
         function v61AskAssistant(question,initial=false){
@@ -2611,7 +2611,7 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
                 lines.push(Object.keys(kinds).length?'التصنيف: '+Object.entries(kinds).map(([k,v])=>`${k} (${v})`).join('، '):'الأرشيف لا يحتوي وثائق بعد.');
                 lines.push('التوصية: أضف رقم الوثيقة وتاريخها لتسهيل الاسترجاع.');
             }else if(q.includes('مهم')||q.includes('تكليف')||q.includes('موعد')){
-                lines.push(`المهام المسجلة محلياً: ${tasks.length}. والمواعيد المسجلة: ${events.length}.`);
+                lines.push(`المهام المسجلة محلياً: ${tasks.length}. ومواعيد التقويم السحابي: ${Number(window.sdCalendarCount||0)}.`);
                 lines.push(`المهام التي تاريخها اليوم أو سابقاً: ${due.length}.`);
                 if(due.length)lines.push('تحتاج مراجعة: '+due.slice(0,5).map(x=>x.title).join('، ')+'.');
                 lines.push('التوصية: حدّث حالة الإنجاز يدوياً بعد التحقق من التنفيذ.');
@@ -2619,7 +2619,7 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
                 lines.push('ملخص سجلات الإشراف المتاحة على هذا الجهاز:');
                 lines.push(`• وثائق الأرشيف: ${archive.length}.`);
                 lines.push(`• طلبات الموافقة المعلقة: ${pending.length} من أصل ${approvals.length}.`);
-                lines.push(`• المهام المحلية: ${tasks.length}، والمواعيد: ${events.length}.`);
+                lines.push(`• المهام المحلية: ${tasks.length}، ومواعيد التقويم السحابي: ${Number(window.sdCalendarCount||0)}.`);
                 lines.push(`• عمليات التدقيق المسجلة: ${audit.length}.`);
                 lines.push('أولوية المتابعة المقترحة: مراجعة الطلبات المعلقة، ثم المهام ذات التاريخ المستحق، ثم التأكد من اكتمال فهرسة الوثائق.');
             }
