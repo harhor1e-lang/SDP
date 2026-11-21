@@ -1569,9 +1569,8 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
     </section>
     <!-- إحصائيات المنصة العامة: أرقام مجمّعة فقط دون كشف بيانات الطلاب -->
     <section id="platform-stats" class="max-w-7xl mx-auto mt-4 px-4 md:px-6 relative z-10">
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+        <div class="grid grid-cols-2 md:grid-cols-2 gap-3">
             <div class="theme-card rounded-2xl p-4 text-center"><p class="text-[10px] opacity-70">زيارات الجلسات</p><strong id="stat-visits" class="block text-2xl font-black text-yellow-400">—</strong></div>
-            <div class="theme-card rounded-2xl p-4 text-center"><p class="text-[10px] opacity-70">الطلاب المسجلون</p><strong id="stat-students" class="block text-2xl font-black text-yellow-400">—</strong></div>
             
             <div class="theme-card rounded-2xl p-4 text-center"><p class="text-[10px] opacity-70">المختبرات العلمية</p><strong class="block text-2xl font-black text-yellow-400">٤</strong></div>
         </div>
@@ -1933,8 +1932,7 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
             </div>
         </section>
     </main>
-    <!-- أزرار الإدارة وسجل الطلاب مستقلة عن المربع المحذوف -->
-    <nav class="essential-school-actions" aria-label="إدارة المدرسة وسجل الطلاب">
+    <nav class="essential-school-actions" aria-label="إدارة المدرسة">
       <button type="button" onclick="openPinModal()" class="essential-action-btn">🔐 الإدارة</button>
       </nav>
 
@@ -2910,7 +2908,7 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
 
         function applySavedSiteTextEdits() {
             document.querySelectorAll('body *').forEach(element => {
-                if (element.closest('#admin-dashboard-modal, #pin-modal, #students-dashboard-modal, #students-pin-modal, #site-text-edit-helper, script, style, textarea, input, select, button, nav, svg')) return;
+                if (element.closest('#admin-dashboard-modal, #pin-modal, #site-text-edit-helper, script, style, textarea, input, select, button, nav, svg')) return;
                 if (element.children.length !== 0 || !element.textContent.trim()) return;
                 const key = getSiteTextKey(element);
                 if (Object.prototype.hasOwnProperty.call(savedSiteTextEdits, key)) {
@@ -4217,7 +4215,7 @@ bind('weeklyTimetables',x=>tables=x,renderTable);bind('guidancePosts',x=>guides=
    const p=String(path||'').replace(/^https?:\/\/[^/]+\/?/,'').replace(/^\//,'');
    if(/(^|\/)(students|studentRecords|attendance|discipline|studentProfiles)(\/|$)/i.test(p)||/studentId|studentName/i.test(p))return;
    if(p.startsWith('adminActivity'))return;
-   const parts=p.split('/').filter(Boolean);const allowed=['posts','labs','books','studentPortal','weeklyTimetables','guidancePosts','adminInbox','questionBank','badgeConfig','liveBroadcast','adminArchiveV14'];
+   const parts=p.split('/').filter(Boolean);const allowed=['posts','labs','books','studentPortal','weeklyTimetables','guidancePosts','adminInbox','questionBank','liveBroadcast','adminArchiveV14'];
    if(parts.length&&!allowed.includes(parts[0]))return;
    const section=(parts[0]||'إدارة النظام').replace(/([A-Z])/g,' $1');
    try{firebase.database().ref('adminActivity').push({action,section:section.slice(0,60),actor:getAuditActor(),createdAt:firebase.database.ServerValue.TIMESTAMP});}catch(e){console.warn('تعذر تسجيل النشاط الإداري',e)}
