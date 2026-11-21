@@ -1364,7 +1364,7 @@ html.sd-skip-intro-once #cinematic-intro{display:none!important;visibility:hidde
             <div class="intro-progress"><span></span></div>
             <p class="intro-enter">نحو المعرفة والمستقبل</p>
         </div>
-        <button id="skip-cinematic-intro" type="button" onclick="skipCinematicIntro()" aria-label="الدخول إلى الموقع">الدخول <span aria-hidden="true">↗</span></button>
+        <button id="skip-cinematic-intro" type="button" onclick="document.body.classList.remove('sd-intro-active');document.body.style.overflow='';var intro=this.closest('#cinematic-intro');if(intro){intro.classList.add('fade-out');intro.style.pointerEvents='none';intro.style.display='none';intro.setAttribute('aria-hidden','true');}" aria-label="الدخول إلى الموقع">الدخول <span aria-hidden="true">↗</span></button>
         <div class="intro-bottom">SALAH AL-DIN BOYS PREPARATORY SCHOOL</div>
     </div>
 
