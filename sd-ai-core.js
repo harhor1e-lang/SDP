@@ -98,7 +98,7 @@
     const combined = pageText.concat(cloud.output);
     const unique = Array.from(new Set(combined)).filter(Boolean);
     lastIndex = {
-      text: unique.join('\n').slice(0, 14500),
+      text: unique.join('\n').slice(0, 3200),
       status: Object.assign({ 'محتوى صفحات الموقع': pageText.length ? pageText.length + ' أقسام' : 'لا توجد نصوص ظاهرة' }, cloud.status)
     };
     return lastIndex;
@@ -146,7 +146,7 @@
     try {
       const index = await refreshIndex();
       const endpoint = getEndpoint();
-      const outgoing = history.slice(-10);
+      const outgoing = history.slice(-6);
       outgoing.push({
         role: 'user',
         content:
@@ -160,11 +160,16 @@
         body: JSON.stringify({ messages: outgoing })
       });
       let data = {};
-      try { data = await response.json(); } catch (_) {}
+      let rawResponse = '';
+      try { data = await response.json(); } catch (_) {
+        try { rawResponse = await response.text(); } catch (_) {}
+      }
       if (!response.ok || !data.reply) {
-        if (response.status === 401 || response.status === 403) throw new Error('الخادم رفض الاتصال. يلزم فحص إعدادات وظيفة الذكاء الاصطناعي.');
-        if (response.status === 429) throw new Error('وصل المساعد إلى حد الاستخدام المؤقت. حاول لاحقاً.');
-        throw new Error(data.error || 'تعذر الحصول على إجابة من خدمة الذكاء الاصطناعي.');
+        const serverMessage = (data && (data.error || data.message || data.details)) || rawResponse;
+        if (response.status === 401 || response.status === 403) throw new Error('رفضت وظيفة bright-api الطلب (HTTP ' + response.status + '). افحص إعداد التحقق JWT وصلاحية مفتاح Groq.');
+        if (response.status === 429) throw new Error('وصل المساعد إلى حد الاستخدام المؤقت (HTTP 429).');
+        if (response.status >= 500) throw new Error('حدث خطأ داخل bright-api (HTTP ' + response.status + '): ' + String(serverMessage || 'راجع سجلات الوظيفة في Supabase').slice(0, 280));
+        throw new Error('استجابة bright-api غير مكتملة (HTTP ' + response.status + '): ' + String(serverMessage || 'لم يُرجع الخادم الحقل reply').slice(0, 280));
       }
       const answer = String(data.reply).slice(0, 12000);
       history.push({ role: 'user', content: value }, { role: 'assistant', content: answer });
