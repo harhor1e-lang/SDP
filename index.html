@@ -4574,18 +4574,8 @@ window.v14GuidanceDigest=async function(password,salt){
  return Array.from(new Uint8Array(hash)).map(x=>x.toString(16).padStart(2,'0')).join('');
 }
 async function v14VerifyGuidancePassword(password){
- if(typeof firebase==='undefined'||!firebase.apps?.length)throw new Error('خدمة التخزين السحابي غير متاحة.');
- const ref=firebase.database().ref('guidanceAccess/credential');
- const snap=await ref.once('value');
- let cred=snap.val();
- if(!cred){
-  if(password!=='1966')return false;
-  const salt=Array.from(crypto.getRandomValues(new Uint8Array(16))).map(x=>x.toString(16).padStart(2,'0')).join('');
-  cred={salt,hash:await window.v14GuidanceDigest('1966',salt),updatedAt:Date.now(),version:1};
-  await ref.set(cred);
- }
- if(!cred.salt||!cred.hash)return false;
- return (await window.v14GuidanceDigest(password,cred.salt))===cred.hash;
+ if(typeof window.v14VerifyAdminPin!=='function')throw new Error('بوابة الإدارة الآمنة غير متاحة.');
+ return await window.v14VerifyAdminPin(password);
 }
 window.v7Open=async id=>{
  if(id==='guidance'&&!window.v7GuidanceUnlocked){
@@ -4935,29 +4925,11 @@ bind('weeklyTimetables',x=>tables=x,renderTable);bind('guidancePosts',x=>guides=
     pages.guidance.appendChild(guidanceFallback);
   }
 
-  // Guidance password is independent from the manager PIN and is stored as a salted SHA-256 hash.
+    // قسم الإرشاد يستخدم رمز الإدارة الموحد عبر بوابة الخادم؛ لا توجد كلمة مرور محلية منفصلة.
   const guidancePasswordCard=document.createElement('section');
   guidancePasswordCard.className='sd-card space-y-3 mt-4';
-  guidancePasswordCard.innerHTML=`<div><h3 class="text-emerald-200">🔑 تغيير كلمة مرور قسم الإرشاد</h3><p class="sd-muted mt-1">كلمة مرور الإرشاد منفصلة عن رمز دخول المدير. تُحفظ بصيغة مشفّرة تجزئياً في Firebase ولا تُخزّن كنص مكشوف.</p></div><div class="grid sm:grid-cols-2 gap-2"><input id="v14-guidance-new-password" class="sd-field" type="password" minlength="6" autocomplete="new-password" placeholder="كلمة المرور الجديدة (6 أحرف على الأقل)"><input id="v14-guidance-confirm-password" class="sd-field" type="password" minlength="6" autocomplete="new-password" placeholder="تأكيد كلمة المرور الجديدة"></div><div class="flex flex-wrap items-center gap-2"><button type="button" class="sd-btn" id="v14-guidance-save-password">💾 حفظ كلمة المرور</button><span id="v14-guidance-password-status" class="sd-muted" aria-live="polite"></span></div>`;
+  guidancePasswordCard.innerHTML='<div><h3 class="text-emerald-200">🔐 حماية قسم الإرشاد</h3><p class="sd-muted mt-1">يستخدم قسم الإرشاد الرمز الموحد نفسه المعتمد للمدير والمرشد، ويتم التحقق منه عبر بوابة الإدارة الآمنة. تغيير الرمز يتم من إعدادات الإدارة فقط.</p></div>';
   pages.guidance.appendChild(guidancePasswordCard);
-  guidancePasswordCard.querySelector('#v14-guidance-save-password').addEventListener('click',async()=>{
-   if(!window.isAdminLoggedIn && !(typeof isAdminLoggedIn!=='undefined'&&isAdminLoggedIn)){toast('هذه العملية متاحة للمدير فقط',false);return}
-   const a=guidancePasswordCard.querySelector('#v14-guidance-new-password').value;
-   const b=guidancePasswordCard.querySelector('#v14-guidance-confirm-password').value;
-   const status=guidancePasswordCard.querySelector('#v14-guidance-password-status');
-   if(a.length<6){status.textContent='اجعل كلمة المرور 6 أحرف أو أكثر.';return}
-   if(a!==b){status.textContent='كلمتا المرور غير متطابقتين.';return}
-   try{
-    const salt=Array.from(crypto.getRandomValues(new Uint8Array(16))).map(x=>x.toString(16).padStart(2,'0')).join('');
-    const hash=await window.v14GuidanceDigest(a,salt);
-    await Promise.race([firebase.database().ref('guidanceAccess/credential').set({salt,hash,updatedAt:Date.now(),version:1}),new Promise((_,reject)=>setTimeout(()=>reject(new Error('انتهت مهلة الحفظ بعد 15 ثانية؛ تحقق من اتصال الإنترنت وقواعد Firebase.')),15000))]);
-    guidancePasswordCard.querySelector('#v14-guidance-new-password').value='';
-    guidancePasswordCard.querySelector('#v14-guidance-confirm-password').value='';
-    status.textContent='تم تحديث كلمة مرور الإرشاد وحفظها سحابياً.';
-    window.v7GuidanceUnlocked=false;
-    toast('تم حفظ كلمة مرور الإرشاد بنجاح');
-   }catch(e){status.textContent='تعذر الحفظ: '+(e.message||'تحقق من صلاحيات Firebase');toast('فشل حفظ كلمة المرور',false)}
-  });
 
   // Cloud archive: text and image attachments are stored in Firebase Storage + Realtime Database.
   // Dedicated admin destination for incoming requests and editable printable forms.
