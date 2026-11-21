@@ -2800,6 +2800,47 @@ html.sd-skip-intro-once #cinematic-intro{display:none!important;visibility:hidde
                 host.appendChild(fallback);
             }
         }
+        // صور العرض الترويجية داخل الإطار المائل في بطاقة الواجهة.
+        window.sdHeroAdvertisementRecords = {};
+        let sdHeroAdvertisementTimer = null;
+        function renderHeroAdvertisements(records) {
+            const host = document.querySelector('.hero-crest');
+            if (!host) return;
+            const ads = ['first','second'].map(key => records && records[key]).filter(item => item && typeof item.url === 'string' && /^https:\/\//i.test(item.url));
+            if (sdHeroAdvertisementTimer) { clearInterval(sdHeroAdvertisementTimer); sdHeroAdvertisementTimer = null; }
+            host.replaceChildren();
+            if (!ads.length) {
+                const fallback = document.createElement('span');
+                fallback.className = 'sd-hero-ad-fallback';
+                fallback.textContent = 'ص';
+                host.appendChild(fallback);
+                return;
+            }
+            const images = ads.map((record,index) => {
+                const img = document.createElement('img');
+                img.className = 'sd-hero-ad-image' + (index === 0 ? ' is-active' : '');
+                img.src = record.url;
+                img.alt = 'إعلان المدرسة ' + (index + 1);
+                img.loading = 'eager';
+                host.appendChild(img);
+                return img;
+            });
+            if (images.length > 1) {
+                let active = 0;
+                sdHeroAdvertisementTimer = setInterval(() => {
+                    images[active].classList.remove('is-active');
+                    active = (active + 1) % images.length;
+                    images[active].classList.add('is-active');
+                }, 5000);
+            }
+        }
+        try {
+            firebase.database().ref('schoolBranding/advertisements').on('value', snapshot => {
+                window.sdHeroAdvertisementRecords = snapshot.val() || {};
+                renderHeroAdvertisements(window.sdHeroAdvertisementRecords);
+            }, error => console.warn('تعذر تحميل صور العرض:', error));
+        } catch (error) { console.warn('تعذر تهيئة صور العرض:', error); }
+
         try {
             firebase.database().ref('schoolBranding/headerImage').on('value', snapshot => {
                 const record = snapshot.val() || null;
@@ -4598,6 +4639,51 @@ bind('weeklyTimetables',x=>tables=x,renderTable);bind('guidancePosts',x=>guides=
     console.error('[School branding upload]',error);brandingStatus.textContent='تعذر النشر: '+(error.message||'تحقق من اتصال التخزين السحابي وصلاحيات المدير.');
    }finally{button.disabled=false;button.textContent='☁️ رفع الصورة ونشرها'}
   });
+  // إعلانان مستقلان داخل إطار الشعار المائل؛ لكل صورة رفع ونشر منفصل.
+  const adsAdminCard=document.createElement('section');
+  adsAdminCard.className='theme-card p-4 md:p-6 rounded-2xl border border-cyan-400/30 space-y-4 mt-4';
+  adsAdminCard.innerHTML=`<div><span class="text-[10px] tracking-widest text-cyan-300 font-black">HERO ADVERTISEMENTS</span><h3 class="text-lg font-black text-amber-100 mt-1">🖼️ صور العرض داخل الإطار المائل</h3><p class="text-xs opacity-75 leading-6">ارفع إعلانين بصورة مستقلة. تظهر الصور بالتناوب داخل الشكل المائل خلف شعار «ص»، مع الحفاظ على زوايا الإطار. نشر أو استبدال صورة لا يغيّر الصورة الأخرى.</p></div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+   <div class="rounded-2xl border border-amber-400/25 p-3 space-y-3"><b class="text-sm text-amber-200">الإعلان الأول</b><img id="sd-hero-ad-preview-first" class="hidden w-full h-36 object-cover rounded-xl bg-slate-900" alt="معاينة الإعلان الأول"><input id="sd-hero-ad-file-first" type="file" accept="image/jpeg,image/png,image/webp" class="block w-full text-xs"><button type="button" id="sd-hero-ad-publish-first" class="w-full px-4 py-3 rounded-xl bg-amber-400 text-slate-950 text-xs font-black">رفع ونشر الإعلان الأول</button><p id="sd-hero-ad-status-first" class="text-xs opacity-80" role="status" aria-live="polite">اختر صورة الإعلان الأول.</p></div>
+   <div class="rounded-2xl border border-cyan-400/25 p-3 space-y-3"><b class="text-sm text-cyan-200">الإعلان الثاني</b><img id="sd-hero-ad-preview-second" class="hidden w-full h-36 object-cover rounded-xl bg-slate-900" alt="معاينة الإعلان الثاني"><input id="sd-hero-ad-file-second" type="file" accept="image/jpeg,image/png,image/webp" class="block w-full text-xs"><button type="button" id="sd-hero-ad-publish-second" class="w-full px-4 py-3 rounded-xl bg-cyan-300 text-slate-950 text-xs font-black">رفع ونشر الإعلان الثاني</button><p id="sd-hero-ad-status-second" class="text-xs opacity-80" role="status" aria-live="polite">اختر صورة الإعلان الثاني.</p></div>
+  </div><p class="text-[10px] opacity-60">الصيغ: JPG / PNG / WEBP · الحد الأقصى لكل صورة 8MB.</p>`;
+  pages.branding.appendChild(adsAdminCard);
+  ['first','second'].forEach(slot=>{
+   const fileInput=adsAdminCard.querySelector('#sd-hero-ad-file-'+slot);
+   const preview=adsAdminCard.querySelector('#sd-hero-ad-preview-'+slot);
+   const status=adsAdminCard.querySelector('#sd-hero-ad-status-'+slot);
+   const publish=adsAdminCard.querySelector('#sd-hero-ad-publish-'+slot);
+   fileInput.addEventListener('change',()=>{
+    const file=fileInput.files&&fileInput.files[0];
+    if(!file){preview.classList.add('hidden');return}
+    if(!['image/jpeg','image/png','image/webp'].includes(file.type)||file.size>8*1024*1024){status.textContent='اختر JPG أو PNG أو WEBP بحجم لا يتجاوز 8MB.';fileInput.value='';preview.classList.add('hidden');return}
+    preview.src=URL.createObjectURL(file);preview.classList.remove('hidden');status.textContent='المعاينة جاهزة. اضغط زر نشر هذا الإعلان.';
+   });
+   publish.addEventListener('click',async()=>{
+    if(!(typeof isAdminLoggedIn!=='undefined'&&isAdminLoggedIn)){status.textContent='هذه العملية متاحة للمدير بعد تسجيل الدخول.';return}
+    const file=fileInput.files&&fileInput.files[0];
+    if(!file){status.textContent='اختر صورة هذا الإعلان أولاً.';return}
+    if(!['image/jpeg','image/png','image/webp'].includes(file.type)||file.size>8*1024*1024){status.textContent='الصورة غير صالحة أو تتجاوز 8MB.';return}
+    publish.disabled=true;publish.textContent='جارٍ الرفع والنشر...';status.textContent='جارٍ رفع الصورة وحفظ الإعلان بشكل مستقل...';
+    let uploaded=null;
+    try{
+     uploaded=await window.uploadOriginalSchoolImage(file,'studentPortalFiles/general/branding-ads');
+     const previous=(window.sdHeroAdvertisementRecords&&window.sdHeroAdvertisementRecords[slot])||null;
+     const record={url:uploaded.url,path:uploaded.path,fileStorage:'supabase',fileName:file.name,updatedAt:firebase.database.ServerValue.TIMESTAMP,updatedBy:'admin'};
+     await firebase.database().ref('schoolBranding/advertisements/'+slot).set(record);
+     window.sdHeroAdvertisementRecords=window.sdHeroAdvertisementRecords||{};
+     window.sdHeroAdvertisementRecords[slot]={...record,updatedAt:Date.now()};
+     renderHeroAdvertisements(window.sdHeroAdvertisementRecords);
+     status.textContent='تم نشر '+(slot==='first'?'الإعلان الأول':'الإعلان الثاني')+' بنجاح. سيظهر بالتناوب داخل الإطار.';
+     fileInput.value='';
+     if(previous&&previous.path&&previous.fileStorage==='supabase'&&previous.path!==uploaded.path){try{await schoolGateway('delete-file',{session:window.sdAdminSession,path:previous.path})}catch(cleanError){console.warn('تعذر حذف نسخة الإعلان السابقة من التخزين',cleanError)}}
+    }catch(error){
+     if(uploaded&&uploaded.path){try{await schoolGateway('delete-file',{session:window.sdAdminSession,path:uploaded.path})}catch(cleanError){console.warn(cleanError)}}
+     console.error('[Hero advertisement upload]',error);status.textContent='تعذر النشر: '+(error.message||'تحقق من اتصال التخزين وصلاحيات المدير.');
+    }finally{publish.disabled=false;publish.textContent=slot==='first'?'رفع ونشر الإعلان الأول':'رفع ونشر الإعلان الثاني'}
+   });
+  });
+
   function move(node,id){if(node&&pages[id]&&!node.dataset.v14Moved){pages[id].appendChild(node);node.dataset.v14Moved='1'}}
   // Retain every existing control and move complete feature blocks without rebuilding their forms.
   const panelChildren=[...(header?[...header.children]:[]),...shell.children];
@@ -4847,6 +4933,27 @@ hr,.divider{border-color:rgba(231,196,119,.18)!important}
  box-shadow:0 15px 38px rgba(0,0,0,.48),inset 0 2px 8px rgba(255,255,255,.35),0 0 28px rgba(231,196,119,.18)!important;
  border:1px solid rgba(255,231,168,.72)!important;
 }
+
+/* Hero promotional image frame: angled quadrilateral matching the school emblem. */
+.hero-crest{
+  position:relative!important;display:block!important;overflow:hidden!important;
+  border-radius:0!important;clip-path:polygon(12% 0,100% 0,88% 100%,0 100%)!important;
+  transform:rotate(-8deg)!important;background:rgba(8,14,22,.72)!important;
+  box-shadow:0 0 0 10px rgba(216,180,90,.05),0 0 38px rgba(216,180,90,.2)!important;
+  border:0!important;
+}
+.hero-crest .sd-hero-ad-image{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  opacity:0;transform:rotate(8deg) scale(1.18);transition:opacity .8s ease;
+}
+.hero-crest .sd-hero-ad-image.is-active{opacity:1}
+.hero-crest .sd-hero-ad-fallback{
+  position:absolute;inset:0;display:grid;place-items:center;
+  color:#f0d58e;font:900 90px 'Reem Kufi',sans-serif;
+  text-shadow:0 10px 30px rgba(0,0,0,.5);transform:rotate(8deg);
+}
+@media(max-width:480px){.hero-crest .sd-hero-ad-fallback{font-size:72px}}
+
 .sd-kicker,.identity-eyebrow,.hero-overline{color:var(--royal-gold)!important;letter-spacing:.16em}
 .sd-muted,.sd-note,.hero-description,.identity-copy p{color:var(--royal-muted)!important}
 .sd-pill,.hero-badge{background:linear-gradient(135deg,rgba(231,196,119,.18),rgba(142,120,214,.14))!important;border:1px solid rgba(231,196,119,.32)!important;color:#f4dca7!important}
