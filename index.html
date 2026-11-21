@@ -1999,7 +1999,7 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
             <div class="flex justify-between items-center border-b border-current pb-4">
                 <div>
                     <h2 class="title-font text-2xl font-black gold-gradient-text">سجل الإشراف الإداري للطلاب والسير الذاتية</h2>
-                    <p class="text-xs opacity-75">بيانات خاصة ومحمية سحابياً - تحت تحكم المدير حصراً</p>
+                    <p class="text-xs opacity-75">سجل إداري موقوف مؤقتاً لحماية بيانات الطلاب حتى تأمين قواعد Firebase</p>
                 </div>
                 <button onclick="closeStudentsDashboard()" class="px-4 py-2 rounded-xl bg-red-500/20 text-red-400 border border-red-500/30 text-xs font-bold">إغلاق السجل</button>
             </div>
@@ -3143,6 +3143,9 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
         // حماية مؤقتة: إيقاف قراءة وكتابة سجل الغياب والإنذارات حتى تأمين قواعد Firebase واختبارها.
         // لا تُفعّل هذا الخيار قبل منع القراءة والكتابة العامة والتحقق من صلاحيات الإدارة على الخادم.
         const SECURE_STUDENT_RECORDS_ENABLED = false;
+        // إيقاف سجل الطلاب السحابي مؤقتاً حتى تُغلق القراءة والكتابة العامة في Firebase وتُختبر صلاحيات الخادم.
+        const STUDENT_REGISTER_CLOUD_ENABLED = false;
+        function studentRegisterAccessAllowed(showNotice=true){if(STUDENT_REGISTER_CLOUD_ENABLED)return true;if(showNotice)alert('سجل الطلاب متوقف مؤقتاً لحماية الأسماء وأرقام أولياء الأمور والصور حتى تأمين صلاحيات Firebase.');return false;}
         const SITE_TEXT_STORAGE_KEY = 'salahaldin_site_text_edits_v2';
 
         function getSiteTextKey(element) {
@@ -3956,7 +3959,7 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
         }
 
         function listenStudentsData() {
-            if (!requireAdmin() || !firebaseReady()) return;
+            if (!requireAdmin() || !firebaseReady() || !studentRegisterAccessAllowed(false)) { globalStudentsData = {}; renderStudentsList(); return; }
             const ref = db.ref('students');
             ref.off('value');
             ref.on('value', snapshot => {
@@ -3968,7 +3971,7 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
         }
 
         function previewStudentPhoto(input){const preview=document.getElementById('new-student-photo-preview'),file=input?.files?.[0];if(!file){preview.classList.add('hidden');preview.removeAttribute('src');return}if(!file.type.startsWith('image/')||file.size>50*1024*1024){alert('اختر صورة صالحة لا يتجاوز حجمها 50MB.');input.value='';preview.classList.add('hidden');return}const url=URL.createObjectURL(file);preview.src=url;preview.classList.remove('hidden');preview.onload=()=>URL.revokeObjectURL(url)}
-        async function addNewStudent(){if(!requireAdmin()||!firebaseReady()||!window.sdAdminSession)return;const name=document.getElementById('new-student-name').value.trim(),grade=document.getElementById('new-student-grade').value,section=document.getElementById('new-student-section').value,phone=document.getElementById('new-student-phone').value.trim(),behavior=document.getElementById('new-student-behavior').value.trim(),photoInput=document.getElementById('new-student-photo'),file=photoInput?.files?.[0],button=document.querySelector('button[onclick="addNewStudent()"]');if(!name){alert('يرجى إدخال اسم الطالب');return}const normalizedName=normalizeStudentName(name);if(Object.values(globalStudentsData).some(s=>normalizeStudentName(s.name||'')===normalizedName)){alert('هذا الاسم موجود مسبقاً في السجل، لم تتم إضافته مرة ثانية.');return}if(button)button.disabled=true;let uploaded=null;try{if(file)uploaded=await window.uploadOriginalSchoolImage(file,'studentPortalFiles/'+grade+'/student-photos');await db.ref('students').push({name,grade,section,photoData:'',photoUrl:uploaded?.url||'',photoPath:uploaded?.path||'',photoStorage:uploaded?'supabase':'',guardianPhone:phone||'غير محدد',behaviorNotes:behavior||'جيد جداً',timestamp:Date.now()});alert('تمت إضافة الطالب بنجاح. الصورة محفوظة بأبعادها الأصلية.');['new-student-name','new-student-phone','new-student-behavior'].forEach(id=>document.getElementById(id).value='');if(photoInput)photoInput.value='';const preview=document.getElementById('new-student-photo-preview');if(preview){preview.removeAttribute('src');preview.classList.add('hidden')}}catch(e){if(uploaded?.path)try{await schoolGateway('delete-file',{session:window.sdAdminSession,path:uploaded.path})}catch(cleanError){console.warn(cleanError)}alert('تعذر إضافة الطالب أو رفع صورته: '+(e.message||'خطأ غير معروف'))}finally{if(button)button.disabled=false}}
+        async function addNewStudent(){if(!requireAdmin()||!firebaseReady()||!window.sdAdminSession||!studentRegisterAccessAllowed())return;const name=document.getElementById('new-student-name').value.trim(),grade=document.getElementById('new-student-grade').value,section=document.getElementById('new-student-section').value,phone=document.getElementById('new-student-phone').value.trim(),behavior=document.getElementById('new-student-behavior').value.trim(),photoInput=document.getElementById('new-student-photo'),file=photoInput?.files?.[0],button=document.querySelector('button[onclick="addNewStudent()"]');if(!name){alert('يرجى إدخال اسم الطالب');return}const normalizedName=normalizeStudentName(name);if(Object.values(globalStudentsData).some(s=>normalizeStudentName(s.name||'')===normalizedName)){alert('هذا الاسم موجود مسبقاً في السجل، لم تتم إضافته مرة ثانية.');return}if(button)button.disabled=true;let uploaded=null;try{if(file)uploaded=await window.uploadOriginalSchoolImage(file,'studentPortalFiles/'+grade+'/student-photos');await db.ref('students').push({name,grade,section,photoData:'',photoUrl:uploaded?.url||'',photoPath:uploaded?.path||'',photoStorage:uploaded?'supabase':'',guardianPhone:phone||'غير محدد',behaviorNotes:behavior||'جيد جداً',timestamp:Date.now()});alert('تمت إضافة الطالب بنجاح. الصورة محفوظة بأبعادها الأصلية.');['new-student-name','new-student-phone','new-student-behavior'].forEach(id=>document.getElementById(id).value='');if(photoInput)photoInput.value='';const preview=document.getElementById('new-student-photo-preview');if(preview){preview.removeAttribute('src');preview.classList.add('hidden')}}catch(e){if(uploaded?.path)try{await schoolGateway('delete-file',{session:window.sdAdminSession,path:uploaded.path})}catch(cleanError){console.warn(cleanError)}alert('تعذر إضافة الطالب أو رفع صورته: '+(e.message||'خطأ غير معروف'))}finally{if(button)button.disabled=false}}
 
         function escapeStudentHtml(value) { return escapeHtml(value); }
 
@@ -3977,7 +3980,7 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
         }
 
         function importStudentsBulk() {
-            if (!requireAdmin() || !firebaseReady()) return;
+            if (!requireAdmin() || !firebaseReady() || !studentRegisterAccessAllowed()) return;
             const raw = document.getElementById('students-bulk-import').value;
             if (!raw.trim()) { alert('الصق قائمة الأسماء أولاً.'); return; }
             const gradeNames = ['الرابع العلمي', 'الخامس العلمي', 'السادس العلمي'];
@@ -4067,7 +4070,7 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
         }
 
         function updateStudent(studentId) {
-            if (!requireAdmin() || !firebaseReady()) return;
+            if (!requireAdmin() || !firebaseReady() || !studentRegisterAccessAllowed()) return;
             const phoneEl = document.getElementById(`phone-${studentId}`);
             const behaviorEl = document.getElementById(`behavior-${studentId}`);
             if (!phoneEl || !behaviorEl) { alert('تعذر العثور على حقول الطالب. حدّث السجل وحاول مجدداً.'); return; }
@@ -4080,7 +4083,7 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
         }
 
         function deleteStudent(studentId) {
-            if (!requireAdmin() || !firebaseReady()) return;
+            if (!requireAdmin() || !firebaseReady() || !studentRegisterAccessAllowed()) return;
             if (confirm('هل أنت متأكد من حذف هذا الطالب من السجل النهائياً؟')) {
                 db.ref(`students/${studentId}`).remove()
                     .then(() => alert('تم حذف الطالب من السجل بنجاح!'))
@@ -5370,7 +5373,7 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
  const status=t=>{const el=$('sdb-status');if(el)el.textContent=t};
  const imageUrl=st=>st?.badgePhotoData||st?.badgePhotoUrl||st?.photoUrl||st?.photoData||'';
  function visible(){const panel=$('sd-school-badges'),admin=$('admin-dashboard-modal'),page=panel?.closest('.v14-admin-page');return !!panel&&!!admin&&!admin.classList.contains('hidden')&&(!page||!page.hidden)}
- function authorized(){if(typeof requireAdmin==='function'&&!requireAdmin()){alert('هذه الخدمة متاحة للمدير فقط.');return false}if(typeof db==='undefined'||typeof firebase==='undefined'||!firebase.apps?.length){alert('اتصال Firebase غير متاح حالياً.');return false}return true}
+ function authorized(){if(typeof requireAdmin==='function'&&!requireAdmin()){alert('هذه الخدمة متاحة للمدير فقط.');return false}if(typeof studentRegisterAccessAllowed==='function'&&!studentRegisterAccessAllowed())return false;if(typeof db==='undefined'||typeof firebase==='undefined'||!firebase.apps?.length){alert('اتصال Firebase غير متاح حالياً.');return false}return true}
   window.sdOpenSchoolBadges=()=>{if(!authorized())return;if(!Object.keys(students).length)loadStudents()};
  function fmtDate(v){if(!v)return '—';const p=String(v).split('-');return p.length===3?`${p[2]}/${p[1]}/${p[0]}`:v}
  let previewRevision=0;
