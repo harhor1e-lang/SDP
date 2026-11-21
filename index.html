@@ -1838,8 +1838,7 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
           <div class="sd-heading"><div class="sd-icon">🏛️</div><div><span class="sd-kicker">ADMINISTRATION COMMAND CENTER</span><h2 class="title-font text-2xl font-black gold-gradient-text">مركز القيادة الإدارية</h2><p class="sd-muted">نظرة موحدة على مؤشرات المدرسة وأدوات الإدارة</p></div></div>
           <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
             <div class="sd-card"><p class="sd-muted">زيارات الجلسات</p><strong id="sd-admin-visits" class="sd-stat">—</strong><p class="sd-muted">من الإحصائيات العامة</p></div>
-            <div class="sd-card"><p class="sd-muted">الطلاب المسجلون</p><strong id="sd-admin-students" class="sd-stat">—</strong><p class="sd-muted">عدد إجمالي فقط</p></div>
-            <div class="sd-card"><p class="sd-muted">الكتب المنشورة</p><strong id="sd-admin-books" class="sd-stat">—</strong><p class="sd-muted">من المكتبة السحابية</p></div>
+                        <div class="sd-card"><p class="sd-muted">الكتب المنشورة</p><strong id="sd-admin-books" class="sd-stat">—</strong><p class="sd-muted">من المكتبة السحابية</p></div>
             <div class="sd-card"><p class="sd-muted">مهام الإشراف المسجلة على هذا الجهاز</p><strong id="sd-open-tasks" class="sd-stat">0</strong><p class="sd-muted">على هذا المتصفح فقط</p></div>
           </div>
           <div class="sd-action-grid">
@@ -4000,8 +3999,8 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
         document.addEventListener('DOMContentLoaded',sdStudentProfileInit);
 
         function sdOpenStudentResources(){const grade=document.getElementById('sd-student-grade').value;const filter=document.getElementById('question-grade-filter');if(filter){filter.value=grade; if(typeof renderQuestionBank==='function')renderQuestionBank();}document.getElementById('sd-student-status').textContent='تم اختيار '+grade+'؛ يمكنك الآن فتح بنك الأسئلة والمكتبة.';document.getElementById('question-bank-section').scrollIntoView({behavior:'smooth',block:'start'});}
-        function sdSyncDashboardStats(){const pairs=[['stat-visits','sd-admin-visits'],['stat-students','sd-admin-students'],['stat-books','sd-admin-books']];pairs.forEach(([source,target])=>{const a=document.getElementById(source),b=document.getElementById(target);if(a&&b)b.textContent=a.textContent||'—';});}
-        document.addEventListener('DOMContentLoaded',()=>{sdRenderAllLocal();sdSyncDashboardStats();const observer=new MutationObserver(sdSyncDashboardStats);['stat-visits','stat-students','stat-books'].forEach(id=>{const el=document.getElementById(id);if(el)observer.observe(el,{childList:true,characterData:true,subtree:true});});});
+        function sdSyncDashboardStats(){const pairs=[['stat-visits','sd-admin-visits'],['stat-books','sd-admin-books']];pairs.forEach(([source,target])=>{const a=document.getElementById(source),b=document.getElementById(target);if(a&&b)b.textContent=a.textContent||'—';});}
+        document.addEventListener('DOMContentLoaded',()=>{sdRenderAllLocal();sdSyncDashboardStats();const observer=new MutationObserver(sdSyncDashboardStats);['stat-visits','stat-books'].forEach(id=>{const el=document.getElementById(id);if(el)observer.observe(el,{childList:true,characterData:true,subtree:true});});});
 
 </script>
 <script id="salah-v7-functions">
