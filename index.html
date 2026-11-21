@@ -2992,17 +2992,26 @@ html.sd-skip-intro-once #cinematic-intro{display:none!important;visibility:hidde
         const SITE_TEXT_STORAGE_KEY = 'salahaldin_site_text_edits_v2';
 
         function getSiteTextKey(element) {
-            if (element.id) return 'id__' + element.id.replace(/[^a-zA-Z0-9_-]/g, '_');
-            const parts = [];
-            let node = element;
-            while (node && node !== document.body) {
-                const parent = node.parentElement;
-                if (!parent) break;
-                const siblings = Array.from(parent.children).filter(child => child.tagName === node.tagName);
-                parts.unshift(node.tagName.toLowerCase() + '_' + (siblings.indexOf(node) + 1));
-                node = parent;
+            if (!element) return '';
+            const cached = element.getAttribute('data-sd-text-edit-key');
+            if (cached) return cached;
+            let key;
+            if (element.id) {
+                key = 'id__' + element.id.replace(/[^a-zA-Z0-9_-]/g, '_');
+            } else {
+                const parts = [];
+                let node = element;
+                while (node && node !== document.body) {
+                    const parent = node.parentElement;
+                    if (!parent) break;
+                    const siblings = Array.from(parent.children).filter(child => child.tagName === node.tagName);
+                    parts.unshift(node.tagName.toLowerCase() + '_' + (siblings.indexOf(node) + 1));
+                    node = parent;
+                }
+                key = parts.join('__').replace(/[.#$\\[\\]\\/]/g, '_');
             }
-            return parts.join('__').replace(/[.#$\[\]\/]/g, '_');
+            element.setAttribute('data-sd-text-edit-key', key);
+            return key;
         }
 
         function readLocalSiteTextEdits() {
@@ -3068,11 +3077,11 @@ html.sd-skip-intro-once #cinematic-intro{display:none!important;visibility:hidde
             document.getElementById('admin-dashboard-modal').classList.remove('hidden');
         }
 
-        document.addEventListener('click', function(event) {
+        document.addEventListener('click', async function(event) {
             if (!siteTextEditingEnabled || !isAdminLoggedIn) return;
-            let node = event.target;
+            let node = event.target instanceof Element ? event.target : event.target?.parentElement;
             while (node && node !== document.body) {
-                if (node.closest('#admin-dashboard-modal, #pin-modal, #students-dashboard-modal, #students-pin-modal, #site-text-edit-helper, script, style, textarea, input, select, button, nav, svg')) return;
+                if (node.closest('#admin-dashboard-modal, #pin-modal, #students-dashboard-modal, #students-pin-modal, #site-text-edit-helper, script, style, textarea, input, select, button, nav, svg, a')) return;
                 if (node.children.length === 0 && node.textContent.trim()) break;
                 node = node.parentElement;
             }
@@ -3080,25 +3089,26 @@ html.sd-skip-intro-once #cinematic-intro{display:none!important;visibility:hidde
             event.preventDefault();
             event.stopPropagation();
             const oldText = node.textContent.trim();
-            const newText = prompt('اكتب النص الجديد:', oldText);
+            const newText = prompt('اكتب النص الجديد بالكامل:', oldText);
             if (newText === null || newText.trim() === '' || newText.trim() === oldText) return;
             const key = getSiteTextKey(node);
             const cleanText = newText.trim();
-
-            savedSiteTextEdits[key] = cleanText;
-            writeLocalSiteTextEdits();
-            node.textContent = cleanText;
-            if (!firebaseReady()) {
-                alert('تم حفظ التعديل على هذا الجهاز فقط؛ خدمة السحابة غير متاحة حالياً.');
+            if (!firebaseReady() || !db) {
+                alert('تعذر تعديل النص المنشور: اتصال قاعدة البيانات غير متاح. لم يتم نشر التغيير.');
                 return;
             }
-
-            db.ref('siteTextEdits/' + key).set(cleanText).then(() => {
-                alert('تم حفظ التعديل محلياً وسحابياً بنجاح.');
-            }).catch(error => {
+            try {
+                await db.ref('siteTextEdits/' + key).set(cleanText);
+                savedSiteTextEdits[key] = cleanText;
+                writeLocalSiteTextEdits();
+                node.textContent = cleanText;
+                node.setAttribute('data-sd-text-edit-key', key);
+                alert('تم تحديث النص ونشره سحابياً بنجاح. سيظهر للزوار بعد تحديث الصفحة.');
+            } catch (error) {
                 console.error('[Firebase] تعذر حفظ تعديل النص:', error);
-                alert('تم حفظ التعديل على هذا الجهاز، لكن فشل الحفظ السحابي. تحقق من صلاحيات Firebase والاتصال.');
-            });
+                const detail = error && error.code ? ' (' + error.code + ')' : '';
+                alert('لم يُنشر التعديل. فشل الحفظ السحابي' + detail + '. تحقق من صلاحيات الكتابة في Firebase ثم أعد المحاولة.');
+            }
         }, true);
 
         savedSiteTextEdits = readLocalSiteTextEdits();
