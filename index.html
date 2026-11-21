@@ -522,7 +522,7 @@ nav,.nav,.section-header{
 </style>
 
 <style id="salah-v7-style">
-#average-calculator-section,#question-bank-section,#library-section,#school-communication-portal,#annual-report-public,#teacher-portal-section,#student-portal-section,#attendance-summary-section,#school-operations-section,#report-center-section,#school-timetable-section,#school-initiatives-section,#school-achievements-section,#admin-command-section{display:none!important}
+#average-calculator-section,#question-bank-section,#library-section,#school-communication-portal,#annual-report-public,#teacher-portal-section,#student-portal-section,#attendance-summary-section,#school-operations-section,#report-center-section,#school-timetable-section,#school-initiatives-section,#admin-command-section{display:none!important}
 .v7-page{display:none;max-width:1100px;margin:18px auto;padding:14px;position:relative;z-index:5}.v7-page.active{display:block}
 .v7-panel{padding:18px;border:1px solid #3b7895;border-radius:20px;background:linear-gradient(145deg,#112b49,#071426);box-shadow:0 18px 45px #0006}
 .v7-launch-grid,.v7-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:11px}
@@ -1592,8 +1592,6 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
 
 
 </div></div></section>
-<section id="v7-calendar" class="v7-page"><div class="v7-panel"><button class="v7-btn alt" onclick="v7Back()">رجوع</button><h2 class="title-font text-2xl font-black gold-gradient-text">📅 التقويم المدرسي الرسمي</h2><p class="sd-muted mb-3">المواعيد والامتحانات والعطل والفعاليات المنشورة رسمياً.</p><div id="v7-calendar-slot"></div></div>
-<section id="v7-achievements" class="v7-page"><div class="v7-panel"><button class="v7-btn alt" onclick="v7Back()">رجوع</button><h2 class="title-font text-2xl font-black gold-gradient-text">🏆 إنجازات المدرسة والفعاليات</h2><p class="sd-muted mb-3">سجل الإنجازات والأنشطة المدرسية المعتمدة والمنشورة.</p><div id="v7-achievements-slot"></div></div>
 <section id="v7-students" class="v7-page"><div class="v7-panel"><button class="v7-btn alt" onclick="v7Back()">رجوع</button><h2 class="title-font text-2xl font-black gold-gradient-text">بوابة الطالب</h2><div id="v7-grades" class="v7-tabs"></div><div id="v7-cats" class="v7-tabs"></div><div id="v7-student-items"></div></div></section>
 <section id="v7-timetable" class="v7-page"><div class="v7-panel"><button class="v7-btn alt" onclick="v7Back()">رجوع</button><h2 class="title-font text-2xl font-black gold-gradient-text">جدول الدروس الأسبوعي</h2><div id="v7-table-grades" class="v7-tabs"></div><div id="v7-table-view"></div></div></section>
 <section id="v7-calculator" class="v7-page"><div class="v7-panel"><button class="v7-btn alt" onclick="v7Back()">رجوع</button><h2 class="title-font text-2xl font-black gold-gradient-text">الحاسبة الطلابية</h2><div id="v7-calc-slot"></div></div></section>
@@ -1926,16 +1924,6 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
           <div class="sd-card"><p class="sd-muted">تُعرض المبادرات والمساهمات المعتمدة فقط بعد مراجعة الإدارة. لا تُنشر بيانات شخصية للمتبرعين أو معلومات مالية غير مصادق عليها.</p></div>
         </section>
 
-        <section id="sd-public-calendar" class="theme-panel p-5 md:p-8 space-y-4 sd-section" style="display:block!important">
-          <div class="sd-heading"><div class="sd-icon">📅</div><div><span class="sd-kicker">OFFICIAL SCHOOL CALENDAR</span><h2 class="title-font text-2xl font-black gold-gradient-text">التقويم المدرسي الرسمي</h2><p class="sd-muted">المواعيد والامتحانات والفعاليات المنشورة من إدارة المدرسة.</p></div></div>
-          <div id="sd-public-calendar-list" class="grid grid-cols-1 md:grid-cols-2 gap-3"><p class="sd-muted">جارٍ تحميل التقويم...</p></div>
-        
-
-        <section id="school-achievements-section" class="theme-panel p-5 md:p-8 space-y-4 sd-section">
-          <div class="sd-heading"><div class="sd-icon">🏆</div><div><span class="sd-kicker">ACHIEVEMENTS & HONOR ROLL</span><h2 class="title-font text-2xl font-black gold-gradient-text">إنجازات المدرسة والفعاليات ولوحة الشرف</h2><p class="sd-muted">توثيق ونشر الإنجازات والفعاليات بعد اعتمادها من الإدارة.</p></div></div>
-          <div class="sd-card space-y-3"><p class="sd-muted">الإنجازات والفعاليات المعتمدة من إدارة المدرسة، وتُحدّث تلقائياً عند النشر.</p><div id="sd-public-achievement-list" class="space-y-3"><p class="sd-muted">جارٍ تحميل الإنجازات المنشورة...</p></div><div class="rounded-xl border border-amber-300/25 bg-amber-300/5 p-3 text-xs text-amber-100">لوحة أسماء الطلبة المتفوقين والشهادات الفردية ستُفعّل بعد تأمين صلاحيات قاعدة البيانات؛ لا تُدخل أسماء أو معلومات شخصية في السجل الحالي.</div></div>
-        
-
         <!-- معلومات التواصل والاعتماد -->
         <section id="school-info-section" class="theme-panel p-6 rounded-2xl text-center space-y-2 relative">
             <p class="text-xs opacity-75">للتواصل الرسمي مع المدرسة: <a href="mailto:salahaldinsc600l@gmail.com" class="text-yellow-400 underline">salahaldinsc600l@gmail.com</a></p>
@@ -2195,13 +2183,6 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
                 <div class="grid grid-cols-2 gap-2"><select id="sd-task-priority" class="sd-field"><option value="عادية">أولوية عادية</option><option value="مهمة">مهمة</option><option value="عاجلة">عاجلة</option></select><input id="sd-task-date" class="sd-field" type="date" aria-label="موعد المهمة"></div>
                 <button class="sd-btn" type="button" onclick="sdAddTask()">إضافة مهمة إدارية</button><div id="sd-task-list" class="sd-list"><div class="sd-empty">لا توجد مهام محفوظة على هذا الجهاز.</div></div><p id="sd-task-status" class="sd-status" aria-live="polite"></p>
               </div>
-              <div id="sd-private-calendar" class="border-t border-white/10 pt-4 space-y-3">
-                <h4 class="font-black text-sm text-yellow-200">📅 التقويم المدرسي والفعاليات</h4>
-                <p class="sd-muted text-xs">من هذا التبويب تستطيع إضافة موعد جديد، ثم إدارة السجلات الموجودة من أزرار التعديل والنشر والحذف أسفل النموذج. ما حالته «منشور» يظهر للزوار.</p>
-                <input id="sd-event-title" class="sd-field" maxlength="100" placeholder="عنوان الموعد أو الفعالية">
-                <div class="grid grid-cols-2 gap-2"><input id="sd-event-date" class="sd-field" type="date" aria-label="تاريخ الفعالية"><select id="sd-event-type" class="sd-field"><option>امتحان</option><option>اجتماع</option><option>فعالية</option><option>موعد إداري</option><option>عطلة</option></select></div>
-                <label class="sd-muted text-xs block">صورة مرفقة للموعد (اختياري)</label><input id="sd-event-image" class="sd-field" type="file" accept="image/jpeg,image/png,image/webp"><div class="flex flex-wrap gap-2"><button id="sd-event-submit" class="sd-btn" type="button" onclick="sdAddEvent()">نشر الموعد في التقويم العام</button><button id="sd-event-cancel-edit" class="sd-btn" type="button" onclick="sdCancelCalendarEdit()" hidden>إلغاء التعديل</button></div><div id="sd-event-cloud-admin-list" class="sd-list"><div class="sd-empty">جارٍ تحميل المواعيد السحابية...</div></div><p id="sd-event-status" class="sd-status" aria-live="polite"></p>
-              
               <div id="sd-private-maintenance" class="border-t border-white/10 pt-4 space-y-3">
                 <h4 class="font-black text-sm text-yellow-200">🛠️ سجل الصيانة والنظافة والترتيب</h4>
                 <select id="sd-maint-category" class="sd-field"><option>نظافة وترتيب</option><option>مقاعد وطاولات</option><option>مختبرات</option><option>كهرباء وإنارة</option><option>ماء وصحيات</option><option>أجهزة وحاسوب</option><option>أخرى</option></select>
@@ -2239,12 +2220,6 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-2"><input id="sd-initiative-title" class="sd-field" maxlength="100" placeholder="عنوان المبادرة"><select id="sd-initiative-type" class="sd-field"><option>مبادرة تطوعية</option><option>نظافة وترتيب</option><option>تشجير</option><option>صيانة وتطوير</option><option>مساهمة عينية</option><option>مساهمة مالية معتمدة</option></select></div>
                 <textarea id="sd-initiative-detail" class="sd-field" rows="3" maxlength="500" placeholder="وصف المبادرة والغرض منها. لا تسجل أسماء أو بيانات المتبرعين."></textarea><input id="sd-initiative-amount" class="sd-field" type="number" min="0" step="0.01" placeholder="المبلغ المعتمد إن وجد – اختياري"><button class="sd-btn" type="button" onclick="sdAddInitiative()">حفظ المبادرة / المساهمة</button><div id="sd-initiative-list" class="sd-list"><div class="sd-empty">لا توجد مبادرات محفوظة.</div></div><p id="sd-initiative-status" class="sd-status" aria-live="polite"></p>
               </div>
-              <div id="sd-private-achievements" class="border-t border-white/10 pt-4 space-y-3">
-                <h4 class="font-black text-sm text-yellow-200">🏆 إنجازات المدرسة والفعاليات ولوحة الشرف</h4>
-                <p class="sd-muted text-xs">أضف إنجازاً أو فعالية مع التفاصيل والتاريخ. استخدم قائمة السجلات السحابية أدناه للتعديل أو النشر أو إلغاء النشر أو الحذف.</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-2"><input id="sd-achievement-title" class="sd-field" maxlength="120" placeholder="عنوان الإنجاز أو الفعالية"><select id="sd-achievement-type" class="sd-field"><option>إنجاز مدرسي</option><option>شهادة تقدير</option><option>تكريم</option><option>إعفاء مدرسي</option><option>مشاركة مدرسية</option><option>مسابقة</option><option>جائزة</option><option>فعالية</option><option>لوحة الشرف</option></select></div>
-                <input id="sd-achievement-date" class="sd-field" type="date" aria-label="تاريخ الإنجاز"><textarea id="sd-achievement-detail" class="sd-field" rows="3" maxlength="500" placeholder="تفاصيل الإنجاز أو الفعالية بعد التحقق منها"></textarea><label class="sd-muted text-xs block">صورة مرفقة للإنجاز أو الفعالية (اختياري)</label><input id="sd-achievement-image" class="sd-field" type="file" accept="image/jpeg,image/png,image/webp"><div class="flex flex-wrap gap-2"><button id="sd-achievement-submit" class="sd-btn" type="button" onclick="sdAddAchievement()">نشر الإنجاز في الموقع</button><button id="sd-achievement-cancel-edit" class="sd-btn" type="button" onclick="sdCancelAchievementEdit()" hidden>إلغاء التعديل</button></div><div id="sd-achievement-cloud-admin-list" class="sd-list"><div class="sd-empty">جارٍ تحميل السجل السحابي...</div></div><p class="text-xs text-amber-200">تنبيه أمني: لا تُدخل أسماء الطلبة أو بياناتهم الفردية قبل تأمين قواعد Firebase.</p><p id="sd-achievement-status" class="sd-status" aria-live="polite"></p>
-              
               <div id="sd-exam-lab" class="border-t border-white/10 pt-5 space-y-4">
                 <div class="flex flex-wrap items-center justify-between gap-2"><div><span class="text-[10px] tracking-widest text-cyan-300 font-black">E-EXAM LAB</span><h4 class="font-black text-base text-cyan-100">🧪 مختبر الامتحانات الإلكتروني</h4><p class="sd-muted text-xs mt-1">إنشاء نماذج امتحانية، إضافة أسئلة اختيار من متعدد، وتصدير أو طباعة نسخة ورقية.</p></div><span class="text-[10px] rounded-full border border-cyan-300/30 px-3 py-1 text-cyan-200">إدارة المدير</span></div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-2"><select id="sd-exam-grade" class="sd-field"><option>الرابع العلمي</option><option>الخامس العلمي</option><option>السادس العلمي</option></select><select id="sd-exam-subject" class="sd-field"><option>الرياضيات</option><option>الفيزياء</option><option>الكيمياء</option><option>الأحياء</option><option>العربي</option><option>الإنكليزي</option><option>الحاسوب</option></select></div>
@@ -2583,7 +2558,7 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
             if(incompleteDocs.length)priorities.push({level:'تنظيم',text:`استكمال رقم أو تاريخ ${incompleteDocs.length} وثيقة في الأرشيف.`,target:'v61-archive-section'});
             if(!priorities.length)priorities.push({level:'مستقر',text:'لا تظهر أولويات معلقة ضمن السجلات المحلية المتاحة حالياً. يُستحسن مراجعة التحديثات الواردة يدوياً.',target:null});
             const safe=priorities.map((p,i)=>`<div class="flex gap-2 items-start rounded-lg border border-white/10 p-2"><span class="text-xs rounded-md px-2 py-1 ${p.level==='عاجل'?'bg-rose-500/20 text-rose-200':p.level==='متابعة'?'bg-amber-500/20 text-amber-200':'bg-cyan-500/20 text-cyan-200'}">${p.level}</span><span class="text-sm flex-1">${escapeHtml(p.text)}</span>${p.target?`<button class="sd-btn" type="button" onclick="document.getElementById('${p.target}')?.scrollIntoView({behavior:'smooth',block:'center'})">فتح</button>`:''}</div>`).join('');
-            box.innerHTML=`<b class="text-cyan-100">موجز المدير التنفيذي · ${new Date().toLocaleString('ar-IQ')}</b><div class="grid grid-cols-3 gap-2 text-center"><div class="rounded-lg bg-white/5 p-2"><b class="block text-lg">${pending.length}</b><small class="sd-muted">موافقات معلقة</small></div><div class="rounded-lg bg-white/5 p-2"><b class="block text-lg">${overdue.length}</b><small class="sd-muted">مهام مستحقة</small></div><div class="rounded-lg bg-white/5 p-2"><b class="block text-lg">${Number(window.sdCalendarCount||0)}</b><small class="sd-muted">مواعيد التقويم السحابي</small></div></div><b class="text-sm text-violet-100">أولويات مقترحة للمدير</b>${safe}<p class="text-[10px] text-amber-200/80">الموجز مبني حصراً على السجلات المحلية الموجودة في هذا المتصفح، ولا يثبت اكتمال بيانات المدرسة أو مزامنتها.</p>`;
+            box.innerHTML=`<b class="text-cyan-100">موجز المدير التنفيذي · ${new Date().toLocaleString('ar-IQ')}</b><div class="grid grid-cols-3 gap-2 text-center"><div class="rounded-lg bg-white/5 p-2"><b class="block text-lg">${pending.length}</b><small class="sd-muted">موافقات معلقة</small></div><div class="rounded-lg bg-white/5 p-2"><b class="block text-lg">${overdue.length}</b><small class="sd-muted">مهام مستحقة</small></div></div><b class="text-sm text-violet-100">أولويات مقترحة للمدير</b>${safe}<p class="text-[10px] text-amber-200/80">الموجز مبني حصراً على السجلات المحلية الموجودة في هذا المتصفح، ولا يثبت اكتمال بيانات المدرسة أو مزامنتها.</p>`;
             v61Audit('إعداد موجز المدير التنفيذي','تحليل أولويات المتابعة المحلية');
         }
         function v61AskAssistant(question,initial=false){
@@ -2610,7 +2585,7 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
                 lines.push(Object.keys(kinds).length?'التصنيف: '+Object.entries(kinds).map(([k,v])=>`${k} (${v})`).join('، '):'الأرشيف لا يحتوي وثائق بعد.');
                 lines.push('التوصية: أضف رقم الوثيقة وتاريخها لتسهيل الاسترجاع.');
             }else if(q.includes('مهم')||q.includes('تكليف')||q.includes('موعد')){
-                lines.push(`المهام المسجلة محلياً: ${tasks.length}. ومواعيد التقويم السحابي: ${Number(window.sdCalendarCount||0)}.`);
+                lines.push(`المهام المسجلة محلياً: ${tasks.length}..`);
                 lines.push(`المهام التي تاريخها اليوم أو سابقاً: ${due.length}.`);
                 if(due.length)lines.push('تحتاج مراجعة: '+due.slice(0,5).map(x=>x.title).join('، ')+'.');
                 lines.push('التوصية: حدّث حالة الإنجاز يدوياً بعد التحقق من التنفيذ.');
@@ -2618,7 +2593,7 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
                 lines.push('ملخص سجلات الإشراف المتاحة على هذا الجهاز:');
                 lines.push(`• وثائق الأرشيف: ${archive.length}.`);
                 lines.push(`• طلبات الموافقة المعلقة: ${pending.length} من أصل ${approvals.length}.`);
-                lines.push(`• المهام المحلية: ${tasks.length}، ومواعيد التقويم السحابي: ${Number(window.sdCalendarCount||0)}.`);
+                lines.push(`• المهام المحلية: ${tasks.length}.`);
                 lines.push(`• عمليات التدقيق المسجلة: ${audit.length}.`);
                 lines.push('أولوية المتابعة المقترحة: مراجعة الطلبات المعلقة، ثم المهام ذات التاريخ المستحق، ثم التأكد من اكتمال فهرسة الوثائق.');
             }
@@ -5720,6 +5695,6 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
 })();
 </script>
 
-<style id="sd-public-sections-visible">#school-achievements-section{display:block!important}</style>
+
 </body>
 </html>
