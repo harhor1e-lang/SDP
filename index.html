@@ -2753,7 +2753,7 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
   }
   async function addCalendar(){
     if(typeof requireAdmin!=='function'||!requireAdmin())return;
-    if(!window.db||!window.firebase){status('sd-event-status','خدمة قاعدة البيانات غير متاحة حالياً.');return;}
+    if(typeof db==='undefined'||typeof firebase==='undefined'||!firebase.apps?.length){status('sd-event-status','خدمة قاعدة البيانات غير متاحة حالياً.');return;}
     const title=$('sd-event-title')?.value.trim(),date=$('sd-event-date')?.value,type=$('sd-event-type')?.value||'موعد إداري';
     if(!title||!date){status('sd-event-status','أدخل عنوان الموعد وتاريخه.');return;}
     try{
@@ -2763,7 +2763,7 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
   }
   async function addAchievement(){
     if(typeof requireAdmin!=='function'||!requireAdmin())return;
-    if(!window.db||!window.firebase){status('sd-achievement-status','خدمة قاعدة البيانات غير متاحة حالياً.');return;}
+    if(typeof db==='undefined'||typeof firebase==='undefined'||!firebase.apps?.length){status('sd-achievement-status','خدمة قاعدة البيانات غير متاحة حالياً.');return;}
     const title=$('sd-achievement-title')?.value.trim(),detail=$('sd-achievement-detail')?.value.trim(),type=$('sd-achievement-type')?.value||'إنجاز مدرسي',date=$('sd-achievement-date')?.value||new Date().toISOString().slice(0,10);
     if(!title||!detail){status('sd-achievement-status','أدخل عنوان الإنجاز وتفاصيله.');return;}
     try{
