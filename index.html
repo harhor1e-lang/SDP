@@ -2574,7 +2574,7 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
             if(!requireAdmin())return;
             const box=document.getElementById('v61-chief-brief');if(!box)return;
             const approvals=v61Read(V61_APPROVAL_KEY,[]),pending=approvals.filter(x=>x.status==='بانتظار المراجعة');
-            const archive=v61Read(V61_ARCHIVE_KEY,[]),tasks=sdReadLocal(SD_LOCAL_KEYS.tasks),events=sdReadLocal(SD_LOCAL_KEYS.events);
+            const archive=v61Read(V61_ARCHIVE_KEY,[]),tasks=sdReadLocal(SD_LOCAL_KEYS.tasks);
             const today=new Date().toISOString().slice(0,10);
             const overdue=tasks.filter(x=>x.date&&x.date<=today&&!(x.completed===true||x.status==='منجز'||x.status==='مكتمل'));
             const incompleteDocs=archive.filter(x=>!x.number||!x.date);
@@ -2596,7 +2596,7 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
             if(!q){output.textContent='اكتب سؤالاً إدارياً أولاً.';return;}
             const approvals=v61Read(V61_APPROVAL_KEY,[]),pending=approvals.filter(x=>x.status==='بانتظار المراجعة');
             const archive=v61Read(V61_ARCHIVE_KEY,[]),audit=v61Read(V61_AUDIT_KEY,[]);
-            const tasks=sdReadLocal(SD_LOCAL_KEYS.tasks),events=sdReadLocal(SD_LOCAL_KEYS.events);
+            const tasks=sdReadLocal(SD_LOCAL_KEYS.tasks),events=[];
             const today=new Date().toISOString().slice(0,10);
             const due=tasks.filter(x=>x.date&&x.date<=today);
             let lines=[];
@@ -5755,13 +5755,15 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
  function requireManager(){if(typeof requireAdmin==='function')return requireAdmin();status('sd-event-status','تعذر التحقق من صلاحية الإدارة.');return false;}
  function imageMarkup(x){return x&&x.imageUrl?'<img src="'+esc(x.imageUrl)+'" alt="صورة مرفقة" loading="lazy" class="w-full max-h-64 object-contain rounded-xl border border-white/10 bg-slate-950">':'';}
  function renderCalendar(){
-  const pub=$('sd-public-calendar-list'),admin=$('sd-event-cloud-admin-list'),all=sorted(calendarRows);
+   window.sdCalendarCount=Object.keys(calendarRows||{}).length;
+   const pub=$('sd-public-calendar-list'),admin=$('sd-event-cloud-admin-list'),all=sorted(calendarRows);
   const visible=all.filter(([,x])=>x&&x.published===true).sort((a,b)=>String(a[1].date||'').localeCompare(String(b[1].date||'')));
   if(pub)pub.innerHTML=visible.length?visible.map(([id,x])=>'<article class="sd-card p-4 space-y-2">'+imageMarkup(x)+'<div class="flex items-center justify-between gap-2"><span class="text-xs text-yellow-200 font-black">'+esc(x.type||'موعد مدرسي')+'</span><span class="text-[10px] opacity-70">'+dateLabel(x.date)+'</span></div><h3 class="font-black text-base">'+esc(x.title||'موعد مدرسي')+'</h3></article>').join(''):'<p class="sd-muted">لا توجد مواعيد منشورة حالياً.</p>';
   if(admin)admin.innerHTML=all.length?all.map(([id,x])=>'<article class="sd-list-row"><div class="min-w-0 flex-1 space-y-2">'+imageMarkup(x)+'<b>'+esc(x.title||'موعد')+'</b><p class="text-xs opacity-70">'+dateLabel(x.date)+' · '+esc(x.type||'')+' · '+(x.published?'منشور':'مسودة')+'</p></div><div class="flex flex-wrap gap-1"><button type="button" class="sd-btn" data-cal-edit="'+esc(id)+'">تعديل</button><button type="button" class="sd-btn" data-cal-publish="'+esc(id)+'">'+(x.published?'إلغاء النشر':'نشر')+'</button><button type="button" class="sd-btn" data-cal-delete="'+esc(id)+'">حذف</button></div></article>').join(''):'<div class="sd-empty">لا توجد مواعيد في السجل السحابي بعد. أضف أول موعد من النموذج أعلاه.</div>';
  }
  function renderAchievements(){
-  const pub=$('sd-public-achievement-list'),admin=$('sd-achievement-cloud-admin-list'),all=sorted(achievementRows),visible=all.filter(([,x])=>x&&x.published===true);
+   window.sdAchievementCount=Object.keys(achievementRows||{}).length;
+   const pub=$('sd-public-achievement-list'),admin=$('sd-achievement-cloud-admin-list'),all=sorted(achievementRows),visible=all.filter(([,x])=>x&&x.published===true);
   if(pub)pub.innerHTML=visible.length?visible.map(([id,x])=>'<article class="sd-card p-4 space-y-2">'+imageMarkup(x)+'<div class="flex items-center justify-between gap-2"><span class="text-xs text-yellow-200 font-black">'+esc(x.type||'إنجاز مدرسي')+'</span><span class="text-[10px] opacity-70">'+dateLabel(x.date)+'</span></div><h3 class="font-black text-base">'+esc(x.title||'إنجاز مدرسي')+'</h3><p class="text-sm opacity-85 whitespace-pre-wrap">'+esc(x.detail||'')+'</p></article>').join(''):'<p class="sd-muted">لا توجد إنجازات أو فعاليات منشورة حالياً.</p>';
   if(admin)admin.innerHTML=all.length?all.map(([id,x])=>'<article class="sd-list-row"><div class="min-w-0 flex-1 space-y-2">'+imageMarkup(x)+'<b>'+esc(x.title||'إنجاز')+'</b><p class="text-xs opacity-70">'+esc(x.type||'')+' · '+dateLabel(x.date)+' · '+(x.published?'منشور':'مسودة')+'</p><p class="text-sm whitespace-pre-wrap">'+esc(x.detail||'')+'</p></div><div class="flex flex-wrap gap-1"><button type="button" class="sd-btn" data-ach-edit="'+esc(id)+'">تعديل</button><button type="button" class="sd-btn" data-ach-publish="'+esc(id)+'">'+(x.published?'إلغاء النشر':'نشر')+'</button><button type="button" class="sd-btn" data-ach-delete="'+esc(id)+'">حذف</button></div></article>').join(''):'<div class="sd-empty">لا توجد إنجازات في السجل السحابي بعد. أضف أول إنجاز من النموذج أعلاه.</div>';
  }
