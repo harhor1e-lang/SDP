@@ -1420,7 +1420,24 @@ html.sd-skip-intro-once #cinematic-intro{display:none!important;visibility:hidde
         </div>
         <div class="hero-scroll-hint"><span></span> مرّر لاكتشاف أقسام المنصة</div>
     </section>
-
+    <section id="sd-teacher-advertisements" class="max-w-7xl mx-auto px-4 md:px-6 mt-8 relative z-10" aria-label="إعلانات الكادر التدريسي">
+      <div class="theme-card rounded-3xl border border-cyan-400/30 p-4 md:p-6 shadow-xl">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-4"><div><span class="text-[10px] tracking-[.2em] text-cyan-300 font-black">OUR TEACHING STAFF</span><h2 class="text-xl md:text-2xl font-black text-amber-100 mt-1">إعلانات الكادر التدريسي</h2><p class="text-xs opacity-70 mt-1">صور وإعلانات المدرسين المنشورة بإشراف الإدارة</p></div><span class="text-[10px] rounded-full border border-cyan-300/30 px-3 py-2 text-cyan-200">✦ بإشراف إدارة المدرسة</span></div>
+        <div id="sd-teacher-ad-gallery" class="relative min-h-[180px] md:min-h-[260px] rounded-2xl overflow-hidden border border-white/10 bg-slate-950/50 flex items-center justify-center"><p class="text-sm opacity-60 text-center px-5 py-12">ستظهر هنا الصور الإعلانية للكادر التدريسي عند نشرها من لوحة الإدارة.</p></div>
+        <div id="sd-teacher-ad-controls" class="hidden items-center justify-center gap-3 mt-3"><button type="button" id="sd-teacher-ad-prev" class="w-10 h-10 rounded-full border border-cyan-300/30 text-cyan-200" aria-label="الصورة السابقة">‹</button><span id="sd-teacher-ad-count" class="text-xs opacity-70 tabular-nums"></span><button type="button" id="sd-teacher-ad-next" class="w-10 h-10 rounded-full border border-cyan-300/30 text-cyan-200" aria-label="الصورة التالية">›</button></div>
+      </div>
+    </section>
+    <section id="sd-school-leadership" class="max-w-7xl mx-auto px-4 md:px-6 mt-5 mb-8 relative z-10" aria-label="الإدارة المدرسية والمعاونون">
+      <div class="theme-card rounded-3xl border border-amber-400/30 p-4 md:p-6 shadow-xl">
+        <div class="text-center mb-5"><span class="text-[10px] tracking-[.2em] text-amber-300 font-black">SCHOOL LEADERSHIP</span><h2 class="text-xl md:text-2xl font-black text-amber-100 mt-1">الإدارة المدرسية</h2><p class="text-xs opacity-70 mt-1">قيادة تربوية تصنع بيئة العلم والانضباط والتميّز</p></div>
+        <div class="max-w-2xl mx-auto rounded-2xl p-4 md:p-5 text-center border border-amber-300/50 bg-gradient-to-br from-amber-400/15 via-slate-900/50 to-slate-950/70 shadow-lg"><span class="text-[10px] tracking-widest text-amber-300 font-black">مدير الإعدادية</span><h3 class="text-lg md:text-xl font-black text-amber-100 mt-2">الأستاذ م.م محمد أكرم الربيعي</h3><p class="text-[10px] opacity-65 mt-1">إدارة إعدادية صلاح الدين للبنين</p></div>
+        <div class="mt-5"><div class="flex items-center justify-center gap-2 mb-4"><span class="h-px flex-1 bg-amber-300/20"></span><h3 class="text-sm font-black text-cyan-200 whitespace-nowrap">المعاونون</h3><span class="h-px flex-1 bg-amber-300/20"></span></div><div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <article class="rounded-2xl border border-cyan-300/25 bg-cyan-950/20 p-4 text-center"><span class="text-2xl">✦</span><h4 class="font-black text-sm text-cyan-100 mt-2">الأستاذ حيدر عبد الزهرة</h4><p class="text-[10px] text-cyan-200/70 mt-1">معاون المدير</p></article>
+          <article class="rounded-2xl border border-violet-300/25 bg-violet-950/20 p-4 text-center"><span class="text-2xl">✦</span><h4 class="font-black text-sm text-violet-100 mt-2">الدكتور عبد الرحيم عبد الكريم</h4><p class="text-[10px] text-violet-200/70 mt-1">معاون المدير</p></article>
+          <article class="rounded-2xl border border-emerald-300/25 bg-emerald-950/20 p-4 text-center"><span class="text-2xl">✦</span><h4 class="font-black text-sm text-emerald-100 mt-2">الأستاذ مصطفى عبد الحسين</h4><p class="text-[10px] text-emerald-200/70 mt-1">معاون المدير</p></article>
+        </div></div>
+      </div>
+    </section>
     <!-- المحتوى الرئيسي -->
     <!-- الهوية المؤسسية الجديدة: إضافة بصرية فقط، مع الإبقاء على جميع الأقسام الأصلية -->
     <section class="identity-console max-w-7xl mx-auto px-4 md:px-6 relative z-10" aria-label="الهوية المؤسسية والتنقل السريع">
@@ -2800,6 +2817,19 @@ html.sd-skip-intro-once #cinematic-intro{display:none!important;visibility:hidde
                 host.appendChild(fallback);
             }
         }
+        window.sdTeacherAdvertisementRecords={};let sdTeacherAdvertisementIndex=0,sdTeacherAdvertisementTimer=null;
+        function renderTeacherAdvertisements(records){
+          const host=document.getElementById('sd-teacher-ad-gallery'),controls=document.getElementById('sd-teacher-ad-controls'),count=document.getElementById('sd-teacher-ad-count');if(!host)return;
+          const ads=Object.values(records||{}).filter(x=>x&&x.published!==false&&typeof x.url==='string'&&/^https:\/\//i.test(x.url));
+          if(sdTeacherAdvertisementTimer){clearInterval(sdTeacherAdvertisementTimer);sdTeacherAdvertisementTimer=null}host.replaceChildren();
+          if(!ads.length){const p=document.createElement('p');p.className='text-sm opacity-60 text-center px-5 py-12';p.textContent='ستظهر هنا الصور الإعلانية للكادر التدريسي عند نشرها من لوحة الإدارة.';host.appendChild(p);if(controls)controls.classList.add('hidden');return}
+          sdTeacherAdvertisementIndex%=ads.length;const img=document.createElement('img');img.src=ads[sdTeacherAdvertisementIndex].url;img.alt='إعلان للكادر التدريسي';img.className='w-full max-h-[520px] object-contain';img.loading='lazy';host.appendChild(img);
+          if(controls){controls.classList.toggle('hidden',ads.length<2);controls.classList.toggle('flex',ads.length>=2)}if(count)count.textContent=(sdTeacherAdvertisementIndex+1)+' / '+ads.length;
+          const show=d=>{sdTeacherAdvertisementIndex=(sdTeacherAdvertisementIndex+d+ads.length)%ads.length;renderTeacherAdvertisements(window.sdTeacherAdvertisementRecords)};
+          const prev=document.getElementById('sd-teacher-ad-prev'),next=document.getElementById('sd-teacher-ad-next');if(prev&&!prev.dataset.bound){prev.dataset.bound='1';prev.addEventListener('click',()=>show(-1))}if(next&&!next.dataset.bound){next.dataset.bound='1';next.addEventListener('click',()=>show(1))}
+          if(ads.length>1)sdTeacherAdvertisementTimer=setInterval(()=>show(1),6000)
+        }
+        try{firebase.database().ref('schoolBranding/teacherAdvertisements').on('value',snap=>{window.sdTeacherAdvertisementRecords=snap.val()||{};sdTeacherAdvertisementIndex=0;renderTeacherAdvertisements(window.sdTeacherAdvertisementRecords)},e=>console.warn('تعذر تحميل إعلانات الكادر:',e))}catch(e){console.warn(e)}
         // صور العرض الترويجية داخل الإطار المائل في بطاقة الواجهة.
         window.sdHeroAdvertisementRecords = {};
         let sdHeroAdvertisementTimer = null;
@@ -4594,6 +4624,7 @@ bind('weeklyTimetables',x=>tables=x,renderTable);bind('guidancePosts',x=>guides=
   const groups=[
    ['students','سجل الطلاب','🎓','أدوات إدارة سجل الطلاب والهويات'],
    ['branding','شعار وصورة العرض','🖼️','رفع شعار المدرسة أو صورة عرض وتحديثها من الموقع مباشرة'],
+   ['teacherAds','الإشراف على إعلانات المدرسين','📸','إرفاق صور إعلانية للكادر التدريسي ومراجعتها ونشرها للزوار'],
    ['badges','إدارة الباجات المدرسية','🪪','إصدار ومعاينة وطباعة باجات الطلاب بصورة مستقلة'],
    ['guidance','قسم المرشد التربوي','🧭','كتابة إرشاد تربوي منظم وإرفاق الصور ونشره للطلبة'],
    ['notices','التبليغات والإعلانات','📢','نشر ومراجعة التبليغات والبث الإداري'],
@@ -4606,6 +4637,15 @@ bind('weeklyTimetables',x=>tables=x,renderTable);bind('guidancePosts',x=>guides=
    ['system','النظام والاتصال','⚙️','حالة Firebase والإعدادات والأدوات الحساسة']
   ];
   groups.forEach(([id,title,icon,desc])=>{makePage(id,title,icon,desc);const b=document.createElement('button');b.type='button';b.className='v14-admin-tile';b.innerHTML=`<span class="v14-icon">${icon}</span><span><b>${title}</b><small>${desc}</small></span>`;b.addEventListener('click',()=>showPage(id));home.querySelector('#v14-admin-nav').appendChild(b)});
+  const teacherAdsCard=document.createElement('section');
+  teacherAdsCard.className='theme-card p-4 md:p-6 rounded-2xl border border-cyan-400/30 space-y-4';
+  teacherAdsCard.innerHTML=`<div><span class="text-[10px] tracking-widest text-cyan-300 font-black">TEACHING STAFF · SUPERVISION</span><h3 class="text-lg font-black text-amber-100 mt-1">📸 إعلانات وصور المدرسين</h3><p class="text-xs opacity-75 leading-6">إرفاق الصور الإعلانية للكادر التدريسي فقط. كل صورة تُنشر بصورة مستقلة وتظهر أسفل البطاقة الذهبية. النشر متاح للمدير بعد تسجيل الدخول.</p></div><div class="rounded-2xl border border-cyan-300/20 p-3 space-y-3"><input id="sd-teacher-ad-admin-file" type="file" accept="image/jpeg,image/png,image/webp" class="block w-full text-xs"><img id="sd-teacher-ad-admin-preview" class="hidden w-full max-h-64 object-contain rounded-xl bg-slate-950" alt="معاينة صورة إعلان المدرس"><button type="button" id="sd-teacher-ad-admin-publish" class="w-full rounded-xl px-4 py-3 bg-cyan-300 text-slate-950 text-xs font-black">رفع الصورة ونشرها بإشراف الإدارة</button><p id="sd-teacher-ad-admin-status" class="text-xs opacity-80" role="status" aria-live="polite">اختر صورة إعلانية للكادر التدريسي.</p></div><div><h4 class="font-black text-sm text-amber-100 mb-2">الصور المنشورة حالياً</h4><div id="sd-teacher-ad-admin-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div></div>`;
+  pages.teacherAds.appendChild(teacherAdsCard);
+  const teacherAdFile=teacherAdsCard.querySelector('#sd-teacher-ad-admin-file'),teacherAdPreview=teacherAdsCard.querySelector('#sd-teacher-ad-admin-preview'),teacherAdStatus=teacherAdsCard.querySelector('#sd-teacher-ad-admin-status'),teacherAdPublish=teacherAdsCard.querySelector('#sd-teacher-ad-admin-publish');
+  teacherAdFile.addEventListener('change',()=>{const f=teacherAdFile.files&&teacherAdFile.files[0];if(!f){teacherAdPreview.classList.add('hidden');return}if(!['image/jpeg','image/png','image/webp'].includes(f.type)||f.size>8*1024*1024){teacherAdStatus.textContent='الصيغ المدعومة JPG وPNG وWEBP وبحجم أقصى 8MB.';teacherAdFile.value='';return}teacherAdPreview.src=URL.createObjectURL(f);teacherAdPreview.classList.remove('hidden');teacherAdStatus.textContent='المعاينة جاهزة.'});
+  teacherAdPublish.addEventListener('click',async()=>{if(!(typeof isAdminLoggedIn!=='undefined'&&isAdminLoggedIn)){teacherAdStatus.textContent='النشر متاح للمدير بعد تسجيل الدخول.';return}const f=teacherAdFile.files&&teacherAdFile.files[0];if(!f){teacherAdStatus.textContent='اختر صورة أولاً.';return}teacherAdPublish.disabled=true;let uploaded=null;try{uploaded=await window.uploadOriginalSchoolImage(f,'studentPortalFiles/general/teacher-advertisements');const ref=firebase.database().ref('schoolBranding/teacherAdvertisements').push();await ref.set({url:uploaded.url,path:uploaded.path,fileStorage:'supabase',fileName:f.name,updatedAt:firebase.database.ServerValue.TIMESTAMP,updatedBy:'admin',published:true});teacherAdStatus.textContent='تم نشر الصورة في تبويب إعلانات الكادر.';teacherAdFile.value='';teacherAdPreview.classList.add('hidden')}catch(e){if(uploaded?.path)try{await schoolGateway('delete-file',{session:window.sdAdminSession,path:uploaded.path})}catch(cleanError){console.warn(cleanError)}teacherAdStatus.textContent='تعذر النشر: '+(e.message||'تحقق من التخزين والصلاحيات')}finally{teacherAdPublish.disabled=false}});
+  const teacherAdAdminList=teacherAdsCard.querySelector('#sd-teacher-ad-admin-list');
+  firebase.database().ref('schoolBranding/teacherAdvertisements').on('value',snap=>{const records=snap.val()||{};teacherAdAdminList.replaceChildren();const entries=Object.entries(records).filter(([,v])=>v&&v.url);if(!entries.length){teacherAdAdminList.textContent='لا توجد صور منشورة حالياً.';return}entries.forEach(([id,item])=>{const card=document.createElement('div');card.className='rounded-xl border border-white/10 p-2 space-y-2';const img=document.createElement('img');img.src=item.url;img.alt='إعلان مدرس';img.className='w-full h-36 object-contain rounded-lg bg-slate-950';const btn=document.createElement('button');btn.type='button';btn.className='text-xs text-red-300 border border-red-400/30 rounded-lg px-3 py-2';btn.textContent='حذف الإعلان';btn.addEventListener('click',async()=>{if(!(typeof isAdminLoggedIn!=='undefined'&&isAdminLoggedIn))return;if(!confirm('حذف هذه الصورة الإعلانية؟'))return;btn.disabled=true;try{await firebase.database().ref('schoolBranding/teacherAdvertisements/'+id).remove();if(item.path&&item.fileStorage==='supabase')try{await schoolGateway('delete-file',{session:window.sdAdminSession,path:item.path})}catch(e){console.warn(e)}}catch(e){alert('تعذر الحذف: '+e.message);btn.disabled=false}});card.append(img,btn);teacherAdAdminList.appendChild(card)})});
   // School header image: upload through the existing secured Supabase gateway and publish its URL in Firebase.
   const brandingCard=document.createElement('section');
   brandingCard.className='theme-card p-4 md:p-6 rounded-2xl border border-amber-400/40 space-y-4';
