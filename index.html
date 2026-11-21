@@ -3140,9 +3140,9 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
         let globalStudentsData = {};
         let globalQuestionBankData = {};
         let currentDisciplineStudentId = null;
-        // وضع تجريبي: السجلات تعمل سحابياً وفق قواعد Realtime Database الحالية المفتوحة.
-        // لا تُدخل بيانات شخصية حساسة أو حقيقية قبل إعداد صلاحيات مناسبة.
-        const SECURE_STUDENT_RECORDS_ENABLED = true;
+        // حماية مؤقتة: إيقاف قراءة وكتابة سجل الغياب والإنذارات حتى تأمين قواعد Firebase واختبارها.
+        // لا تُفعّل هذا الخيار قبل منع القراءة والكتابة العامة والتحقق من صلاحيات الإدارة على الخادم.
+        const SECURE_STUDENT_RECORDS_ENABLED = false;
         const SITE_TEXT_STORAGE_KEY = 'salahaldin_site_text_edits_v2';
 
         function getSiteTextKey(element) {
@@ -4185,7 +4185,7 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
             document.getElementById('discipline-student-title').textContent='سجل الغياب والإنذارات · '+(student.name||'طالب');
             document.getElementById('discipline-date').value=new Date().toISOString().slice(0,10);
             document.getElementById('student-discipline-history').innerHTML='<p class="text-xs opacity-60">جارٍ تحميل السجل السحابي...</p>';
-            document.getElementById('discipline-security-message').textContent='وضع تجريبي: يتم حفظ السجلات على Firebase وفق القواعد الحالية المفتوحة.';
+            document.getElementById('discipline-security-message').textContent='الحفظ والعرض موقوفان مؤقتاً لحماية بيانات الطلاب حتى تأمين صلاحيات قاعدة البيانات.';
             document.getElementById('student-discipline-modal').classList.remove('hidden');
             if(SECURE_STUDENT_RECORDS_ENABLED) loadStudentDiscipline(studentId);
         }
