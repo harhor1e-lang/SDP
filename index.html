@@ -3044,22 +3044,24 @@ html.sd-skip-intro-once #cinematic-intro{display:none!important;visibility:hidde
         }
 
         function toggleSiteTextEditing() {
-            if (!isAdminLoggedIn) { alert('هذه الصلاحية للمدير فقط.'); return; }
+            if (!isAdminLoggedIn) { alert('هذه الصلاحية للمدير فقط. سجّل دخول المدير أولاً.'); return; }
             siteTextEditingEnabled = !siteTextEditingEnabled;
             const button = document.getElementById('site-text-edit-toggle');
             if (button) {
                 button.textContent = siteTextEditingEnabled ? 'إيقاف تعديل النصوص ✖' : 'تفعيل تعديل النصوص ✏️';
                 button.classList.toggle('bg-emerald-500/20', siteTextEditingEnabled);
                 button.classList.toggle('text-emerald-400', siteTextEditingEnabled);
+                button.setAttribute('aria-pressed', String(siteTextEditingEnabled));
             }
             document.body.style.cursor = siteTextEditingEnabled ? 'text' : '';
             const helper = document.getElementById('site-text-edit-helper');
             if (helper) helper.classList.toggle('hidden', !siteTextEditingEnabled);
+            const dashboard = document.getElementById('admin-dashboard-modal');
             if (siteTextEditingEnabled) {
-                document.getElementById('admin-dashboard-modal').classList.add('hidden');
-                alert('تم تفعيل التعديل. اضغط على النص المطلوب ثم اكتب النص الجديد.');
-            } else {
-                document.getElementById('admin-dashboard-modal').classList.remove('hidden');
+                if (dashboard) dashboard.classList.add('hidden');
+                alert('تم تفعيل تعديل النصوص. اضغط على النص نفسه لتغييره. بعد الحفظ ستظهر رسالة توضح حالة المزامنة.');
+            } else if (dashboard) {
+                dashboard.classList.remove('hidden');
             }
         }
 
@@ -3093,32 +3095,44 @@ html.sd-skip-intro-once #cinematic-intro{display:none!important;visibility:hidde
             if (newText === null || newText.trim() === '' || newText.trim() === oldText) return;
             const key = getSiteTextKey(node);
             const cleanText = newText.trim();
-            if (!firebaseReady() || !db) {
-                alert('تعذر تعديل النص المنشور: اتصال قاعدة البيانات غير متاح. لم يتم نشر التغيير.');
+            savedSiteTextEdits[key] = cleanText;
+            node.textContent = cleanText;
+            node.setAttribute('data-sd-text-edit-key', key);
+            const localSaved = writeLocalSiteTextEdits();
+            if (!localSaved) {
+                alert('تعذر حفظ التعديل على هذا الجهاز. تحقق من مساحة التخزين في المتصفح.');
+                return;
+            }
+            if (!db || !firebaseReady()) {
+                alert('تم حفظ النص على هذا الجهاز فقط. لم تتم مزامنته مع الزوار لأن اتصال Firebase غير متاح.');
                 return;
             }
             try {
                 await db.ref('siteTextEdits/' + key).set(cleanText);
-                savedSiteTextEdits[key] = cleanText;
-                writeLocalSiteTextEdits();
-                node.textContent = cleanText;
-                node.setAttribute('data-sd-text-edit-key', key);
-                alert('تم تحديث النص ونشره سحابياً بنجاح. سيظهر للزوار بعد تحديث الصفحة.');
+                alert('تم حفظ النص ومزامنته سحابياً بنجاح. سيظهر للزوار بعد تحديث الصفحة.');
             } catch (error) {
                 console.error('[Firebase] تعذر حفظ تعديل النص:', error);
                 const detail = error && error.code ? ' (' + error.code + ')' : '';
-                alert('لم يُنشر التعديل. فشل الحفظ السحابي' + detail + '. تحقق من صلاحيات الكتابة في Firebase ثم أعد المحاولة.');
+                alert('تم حفظ النص على هذا الجهاز فقط، لكن فشلت المزامنة السحابية' + detail + '. يلزم فحص صلاحيات الكتابة في Firebase.');
             }
         }, true);
 
         savedSiteTextEdits = readLocalSiteTextEdits();
         document.addEventListener('DOMContentLoaded', applySavedSiteTextEdits);
-        db.ref('siteTextEdits').on('value', snapshot => {
-            const cloudEdits = snapshot.val() || {};
-            savedSiteTextEdits = Object.assign({}, readLocalSiteTextEdits(), cloudEdits);
-            writeLocalSiteTextEdits();
-            applySavedSiteTextEdits();
-        }, error => console.error('[Firebase] تعذر تحميل تعديلات نصوص الموقع:', error));
+        if (db && typeof db.ref === 'function') {
+            db.ref('siteTextEdits').on('value', snapshot => {
+                const cloudEdits = snapshot.val() || {};
+                savedSiteTextEdits = Object.assign({}, cloudEdits, readLocalSiteTextEdits());
+                writeLocalSiteTextEdits();
+                applySavedSiteTextEdits();
+            }, error => {
+                console.error('[Firebase] تعذر تحميل تعديلات نصوص الموقع:', error);
+                savedSiteTextEdits = readLocalSiteTextEdits();
+                applySavedSiteTextEdits();
+            });
+        } else {
+            savedSiteTextEdits = readLocalSiteTextEdits();
+        }
 
         const cursorGlow = document.getElementById('cursor-glow');
         if (cursorGlow && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
