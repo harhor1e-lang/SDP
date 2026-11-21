@@ -1931,8 +1931,8 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
             </div>
         </section>
     </main>
-    <!-- أزرار الإدارة وسجل الطلاب مستقلة عن المربع المحذوف -->
-    <nav class="essential-school-actions" aria-label="إدارة المدرسة وسجل الطلاب">
+    <!-- زر الدخول إلى لوحة الإدارة -->
+    <nav class="essential-school-actions" aria-label="إدارة المدرسة">
       <button type="button" onclick="openPinModal()" class="essential-action-btn">🔐 الإدارة</button>
     </nav>
 
@@ -2908,7 +2908,7 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
 
         function applySavedSiteTextEdits() {
             document.querySelectorAll('body *').forEach(element => {
-                if (element.closest('#admin-dashboard-modal, #pin-modal, #students-dashboard-modal, #students-pin-modal, #site-text-edit-helper, script, style, textarea, input, select, button, nav, svg')) return;
+                if (element.closest('#admin-dashboard-modal, #pin-modal, #site-text-edit-helper, script, style, textarea, input, select, button, nav, svg')) return;
                 if (element.children.length !== 0 || !element.textContent.trim()) return;
                 const key = getSiteTextKey(element);
                 if (Object.prototype.hasOwnProperty.call(savedSiteTextEdits, key)) {
@@ -2957,7 +2957,7 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
             if (!siteTextEditingEnabled || !isAdminLoggedIn) return;
             let node = event.target instanceof Element ? event.target : event.target?.parentElement;
             while (node && node !== document.body) {
-                if (node.closest('#admin-dashboard-modal, #pin-modal, #students-dashboard-modal, #students-pin-modal, #site-text-edit-helper, script, style, textarea, input, select, button, nav, svg, a')) return;
+                if (node.closest('#admin-dashboard-modal, #pin-modal, #site-text-edit-helper, script, style, textarea, input, select, button, nav, svg, a')) return;
                 if (node.children.length === 0 && node.textContent.trim()) break;
                 node = node.parentElement;
             }
@@ -3142,7 +3142,6 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
             const helper = document.getElementById('site-text-edit-helper');
             if (helper) helper.classList.add('hidden');
             document.getElementById('admin-dashboard-modal').classList.add('hidden');
-            db.ref('students').off('value');
             renderPosts();
             ['computer', 'physics', 'chemistry', 'biology'].forEach(lab => renderLab(lab));
             renderBooks();
@@ -3718,42 +3717,6 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
             if(!requireAdmin()||!firebaseReady()||!id)return;
             if(!confirm('حذف هذه المادة من بنك الأسئلة؟'))return;
             db.ref('questionBank/'+id).remove().catch(error=>reportDbError('حذف مادة من بنك الأسئلة',error));
-        }
-
-        // ====== سجل الغياب والإنذارات: لا يتم حفظ بيانات الطلاب قبل تفعيل الحماية ======
-        function openStudentDiscipline(studentId) {
-            if(!requireAdmin())return;
-            currentDisciplineStudentId=studentId;
-            const student=globalStudentsData[studentId]||{};
-            document.getElementById('discipline-student-title').textContent='سجل الغياب والإنذارات · '+(student.name||'طالب');
-            document.getElementById('discipline-date').value=new Date().toISOString().slice(0,10);
-            document.getElementById('student-discipline-history').innerHTML='<p class="text-xs opacity-60">جارٍ تحميل السجل السحابي...</p>';
-            document.getElementById('discipline-security-message').textContent='الحفظ والعرض موقوفان مؤقتاً لحماية بيانات الطلاب حتى تأمين صلاحيات قاعدة البيانات.';
-            document.getElementById('student-discipline-modal').classList.remove('hidden');
-            if(SECURE_STUDENT_RECORDS_ENABLED) loadStudentDiscipline(studentId);
-        }
-
-        function closeStudentDiscipline(){document.getElementById('student-discipline-modal').classList.add('hidden');currentDisciplineStudentId=null;}
-
-        function loadStudentDiscipline(studentId){
-            if(!requireAdmin()||!firebaseReady()||!SECURE_STUDENT_RECORDS_ENABLED)return;
-            db.ref('studentRecords/'+studentId).once('value').then(snapshot=>{
-                const data=snapshot.val()||{};const box=document.getElementById('student-discipline-history');box.innerHTML='';
-                const entries=Object.entries(data).reverse();
-                if(!entries.length){box.textContent='لا توجد حالات مسجلة.';return;}
-                entries.forEach(([id,item])=>{const row=document.createElement('div');row.className='theme-card p-3 rounded-xl';const head=document.createElement('p');head.className='text-xs font-bold text-amber-300';head.textContent=(item.type==='absence'?'غياب':item.type==='warning'?'إنذار':'ملاحظة')+' · '+(item.date||'');const body=document.createElement('p');body.className='text-xs mt-1';body.textContent=(item.status||'')+' — '+(item.note||'');row.append(head,body);box.append(row);});
-            }).catch(error=>reportDbError('تحميل سجل الغياب والإنذارات',error));
-        }
-
-        function saveStudentDiscipline(){
-            if(!requireAdmin()||!firebaseReady())return;
-            if(!SECURE_STUDENT_RECORDS_ENABLED){alert('الحفظ غير مفعّل حالياً.');return;}
-            if(!currentDisciplineStudentId)return;
-            const note=document.getElementById('discipline-note').value.trim();const date=document.getElementById('discipline-date').value;
-            if(!date||!note){alert('حدد التاريخ واكتب تفاصيل الحالة.');return;}
-            db.ref('studentRecords/'+currentDisciplineStudentId).push({type:document.getElementById('discipline-type').value,status:document.getElementById('discipline-status').value,date,note:note.slice(0,500),createdAt:Date.now()})
-                .then(()=>{document.getElementById('discipline-note').value='';loadStudentDiscipline(currentDisciplineStudentId);alert('تم حفظ الحالة.');})
-                .catch(error=>reportDbError('حفظ سجل الطالب',error));
         }
 
         // ====== إحصائيات مجمّعة ======
@@ -4529,10 +4492,8 @@ bind('weeklyTimetables',x=>tables=x,renderTable);bind('guidancePosts',x=>guides=
    catch(e){archiveHost.dataset.listenerAttached='';archiveList.innerHTML='<div class="sd-empty">خدمة Firebase غير متاحة حالياً.</div>'}
   }
 
-  // Existing administration subtools are kept intact inside their corresponding independent pages.
-  const studentLaunch=document.createElement('div');studentLaunch.className='sd-card space-y-3';studentLaunch.innerHTML='<h3>سجل الطلاب المحمي</h3><p class="sd-muted">فتح نافذة سجل الطلاب الحالية مع الحفاظ على رمز الدخول ووظائف الإضافة والتعديل والحذف.</p><button type="button" class="sd-btn" id="v14-open-student-records">🎓 فتح سجل الطلاب</button>';pages.students.appendChild(studentLaunch);studentLaunch.querySelector('button').addEventListener('click',()=>{if(typeof openStudentsPinModal==='function')openStudentsPinModal();else toast('نافذة سجل الطلاب غير متاحة حالياً',false)});
   showPage('home');initAudit();
-  function showPage(id){home.hidden=id!=='home';Object.entries(pages).forEach(([key,page])=>page.hidden=key!==id);if(id==='archive'&&typeof isAdminLoggedIn!=='undefined'&&isAdminLoggedIn)startCloudArchiveListener();if(id==='badges'&&typeof window.sdOpenSchoolBadges==='function')window.sdOpenSchoolBadges();if(id==='home')home.scrollIntoView({block:'start',behavior:'smooth'});else pages[id]?.scrollIntoView({block:'start',behavior:'smooth'});}
+  function showPage(id){home.hidden=id!=='home';Object.entries(pages).forEach(([key,page])=>page.hidden=key!==id);if(id==='archive'&&typeof isAdminLoggedIn!=='undefined'&&isAdminLoggedIn)startCloudArchiveListener();if(id==='home')home.scrollIntoView({block:'start',behavior:'smooth'});else pages[id]?.scrollIntoView({block:'start',behavior:'smooth'});}
   modal.dataset.v14ShowHome='1';modal._v14ShowHome=()=>showPage('home');
  }
  document.addEventListener('DOMContentLoaded',()=>{setupAdminPages();const modal=$('admin-dashboard-modal');if(modal){new MutationObserver(()=>{if(!modal.classList.contains('hidden')&&modal._v14ShowHome)modal._v14ShowHome()}).observe(modal,{attributes:true,attributeFilter:['class']})}});
