@@ -2099,11 +2099,7 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
         <div class="max-w-4xl mx-auto theme-panel p-6 md:p-8 rounded-3xl space-y-8 border border-yellow-500/50">
             <div class="flex justify-between items-center border-b border-current pb-4">
                 <h2 class="title-font text-2xl font-black gold-gradient-text">لوحة التحكم السحابية الرسمية (أعدادية صلاح الدين)</h2>
-            <div id="sd-admin-calendar-achievement-tabs" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <button type="button" class="sd-action text-right" onclick="openAdminPrivateSection('sd-private-calendar')"><span>📅</span><b>تبويب إدارة التقويم المدرسي</b><span class="sd-muted">إضافة المواعيد والامتحانات والعطل، تعديلها وحذفها ونشرها أو إلغاء نشرها</span></button>
-              <button type="button" class="sd-action text-right" onclick="openAdminPrivateSection('sd-private-achievements')"><span>🏆</span><b>تبويب إدارة الإنجازات والفعاليات</b><span class="sd-muted">إضافة الإنجازات والفعاليات وتعديلها وحذفها وإدارة حالة نشرها</span></button>
-            </div>
-                
+
 <div id="v7-admin-tools" class="theme-card p-4 rounded-2xl border border-cyan-400/30 space-y-4">
 <h3 class="font-black text-cyan-200 text-lg">إدارة بوابة الطالب والملفات والجداول والرسائل</h3>
 <p class="text-xs opacity-75">ترفع ملفات PDF إلى Firebase Storage، وتُحفظ روابطها وبياناتها في Realtime Database.</p>
@@ -2187,12 +2183,10 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
               <div class="space-y-1"><span class="text-[10px] tracking-widest text-yellow-400 font-black">PRIVATE ADMIN SUPERVISION</span><h3 class="text-lg font-black text-yellow-200">🔐 الخصوصية الإشرافية لإدارة المدرسة</h3><p class="text-xs opacity-70 leading-6">جميع أدوات الإدارة التالية محصورة بواجهة المدير بعد تسجيل الدخول. لا تظهر نماذج الإضافة والتعديل والحذف في واجهة الزوار أو الطلاب.</p></div>
               <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
                 <button class="sd-btn" type="button" onclick="document.getElementById('sd-private-operations').scrollIntoView({behavior:'smooth'})">📌 المهام</button>
-                <button class="sd-btn" type="button" onclick="document.getElementById('sd-private-calendar').scrollIntoView({behavior:'smooth'})">📅 التقويم والفعاليات</button>
                 <button class="sd-btn" type="button" onclick="document.getElementById('sd-private-maintenance').scrollIntoView({behavior:'smooth'})">🛠️ الصيانة</button>
                 <button class="sd-btn" type="button" onclick="document.getElementById('sd-private-suggestions').scrollIntoView({behavior:'smooth'})">💡 الاقتراحات</button>
                 <button class="sd-btn" type="button" onclick="document.getElementById('sd-private-timetable').scrollIntoView({behavior:'smooth'})">🗓️ الجداول</button>
                 <button class="sd-btn" type="button" onclick="document.getElementById('sd-private-initiatives').scrollIntoView({behavior:'smooth'})">🤝 المبادرات</button>
-                <button class="sd-btn" type="button" onclick="document.getElementById('sd-private-achievements').scrollIntoView({behavior:'smooth'})">🏆 الإنجازات</button>
                 <button class="sd-btn" type="button" onclick="document.getElementById('sd-private-security').scrollIntoView({behavior:'smooth'})">🛡️ الدرع الأمني</button>
                 <button class="sd-btn" type="button" onclick="document.getElementById('sd-certificate-factory').scrollIntoView({behavior:'smooth'})">🏅 مصنع الشهادات</button>
                 <button class="sd-btn" type="button" onclick="document.getElementById('sd-school-map-3d').scrollIntoView({behavior:'smooth'})">🗺️ الخريطة المدرسية 3D</button>
@@ -4810,9 +4804,23 @@ bind('weeklyTimetables',x=>tables=x,renderTable);bind('guidancePosts',x=>guides=
    ['resources','الموارد الدراسية','📚','المكتبة والكتب وبنك الأسئلة والمختبرات'],
    ['reports','التقارير والأدوات','📊','التقارير والطباعة وأدوات الموقع'],
    ['archive','الأرشيف','🗄️','حفظ النصوص والصور والمواد التي يرسلها المدير'],
-   ['system','النظام والاتصال','⚙️','حالة Firebase والإعدادات والأدوات الحساسة']
+   ['system','النظام والاتصال','⚙️','حالة Firebase والإعدادات والأدوات الحساسة'],
+   ['calendar','التقويم المدرسي','📅','إضافة الامتحانات والمواعيد والعطل وتعديلها ونشرها'],
+   ['achievements','الإنجازات والفعاليات','🏆','إدارة التكريمات والإنجازات والأنشطة المدرسية']
   ];
   groups.forEach(([id,title,icon,desc])=>{makePage(id,title,icon,desc);const b=document.createElement('button');b.type='button';b.className='v14-admin-tile';b.innerHTML=`<span class="v14-icon">${icon}</span><span><b>${title}</b><small>${desc}</small></span>`;b.addEventListener('click',()=>showPage(id));home.querySelector('#v14-admin-nav').appendChild(b)});
+  // Give the calendar and achievements their own real admin pages.
+  // Move the original forms (do not clone them) so all existing Firebase handlers and IDs keep working.
+  const privateCalendar=$('sd-private-calendar');
+  const privateAchievements=$('sd-private-achievements');
+  if(privateCalendar){
+    privateCalendar.classList.add('theme-card','p-4','md:p-6','rounded-2xl','border','border-amber-400/30');
+    pages.calendar.appendChild(privateCalendar);
+  }
+  if(privateAchievements){
+    privateAchievements.classList.add('theme-card','p-4','md:p-6','rounded-2xl','border','border-amber-400/30');
+    pages.achievements.appendChild(privateAchievements);
+  }
   const teacherAdsCard=document.createElement('section');
   teacherAdsCard.className='theme-card p-4 md:p-6 rounded-2xl border border-cyan-400/30 space-y-4';
   teacherAdsCard.innerHTML=`<div><span class="text-[10px] tracking-widest text-cyan-300 font-black">TEACHING STAFF · SUPERVISION</span><h3 class="text-lg font-black text-amber-100 mt-1">📸 إعلانات وصور المدرسين</h3><p class="text-xs opacity-75 leading-6">إرفاق الصور الإعلانية للكادر التدريسي فقط. كل صورة تُنشر بصورة مستقلة وتظهر أسفل البطاقة الذهبية. النشر متاح للمدير بعد تسجيل الدخول.</p></div><div class="rounded-2xl border border-cyan-300/20 p-3 space-y-3"><input id="sd-teacher-ad-admin-file" type="file" accept="image/jpeg,image/png,image/webp" class="block w-full text-xs"><img id="sd-teacher-ad-admin-preview" class="hidden w-full max-h-64 object-contain rounded-xl bg-slate-950" alt="معاينة صورة إعلان المدرس"><button type="button" id="sd-teacher-ad-admin-publish" class="w-full rounded-xl px-4 py-3 bg-cyan-300 text-slate-950 text-xs font-black">رفع الصورة ونشرها بإشراف الإدارة</button><p id="sd-teacher-ad-admin-status" class="text-xs opacity-80" role="status" aria-live="polite">اختر صورة إعلانية للكادر التدريسي.</p></div><div><h4 class="font-black text-sm text-amber-100 mb-2">الصور المنشورة حالياً</h4><div id="sd-teacher-ad-admin-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div></div>`;
