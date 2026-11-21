@@ -3,7 +3,6 @@
   'use strict';
 
   const SCHOOL_PATHS = [
-    ['posts', 'المنشورات'],
     ['schoolMessages', 'التبليغات'],
     ['liveBroadcast', 'البث المباشر'],
     ['digitalLibrary', 'المكتبة الرقمية'],
@@ -11,9 +10,9 @@
     ['questionBank', 'بنك الأسئلة']
   ];
   const PUBLIC_FIELDS = new Set([
-    'title', 'name', 'headline', 'body', 'text', 'content', 'description',
+    'title', 'headline', 'body', 'text', 'content', 'description',
     'summary', 'subject', 'stage', 'grade', 'className', 'category',
-    'type', 'teacher', 'teacherName', 'author', 'date', 'createdAt',
+    'type', 'teacher', 'teacherName', 'date', 'createdAt',
     'question', 'answer', 'lesson', 'chapter', 'term', 'audience'
   ]);
   const PUBLIC_SECTION_IDS = [
@@ -35,10 +34,10 @@
 
   function isPublicRecord(record) {
     if (!record || typeof record !== 'object') return true;
-    if (record.published === false || record.isPublic === false || record.public === false) return false;
-    if (String(record.visibility || '').toLowerCase() === 'private') return false;
-    if (String(record.status || '').toLowerCase() === 'draft') return false;
-    return true;
+    const hasPublicFlag = Object.prototype.hasOwnProperty.call(record, 'published') || Object.prototype.hasOwnProperty.call(record, 'isPublic') || Object.prototype.hasOwnProperty.call(record, 'public') || Object.prototype.hasOwnProperty.call(record, 'visibility');
+    if (!hasPublicFlag) return false;
+    if (record.published === true || record.isPublic === true || record.public === true || String(record.visibility || '').toLowerCase() === 'public') return true;
+    return false;
   }
 
   function collectAllowedFields(value, label, output, depth) {
