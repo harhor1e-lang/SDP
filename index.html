@@ -3144,12 +3144,30 @@ html.sd-skip-intro-once #cinematic-intro{display:none!important;visibility:hidde
 
         function skipCinematicIntro() {
             const intro = document.getElementById('cinematic-intro');
-            if (!intro || intro.classList.contains('fade-out')) return;
+            if (!intro) {
+                document.body.classList.remove('sd-intro-active');
+                document.body.style.overflow = '';
+                return;
+            }
             clearTimeout(cinematicIntroTimer);
             intro.classList.add('fade-out');
             document.body.classList.remove('sd-intro-active');
+            document.body.style.overflow = '';
+            intro.style.pointerEvents = 'none';
+            // إخفاء طبقة الانترو نهائياً بعد الانتقال حتى لا تحجب الصفحة الرئيسية
+            window.setTimeout(function () {
+                intro.style.display = 'none';
+                intro.setAttribute('aria-hidden', 'true');
+            }, 380);
         }
         window.skipCinematicIntro = skipCinematicIntro;
+        document.addEventListener('DOMContentLoaded', function () {
+            const introButton = document.getElementById('skip-cinematic-intro');
+            if (introButton) introButton.addEventListener('click', function (event) {
+                event.preventDefault();
+                window.skipCinematicIntro();
+            });
+        }, { once: true });
         // تبقى المقدمة ظاهرة إلى أن يضغط المستخدم زر «الدخول».
 
         function openPinModal() {
