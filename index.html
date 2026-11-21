@@ -1589,10 +1589,12 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
 <button class="v7-launch" onclick="v7Open('contact')"><span>✉️</span>مراسلة الإدارة</button>
 <button class="v7-launch" onclick="openPublicNoticeTab('admin')"><span>📢</span>تبليغات الإدارة<small>كل ما تنشره إدارة المدرسة</small></button>
 <button class="v7-launch" onclick="openPublicNoticeTab('guidance')"><span>🧭</span>الإرشاد التربوي<small>كل ما ينشره المرشد التربوي</small></button>
-
-
+<button class="v7-launch" onclick="v7Open('calendar')"><span>📅</span>التقويم المدرسي الرسمي<small>المواعيد والامتحانات والعطل</small></button>
+<button class="v7-launch" onclick="v7Open('achievements')"><span>🏆</span>إنجازات المدرسة والفعاليات<small>الإنجازات والأنشطة المعتمدة</small></button>
 
 </div></div></section>
+<section id="v7-calendar" class="v7-page"><div class="v7-panel"><button class="v7-btn alt" onclick="v7Back()">رجوع</button><h2 class="title-font text-2xl font-black gold-gradient-text">📅 التقويم المدرسي الرسمي</h2><p class="sd-muted mb-3">المواعيد والامتحانات والعطل والفعاليات المنشورة رسمياً.</p><div id="v7-calendar-slot"></div></div></section>
+<section id="v7-achievements" class="v7-page"><div class="v7-panel"><button class="v7-btn alt" onclick="v7Back()">رجوع</button><h2 class="title-font text-2xl font-black gold-gradient-text">🏆 إنجازات المدرسة والفعاليات</h2><p class="sd-muted mb-3">سجل الإنجازات والأنشطة المدرسية المعتمدة والمنشورة.</p><div id="v7-achievements-slot"></div></div></section>
 <section id="v7-students" class="v7-page"><div class="v7-panel"><button class="v7-btn alt" onclick="v7Back()">رجوع</button><h2 class="title-font text-2xl font-black gold-gradient-text">بوابة الطالب</h2><div id="v7-grades" class="v7-tabs"></div><div id="v7-cats" class="v7-tabs"></div><div id="v7-student-items"></div></div></section>
 <section id="v7-timetable" class="v7-page"><div class="v7-panel"><button class="v7-btn alt" onclick="v7Back()">رجوع</button><h2 class="title-font text-2xl font-black gold-gradient-text">جدول الدروس الأسبوعي</h2><div id="v7-table-grades" class="v7-tabs"></div><div id="v7-table-view"></div></div></section>
 <section id="v7-calculator" class="v7-page"><div class="v7-panel"><button class="v7-btn alt" onclick="v7Back()">رجوع</button><h2 class="title-font text-2xl font-black gold-gradient-text">الحاسبة الطلابية</h2><div id="v7-calc-slot"></div></div></section>
@@ -4613,6 +4615,14 @@ async function v14VerifyGuidancePassword(password){
  return (await window.v14GuidanceDigest(password,cred.salt))===cred.hash;
 }
 window.v7Open=async id=>{
+ if(id==='calendar'){
+  const section=$('sd-public-calendar'),slot=$('v7-calendar-slot');
+  if(section&&slot){slot.appendChild(section);section.style.setProperty('display','block','important');}
+ }
+ if(id==='achievements'){
+  const section=$('school-achievements-section'),slot=$('v7-achievements-slot');
+  if(section&&slot){slot.appendChild(section);section.style.setProperty('display','block','important');}
+ }
  if(id==='guidance'&&!window.v7GuidanceUnlocked){
   const code=prompt('أدخل كلمة مرور قسم الإرشاد التربوي');
   if(code===null)return;
