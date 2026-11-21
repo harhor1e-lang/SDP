@@ -1437,6 +1437,24 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
 
     <div id="cinematic-intro" aria-label="مقدمة الموقع">
         <div class="intro-orbit intro-orbit-one"></div>
+<script id="sd-intro-failsafe-v1">
+(function(){
+  var intro=document.getElementById('cinematic-intro');
+  if(!intro)return;
+  function reveal(){
+    document.body.classList.remove('sd-intro-active');
+    document.body.style.overflow='';
+    intro.classList.add('fade-out');
+    intro.style.pointerEvents='none';
+    window.setTimeout(function(){
+      intro.style.display='none';
+      intro.setAttribute('aria-hidden','true');
+    },420);
+  }
+  window.setTimeout(reveal,2600);
+})();
+</script>
+
         <div class="intro-orbit intro-orbit-two"></div>
         <div class="intro-grid"></div>
         <div class="intro-emblem"><span>ص</span></div>
