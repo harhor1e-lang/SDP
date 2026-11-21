@@ -1329,6 +1329,89 @@ html.sd-skip-intro-once #cinematic-intro{display:none!important;visibility:hidde
       #sd-assistant-input:focus{border-color:#67e8f9;box-shadow:0 0 0 3px #22d3ee22}
       @media(max-width:600px){#sd-assistant-modal{padding:8px}#sd-assistant-panel{max-height:90dvh;border-radius:20px}#sd-assistant-messages{max-height:52dvh}}
     </style>
+<style id="sd-royal-unified-theme">
+:root{
+ --sd-royal-gold:#d8b45a;--sd-royal-gold-bright:#f5d98a;--sd-royal-navy:#071426;
+ --sd-royal-navy-deep:#030914;--sd-royal-glass:rgba(7,20,38,.66);
+ --sd-royal-line:rgba(216,180,90,.34);--sd-royal-neon:rgba(245,217,138,.72);
+}
+html,body{background-color:var(--sd-royal-navy-deep)!important;color:#edf2f8}
+body{
+ background-image:radial-gradient(ellipse at 12% 5%,rgba(30,65,99,.26),transparent 38%),radial-gradient(ellipse at 88% 18%,rgba(216,180,90,.10),transparent 32%),linear-gradient(145deg,#030914,#091a30 52%,#040b16)!important;
+}
+.theme-panel,.theme-card,.sd-card,.v7-item,.v7-panel,.v14-admin-page,.v14-admin-shell,
+#sd-assistant-panel,#sd-header-menu,.floating-command-dock{
+ background:rgba(7,20,38,.66)!important;
+ border:1px solid var(--sd-royal-line)!important;
+ color:#edf2f8;
+ box-shadow:0 14px 38px rgba(0,0,0,.30),inset 0 1px rgba(255,255,255,.07),0 0 18px rgba(216,180,90,.055)!important;
+ backdrop-filter:blur(22px) saturate(135%)!important;
+}
+.theme-panel:hover,.theme-card:hover,.v7-item:hover{
+ border-color:rgba(245,217,138,.62)!important;
+ box-shadow:0 18px 42px rgba(0,0,0,.34),0 0 22px rgba(216,180,90,.12)!important;
+}
+.floating-command-dock{background:rgba(5,16,31,.72)!important;border-color:rgba(245,217,138,.52)!important}
+#sd-main-header,#sd-header-menu{background:rgba(5,16,31,.68)!important;backdrop-filter:blur(24px) saturate(145%)!important}
+#sd-header-menu{border-color:rgba(245,217,138,.46)!important}
+#sd-header-menu-toggle[aria-expanded="true"],#sd-notify-btn.is-enabled{
+ color:#f5d98a!important;border-color:rgba(245,217,138,.8)!important;background:rgba(216,180,90,.12)!important;
+ box-shadow:0 0 16px rgba(216,180,90,.14)!important;
+}
+.floating-command-dock button,.floating-command-dock a,#sd-main-header button,#sd-main-header a,
+#sd-header-menu button,#sd-header-menu a,.v7-launch,.v7-btn,.v14-admin-page button,
+.hero-secondary,.sd-role-card button{
+ background:rgba(10,27,48,.52)!important;color:#f3dfaa!important;
+ border:1px solid rgba(216,180,90,.36)!important;
+ box-shadow:inset 0 1px rgba(255,255,255,.08),0 0 12px rgba(216,180,90,.045)!important;
+ backdrop-filter:blur(16px)!important;
+}
+.floating-command-dock button:hover,.floating-command-dock a:hover,#sd-main-header button:hover,
+#sd-main-header a:hover,#sd-header-menu button:hover,#sd-header-menu a:hover,.v7-launch:hover,.v7-btn:hover,
+.v14-admin-page button:hover,.hero-secondary:hover{
+ color:#fff2c9!important;border-color:rgba(245,217,138,.85)!important;
+ box-shadow:0 0 18px rgba(216,180,90,.20),inset 0 0 12px rgba(216,180,90,.07)!important;
+}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{
+ outline:2px solid var(--sd-royal-gold-bright)!important;outline-offset:3px!important;
+}
+input,textarea,select,#sd-assistant-input{
+ background:rgba(3,12,25,.78)!important;color:#f1f5f9!important;border-color:rgba(216,180,90,.36)!important;
+}
+input:focus,textarea:focus,select:focus,#sd-assistant-input:focus{
+ border-color:rgba(245,217,138,.9)!important;box-shadow:0 0 0 3px rgba(216,180,90,.13),0 0 20px rgba(216,180,90,.12)!important;
+}
+.gold-gradient-text,.hero-heading span{filter:drop-shadow(0 0 12px rgba(216,180,90,.18))}
+#cursor-glow{background:radial-gradient(circle,rgba(216,180,90,.15),rgba(216,180,90,.035),transparent 70%)!important}
+#sd-assistant-panel{border-color:rgba(216,180,90,.42)!important;background:linear-gradient(145deg,rgba(10,27,48,.94),rgba(3,12,25,.96))!important}
+.sd-ai-msg.user{background:linear-gradient(120deg,rgba(216,180,90,.28),rgba(10,27,48,.88))!important;border:1px solid rgba(216,180,90,.32)!important;color:#fff1c7!important}
+.sd-ai-msg.system{background:rgba(255,255,255,.055)!important;border-color:rgba(216,180,90,.16)!important;color:#e4ebf4!important}
+.marquee-container{background:linear-gradient(90deg,#7f6028,#e2c16e 48%,#8e6a2c)!important;color:#101827!important}
+th{background:rgba(216,180,90,.15)!important;color:#f5dfaa!important}
+td,th{border-color:rgba(216,180,90,.18)!important}
+html:not(.dark) body{background:linear-gradient(145deg,#e8edf4,#dfe7f0 55%,#f4f1e8)!important;color:#15243a!important}
+html:not(.dark) .theme-panel,html:not(.dark) .theme-card,html:not(.dark) .sd-card,html:not(.dark) .v7-item,
+html:not(.dark) .v7-panel,html:not(.dark) .v14-admin-page{
+ background:rgba(255,255,255,.72)!important;color:#17263b!important;border-color:rgba(153,116,49,.32)!important;
+}
+html:not(.dark) .floating-command-dock,html:not(.dark) #sd-main-header,html:not(.dark) #sd-header-menu{
+ background:rgba(235,241,248,.76)!important;color:#17263b!important;
+}
+html:not(.dark) .floating-command-dock button,html:not(.dark) .floating-command-dock a,
+html:not(.dark) #sd-main-header button,html:not(.dark) #sd-main-header a,
+html:not(.dark) #sd-header-menu button,html:not(.dark) #sd-header-menu a,
+html:not(.dark) .v7-btn,html:not(.dark) .v7-launch{
+ background:rgba(255,255,255,.46)!important;color:#76551f!important;border-color:rgba(153,116,49,.4)!important;
+}
+html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background:rgba(255,255,255,.86)!important;color:#17263b!important}
+@media(max-width:760px){
+ .floating-command-dock{background:rgba(5,16,31,.82)!important}
+ .floating-command-dock button,.floating-command-dock a{border-radius:14px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ .theme-panel,.theme-card,.v7-item,.floating-command-dock button{transition:none!important}
+}
+</style>
 </head>
 <body class="min-h-screen relative">
 <script>
@@ -4542,13 +4625,34 @@ window.v7Publish=async()=>{
 };
 function renderAdmin(){
  let h=$('v7-admin-items');
- if(h)h.innerHTML=Object.entries(data).map(([gr,cs])=>Object.entries(cs||{}).map(([ca,items])=>Object.entries(items||{}).map(([id,x])=>`<div class="v7-item"><b>${esc(gr)} · ${esc(ca)} · ${esc(x.title)}</b><div class="flex flex-wrap gap-2 mt-2"><button class="v7-btn alt" onclick="v7Edit('${gr}','${ca}','${id}')">تعديل النص</button><label class="v7-btn alt cursor-pointer">استبدال الملف<input type="file" accept=".pdf,.jpg,.jpeg,.png,.webp,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.mp4,.webm" class="hidden" onchange="v7ReplaceResource('${gr}','${ca}','${id}',this.files[0])"></label><button class="v7-btn alt" onclick="v7Delete('${gr}','${ca}','${id}')">حذف</button></div></div>`).join('')).join('')).join('')||'لا توجد مواد';
+ if(h){
+  h.innerHTML=Object.entries(data).map(([gr,cs])=>Object.entries(cs||{}).map(([ca,items])=>Object.entries(items||{}).map(([id,x])=>{
+   const hasFile=!!x.fileUrl;
+   const fileMeta=hasFile?'<p class="text-xs opacity-75 mt-1">الملف المرتبط: '+esc(x.fileName||'ملف مرفق')+(x.fileType?' · '+esc(x.fileType):'')+'</p>':'<p class="text-xs opacity-50 mt-1">لا يوجد ملف مرفق حالياً</p>';
+   const fileActions=hasFile?`<button type="button" class="v7-btn alt" data-admin-open-file="${esc(x.fileUrl)}" data-file-name="${esc(x.fileName||x.title||'ملف المدرسة')}" data-file-type="${esc(x.fileType||'')}">معاينة الملف</button><button type="button" class="v7-btn alt" data-admin-print-file="${esc(x.fileUrl)}" data-file-name="${esc(x.fileName||x.title||'ملف المدرسة')}" data-file-type="${esc(x.fileType||'')}">طباعة الملف</button><a class="v7-btn alt" target="_blank" rel="noopener" href="${esc(v7DownloadUrl(x.fileUrl,x.fileName||x.title||'school-file'))}">تحميل</a><button type="button" class="v7-btn alt" data-admin-remove-file-gr="${esc(gr)}" data-admin-remove-file-ca="${esc(ca)}" data-admin-remove-file-id="${esc(id)}">حذف الملف فقط</button>`:'';
+   return `<div class="v7-item"><b>${esc(gr)} · ${esc(ca)} · ${esc(x.title)}</b>${fileMeta}<div class="flex flex-wrap gap-2 mt-2">${fileActions}<button class="v7-btn alt" onclick="v7Edit('${gr}','${ca}','${id}')">تعديل النص</button><label class="v7-btn alt cursor-pointer">استبدال الملف<input type="file" accept=".pdf,.jpg,.jpeg,.png,.webp,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.mp4,.webm" class="hidden" onchange="v7ReplaceResource('${gr}','${ca}','${id}',this.files[0])"></label><button class="v7-btn alt" onclick="v7Delete('${gr}','${ca}','${id}')">حذف المادة</button></div></div>`;
+  })).join('')).join('')||'لا توجد مواد';
+  h.querySelectorAll('[data-admin-open-file]').forEach(btn=>btn.addEventListener('click',()=>window.v7OpenFile(btn.dataset.adminOpenFile,btn.dataset.fileName,btn.dataset.fileType)));
+  h.querySelectorAll('[data-admin-print-file]').forEach(btn=>btn.addEventListener('click',()=>window.v7PrintFile(btn.dataset.adminPrintFile,btn.dataset.fileName,btn.dataset.fileType)));
+  h.querySelectorAll('[data-admin-remove-file-id]').forEach(btn=>btn.addEventListener('click',()=>window.v7RemoveFile(btn.dataset.adminRemoveFileGr,btn.dataset.adminRemoveFileCa,btn.dataset.adminRemoveFileId)));
+ }
  let p=$('v7-admin-posts');if(p)p.innerHTML=Object.entries(posts).reverse().map(([id,x])=>`<div class="v7-item">${esc(x.author)} · ${esc(x.text)}<button class="v7-btn alt" onclick="v7EditPost('${id}')">تعديل</button><button class="v7-btn alt" onclick="v7DeletePost('${id}')">حذف</button></div>`).join('')||'لا توجد منشورات';
  let gh=$('v7-admin-guidance');if(gh)gh.innerHTML=Object.entries(guides).reverse().map(([id,x])=>`<div class="v7-item"><b>${esc((x.text||'إرشاد').slice(0,120))}</b><button class="v7-btn alt" onclick="v7EditGuidance('${id}')">تعديل</button><button class="v7-btn alt" onclick="v7DeleteGuidance('${id}')">حذف</button></div>`).join('')||'<p class="text-xs opacity-70">لا توجد منشورات إرشادية</p>';
  let th=$('v7-admin-tables');if(th)th.innerHTML=Object.entries(tables).map(([gr,x])=>`<div class="v7-item"><b>${esc(gr)} · ${esc(x.title||'الجدول الأسبوعي')}</b><button class="v7-btn alt" onclick="v7EditTable('${gr}')">تعديل العنوان</button><button class="v7-btn alt" onclick="v7DeleteTable('${gr}')">حذف الجدول</button></div>`).join('')||'لا توجد جداول منشورة';
 }
 window.v7Edit=async(gr,ca,id)=>{if(!gate())return;const x=data[gr]?.[ca]?.[id];if(!x)return;const t=prompt('تعديل العنوان',x.title||'');if(t===null)return;const d=prompt('تعديل الوصف',x.description||'');if(d===null)return;try{await db.ref('studentPortal/'+gr+'/'+ca+'/'+id).update({title:t.trim(),description:d.trim(),updatedAt:Date.now()});alert('تم حفظ تعديل المادة.')}catch(e){alert('تعذر حفظ التعديل: '+e.message)}};
 window.v7ReplaceResource=async(gr,ca,id,file)=>{if(!gate()||!file)return;const x=data[gr]?.[ca]?.[id];if(!x)return;let fresh=null;try{v7UploadStatus('جارٍ استبدال الملف عبر Supabase…');fresh=await uploadStudentPdf(file,'studentPortalFiles/'+gr+'/'+ca,(pct,info)=>v7UploadStatus(info?.state==='success'?'اكتمل الرفع.':'جارٍ رفع الملف إلى Supabase…'));await db.ref('studentPortal/'+gr+'/'+ca+'/'+id).update({fileUrl:fresh.url,filePath:fresh.path,fileName:fresh.name,fileSize:fresh.size,fileType:fresh.type,fileStorage:'supabase',updatedAt:firebase.database.ServerValue.TIMESTAMP});try{await deleteStudentPortalFile(x)}catch(e){console.warn('تم تحديث المادة لكن تعذر حذف الملف السابق:',e)}v7UploadStatus('تم استبدال الملف بنجاح.');alert('تم استبدال الملف بنجاح.')}catch(e){if(fresh?.path){try{await schoolGateway('delete-file',{session:window.sdAdminSession,path:fresh.path})}catch(cleanError){console.warn(cleanError)}}const detail=e?.message||'خطأ غير معروف';v7UploadStatus('فشل الاستبدال: '+detail,true);console.error('[Student portal replace]',e);alert('تعذر استبدال الملف:\n'+detail)}};
+window.v7RemoveFile=async(gr,ca,id)=>{
+ if(!gate())return;
+ const x=data[gr]?.[ca]?.[id];
+ if(!x?.fileUrl){alert('لا يوجد ملف مرتبط بهذه المادة.');return}
+ if(!confirm('حذف الملف المرفق فقط مع الإبقاء على عنوان المادة ووصفها؟'))return;
+ try{
+  await deleteStudentPortalFile(x);
+  await db.ref('studentPortal/'+gr+'/'+ca+'/'+id).update({fileUrl:null,filePath:null,fileName:null,fileSize:null,fileType:null,fileStorage:null,updatedAt:firebase.database.ServerValue.TIMESTAMP});
+  alert('تم حذف الملف من المادة، وبقيت بيانات المادة منشورة.');
+ }catch(e){alert('تعذر حذف الملف: '+(e.message||'خطأ غير معروف'))}
+};
 window.v7Delete=async(gr,ca,id)=>{if(!gate()||!confirm('حذف المادة والملف المرتبط بها نهائياً؟'))return;const x=data[gr]?.[ca]?.[id];try{if(x?.fileStorage==='supabase')await deleteStudentPortalFile(x);await db.ref('studentPortal/'+gr+'/'+ca+'/'+id).remove();if(x&&x.fileStorage!=='supabase')try{await deleteStudentPortalFile(x)}catch(e){console.warn('تعذر حذف الملف القديم من Firebase Storage:',e)}alert('تم حذف المادة.')}catch(e){alert('تعذر حذف المادة أو الملف: '+(e.message||'خطأ غير معروف'))}};
 function renderTable(){ $('v7-table-grades').innerHTML=grades.map(x=>`<button onclick="v7ShowTable('${x}')">${x}</button>`).join('');window.v7ShowTable(g);renderAdmin()}
 window.v7ShowTable=x=>{g=x;let t=tables[x];$('v7-table-view').innerHTML=t?`<h3>${esc(t.title)}</h3><img style="max-width:100%;border-radius:12px" src="${t.image}" alt="جدول ${esc(x)}">`:'<p class="sd-muted">لم ينشر جدول لهذا الصف بعد.</p>'};
