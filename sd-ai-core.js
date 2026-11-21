@@ -161,9 +161,7 @@
       });
       let data = {};
       let rawResponse = '';
-      try { data = await response.json(); } catch (_) {
-        try { rawResponse = await response.text(); } catch (_) {}
-      }
+      try { rawResponse = await response.text(); data = rawResponse ? JSON.parse(rawResponse) : {}; } catch (_) { data = {}; }
       if (!response.ok || !data.reply) {
         const serverMessage = (data && (data.error || data.message || data.details)) || rawResponse;
         if (response.status === 401 || response.status === 403) throw new Error('رفضت وظيفة bright-api الطلب (HTTP ' + response.status + '). افحص إعداد التحقق JWT وصلاحية مفتاح Groq.');
