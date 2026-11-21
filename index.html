@@ -1589,12 +1589,11 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
 <button class="v7-launch" onclick="v7Open('contact')"><span>✉️</span>مراسلة الإدارة</button>
 <button class="v7-launch" onclick="openPublicNoticeTab('admin')"><span>📢</span>تبليغات الإدارة<small>كل ما تنشره إدارة المدرسة</small></button>
 <button class="v7-launch" onclick="openPublicNoticeTab('guidance')"><span>🧭</span>الإرشاد التربوي<small>كل ما ينشره المرشد التربوي</small></button>
-<button class="v7-launch" onclick="v7Open('calendar')"><span>📅</span>التقويم المدرسي الرسمي<small>المواعيد والامتحانات والعطل</small></button>
-<button class="v7-launch" onclick="v7Open('achievements')"><span>🏆</span>إنجازات المدرسة والفعاليات<small>الإنجازات والأنشطة المعتمدة</small></button>
+
 
 </div></div></section>
-<section id="v7-calendar" class="v7-page"><div class="v7-panel"><button class="v7-btn alt" onclick="v7Back()">رجوع</button><h2 class="title-font text-2xl font-black gold-gradient-text">📅 التقويم المدرسي الرسمي</h2><p class="sd-muted mb-3">المواعيد والامتحانات والعطل والفعاليات المنشورة رسمياً.</p><div id="v7-calendar-slot"></div></div></section>
-<section id="v7-achievements" class="v7-page"><div class="v7-panel"><button class="v7-btn alt" onclick="v7Back()">رجوع</button><h2 class="title-font text-2xl font-black gold-gradient-text">🏆 إنجازات المدرسة والفعاليات</h2><p class="sd-muted mb-3">سجل الإنجازات والأنشطة المدرسية المعتمدة والمنشورة.</p><div id="v7-achievements-slot"></div></div></section>
+<section id="v7-calendar" class="v7-page"><div class="v7-panel"><button class="v7-btn alt" onclick="v7Back()">رجوع</button><h2 class="title-font text-2xl font-black gold-gradient-text">📅 التقويم المدرسي الرسمي</h2><p class="sd-muted mb-3">المواعيد والامتحانات والعطل والفعاليات المنشورة رسمياً.</p><div id="v7-calendar-slot"></div></div>
+<section id="v7-achievements" class="v7-page"><div class="v7-panel"><button class="v7-btn alt" onclick="v7Back()">رجوع</button><h2 class="title-font text-2xl font-black gold-gradient-text">🏆 إنجازات المدرسة والفعاليات</h2><p class="sd-muted mb-3">سجل الإنجازات والأنشطة المدرسية المعتمدة والمنشورة.</p><div id="v7-achievements-slot"></div></div>
 <section id="v7-students" class="v7-page"><div class="v7-panel"><button class="v7-btn alt" onclick="v7Back()">رجوع</button><h2 class="title-font text-2xl font-black gold-gradient-text">بوابة الطالب</h2><div id="v7-grades" class="v7-tabs"></div><div id="v7-cats" class="v7-tabs"></div><div id="v7-student-items"></div></div></section>
 <section id="v7-timetable" class="v7-page"><div class="v7-panel"><button class="v7-btn alt" onclick="v7Back()">رجوع</button><h2 class="title-font text-2xl font-black gold-gradient-text">جدول الدروس الأسبوعي</h2><div id="v7-table-grades" class="v7-tabs"></div><div id="v7-table-view"></div></div></section>
 <section id="v7-calculator" class="v7-page"><div class="v7-panel"><button class="v7-btn alt" onclick="v7Back()">رجوع</button><h2 class="title-font text-2xl font-black gold-gradient-text">الحاسبة الطلابية</h2><div id="v7-calc-slot"></div></div></section>
@@ -1930,12 +1929,12 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
         <section id="sd-public-calendar" class="theme-panel p-5 md:p-8 space-y-4 sd-section" style="display:block!important">
           <div class="sd-heading"><div class="sd-icon">📅</div><div><span class="sd-kicker">OFFICIAL SCHOOL CALENDAR</span><h2 class="title-font text-2xl font-black gold-gradient-text">التقويم المدرسي الرسمي</h2><p class="sd-muted">المواعيد والامتحانات والفعاليات المنشورة من إدارة المدرسة.</p></div></div>
           <div id="sd-public-calendar-list" class="grid grid-cols-1 md:grid-cols-2 gap-3"><p class="sd-muted">جارٍ تحميل التقويم...</p></div>
-        </section>
+        
 
         <section id="school-achievements-section" class="theme-panel p-5 md:p-8 space-y-4 sd-section">
           <div class="sd-heading"><div class="sd-icon">🏆</div><div><span class="sd-kicker">ACHIEVEMENTS & HONOR ROLL</span><h2 class="title-font text-2xl font-black gold-gradient-text">إنجازات المدرسة والفعاليات ولوحة الشرف</h2><p class="sd-muted">توثيق ونشر الإنجازات والفعاليات بعد اعتمادها من الإدارة.</p></div></div>
           <div class="sd-card space-y-3"><p class="sd-muted">الإنجازات والفعاليات المعتمدة من إدارة المدرسة، وتُحدّث تلقائياً عند النشر.</p><div id="sd-public-achievement-list" class="space-y-3"><p class="sd-muted">جارٍ تحميل الإنجازات المنشورة...</p></div><div class="rounded-xl border border-amber-300/25 bg-amber-300/5 p-3 text-xs text-amber-100">لوحة أسماء الطلبة المتفوقين والشهادات الفردية ستُفعّل بعد تأمين صلاحيات قاعدة البيانات؛ لا تُدخل أسماء أو معلومات شخصية في السجل الحالي.</div></div>
-        </section>
+        
 
         <!-- معلومات التواصل والاعتماد -->
         <section id="school-info-section" class="theme-panel p-6 rounded-2xl text-center space-y-2 relative">
@@ -2202,7 +2201,7 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
                 <input id="sd-event-title" class="sd-field" maxlength="100" placeholder="عنوان الموعد أو الفعالية">
                 <div class="grid grid-cols-2 gap-2"><input id="sd-event-date" class="sd-field" type="date" aria-label="تاريخ الفعالية"><select id="sd-event-type" class="sd-field"><option>امتحان</option><option>اجتماع</option><option>فعالية</option><option>موعد إداري</option><option>عطلة</option></select></div>
                 <label class="sd-muted text-xs block">صورة مرفقة للموعد (اختياري)</label><input id="sd-event-image" class="sd-field" type="file" accept="image/jpeg,image/png,image/webp"><div class="flex flex-wrap gap-2"><button id="sd-event-submit" class="sd-btn" type="button" onclick="sdAddEvent()">نشر الموعد في التقويم العام</button><button id="sd-event-cancel-edit" class="sd-btn" type="button" onclick="sdCancelCalendarEdit()" hidden>إلغاء التعديل</button></div><div id="sd-event-cloud-admin-list" class="sd-list"><div class="sd-empty">جارٍ تحميل المواعيد السحابية...</div></div><p id="sd-event-status" class="sd-status" aria-live="polite"></p>
-              </div>
+              
               <div id="sd-private-maintenance" class="border-t border-white/10 pt-4 space-y-3">
                 <h4 class="font-black text-sm text-yellow-200">🛠️ سجل الصيانة والنظافة والترتيب</h4>
                 <select id="sd-maint-category" class="sd-field"><option>نظافة وترتيب</option><option>مقاعد وطاولات</option><option>مختبرات</option><option>كهرباء وإنارة</option><option>ماء وصحيات</option><option>أجهزة وحاسوب</option><option>أخرى</option></select>
@@ -2245,7 +2244,7 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
                 <p class="sd-muted text-xs">أضف إنجازاً أو فعالية مع التفاصيل والتاريخ. استخدم قائمة السجلات السحابية أدناه للتعديل أو النشر أو إلغاء النشر أو الحذف.</p>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-2"><input id="sd-achievement-title" class="sd-field" maxlength="120" placeholder="عنوان الإنجاز أو الفعالية"><select id="sd-achievement-type" class="sd-field"><option>إنجاز مدرسي</option><option>شهادة تقدير</option><option>تكريم</option><option>إعفاء مدرسي</option><option>مشاركة مدرسية</option><option>مسابقة</option><option>جائزة</option><option>فعالية</option><option>لوحة الشرف</option></select></div>
                 <input id="sd-achievement-date" class="sd-field" type="date" aria-label="تاريخ الإنجاز"><textarea id="sd-achievement-detail" class="sd-field" rows="3" maxlength="500" placeholder="تفاصيل الإنجاز أو الفعالية بعد التحقق منها"></textarea><label class="sd-muted text-xs block">صورة مرفقة للإنجاز أو الفعالية (اختياري)</label><input id="sd-achievement-image" class="sd-field" type="file" accept="image/jpeg,image/png,image/webp"><div class="flex flex-wrap gap-2"><button id="sd-achievement-submit" class="sd-btn" type="button" onclick="sdAddAchievement()">نشر الإنجاز في الموقع</button><button id="sd-achievement-cancel-edit" class="sd-btn" type="button" onclick="sdCancelAchievementEdit()" hidden>إلغاء التعديل</button></div><div id="sd-achievement-cloud-admin-list" class="sd-list"><div class="sd-empty">جارٍ تحميل السجل السحابي...</div></div><p class="text-xs text-amber-200">تنبيه أمني: لا تُدخل أسماء الطلبة أو بياناتهم الفردية قبل تأمين قواعد Firebase.</p><p id="sd-achievement-status" class="sd-status" aria-live="polite"></p>
-              </div>
+              
               <div id="sd-exam-lab" class="border-t border-white/10 pt-5 space-y-4">
                 <div class="flex flex-wrap items-center justify-between gap-2"><div><span class="text-[10px] tracking-widest text-cyan-300 font-black">E-EXAM LAB</span><h4 class="font-black text-base text-cyan-100">🧪 مختبر الامتحانات الإلكتروني</h4><p class="sd-muted text-xs mt-1">إنشاء نماذج امتحانية، إضافة أسئلة اختيار من متعدد، وتصدير أو طباعة نسخة ورقية.</p></div><span class="text-[10px] rounded-full border border-cyan-300/30 px-3 py-1 text-cyan-200">إدارة المدير</span></div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-2"><select id="sd-exam-grade" class="sd-field"><option>الرابع العلمي</option><option>الخامس العلمي</option><option>السادس العلمي</option></select><select id="sd-exam-subject" class="sd-field"><option>الرياضيات</option><option>الفيزياء</option><option>الكيمياء</option><option>الأحياء</option><option>العربي</option><option>الإنكليزي</option><option>الحاسوب</option></select></div>
@@ -4611,14 +4610,6 @@ async function v14VerifyGuidancePassword(password){
  return (await window.v14GuidanceDigest(password,cred.salt))===cred.hash;
 }
 window.v7Open=async id=>{
- if(id==='calendar'){
-  const section=$('sd-public-calendar'),slot=$('v7-calendar-slot');
-  if(section&&slot){slot.appendChild(section);section.style.setProperty('display','block','important');}
- }
- if(id==='achievements'){
-  const section=$('school-achievements-section'),slot=$('v7-achievements-slot');
-  if(section&&slot){slot.appendChild(section);section.style.setProperty('display','block','important');}
- }
  if(id==='guidance'&&!window.v7GuidanceUnlocked){
   const code=prompt('أدخل كلمة مرور قسم الإرشاد التربوي');
   if(code===null)return;
@@ -4801,22 +4792,8 @@ bind('weeklyTimetables',x=>tables=x,renderTable);bind('guidancePosts',x=>guides=
    ['reports','التقارير والأدوات','📊','التقارير والطباعة وأدوات الموقع'],
    ['archive','الأرشيف','🗄️','حفظ النصوص والصور والمواد التي يرسلها المدير'],
    ['system','النظام والاتصال','⚙️','حالة Firebase والإعدادات والأدوات الحساسة'],
-   ['calendar','التقويم المدرسي','📅','إضافة الامتحانات والمواعيد والعطل وتعديلها ونشرها'],
-   ['achievements','الإنجازات والفعاليات','🏆','إدارة التكريمات والإنجازات والأنشطة المدرسية']
   ];
   groups.forEach(([id,title,icon,desc])=>{makePage(id,title,icon,desc);const b=document.createElement('button');b.type='button';b.className='v14-admin-tile';b.innerHTML=`<span class="v14-icon">${icon}</span><span><b>${title}</b><small>${desc}</small></span>`;b.addEventListener('click',()=>showPage(id));home.querySelector('#v14-admin-nav').appendChild(b)});
-  // Give the calendar and achievements their own real admin pages.
-  // Move the original forms (do not clone them) so all existing Firebase handlers and IDs keep working.
-  const privateCalendar=$('sd-private-calendar');
-  const privateAchievements=$('sd-private-achievements');
-  if(privateCalendar){
-    privateCalendar.classList.add('theme-card','p-4','md:p-6','rounded-2xl','border','border-amber-400/30');
-    pages.calendar.appendChild(privateCalendar);
-  }
-  if(privateAchievements){
-    privateAchievements.classList.add('theme-card','p-4','md:p-6','rounded-2xl','border','border-amber-400/30');
-    pages.achievements.appendChild(privateAchievements);
-  }
   const teacherAdsCard=document.createElement('section');
   teacherAdsCard.className='theme-card p-4 md:p-6 rounded-2xl border border-cyan-400/30 space-y-4';
   teacherAdsCard.innerHTML=`<div><span class="text-[10px] tracking-widest text-cyan-300 font-black">TEACHING STAFF · SUPERVISION</span><h3 class="text-lg font-black text-amber-100 mt-1">📸 إعلانات وصور المدرسين</h3><p class="text-xs opacity-75 leading-6">إرفاق الصور الإعلانية للكادر التدريسي فقط. كل صورة تُنشر بصورة مستقلة وتظهر أسفل البطاقة الذهبية. النشر متاح للمدير بعد تسجيل الدخول.</p></div><div class="rounded-2xl border border-cyan-300/20 p-3 space-y-3"><input id="sd-teacher-ad-admin-file" type="file" accept="image/jpeg,image/png,image/webp" class="block w-full text-xs"><img id="sd-teacher-ad-admin-preview" class="hidden w-full max-h-64 object-contain rounded-xl bg-slate-950" alt="معاينة صورة إعلان المدرس"><button type="button" id="sd-teacher-ad-admin-publish" class="w-full rounded-xl px-4 py-3 bg-cyan-300 text-slate-950 text-xs font-black">رفع الصورة ونشرها بإشراف الإدارة</button><p id="sd-teacher-ad-admin-status" class="text-xs opacity-80" role="status" aria-live="polite">اختر صورة إعلانية للكادر التدريسي.</p></div><div><h4 class="font-black text-sm text-amber-100 mb-2">الصور المنشورة حالياً</h4><div id="sd-teacher-ad-admin-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div></div>`;
@@ -5742,105 +5719,7 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
   document.addEventListener('keydown',function(e){if(e.key==='Escape')window.closeGeneralAssistant();});
 })();
 </script>
-<script id="sd-calendar-achievements-cloud-v1">
-(function(){
- 'use strict';
- const CAL='schoolCalendar',ACH='schoolAchievements';
- let calendarRows={},achievementRows={},editingCalendar=null,editingAchievement=null;
- const $=id=>document.getElementById(id);
- const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
- const dateLabel=v=>{if(!v)return 'موعد غير محدد';const d=new Date(v+'T00:00:00');return Number.isNaN(d.getTime())?esc(v):d.toLocaleDateString('ar-IQ',{year:'numeric',month:'long',day:'numeric'});};
- const sorted=data=>Object.entries(data||{}).sort((a,b)=>(Number(b[1]?.createdAt)||0)-(Number(a[1]?.createdAt)||0));
- function status(id,msg){const el=$(id);if(el)el.textContent=msg;}
- function requireManager(){if(typeof requireAdmin==='function')return requireAdmin();status('sd-event-status','تعذر التحقق من صلاحية الإدارة.');return false;}
- function imageMarkup(x){return x&&x.imageUrl?'<img src="'+esc(x.imageUrl)+'" alt="صورة مرفقة" loading="lazy" class="w-full max-h-64 object-contain rounded-xl border border-white/10 bg-slate-950">':'';}
- function renderCalendar(){
-   window.sdCalendarCount=Object.keys(calendarRows||{}).length;
-   const pub=$('sd-public-calendar-list'),admin=$('sd-event-cloud-admin-list'),all=sorted(calendarRows);
-  const visible=all.filter(([,x])=>x&&x.published===true).sort((a,b)=>String(a[1].date||'').localeCompare(String(b[1].date||'')));
-  if(pub)pub.innerHTML=visible.length?visible.map(([id,x])=>'<article class="sd-card p-4 space-y-2">'+imageMarkup(x)+'<div class="flex items-center justify-between gap-2"><span class="text-xs text-yellow-200 font-black">'+esc(x.type||'موعد مدرسي')+'</span><span class="text-[10px] opacity-70">'+dateLabel(x.date)+'</span></div><h3 class="font-black text-base">'+esc(x.title||'موعد مدرسي')+'</h3></article>').join(''):'<p class="sd-muted">لا توجد مواعيد منشورة حالياً.</p>';
-  if(admin)admin.innerHTML=all.length?all.map(([id,x])=>'<article class="sd-list-row"><div class="min-w-0 flex-1 space-y-2">'+imageMarkup(x)+'<b>'+esc(x.title||'موعد')+'</b><p class="text-xs opacity-70">'+dateLabel(x.date)+' · '+esc(x.type||'')+' · '+(x.published?'منشور':'مسودة')+'</p></div><div class="flex flex-wrap gap-1"><button type="button" class="sd-btn" data-cal-edit="'+esc(id)+'">تعديل</button><button type="button" class="sd-btn" data-cal-publish="'+esc(id)+'">'+(x.published?'إلغاء النشر':'نشر')+'</button><button type="button" class="sd-btn" data-cal-delete="'+esc(id)+'">حذف</button></div></article>').join(''):'<div class="sd-empty">لا توجد مواعيد في السجل السحابي بعد. أضف أول موعد من النموذج أعلاه.</div>';
- }
- function renderAchievements(){
-   window.sdAchievementCount=Object.keys(achievementRows||{}).length;
-   const pub=$('sd-public-achievement-list'),admin=$('sd-achievement-cloud-admin-list'),all=sorted(achievementRows),visible=all.filter(([,x])=>x&&x.published===true);
-  if(pub)pub.innerHTML=visible.length?visible.map(([id,x])=>'<article class="sd-card p-4 space-y-2">'+imageMarkup(x)+'<div class="flex items-center justify-between gap-2"><span class="text-xs text-yellow-200 font-black">'+esc(x.type||'إنجاز مدرسي')+'</span><span class="text-[10px] opacity-70">'+dateLabel(x.date)+'</span></div><h3 class="font-black text-base">'+esc(x.title||'إنجاز مدرسي')+'</h3><p class="text-sm opacity-85 whitespace-pre-wrap">'+esc(x.detail||'')+'</p></article>').join(''):'<p class="sd-muted">لا توجد إنجازات أو فعاليات منشورة حالياً.</p>';
-  if(admin)admin.innerHTML=all.length?all.map(([id,x])=>'<article class="sd-list-row"><div class="min-w-0 flex-1 space-y-2">'+imageMarkup(x)+'<b>'+esc(x.title||'إنجاز')+'</b><p class="text-xs opacity-70">'+esc(x.type||'')+' · '+dateLabel(x.date)+' · '+(x.published?'منشور':'مسودة')+'</p><p class="text-sm whitespace-pre-wrap">'+esc(x.detail||'')+'</p></div><div class="flex flex-wrap gap-1"><button type="button" class="sd-btn" data-ach-edit="'+esc(id)+'">تعديل</button><button type="button" class="sd-btn" data-ach-publish="'+esc(id)+'">'+(x.published?'إلغاء النشر':'نشر')+'</button><button type="button" class="sd-btn" data-ach-delete="'+esc(id)+'">حذف</button></div></article>').join(''):'<div class="sd-empty">لا توجد إنجازات في السجل السحابي بعد. أضف أول إنجاز من النموذج أعلاه.</div>';
- }
- function setEditMode(kind,id,x){
-  const isCal=kind==='cal';if(isCal){editingCalendar=id;$('sd-event-title').value=x.title||'';$('sd-event-date').value=x.date||'';$('sd-event-type').value=x.type||'فعالية';status('sd-event-status','وضع التعديل: عدّل البيانات ثم اضغط حفظ التعديلات.');}
-  else{editingAchievement=id;$('sd-achievement-title').value=x.title||'';$('sd-achievement-detail').value=x.detail||'';$('sd-achievement-date').value=x.date||'';$('sd-achievement-type').value=x.type||'إنجاز مدرسي';status('sd-achievement-status','وضع التعديل: عدّل البيانات ثم اضغط حفظ التعديلات.');}
-  const btn=$(isCal?'sd-event-submit':'sd-achievement-submit');if(btn)btn.textContent='💾 حفظ التعديلات';
-  const cancel=$(isCal?'sd-event-cancel-edit':'sd-achievement-cancel-edit');if(cancel)cancel.hidden=false;
-  (isCal?$('sd-private-calendar'):$('sd-private-achievements'))?.scrollIntoView({behavior:'smooth',block:'center'});
- }
- function cancelEdit(kind){
-  const isCal=kind==='cal';if(isCal){editingCalendar=null;$('sd-event-title').value='';$('sd-event-date').value='';$('sd-event-image').value='';status('sd-event-status','تم إلغاء التعديل.');}
-  else{editingAchievement=null;$('sd-achievement-title').value='';$('sd-achievement-detail').value='';$('sd-achievement-date').value='';$('sd-achievement-image').value='';status('sd-achievement-status','تم إلغاء التعديل.');}
-  const btn=$(isCal?'sd-event-submit':'sd-achievement-submit');if(btn)btn.textContent=isCal?'نشر الموعد في التقويم العام':'نشر الإنجاز في الموقع';
-  const cancel=$(isCal?'sd-event-cancel-edit':'sd-achievement-cancel-edit');if(cancel)cancel.hidden=true;
- }
- async function uploadImage(inputId,folder,old){
-  const file=$(inputId)?.files?.[0];if(!file)return old?{imageUrl:old.imageUrl||'',imagePath:old.imagePath||'',imageStorage:old.imageStorage||''}:{};
-  if(!['image/jpeg','image/png','image/webp'].includes(file.type)||file.size>8*1024*1024)throw new Error('الصورة يجب أن تكون JPG أو PNG أو WEBP وبحجم أقصى 8MB.');
-  if(typeof window.uploadOriginalSchoolImage!=='function')throw new Error('خدمة رفع الصور غير متاحة حالياً.');
-  const uploaded=await window.uploadOriginalSchoolImage(file,folder);
-  return {imageUrl:uploaded.url,imagePath:uploaded.path,imageStorage:'supabase',imageName:file.name};
- }
- async function cleanupOldImage(record,newRecord){
-  if(record?.imagePath&&record.imageStorage==='supabase'&&record.imagePath!==newRecord?.imagePath&&typeof schoolGateway==='function'){
-   try{await schoolGateway('delete-file',{session:window.sdAdminSession,path:record.imagePath});}catch(e){console.warn('Old image cleanup',e);}
-  }
- }
- async function saveCalendar(){
-  if(!requireManager())return;if(typeof db==='undefined'||!firebase?.apps?.length){status('sd-event-status','قاعدة البيانات غير متاحة.');return;}
-  const title=$('sd-event-title')?.value.trim(),date=$('sd-event-date')?.value,type=$('sd-event-type')?.value||'موعد إداري';
-  if(!title||!date){status('sd-event-status','أدخل عنوان الموعد وتاريخه.');return;}
-  const btn=$('sd-event-submit');if(btn)btn.disabled=true;
-  try{
-   const wasEditing=!!editingCalendar,old=wasEditing?calendarRows[editingCalendar]:null,media=await uploadImage('sd-event-image','studentPortalFiles/general/school-calendar',old);
-   const payload={title,date,type,...media,updatedAt:firebase.database.ServerValue.TIMESTAMP};
-   if(editingCalendar){await db.ref(CAL+'/'+editingCalendar).update(payload);await cleanupOldImage(old,media);}
-   else await db.ref(CAL).push({...payload,published:true,createdAt:firebase.database.ServerValue.TIMESTAMP,createdBy:'school-admin'});
-   cancelEdit('cal');status('sd-event-status',wasEditing?'تم حفظ التعديلات.':'تم نشر الموعد والصورة سحابياً.'); 
-  }catch(e){console.error('calendar save',e);status('sd-event-status','تعذر الحفظ: '+(e?.message||'تحقق من الاتصال والصلاحيات.'));}
-  finally{if(btn)btn.disabled=false;}
- }
- async function saveAchievement(){
-  if(!requireManager())return;if(typeof db==='undefined'||!firebase?.apps?.length){status('sd-achievement-status','قاعدة البيانات غير متاحة.');return;}
-  const title=$('sd-achievement-title')?.value.trim(),detail=$('sd-achievement-detail')?.value.trim(),type=$('sd-achievement-type')?.value||'إنجاز مدرسي',date=$('sd-achievement-date')?.value||new Date().toISOString().slice(0,10);
-  if(!title||!detail){status('sd-achievement-status','أدخل عنوان الإنجاز وتفاصيله.');return;}
-  const btn=$('sd-achievement-submit');if(btn)btn.disabled=true;
-  try{
-   const wasEditing=!!editingAchievement,old=wasEditing?achievementRows[editingAchievement]:null,media=await uploadImage('sd-achievement-image','studentPortalFiles/general/school-achievements',old);
-   const payload={title,detail,type,date,...media,updatedAt:firebase.database.ServerValue.TIMESTAMP};
-   if(editingAchievement){await db.ref(ACH+'/'+editingAchievement).update(payload);await cleanupOldImage(old,media);}
-   else await db.ref(ACH).push({...payload,published:true,createdAt:firebase.database.ServerValue.TIMESTAMP,createdBy:'school-admin'});
-   cancelEdit('ach');status('sd-achievement-status',wasEditing?'تم حفظ التعديلات.':'تم نشر الإنجاز والصورة سحابياً.');
-  }catch(e){console.error('achievement save',e);status('sd-achievement-status','تعذر الحفظ: '+(e?.message||'تحقق من الاتصال والصلاحيات.'));}
-  finally{if(btn)btn.disabled=false;}
- }
- async function togglePublish(path,id,current){if(!requireManager())return;try{await db.ref(path+'/'+id).update({published:!current.published,updatedAt:firebase.database.ServerValue.TIMESTAMP});}catch(e){alert('تعذر تغيير حالة النشر: '+(e?.message||'خطأ غير معروف'));}}
- async function deleteRecord(path,id,current){if(!requireManager()||!confirm('تأكيد حذف هذا السجل نهائياً؟'))return;try{await db.ref(path+'/'+id).remove();if(current?.imagePath&&current.imageStorage==='supabase'&&typeof schoolGateway==='function')try{await schoolGateway('delete-file',{session:window.sdAdminSession,path:current.imagePath});}catch(e){console.warn('Image delete',e);}}catch(e){alert('تعذر الحذف: '+(e?.message||'خطأ غير معروف'));}}
- document.addEventListener('click',event=>{
-  const b=event.target.closest('button');if(!b)return;const a=b.dataset;
-  if(a.calEdit){const x=calendarRows[a.calEdit];if(x)setEditMode('cal',a.calEdit,x);}
-  if(a.calPublish){const x=calendarRows[a.calPublish];if(x)togglePublish(CAL,a.calPublish,x);}
-  if(a.calDelete)deleteRecord(CAL,a.calDelete,calendarRows[a.calDelete]);
-  if(a.achEdit){const x=achievementRows[a.achEdit];if(x)setEditMode('ach',a.achEdit,x);}
-  if(a.achPublish){const x=achievementRows[a.achPublish];if(x)togglePublish(ACH,a.achPublish,x);}
-  if(a.achDelete)deleteRecord(ACH,a.achDelete,achievementRows[a.achDelete]);
- });
- function init(){
-  if(typeof db==='undefined'||typeof firebase==='undefined'||!firebase.apps?.length){status('sd-event-status','تعذر تهيئة الاتصال بقاعدة البيانات.');status('sd-achievement-status','تعذر تهيئة الاتصال بقاعدة البيانات.');return;}
-  db.ref(CAL).on('value',snap=>{calendarRows=snap.val()||{};renderCalendar();},err=>{console.error('calendar read',err);status('sd-event-status','تعذر تحميل التقويم: '+(err?.message||''));});
-  db.ref(ACH).on('value',snap=>{achievementRows=snap.val()||{};renderAchievements();},err=>{console.error('achievement read',err);status('sd-achievement-status','تعذر تحميل الإنجازات: '+(err?.message||''));});
- }
- window.sdAddEvent=saveCalendar;window.sdAddAchievement=saveAchievement;
- window.sdCancelCalendarEdit=()=>cancelEdit('cal');window.sdCancelAchievementEdit=()=>cancelEdit('ach');
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
-})();
-</script>
+
 <style id="sd-public-sections-visible">#school-achievements-section{display:block!important}</style>
 </body>
 </html>
