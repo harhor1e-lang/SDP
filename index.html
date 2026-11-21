@@ -3790,8 +3790,20 @@ html.sd-skip-intro-once #cinematic-intro{display:none!important;visibility:hidde
                     const actions = document.createElement('div');
                     actions.className = 'flex items-center gap-3';
                     if (link) {
+                        const open = document.createElement('button');
+                        open.type = 'button';
+                        open.className = 'px-4 py-2 rounded-lg theme-card text-xs font-semibold text-cyan-300 border border-cyan-500/30';
+                        open.textContent = 'فتح ومعاينة';
+                        open.addEventListener('click', () => window.v7OpenFile(link, book.title || 'ملف المدرسة', book.fileType || ''));
+                        actions.appendChild(open);
+                        const print = document.createElement('button');
+                        print.type = 'button';
+                        print.className = 'px-4 py-2 rounded-lg theme-card text-xs font-semibold text-amber-300 border border-amber-500/30';
+                        print.textContent = 'طباعة';
+                        print.addEventListener('click', () => window.v7PrintFile(link, book.title || 'ملف المدرسة', book.fileType || ''));
+                        actions.appendChild(print);
                         const anchor = document.createElement('a');
-                        anchor.href = link;
+                        anchor.href = v7DownloadUrl(link, book.title || 'school-file');
                         anchor.target = '_blank';
                         anchor.rel = 'noopener noreferrer';
                         anchor.className = 'px-4 py-2 rounded-lg theme-card text-xs font-semibold text-yellow-400 border border-yellow-500/30';
