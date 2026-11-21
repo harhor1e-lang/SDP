@@ -5800,11 +5800,11 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
   if(!title||!date){status('sd-event-status','أدخل عنوان الموعد وتاريخه.');return;}
   const btn=$('sd-event-submit');if(btn)btn.disabled=true;
   try{
-   const old=editingCalendar?calendarRows[editingCalendar]:null,media=await uploadImage('sd-event-image','studentPortalFiles/general/school-calendar',old);
+   const wasEditing=!!editingCalendar,old=wasEditing?calendarRows[editingCalendar]:null,media=await uploadImage('sd-event-image','studentPortalFiles/general/school-calendar',old);
    const payload={title,date,type,...media,updatedAt:firebase.database.ServerValue.TIMESTAMP};
    if(editingCalendar){await db.ref(CAL+'/'+editingCalendar).update(payload);await cleanupOldImage(old,media);}
    else await db.ref(CAL).push({...payload,published:true,createdAt:firebase.database.ServerValue.TIMESTAMP,createdBy:'school-admin'});
-   cancelEdit('cal');status('sd-event-status',editingCalendar?'تم حفظ التعديلات.':'تم نشر الموعد والصورة سحابياً.'); 
+   cancelEdit('cal');status('sd-event-status',wasEditing?'تم حفظ التعديلات.':'تم نشر الموعد والصورة سحابياً.'); 
   }catch(e){console.error('calendar save',e);status('sd-event-status','تعذر الحفظ: '+(e?.message||'تحقق من الاتصال والصلاحيات.'));}
   finally{if(btn)btn.disabled=false;}
  }
@@ -5814,11 +5814,11 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
   if(!title||!detail){status('sd-achievement-status','أدخل عنوان الإنجاز وتفاصيله.');return;}
   const btn=$('sd-achievement-submit');if(btn)btn.disabled=true;
   try{
-   const old=editingAchievement?achievementRows[editingAchievement]:null,media=await uploadImage('sd-achievement-image','studentPortalFiles/general/school-achievements',old);
+   const wasEditing=!!editingAchievement,old=wasEditing?achievementRows[editingAchievement]:null,media=await uploadImage('sd-achievement-image','studentPortalFiles/general/school-achievements',old);
    const payload={title,detail,type,date,...media,updatedAt:firebase.database.ServerValue.TIMESTAMP};
    if(editingAchievement){await db.ref(ACH+'/'+editingAchievement).update(payload);await cleanupOldImage(old,media);}
    else await db.ref(ACH).push({...payload,published:true,createdAt:firebase.database.ServerValue.TIMESTAMP,createdBy:'school-admin'});
-   cancelEdit('ach');status('sd-achievement-status',editingAchievement?'تم حفظ التعديلات.':'تم نشر الإنجاز والصورة سحابياً.');
+   cancelEdit('ach');status('sd-achievement-status',wasEditing?'تم حفظ التعديلات.':'تم نشر الإنجاز والصورة سحابياً.');
   }catch(e){console.error('achievement save',e);status('sd-achievement-status','تعذر الحفظ: '+(e?.message||'تحقق من الاتصال والصلاحيات.'));}
   finally{if(btn)btn.disabled=false;}
  }
