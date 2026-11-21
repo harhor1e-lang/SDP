@@ -4684,15 +4684,38 @@ bind('weeklyTimetables',x=>tables=x,renderTable);bind('guidancePosts',x=>guides=
   adsAdminCard.className='theme-card p-4 md:p-6 rounded-2xl border border-cyan-400/30 space-y-4 mt-4';
   adsAdminCard.innerHTML=`<div><span class="text-[10px] tracking-widest text-cyan-300 font-black">HERO ADVERTISEMENTS</span><h3 class="text-lg font-black text-amber-100 mt-1">🖼️ صور العرض داخل الإطار المائل</h3><p class="text-xs opacity-75 leading-6">ارفع إعلانين بصورة مستقلة. تظهر الصور بالتناوب داخل الشكل المائل خلف شعار «ص»، مع الحفاظ على زوايا الإطار. نشر أو استبدال صورة لا يغيّر الصورة الأخرى.</p></div>
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-   <div class="rounded-2xl border border-amber-400/25 p-3 space-y-3"><b class="text-sm text-amber-200">الإعلان الأول</b><img id="sd-hero-ad-preview-first" class="hidden w-full h-36 object-cover rounded-xl bg-slate-900" alt="معاينة الإعلان الأول"><input id="sd-hero-ad-file-first" type="file" accept="image/jpeg,image/png,image/webp" class="block w-full text-xs"><button type="button" id="sd-hero-ad-publish-first" class="w-full px-4 py-3 rounded-xl bg-amber-400 text-slate-950 text-xs font-black">رفع ونشر الإعلان الأول</button><p id="sd-hero-ad-status-first" class="text-xs opacity-80" role="status" aria-live="polite">اختر صورة الإعلان الأول.</p></div>
-   <div class="rounded-2xl border border-cyan-400/25 p-3 space-y-3"><b class="text-sm text-cyan-200">الإعلان الثاني</b><img id="sd-hero-ad-preview-second" class="hidden w-full h-36 object-cover rounded-xl bg-slate-900" alt="معاينة الإعلان الثاني"><input id="sd-hero-ad-file-second" type="file" accept="image/jpeg,image/png,image/webp" class="block w-full text-xs"><button type="button" id="sd-hero-ad-publish-second" class="w-full px-4 py-3 rounded-xl bg-cyan-300 text-slate-950 text-xs font-black">رفع ونشر الإعلان الثاني</button><p id="sd-hero-ad-status-second" class="text-xs opacity-80" role="status" aria-live="polite">اختر صورة الإعلان الثاني.</p></div>
+   <div class="rounded-2xl border border-amber-400/25 p-3 space-y-3"><b class="text-sm text-amber-200">الإعلان الأول</b><p class="text-[11px] opacity-60">الصورة المنشورة حالياً</p><img id="sd-hero-ad-current-first" class="hidden w-full h-36 object-contain rounded-xl bg-slate-900" alt="الإعلان الأول المنشور"><img id="sd-hero-ad-preview-first" class="hidden w-full h-36 object-cover rounded-xl bg-slate-900" alt="معاينة الصورة الجديدة"><input id="sd-hero-ad-file-first" type="file" accept="image/jpeg,image/png,image/webp" class="block w-full text-xs"><button type="button" id="sd-hero-ad-publish-first" class="w-full px-4 py-3 rounded-xl bg-amber-400 text-slate-950 text-xs font-black">رفع ونشر الإعلان الأول</button><button type="button" id="sd-hero-ad-delete-first" class="w-full px-4 py-3 rounded-xl border border-red-400/40 text-red-300 text-xs font-black">حذف الإعلان الأول</button><p id="sd-hero-ad-status-first" class="text-xs opacity-80" role="status" aria-live="polite">اختر صورة الإعلان الأول.</p></div>
+   <div class="rounded-2xl border border-cyan-400/25 p-3 space-y-3"><b class="text-sm text-cyan-200">الإعلان الثاني</b><p class="text-[11px] opacity-60">الصورة المنشورة حالياً</p><img id="sd-hero-ad-current-second" class="hidden w-full h-36 object-contain rounded-xl bg-slate-900" alt="الإعلان الثاني المنشور"><img id="sd-hero-ad-preview-second" class="hidden w-full h-36 object-cover rounded-xl bg-slate-900" alt="معاينة الصورة الجديدة"><input id="sd-hero-ad-file-second" type="file" accept="image/jpeg,image/png,image/webp" class="block w-full text-xs"><button type="button" id="sd-hero-ad-publish-second" class="w-full px-4 py-3 rounded-xl bg-cyan-300 text-slate-950 text-xs font-black">رفع ونشر الإعلان الثاني</button><button type="button" id="sd-hero-ad-delete-second" class="w-full px-4 py-3 rounded-xl border border-red-400/40 text-red-300 text-xs font-black">حذف الإعلان الثاني</button><p id="sd-hero-ad-status-second" class="text-xs opacity-80" role="status" aria-live="polite">اختر صورة الإعلان الثاني.</p></div>
   </div><p class="text-[10px] opacity-60">الصيغ: JPG / PNG / WEBP · الحد الأقصى لكل صورة 8MB.</p>`;
   pages.branding.appendChild(adsAdminCard);
+  firebase.database().ref('schoolBranding/advertisements').on('value',snapshot=>{
+   window.sdHeroAdvertisementRecords=snapshot.val()||{};
+   ['first','second'].forEach(slot=>{const img=adsAdminCard.querySelector('#sd-hero-ad-current-'+slot);const del=adsAdminCard.querySelector('#sd-hero-ad-delete-'+slot);const record=window.sdHeroAdvertisementRecords[slot];if(record&&record.url){img.src=record.url;img.classList.remove('hidden');del.disabled=false;del.classList.remove('opacity-40')}else{img.removeAttribute('src');img.classList.add('hidden');del.disabled=true;del.classList.add('opacity-40')}});
+  });
   ['first','second'].forEach(slot=>{
    const fileInput=adsAdminCard.querySelector('#sd-hero-ad-file-'+slot);
    const preview=adsAdminCard.querySelector('#sd-hero-ad-preview-'+slot);
    const status=adsAdminCard.querySelector('#sd-hero-ad-status-'+slot);
    const publish=adsAdminCard.querySelector('#sd-hero-ad-publish-'+slot);
+   const currentPreview=adsAdminCard.querySelector('#sd-hero-ad-current-'+slot);
+   const deleteButton=adsAdminCard.querySelector('#sd-hero-ad-delete-'+slot);
+   const refreshCurrent=record=>{if(record&&record.url){currentPreview.src=record.url;currentPreview.classList.remove('hidden');deleteButton.disabled=false;deleteButton.classList.remove('opacity-40')}else{currentPreview.removeAttribute('src');currentPreview.classList.add('hidden');deleteButton.disabled=true;deleteButton.classList.add('opacity-40')}};
+   refreshCurrent((window.sdHeroAdvertisementRecords||{})[slot]);
+   deleteButton.addEventListener('click',async()=>{
+    if(!(typeof isAdminLoggedIn!=='undefined'&&isAdminLoggedIn)){status.textContent='الحذف متاح للمدير بعد تسجيل الدخول.';return}
+    const record=(window.sdHeroAdvertisementRecords||{})[slot];
+    if(!record){status.textContent='لا يوجد إعلان منشور في هذه الخانة.';refreshCurrent(null);return}
+    if(!confirm('تأكيد حذف '+(slot==='first'?'الإعلان الأول':'الإعلان الثاني')+' نهائياً؟'))return;
+    deleteButton.disabled=true;status.textContent='جارٍ حذف الإعلان...';
+    try{
+     if(record.path&&record.fileStorage==='supabase')await schoolGateway('delete-file',{session:window.sdAdminSession,path:record.path});
+     await firebase.database().ref('schoolBranding/advertisements/'+slot).remove();
+     window.sdHeroAdvertisementRecords=window.sdHeroAdvertisementRecords||{};
+     delete window.sdHeroAdvertisementRecords[slot];
+     renderHeroAdvertisements(window.sdHeroAdvertisementRecords);
+     refreshCurrent(null);status.textContent='تم حذف الإعلان بنجاح.';
+    }catch(error){console.error('[Hero advertisement delete]',error);status.textContent='تعذر الحذف: '+(error.message||'تحقق من صلاحيات المدير والاتصال.');deleteButton.disabled=false}
+   });
    fileInput.addEventListener('change',()=>{
     const file=fileInput.files&&fileInput.files[0];
     if(!file){preview.classList.add('hidden');return}
