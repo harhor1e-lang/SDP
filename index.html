@@ -3803,7 +3803,7 @@ html.sd-skip-intro-once #cinematic-intro{display:none!important;visibility:hidde
                         print.addEventListener('click', () => window.v7PrintFile(link, book.title || 'ملف المدرسة', book.fileType || ''));
                         actions.appendChild(print);
                         const anchor = document.createElement('a');
-                        anchor.href = v7DownloadUrl(link, book.title || 'school-file');
+                        anchor.href = link + (link.includes('?') ? '&' : '?') + 'download=' + encodeURIComponent(book.title || 'school-file');
                         anchor.target = '_blank';
                         anchor.rel = 'noopener noreferrer';
                         anchor.className = 'px-4 py-2 rounded-lg theme-card text-xs font-semibold text-yellow-400 border border-yellow-500/30';
