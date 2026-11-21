@@ -2625,7 +2625,21 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
                 host.appendChild(fallback);
             }
         }
-        window.sdTeacherAdvertisementRecords={};let sdTeacherAdvertisementIndex=0,sdTeacherAdvertisementTimer=null;
+        // V6: Firebase Web configuration. Replace the placeholder with the Web API key
+        // from Firebase Project settings > Your apps. Never put service-account keys here.
+        const firebaseConfig = {
+            apiKey: "AIzaSyCwS_vyKFJxYD3xrczLyvSbAd3lYB0AIoU",
+            authDomain: "aldin-de21f.firebaseapp.com",
+            databaseURL: "https://aldin-de21f-default-rtdb.firebaseio.com/",
+            projectId: "aldin-de21f",
+            storageBucket: "aldin-de21f.firebasestorage.app",
+            messagingSenderId: "31495559853",
+            appId: "1:31495559853:web:1048bdfd8a3976d4d10424",
+            measurementId: "G-03HZY7NR3T"
+        };
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+                window.sdTeacherAdvertisementRecords={};let sdTeacherAdvertisementIndex=0,sdTeacherAdvertisementTimer=null;
         function renderTeacherAdvertisements(records){
           const host=document.getElementById('sd-teacher-ad-gallery'),controls=document.getElementById('sd-teacher-ad-controls'),count=document.getElementById('sd-teacher-ad-count');if(!host)return;
           const ads=Object.values(records||{}).filter(x=>x&&x.published!==false&&typeof x.url==='string'&&/^https:\/\//i.test(x.url));
