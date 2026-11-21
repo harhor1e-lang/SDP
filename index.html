@@ -2099,6 +2099,10 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
         <div class="max-w-4xl mx-auto theme-panel p-6 md:p-8 rounded-3xl space-y-8 border border-yellow-500/50">
             <div class="flex justify-between items-center border-b border-current pb-4">
                 <h2 class="title-font text-2xl font-black gold-gradient-text">لوحة التحكم السحابية الرسمية (أعدادية صلاح الدين)</h2>
+            <div id="sd-admin-calendar-achievement-tabs" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <button type="button" class="sd-action text-right" onclick="openAdminPrivateSection('sd-private-calendar')"><span>📅</span><b>تبويب إدارة التقويم المدرسي</b><span class="sd-muted">إضافة المواعيد والامتحانات والعطل، تعديلها وحذفها ونشرها أو إلغاء نشرها</span></button>
+              <button type="button" class="sd-action text-right" onclick="openAdminPrivateSection('sd-private-achievements')"><span>🏆</span><b>تبويب إدارة الإنجازات والفعاليات</b><span class="sd-muted">إضافة الإنجازات والفعاليات وتعديلها وحذفها وإدارة حالة نشرها</span></button>
+            </div>
                 
 <div id="v7-admin-tools" class="theme-card p-4 rounded-2xl border border-cyan-400/30 space-y-4">
 <h3 class="font-black text-cyan-200 text-lg">إدارة بوابة الطالب والملفات والجداول والرسائل</h3>
@@ -2202,6 +2206,7 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
               </div>
               <div id="sd-private-calendar" class="border-t border-white/10 pt-4 space-y-3">
                 <h4 class="font-black text-sm text-yellow-200">📅 التقويم المدرسي والفعاليات</h4>
+                <p class="sd-muted text-xs">من هذا التبويب تستطيع إضافة موعد جديد، ثم إدارة السجلات الموجودة من أزرار التعديل والنشر والحذف أسفل النموذج. ما حالته «منشور» يظهر للزوار.</p>
                 <input id="sd-event-title" class="sd-field" maxlength="100" placeholder="عنوان الموعد أو الفعالية">
                 <div class="grid grid-cols-2 gap-2"><input id="sd-event-date" class="sd-field" type="date" aria-label="تاريخ الفعالية"><select id="sd-event-type" class="sd-field"><option>امتحان</option><option>اجتماع</option><option>فعالية</option><option>موعد إداري</option><option>عطلة</option></select></div>
                 <button class="sd-btn" type="button" onclick="sdAddEvent()">نشر الموعد في التقويم العام</button><div id="sd-event-list" class="sd-list"><div class="sd-empty">لا توجد مواعيد محفوظة.</div></div><div id="sd-event-cloud-admin-list" class="sd-list"><div class="sd-empty">جارٍ تحميل المواعيد السحابية...</div></div><p id="sd-event-status" class="sd-status" aria-live="polite"></p>
@@ -2245,6 +2250,7 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
               </div>
               <div id="sd-private-achievements" class="border-t border-white/10 pt-4 space-y-3">
                 <h4 class="font-black text-sm text-yellow-200">🏆 إنجازات المدرسة والفعاليات ولوحة الشرف</h4>
+                <p class="sd-muted text-xs">أضف إنجازاً أو فعالية مع التفاصيل والتاريخ. استخدم قائمة السجلات السحابية أدناه للتعديل أو النشر أو إلغاء النشر أو الحذف.</p>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-2"><input id="sd-achievement-title" class="sd-field" maxlength="120" placeholder="عنوان الإنجاز أو الفعالية"><select id="sd-achievement-type" class="sd-field"><option>إنجاز مدرسي</option><option>شهادة تقدير</option><option>تكريم</option><option>إعفاء مدرسي</option><option>مشاركة مدرسية</option><option>مسابقة</option><option>جائزة</option><option>فعالية</option><option>لوحة الشرف</option></select></div>
                 <input id="sd-achievement-date" class="sd-field" type="date" aria-label="تاريخ الإنجاز"><textarea id="sd-achievement-detail" class="sd-field" rows="3" maxlength="500" placeholder="تفاصيل الإنجاز أو الفعالية بعد التحقق منها"></textarea><button class="sd-btn" type="button" onclick="sdAddAchievement()">نشر الإنجاز في الموقع</button><div id="sd-achievement-list" class="sd-list"><div class="sd-empty">لا توجد إنجازات محفوظة.</div></div><div id="sd-achievement-cloud-admin-list" class="sd-list"><div class="sd-empty">جارٍ تحميل السجل السحابي...</div></div><p class="text-xs text-amber-200">تنبيه أمني: لا تُدخل أسماء الطلبة أو بياناتهم الفردية قبل تأمين قواعد Firebase.</p><p id="sd-achievement-status" class="sd-status" aria-live="polite"></p>
               </div>
