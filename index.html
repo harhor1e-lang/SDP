@@ -1599,7 +1599,7 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
 <section id="v7-contact" class="v7-page"><div class="v7-panel"><button class="v7-btn alt" onclick="v7Back()">رجوع</button><h2 class="title-font text-2xl font-black gold-gradient-text">مراسلة الإدارة بسرية</h2><select id="v7-msg-kind" class="v7-field"><option>استفسار</option><option>شكوى</option><option>مقترح</option><option>فاعل خير</option><option>رسالة أخرى</option></select><input id="v7-msg-name" class="v7-field" placeholder="الاسم (اختياري)" maxlength="80"><textarea id="v7-msg-body" class="v7-field" rows="5" maxlength="3000" placeholder="اكتب رسالتك..."></textarea><button class="v7-btn" onclick="v7Send()">إرسال للإدارة</button><p id="v7-msg-status"></p></div></section>
 <section id="v7-admin-feed" class="v7-page"><div class="v7-panel"><button class="v7-btn alt" onclick="v7Back()">رجوع</button><h2 class="title-font text-2xl font-black gold-gradient-text">📢 تبليغات الإدارة</h2><p class="sd-muted mb-4">منشورات إدارة المدرسة فقط.</p><div id="v7-admin-feed-slot"></div></div></section>
 <section id="v7-guidance-feed" class="v7-page"><div class="v7-panel"><button class="v7-btn alt" onclick="v7Back()">رجوع</button><h2 class="title-font text-2xl font-black text-emerald-200">🧭 الإرشاد التربوي</h2><p class="sd-muted mb-4">إرشادات المرشد التربوي فقط.</p><div id="v7-guidance-feed-slot"></div></div></section>
-<!-- حُذف تبويب الإرشاد وتبويب الهوية المستقلان؛ إدارة الهوية أصبحت داخل سجل الطلاب -->
+<!-- تم دمج أدوات الإدارة ضمن لوحة التحكم الحالية -->
 <main class="max-w-7xl mx-auto px-4 md:px-6 py-6 space-y-8 relative z-10 mb-28">
 
         <!-- الأقسام الأربعة الجديدة والمخصصة للمختبرات (حاسوب، فيزياء، كيمياء، أحياء) -->
@@ -1936,8 +1936,7 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
     <!-- أزرار الإدارة وسجل الطلاب مستقلة عن المربع المحذوف -->
     <nav class="essential-school-actions" aria-label="إدارة المدرسة وسجل الطلاب">
       <button type="button" onclick="openPinModal()" class="essential-action-btn">🔐 الإدارة</button>
-      <button type="button" onclick="openStudentsPinModal()" class="essential-action-btn">👨‍🎓 سجل الطلاب</button>
-    </nav>
+      </nav>
 
     <!-- نافذة الرمز السري للإدارة -->
     <div id="pin-modal" class="fixed inset-0 bg-black/70 backdrop-blur-md z-[1000] hidden flex items-center justify-center p-4">
@@ -1980,105 +1979,6 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
       </div>
     </div>
 
-    <!-- نافذة الرمز السري لسجل الطلاب -->
-    <div id="students-pin-modal" class="fixed inset-0 bg-black/70 backdrop-blur-md z-[1000] hidden flex items-center justify-center p-4">
-        <div class="theme-panel p-8 rounded-3xl max-w-md w-full space-y-6 border border-yellow-500/40 shadow-2xl">
-            <div class="flex justify-between items-center">
-                <h3 class="title-font text-xl font-black text-yellow-400">تسجيل دخول سجل الطلاب (المدير)</h3>
-                <button onclick="closeStudentsPinModal()" class="font-bold">✕</button>
-            </div>
-            <p class="text-xs opacity-80">أدخل الرمز السري المخصص لفتح سجل الطلاب:</p>
-            <input type="password" id="students-pin-input" inputmode="numeric" autocomplete="off" placeholder="••••" class="w-full bg-black/60 border border-white/20 rounded-xl px-4 py-3 text-center tracking-widest text-lg outline-none focus:border-yellow-500" onkeydown="if(event.key==='Enter') verifyStudentsPin()">
-            <button onclick="verifyStudentsPin()" class="w-full py-3 rounded-xl bg-gradient-to-r from-yellow-600 to-yellow-400 text-black font-black text-sm shadow-lg">دخول سجل الطلاب</button>
-        </div>
-    </div>
-
-    <!-- لوحة سجلات الطلاب (محمية وحصرية للمدير) -->
-    <div id="students-dashboard-modal" class="fixed inset-0 bg-black/85 backdrop-blur-xl z-[1000] hidden overflow-y-auto p-4 md:p-10">
-        <div class="max-w-5xl mx-auto theme-panel p-6 md:p-8 rounded-3xl space-y-6 border border-yellow-500/50">
-            <div class="flex justify-between items-center border-b border-current pb-4">
-                <div>
-                    <h2 class="title-font text-2xl font-black gold-gradient-text">سجل الإشراف الإداري للطلاب والسير الذاتية</h2>
-                    <p class="text-xs opacity-75">سجل إداري موقوف مؤقتاً لحماية بيانات الطلاب حتى تأمين قواعد Firebase</p>
-                </div>
-                <button onclick="closeStudentsDashboard()" class="px-4 py-2 rounded-xl bg-red-500/20 text-red-400 border border-red-500/30 text-xs font-bold">إغلاق السجل</button>
-            </div>
-
-            <!-- أداة إضافة طالب جديد -->
-            <div class="theme-card p-4 rounded-2xl space-y-3">
-                <h3 class="text-xs font-bold text-yellow-400">إضافة طالب جديد للسجل السحابي</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    <input type="text" id="new-student-name" placeholder="اسم الطالب الثلاثي" class="bg-black/40 border border-white/10 rounded-xl px-3 py-2 text-xs outline-none">
-                    <select id="new-student-grade" class="bg-black/40 border border-white/10 rounded-xl px-3 py-2 text-xs outline-none">
-                        <option value="الرابع العلمي">الرابع العلمي</option>
-                        <option value="الخامس العلمي">الخامس العلمي</option>
-                        <option value="السادس العلمي">السادس العلمي</option>
-                    </select>
-                    <select id="new-student-section" class="bg-black/40 border border-white/10 rounded-xl px-3 py-2 text-xs outline-none">
-                        <option value="أ">الشعبة أ</option><option value="ب">الشعبة ب</option><option value="ج">الشعبة ج</option>
-                        <option value="د">الشعبة د</option><option value="هـ">الشعبة هـ</option><option value="و">الشعبة و</option>
-                    </select>
-                    <input type="text" id="new-student-phone" placeholder="رقم ولي الأمر" class="bg-black/40 border border-white/10 rounded-xl px-3 py-2 text-xs outline-none">
-                    <div class="sm:col-span-3 rounded-xl border border-yellow-500/30 p-3 bg-black/20">
-                      <label for="new-student-photo" class="block text-xs font-bold text-yellow-300 mb-2">📷 صورة الطالب (تُستخدم في نظام الباجات)</label>
-                      <input type="file" id="new-student-photo" accept="image/*" onchange="previewStudentPhoto(this)" class="w-full text-xs">
-                      <img id="new-student-photo-preview" alt="معاينة صورة الطالب" class="hidden mt-3 w-24 h-28 object-cover rounded-xl border-2 border-yellow-500/50">
-                      <p class="text-[10px] opacity-60 mt-2">يمكن اعتماد الصورة الأصلية في نظام الباجات المدرسية. JPG أو PNG أو WEBP حتى 50MB دون تقليل الأبعاد.</p>
-                    </div>
-                </div>
-                <textarea id="new-student-behavior" placeholder="السلوك المدرسي والملاحظات الانضباطية..." class="w-full bg-black/40 border border-white/10 rounded-xl p-3 text-xs h-16 outline-none resize-none"></textarea>
-                <button onclick="addNewStudent()" class="w-full py-2 rounded-xl bg-yellow-500 text-black font-bold text-xs shadow-md">إضافة الطالب وحفظه سحابياً</button>
-                <div class="border-t border-white/10 pt-3 space-y-2">
-                    <h3 class="text-xs font-bold text-emerald-400">استيراد قوائم الطلاب دفعة واحدة</h3>
-                    <p class="text-[10px] opacity-70">الصق القائمة مع عنوان كل شعبة (مثال: الرابع العلمي أ)، ثم الأسماء تحته، كل اسم بسطر. الأسماء المتطابقة تماماً تُحفظ مرة واحدة فقط.</p>
-                    <textarea id="students-bulk-import" placeholder="الرابع العلمي أ
-اسم الطالب الأول
-اسم الطالب الثاني
-الرابع العلمي ب
-اسم الطالب..." class="w-full bg-black/40 border border-white/10 rounded-xl p-3 text-xs min-h-[150px] outline-none"></textarea>
-                    <button onclick="importStudentsBulk()" class="w-full py-2 rounded-xl bg-emerald-600 text-white font-bold text-xs">استيراد وحفظ السجل سحابياً</button>
-                </div>
-            </div>
-
-            <!-- أدوات الفلترة والبحث -->
-            <div class="flex flex-col sm:flex-row gap-3">
-                <input type="text" id="student-search-input" oninput="renderStudentsList()" placeholder="بحث بالاسم أو رقم ولي الأمر..." class="flex-1 bg-black/40 border border-white/10 rounded-xl px-4 py-2 text-xs outline-none">
-                <select id="student-grade-filter" onchange="renderStudentsList()" class="bg-black/40 border border-white/10 rounded-xl px-4 py-2 text-xs outline-none">
-                    <option value="all">جميع الصفوف</option>
-                    <option value="الرابع العلمي">الرابع العلمي</option>
-                    <option value="الخامس العلمي">الخامس العلمي</option>
-                    <option value="السادس العلمي">السادس العلمي</option>
-                </select>
-                <select id="student-section-filter" onchange="renderStudentsList()" class="bg-black/40 border border-white/10 rounded-xl px-4 py-2 text-xs outline-none">
-                    <option value="all">جميع الشعب</option>
-                    <option value="أ">الشعبة أ</option><option value="ب">الشعبة ب</option><option value="ج">الشعبة ج</option>
-                    <option value="د">الشعبة د</option><option value="هـ">الشعبة هـ</option><option value="و">الشعبة و</option>
-                </select>
-            </div>
-
-            <!-- قائمة الطلاب وسيرهم الذاتية -->
-            <div id="students-cards-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <p class="text-xs opacity-60 text-center py-4 col-span-2">جاري تحميل سجلات الطلاب...</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- نافذة سجل الغياب والإنذارات: الواجهة إدارية، والحفظ ينتظر تفعيل حماية Firebase -->
-    <div id="student-discipline-modal" class="fixed inset-0 bg-black/90 backdrop-blur-xl z-[1200] hidden overflow-y-auto p-4 md:p-10">
-        <div class="max-w-3xl mx-auto theme-panel p-6 rounded-3xl space-y-5 border border-amber-500/40">
-            <div class="flex items-center justify-between gap-3"><div><h3 id="discipline-student-title" class="text-lg font-black text-yellow-400">سجل الغياب والإنذارات</h3><p class="text-[10px] opacity-60">سجل داخلي للإدارة فقط</p></div><button onclick="closeStudentDiscipline()" class="px-3 py-2 rounded-lg bg-red-500/20 text-red-300 text-xs">إغلاق</button></div>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                <select id="discipline-type" class="bg-black/50 border border-white/10 rounded-xl p-2 text-xs"><option value="absence">غياب</option><option value="warning">إنذار</option><option value="note">ملاحظة إدارية</option></select>
-                <input id="discipline-date" type="date" class="bg-black/50 border border-white/10 rounded-xl p-2 text-xs">
-                <select id="discipline-status" class="bg-black/50 border border-white/10 rounded-xl p-2 text-xs"><option value="unexcused">غير مبرر</option><option value="excused">مبرر</option><option value="resolved">تمت المعالجة</option></select>
-            </div>
-            <textarea id="discipline-note" maxlength="500" placeholder="تفاصيل مختصرة للحالة..." class="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-xs h-20"></textarea>
-            <button onclick="saveStudentDiscipline()" class="w-full py-2 rounded-xl bg-amber-500 text-black font-black text-xs">حفظ الحالة في السجل الإداري</button>
-            <p id="discipline-security-message" class="text-[10px] text-amber-300 leading-6">الحفظ معطّل حالياً لحماية بيانات الطلاب إلى حين إعداد صلاحيات Firebase الآمنة.</p>
-            <div id="student-discipline-history" class="space-y-2"></div>
-        </div>
-    </div>
-
     <!-- لوحة التحكم الإدارية العامة -->
     <div id="admin-dashboard-modal" class="fixed inset-0 bg-black/85 backdrop-blur-xl z-[1000] hidden overflow-y-auto p-4 md:p-10">
         <div class="max-w-4xl mx-auto theme-panel p-6 md:p-8 rounded-3xl space-y-8 border border-yellow-500/50">
@@ -2101,58 +2001,6 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
 <div class="v7-item"><h4 class="font-black text-cyan-200">صندوق رسائل الإدارة الخاصة</h4><div id="v7-inbox"></div></div>
 <div class="v7-item border border-red-400/30"><h4 class="font-black text-red-300">تنظيف بيانات الأقسام القديمة من Firebase</h4><p class="text-xs opacity-75">سيحذف من Firebase: questionBank وbooks وdigitalLibrary وschoolMessages وannualReports، كما يحذف منشورات الإرشاد القديمة فقط من posts. تبقى إعلانات الإدارة وسجلات الطلاب والهوية وبوابة الطالب والجداول والمختبرات.</p><button class="v7-btn alt" onclick="v7CleanupLegacyFirebase()">حذف بيانات الأقسام القديمة من Firebase</button><p id="v7-cleanup-status" class="text-xs"></p><p class="text-[11px] text-amber-200">لا يتم الحذف تلقائياً عند فتح الموقع؛ نفّذ التنظيف من هنا بعد مراجعة التأكيد. يجب أن تسمح قواعد Firebase بالكتابة حتى ينجح الحذف.</p></div>
 </div>
-
-<!-- V20 ADD-ON: Admin-only school badge management, reuses existing Firebase students and Supabase signed uploads -->
-<style id="sd-school-badges-style">
-#sd-school-badges{margin-top:18px;border:1px solid rgba(218,178,75,.48);border-radius:22px;padding:18px;background:linear-gradient(145deg,rgba(15,30,54,.98),rgba(39,20,61,.96));color:#fff;box-shadow:0 18px 50px #0005}
-#sd-school-badges .sdb-muted{color:#cbd5e1;font-size:12px;line-height:1.8}
-#sd-school-badges .sdb-field{width:100%;min-width:0;background:#071426;color:#fff;border:1px solid rgba(218,178,75,.35);border-radius:11px;padding:10px;font-size:13px;outline:none}
-#sd-school-badges .sdb-btn{border:1px solid rgba(225,190,95,.45);background:linear-gradient(135deg,#9b6c1d,#e4c16a);color:#1d1830;border-radius:11px;padding:10px 14px;font-weight:900;font-size:12px}
-#sd-school-badges .sdb-btn.alt{background:#102743;color:#f5dfaa}
-#sd-school-badges .sdb-student{display:flex;align-items:center;gap:10px;text-align:right;width:100%;padding:10px;border:1px solid #d5ae5540;border-radius:12px;background:#071426;color:white}
-#sd-school-badges .sdb-student img{width:42px;height:48px;object-fit:cover;border-radius:7px;background:#fff}
-#sd-school-badges .sdb-preview-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start}
-#sd-school-badges .sdb-face{position:relative;width:100%;max-width:300px;aspect-ratio:2/3;margin:auto;overflow:hidden;border-radius:16px;background:#211039;box-shadow:0 16px 34px #0008;border:2px solid #d9b65d}
-#sd-school-badges .sdb-face-render{display:block;width:100%;height:100%;object-fit:fill;border-radius:0}
-@media(max-width:640px){#sd-school-badges{padding:12px}#sd-school-badges .sdb-preview-grid{grid-template-columns:1fr;max-width:300px;margin:auto}}
-@media print{#sd-school-badges{display:none!important}}
-</style>
-<section id="sd-school-badges" aria-label="إدارة الباجات المدرسية">
- <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
-  <div><div class="text-[10px] tracking-widest font-black text-amber-300">ROYAL STUDENT ID SYSTEM · V20</div><h3 class="text-xl font-black text-amber-100">🪪 إدارة الباجات المدرسية</h3><p class="sdb-muted">إصدار وتعديل الباجات من سجل الطلاب الحالي مباشرة، دون إنشاء سجل طلاب منفصل.</p></div>
-  <span class="text-[10px] border border-amber-300/30 rounded-full px-3 py-2 text-amber-100">صلاحية الإدارة فقط</span>
- </div>
- <div class="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] gap-3">
-  <div class="space-y-2">
-   <label class="block text-xs text-amber-100">البحث عن الطالب<input id="sdb-search" class="sdb-field mt-1" type="search" placeholder="اكتب اسم الطالب أو الصف أو الشعبة" autocomplete="off"></label>
-   <div class="flex gap-2"><button type="button" class="sdb-btn alt" id="sdb-load-students">تحميل / تحديث سجل الطلاب</button><span id="sdb-count" class="sdb-muted self-center">لم يتم التحميل</span></div>
-   <div id="sdb-student-results" class="space-y-2 max-h-64 overflow-y-auto"><div class="sdb-muted">حمّل سجل الطلاب ثم اختر الطالب المطلوب.</div></div>
-  </div>
-  <div class="space-y-3">
-   <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-    <label class="text-xs text-amber-100">اسم الطالب<input id="sdb-name" class="sdb-field mt-1" readonly placeholder="اختر طالباً من السجل"></label>
-    <label class="text-xs text-amber-100">الصف الدراسي<input id="sdb-grade" class="sdb-field mt-1" readonly></label>
-    <label class="text-xs text-amber-100">الشعبة<input id="sdb-section" class="sdb-field mt-1" readonly></label>
-    <label class="text-xs text-amber-100">تاريخ إصدار الباج<input id="sdb-date" class="sdb-field mt-1" type="date"></label>
-   </div>
-   <label class="block text-xs text-amber-100">صورة الطالب الشخصية (اختياري للتحديث)<input id="sdb-photo-file" class="sdb-field mt-1" type="file" accept="image/jpeg,image/png,image/webp"></label>
-   <p id="sdb-status" class="sdb-muted" role="status" aria-live="polite">اختر طالباً لمعاينة الباج وحفظه.</p>
-  </div>
- </div>
- <div class="mt-4 border-t border-amber-200/20 pt-4">
-  <div class="flex flex-wrap justify-between items-center gap-2 mb-3"><b class="text-sm text-amber-100">معاينة الوجه الأمامي والخلفي</b><span class="sdb-muted">التصميم مقتبس من صورة الباج الأصلية المرفقة</span></div>
-  <div class="sdb-preview-grid">
-   <div><div class="text-center text-xs text-amber-200 mb-2">الوجه الأمامي</div><div id="sdb-front" class="sdb-face"><img id="sdb-front-render" class="sdb-face-render" alt="معاينة الباج الأمامي"></div></div>
-   <div><div class="text-center text-xs text-amber-200 mb-2">الوجه الخلفي</div><div id="sdb-back" class="sdb-face"><img id="sdb-back-render" class="sdb-face-render" alt="معاينة الباج الخلفي"></div></div>
-  </div>
-  <div class="flex flex-wrap gap-2 justify-center mt-4">
-   <button type="button" class="sdb-btn" id="sdb-save">حفظ الباج في السجل السحابي</button>
-   <button type="button" class="sdb-btn alt" id="sdb-print">طباعة الوجهين / حفظ PDF</button>
-   <button type="button" class="sdb-btn alt" id="sdb-download-front">تنزيل الأمامي PNG</button>
-   <button type="button" class="sdb-btn alt" id="sdb-download-back">تنزيل الخلفي PNG</button>
-  </div>
- </div>
-</section>
 
 <button onclick="closeAdminDashboard()" class="px-4 py-2 rounded-xl bg-red-500/20 text-red-400 border border-red-500/30 text-xs font-bold">إغلاق اللوحة</button>
             </div>
@@ -3925,173 +3773,6 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
             if (field) field.value = '';
         }
 
-        async function verifyStudentsPin() {
-            const enteredPin = (document.getElementById('students-pin-input')?.value || '').trim();
-            try { if (!(await window.v14VerifyAdminPin(enteredPin))) { alert('الرمز السري غير صحيح.'); const field = document.getElementById('students-pin-input'); if (field) { field.value = ''; field.focus(); } return; } }
-            catch(error) { alert('تعذر التحقق من الرمز: '+(error.message||'تحقق من Supabase.')); return; }
-            isAdminLoggedIn = true;
-            closeStudentsPinModal();
-            const dashboard = document.getElementById('students-dashboard-modal');
-            if (dashboard) dashboard.classList.remove('hidden');
-            let note = document.getElementById('students-access-security-note');
-            if (!note && dashboard) {
-                note = document.createElement('div');
-                note.id = 'students-access-security-note';
-                note.className = 'rounded-xl border border-amber-400/40 bg-amber-500/10 p-3 text-xs leading-6 text-amber-100';
-                const panel = dashboard.querySelector('.max-w-5xl');
-                if (panel) panel.insertBefore(note, panel.children[1] || null);
-            }
-            if (note) note.textContent = 'سجل الطلاب موقوف مؤقتاً لحماية الخصوصية حتى تأمين قواعد قاعدة البيانات والتحقق من صلاحيات الإدارة.';
-            if (firebaseReady()) listenStudentsData();
-            refreshViews();
-        }
-
-        function closeStudentsDashboard() {
-            document.getElementById('students-dashboard-modal').classList.add('hidden');
-            db.ref('students').off('value');
-            if (document.getElementById('admin-dashboard-modal').classList.contains('hidden')) {
-                isAdminLoggedIn = false;
-                window.sdAdminSession = null;
-                renderPosts();
-                renderBooks();
-                ALLOWED_LABS.forEach(lab => renderLab(lab));
-            }
-        }
-
-        function listenStudentsData() {
-            if (!requireAdmin() || !firebaseReady() || !studentRegisterAccessAllowed(false)) { globalStudentsData = {}; renderStudentsList(); return; }
-            const ref = db.ref('students');
-            ref.off('value');
-            ref.on('value', snapshot => {
-                globalStudentsData = snapshot.val() || {};
-                renderStudentsList();
-                syncAggregateStudentCount();
-                if (typeof v61RenderStudentAnalytics === 'function') v61RenderStudentAnalytics();
-            }, error => reportDbError('تحميل سجل الطلاب', error));
-        }
-
-        function previewStudentPhoto(input){const preview=document.getElementById('new-student-photo-preview'),file=input?.files?.[0];if(!file){preview.classList.add('hidden');preview.removeAttribute('src');return}if(!file.type.startsWith('image/')||file.size>50*1024*1024){alert('اختر صورة صالحة لا يتجاوز حجمها 50MB.');input.value='';preview.classList.add('hidden');return}const url=URL.createObjectURL(file);preview.src=url;preview.classList.remove('hidden');preview.onload=()=>URL.revokeObjectURL(url)}
-        async function addNewStudent(){if(!requireAdmin()||!firebaseReady()||!window.sdAdminSession||!studentRegisterAccessAllowed())return;const name=document.getElementById('new-student-name').value.trim(),grade=document.getElementById('new-student-grade').value,section=document.getElementById('new-student-section').value,phone=document.getElementById('new-student-phone').value.trim(),behavior=document.getElementById('new-student-behavior').value.trim(),photoInput=document.getElementById('new-student-photo'),file=photoInput?.files?.[0],button=document.querySelector('button[onclick="addNewStudent()"]');if(!name){alert('يرجى إدخال اسم الطالب');return}const normalizedName=normalizeStudentName(name);if(Object.values(globalStudentsData).some(s=>normalizeStudentName(s.name||'')===normalizedName)){alert('هذا الاسم موجود مسبقاً في السجل، لم تتم إضافته مرة ثانية.');return}if(button)button.disabled=true;let uploaded=null;try{if(file)uploaded=await window.uploadOriginalSchoolImage(file,'studentPortalFiles/'+grade+'/student-photos');await db.ref('students').push({name,grade,section,photoData:'',photoUrl:uploaded?.url||'',photoPath:uploaded?.path||'',photoStorage:uploaded?'supabase':'',guardianPhone:phone||'غير محدد',behaviorNotes:behavior||'جيد جداً',timestamp:Date.now()});alert('تمت إضافة الطالب بنجاح. الصورة محفوظة بأبعادها الأصلية.');['new-student-name','new-student-phone','new-student-behavior'].forEach(id=>document.getElementById(id).value='');if(photoInput)photoInput.value='';const preview=document.getElementById('new-student-photo-preview');if(preview){preview.removeAttribute('src');preview.classList.add('hidden')}}catch(e){if(uploaded?.path)try{await schoolGateway('delete-file',{session:window.sdAdminSession,path:uploaded.path})}catch(cleanError){console.warn(cleanError)}alert('تعذر إضافة الطالب أو رفع صورته: '+(e.message||'خطأ غير معروف'))}finally{if(button)button.disabled=false}}
-
-        function escapeStudentHtml(value) { return escapeHtml(value); }
-
-        function normalizeStudentName(value) {
-            return String(value || '').replace(/[\u0640\s]+/g, ' ').trim();
-        }
-
-        function importStudentsBulk() {
-            if (!requireAdmin() || !firebaseReady() || !studentRegisterAccessAllowed()) return;
-            const raw = document.getElementById('students-bulk-import').value;
-            if (!raw.trim()) { alert('الصق قائمة الأسماء أولاً.'); return; }
-            const gradeNames = ['الرابع العلمي', 'الخامس العلمي', 'السادس العلمي'];
-            const sections = ['أ', 'ب', 'ج', 'د', 'هـ', 'و'];
-            let currentGrade = '', currentSection = '';
-            const existing = new Set(Object.values(globalStudentsData).map(s => normalizeStudentName(s.name)).filter(Boolean));
-            const additions = {};
-            let skipped = 0, invalid = 0;
-            raw.split(/\r?\n/).map(line => line.trim()).filter(Boolean).forEach(line => {
-                const heading = line.replace(/[()\[\]ـ:：]/g, ' ').replace(/\s+/g, ' ').trim();
-                const grade = gradeNames.find(g => heading.includes(g));
-                const section = sections.find(sec => new RegExp('(?:^|\\s)' + sec + '(?:$|\\s)').test(heading.replace(grade || '', '').trim()));
-                if (grade && section) { currentGrade = grade; currentSection = section; return; }
-                if (!currentGrade || !currentSection) { invalid++; return; }
-                const name = line.replace(/^[-•٠-٩0-9.\s]+/, '').trim();
-                if (!name) return;
-                const normalized = normalizeStudentName(name);
-                if (existing.has(normalized)) { skipped++; return; }
-                existing.add(normalized);
-                const key = db.ref('students').push().key;
-                additions[key] = { name, grade: currentGrade, section: currentSection, guardianPhone: 'غير محدد', behaviorNotes: 'جيد جداً', timestamp: Date.now() };
-            });
-            const count = Object.keys(additions).length;
-            if (!count) { alert('لم يتم العثور على أسماء جديدة قابلة للاستيراد. تأكد من كتابة عنوان كل شعبة بهذا الشكل: الرابع العلمي أ'); return; }
-            db.ref('students').update(additions).then(() => {
-                document.getElementById('students-bulk-import').value = '';
-                alert('اكتمل الاستيراد بنجاح. تمت إضافة ' + count + ' طالباً، وتجاوز ' + skipped + ' اسماً مكرراً.' + (invalid ? ' وتجاهل ' + invalid + ' سطراً خارج تنسيق الشعب.' : ''));
-            }).catch(error => reportDbError('استيراد قائمة الطلاب', error));
-        }
-
-        function renderStudentsList() {
-            const container = document.getElementById('students-cards-container');
-            if (!container) return;
-            container.innerHTML = '';
-
-            const searchQuery = (document.getElementById('student-search-input').value || '').trim().toLocaleLowerCase('ar');
-            const selectedGrade = document.getElementById('student-grade-filter').value;
-            const selectedSection = document.getElementById('student-section-filter').value;
-
-            const keys = Object.keys(globalStudentsData).reverse();
-            let filteredKeys = keys.filter(key => {
-                const s = globalStudentsData[key] || {};
-                const searchable = (String(s.name || '') + ' ' + String(s.guardianPhone || '')).toLocaleLowerCase('ar');
-                const matchName = searchable.includes(searchQuery);
-                const matchGrade = (selectedGrade === 'all') || (s.grade === selectedGrade);
-                const matchSection = (selectedSection === 'all') || ((s.section || '') === selectedSection);
-                return matchName && matchGrade && matchSection;
-            });
-
-            if (filteredKeys.length === 0) {
-                container.innerHTML = '<p class="text-xs opacity-60 text-center py-4 col-span-2">لا يوجد طلاب في السجل يتطابقون مع البحث.</p>';
-                return;
-            }
-
-            filteredKeys.forEach(key => {
-                const student = globalStudentsData[key];
-                const card = document.createElement('div');
-                card.className = 'theme-card p-4 rounded-2xl space-y-3 border border-yellow-500/20 relative';
-
-                card.innerHTML = `
-                    <div class="flex justify-between items-start border-b border-current/10 pb-2">
-                        <div>
-                            <h4 class="font-extrabold text-sm text-yellow-400">${escapeStudentHtml(student.name)}</h4>
-                            <span class="text-[10px] opacity-75 bg-yellow-500/10 px-2 py-0.5 rounded-full border border-yellow-500/20 inline-block mt-1">${escapeStudentHtml(student.grade)} - الشعبة ${escapeStudentHtml(student.section || 'غير محددة')}</span>
-                        </div>
-                        <button onclick="deleteStudent('${key}')" class="px-2 py-1 rounded bg-red-500/20 text-red-400 border border-red-500/30 text-[10px] font-bold">حذف الطالب 🗑️</button>
-                    </div>
-
-                    <div class="space-y-2 text-xs">
-                        <div>
-                            <label class="text-[10px] opacity-60 block">📞 رقم ولي الأمر (خاص بالمدير):</label>
-                            <input type="text" id="phone-${key}" value="${escapeStudentHtml(student.guardianPhone || '')}" class="w-full bg-black/40 border border-white/10 rounded-lg px-2.5 py-1.5 text-xs outline-none">
-                        </div>
-                        <div>
-                            <label class="text-[10px] opacity-60 block">📋 السلوك المدرسي والملاحظات:</label>
-                            <textarea id="behavior-${key}" class="w-full bg-black/40 border border-white/10 rounded-lg p-2 text-xs h-16 outline-none resize-none">${escapeStudentHtml(student.behaviorNotes || '')}</textarea>
-                        </div>
-                        <button onclick="updateStudent('${key}')" class="w-full py-1.5 rounded-lg bg-emerald-600/80 hover:bg-emerald-600 text-white font-bold text-[11px]">حفظ التعديلات سحابياً ✓</button>
-                        <div class="border-t border-amber-500/20 pt-2 space-y-2">
-                            <p class="text-[10px] font-black text-amber-300">سجل الغياب والإنذارات</p>
-                            <button onclick="openStudentDiscipline('${key}')" class="w-full py-2 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-200 text-[11px] font-bold">فتح السجل الإداري للطالب</button>
-                        </div>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        function updateStudent(studentId) {
-            if (!requireAdmin() || !firebaseReady() || !studentRegisterAccessAllowed()) return;
-            const phoneEl = document.getElementById(`phone-${studentId}`);
-            const behaviorEl = document.getElementById(`behavior-${studentId}`);
-            if (!phoneEl || !behaviorEl) { alert('تعذر العثور على حقول الطالب. حدّث السجل وحاول مجدداً.'); return; }
-            db.ref(`students/${studentId}`).update({
-                guardianPhone: phoneEl.value.trim(),
-                behaviorNotes: behaviorEl.value.trim(),
-                updatedAt: Date.now()
-            }).then(() => alert('تم حفظ وتحديث السيرة الذاتية للطالب في السحابة بنجاح!'))
-              .catch(error => reportDbError('تحديث بيانات الطالب', error));
-        }
-
-        function deleteStudent(studentId) {
-            if (!requireAdmin() || !firebaseReady() || !studentRegisterAccessAllowed()) return;
-            if (confirm('هل أنت متأكد من حذف هذا الطالب من السجل النهائياً؟')) {
-                db.ref(`students/${studentId}`).remove()
-                    .then(() => alert('تم حذف الطالب من السجل بنجاح!'))
-                    .catch(error => reportDbError('حذف الطالب', error));
-            }
-        }
-
-
         // ====== بث التنبيهات العاجلة ======
         function renderLiveBroadcast(data) {
             const banner = document.getElementById('live-broadcast-banner');
@@ -4243,12 +3924,6 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
             db.ref('publicStats').on('value',snap=>{const stats=snap.val()||{};updateStat('stat-visits',stats.visits||0);updateStat('stat-students',stats.studentCount||0);},err=>console.warn('stats unavailable',err));
             recordSessionVisit();
             renderQuestionBank();
-        }
-
-        // تحديث العدد الإجمالي فقط؛ لا نرسل أسماء أو أرقام الطلاب إلى واجهة عامة.
-        function syncAggregateStudentCount(){
-            if(!requireAdmin()||!firebaseReady())return;
-            db.ref('publicStats/studentCount').set(Object.keys(globalStudentsData||{}).length).catch(error=>reportDbError('تحديث إحصائية عدد الطلاب',error));
         }
 
         // V6: دخول لوحة الإدارة يتم عبر بوابة الإدارة والتحقق من الجلسة.
@@ -4747,10 +4422,8 @@ bind('weeklyTimetables',x=>tables=x,renderTable);bind('guidancePosts',x=>guides=
   const pages={};
   function makePage(id,title,icon,desc){const page=document.createElement('section');page.className='v14-admin-page';page.dataset.page=id;page.hidden=true;page.innerHTML=`<div class="v14-page-head"><div class="flex items-center gap-3"><span class="text-3xl">${icon}</span><div><h2 class="font-black text-yellow-100">${title}</h2><p class="text-[10px] text-slate-300">${desc}</p></div></div><button type="button" class="v14-back" data-v14-back>↩ العودة إلى لوحة المدير</button></div><div data-v14-content></div>`;modal.appendChild(page);page.querySelector('[data-v14-back]').addEventListener('click',()=>showPage('home'));pages[id]=page;return page.querySelector('[data-v14-content]')}
   const groups=[
-   ['students','سجل الطلاب','🎓','أدوات إدارة سجل الطلاب والهويات'],
    ['branding','شعار وصورة العرض','🖼️','رفع شعار المدرسة أو صورة عرض وتحديثها من الموقع مباشرة'],
    ['teacherAds','الإشراف على إعلانات المدرسين','📸','إرفاق صور إعلانية للكادر التدريسي ومراجعتها ونشرها للزوار'],
-   ['badges','إدارة الباجات المدرسية','🪪','إصدار ومعاينة وطباعة باجات الطلاب بصورة مستقلة'],
    ['guidance','قسم المرشد التربوي','🧭','كتابة إرشاد تربوي منظم وإرفاق الصور ونشره للطلبة'],
    ['notices','التبليغات والإعلانات','📢','نشر ومراجعة التبليغات والبث الإداري'],
    ['messages','مراسلات الإدارة','✉️','صندوق الرسائل والردود الإدارية'],
@@ -4878,12 +4551,11 @@ bind('weeklyTimetables',x=>tables=x,renderTable);bind('guidancePosts',x=>guides=
   panelChildren.forEach(node=>{
     if(node===header||node===home||node===closeBtn||node.tagName==='H2')return;
     const txt=(node.innerText||'').trim();
-    if(node.id==='sd-school-badges'){move(node,'badges');return}
     if(node.id==='v7-admin-tools'){move(node,'resources');return}
     if(node.id==='v7-admin-items'||node.id==='v7-admin-posts'||txt.includes('إدارة التبليغات والإعلانات')){move(node,'notices');return}
     if(node.id==='v7-inbox'||txt.includes('صندوق رسائل الإدارة')){move(node,'messages');return}
     if(txt.includes('تنظيف بيانات الأقسام القديمة')){move(node,'system');return}
-    if(/إدارة بوابة الطالب|إدارة سجل الطلاب|الطلاب المسجلون/.test(txt)){move(node,'students');return}
+     if(/إدارة بوابة الطالب/.test(txt)){move(node,'resources');return}
   });
   [...modal.children].forEach(node=>{
     if(node===shell||node.classList.contains('v14-admin-page'))return;
@@ -4999,10 +4671,8 @@ bind('weeklyTimetables',x=>tables=x,renderTable);bind('guidancePosts',x=>guides=
    catch(e){archiveHost.dataset.listenerAttached='';archiveList.innerHTML='<div class="sd-empty">خدمة Firebase غير متاحة حالياً.</div>'}
   }
 
-  // Existing administration subtools are kept intact inside their corresponding independent pages.
-  const studentLaunch=document.createElement('div');studentLaunch.className='sd-card space-y-3';studentLaunch.innerHTML='<h3>سجل الطلاب المحمي</h3><p class="sd-muted">فتح نافذة سجل الطلاب الحالية مع الحفاظ على رمز الدخول ووظائف الإضافة والتعديل والحذف.</p><button type="button" class="sd-btn" id="v14-open-student-records">🎓 فتح سجل الطلاب</button>';pages.students.appendChild(studentLaunch);studentLaunch.querySelector('button').addEventListener('click',()=>{if(typeof openStudentsPinModal==='function')openStudentsPinModal();else toast('نافذة سجل الطلاب غير متاحة حالياً',false)});
   showPage('home');initAudit();
-  function showPage(id){home.hidden=id!=='home';Object.entries(pages).forEach(([key,page])=>page.hidden=key!==id);if(id==='archive'&&typeof isAdminLoggedIn!=='undefined'&&isAdminLoggedIn)startCloudArchiveListener();if(id==='badges'&&typeof window.sdOpenSchoolBadges==='function')window.sdOpenSchoolBadges();if(id==='home')home.scrollIntoView({block:'start',behavior:'smooth'});else pages[id]?.scrollIntoView({block:'start',behavior:'smooth'});}
+  function showPage(id){home.hidden=id!=='home';Object.entries(pages).forEach(([key,page])=>page.hidden=key!==id);if(id==='archive'&&typeof isAdminLoggedIn!=='undefined'&&isAdminLoggedIn)startCloudArchiveListener();if(id==='home')home.scrollIntoView({block:'start',behavior:'smooth'});else pages[id]?.scrollIntoView({block:'start',behavior:'smooth'});}
   modal.dataset.v14ShowHome='1';modal._v14ShowHome=()=>showPage('home');
  }
  document.addEventListener('DOMContentLoaded',()=>{setupAdminPages();const modal=$('admin-dashboard-modal');if(modal){new MutationObserver(()=>{if(!modal.classList.contains('hidden')&&modal._v14ShowHome)modal._v14ShowHome()}).observe(modal,{attributes:true,attributeFilter:['class']})}});
@@ -5337,165 +5007,6 @@ html:not(.dark) input,html:not(.dark) textarea,html:not(.dark) select{background
 
 </style>
 
-<script id="sd-school-badges-engine">
-(()=>{
- 'use strict';
- const FRONT='assets/royal-badge-front.jpg';
- const BACK='assets/royal-badge-back.jpg';
- const $=id=>document.getElementById(id);
- let selectedId=null, students={}, qrDataUrl='', photoPreviewUrl='', photoUploadFile=null;
- const safe=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
- const today=()=>new Date().toISOString().slice(0,10);
- const status=t=>{const el=$('sdb-status');if(el)el.textContent=t};
- const imageUrl=st=>st?.badgePhotoData||st?.badgePhotoUrl||st?.photoUrl||st?.photoData||'';
- function visible(){const panel=$('sd-school-badges'),admin=$('admin-dashboard-modal'),page=panel?.closest('.v14-admin-page');return !!panel&&!!admin&&!admin.classList.contains('hidden')&&(!page||!page.hidden)}
- function authorized(){if(typeof requireAdmin==='function'&&!requireAdmin()){alert('هذه الخدمة متاحة للمدير فقط.');return false}if(typeof studentRegisterAccessAllowed==='function'&&!studentRegisterAccessAllowed())return false;if(typeof db==='undefined'||typeof firebase==='undefined'||!firebase.apps?.length){alert('اتصال Firebase غير متاح حالياً.');return false}return true}
-  window.sdOpenSchoolBadges=()=>{if(!authorized())return;if(!Object.keys(students).length)loadStudents()};
- function fmtDate(v){if(!v)return '—';const p=String(v).split('-');return p.length===3?`${p[2]}/${p[1]}/${p[0]}`:v}
- let previewRevision=0;
- function updatePreview(){
-  const revision=++previewRevision;
-  Promise.all([drawFace('front'),drawFace('back')]).then(([front,back])=>{
-   if(revision!==previewRevision)return;
-   $('sdb-front-render').src=front.toDataURL('image/png');
-   $('sdb-back-render').src=back.toDataURL('image/png');
-  }).catch(e=>{console.warn('[School badges] preview render failed',e);status('تعذر تحديث المعاينة: '+e.message)});
- }
- function renderResults(){
-  const root=$('sdb-student-results');if(!root)return;
-  const q=($('sdb-search').value||'').trim().toLocaleLowerCase('ar');
-  const rows=Object.entries(students).filter(([id,s])=>s&&[s.name,s.grade,s.section].join(' ').toLocaleLowerCase('ar').includes(q)).sort((a,b)=>String(a[1].name||'').localeCompare(String(b[1].name||''),'ar'));
-  $('sdb-count').textContent=Object.keys(students).length+' طالب';
-  root.innerHTML=rows.length?rows.map(([id,s])=>`<button type="button" class="sdb-student" data-student-id="${safe(id)}"><img src="${safe(imageUrl(s))}" onerror="this.style.visibility='hidden'" alt=""><span class="min-w-0 flex-1"><b class="block text-xs">${safe(s.name||'بدون اسم')}</b><small class="block text-[10px] text-slate-300">${safe(s.grade||'—')} · شعبة ${safe(s.section||'—')}</small></span><span class="text-[10px] text-amber-200">${s.badgeIssuedAt?'لديه باج':'إصدار جديد'}</span></button>`).join(''):'<div class="sdb-muted">لا توجد نتائج مطابقة.</div>';
-  root.querySelectorAll('[data-student-id]').forEach(btn=>btn.addEventListener('click',()=>selectStudent(btn.dataset.studentId)));
- }
- async function loadStudents(){
-  if(!authorized())return;
-  status('جارٍ تحميل سجلات الطلاب من Firebase…');
-  try{const snap=await db.ref('students').once('value');students=snap.val()||{};if(typeof globalStudentsData!=='undefined')globalStudentsData=students;renderResults();status('تم تحميل سجل الطلاب بنجاح. اختر طالباً للمتابعة.')}
-  catch(e){status('فشل تحميل سجل الطلاب: '+(e.message||e));console.error('[School badges] load students',e)}
- }
- function selectStudent(id){
-  if(!students[id])return;selectedId=id;if(photoPreviewUrl.startsWith('blob:'))URL.revokeObjectURL(photoPreviewUrl);photoPreviewUrl='';photoUploadFile=null;const st=students[id];
-  $('sdb-name').value=st.name||'';$('sdb-grade').value=st.grade||'';$('sdb-section').value=st.section||'';$('sdb-date').value=st.badgeIssuedAt||today();$('sdb-photo-file').value='';
-  qrDataUrl=st.badgeQrData||st.badgeQrUrl||st.qrData||'';updatePreview();
-  if(!qrDataUrl)generateQr(false).catch(e=>console.warn('QR preview unavailable',e));
-  status('تم اختيار '+(st.name||'الطالب')+'؛ يمكنك تعديل التاريخ أو تحديث الصورة ثم الحفظ.');
- }
- function makeQrData(){
-  return new Promise((resolve,reject)=>{
-   if(typeof QRCode==='undefined')return reject(new Error('مكتبة QR غير متاحة.'));
-   const st=students[selectedId];if(!st)return reject(new Error('اختر طالباً أولاً.'));
-   const holder=document.createElement('div');holder.style.cssText='position:fixed;left:-10000px;top:0';document.body.appendChild(holder);
-   try{new QRCode(holder,{text:`SalahAlDin|${selectedId}|${st.name||''}|${st.grade||''}|${st.section||''}|${$('sdb-date').value||''}`,width:360,height:360,correctLevel:QRCode.CorrectLevel.H})}catch(e){holder.remove();return reject(e)}
-   let tries=0;const poll=()=>{const canvas=holder.querySelector('canvas'),img=holder.querySelector('img');let url='';try{url=canvas?canvas.toDataURL('image/png'):(img?.src||'')}catch(e){}
-    if(url){holder.remove();resolve(url)}else if(++tries<20)setTimeout(poll,100);else{holder.remove();reject(new Error('تعذر توليد رمز QR.'))}};poll();
-  });
- }
- async function generateQr(showStatus=true){if(!selectedId)return;try{qrDataUrl=await makeQrData();updatePreview();if(showStatus)status('تم تحديث رمز QR للطالب.')}catch(e){if(showStatus)status(e.message)}}
- function dataUrlFile(url,name){const [meta,data]=url.split(',');const mime=(meta.match(/data:(.*?);base64/)||[])[1]||'image/png';const bin=atob(data);const bytes=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);return new File([bytes],name,{type:mime})}
- async function uploadBadgeFile(file,grade){
-  if(typeof uploadStudentPdf!=='function')throw new Error('آلية الرفع السحابي غير متاحة.');
-  if(!window.sdAdminSession)throw new Error('جلسة Supabase الإدارية غير موجودة. سجّل الدخول إلى الإدارة من جديد.');
-  return await uploadStudentPdf(file,'studentPortalFiles/'+String(grade||'general').replace(/[^\p{L}\p{N}_-]/gu,'_')+'/كتب',()=>{});
- }
- async function cleanupUpload(path){if(!path||!window.sdAdminSession)return;try{await schoolGateway('delete-file',{session:window.sdAdminSession,path})}catch(e){console.warn('[School badges] cleanup failed',e)}}
- async function saveBadge(){
-  if(!authorized())return;if(!selectedId||!students[selectedId]){alert('اختر الطالب أولاً.');return}
-  if(!window.sdAdminSession){alert('جلسة الإدارة السحابية غير موجودة. أعد تسجيل الدخول إلى لوحة المدير.');return}
-  const st=students[selectedId],date=$('sdb-date').value;if(!date){alert('حدد تاريخ إصدار الباج.');return}
-  const btn=$('sdb-save');btn.disabled=true;let freshPhoto=null,freshQr=null;
-  try{
-   status('جارٍ تجهيز صورة الطالب ورمز QR…');if(!qrDataUrl)qrDataUrl=await makeQrData();
-   const photoFile=photoUploadFile;
-   if(photoFile){status('جارٍ رفع صورة الطالب المضغوطة إلى Supabase…');freshPhoto=await uploadBadgeFile(photoFile,st.grade)}
-   status('جارٍ رفع رمز QR إلى Supabase…');freshQr=await uploadBadgeFile(dataUrlFile(qrDataUrl,'student-'+selectedId+'-qr.png'),st.grade);
-   const patch={badgeIssuedAt:date,badgeQrUrl:freshQr.url,badgeQrPath:freshQr.path,badgeQrStorage:'supabase',badgeQrData:qrDataUrl,badgeUpdatedAt:Date.now(),badgeDesignVersion:3};
-   if(freshPhoto){patch.badgePhotoUrl=freshPhoto.url;patch.badgePhotoPath=freshPhoto.path;patch.badgePhotoStorage='supabase';patch.badgePhotoData=null}
-   status('تم الرفع. جارٍ حفظ بيانات الباج في سجل الطالب على Firebase…');
-   await db.ref('students/'+selectedId).update(patch);
-   const oldPhoto=st.badgePhotoPath,oldQr=st.badgeQrPath;
-   students[selectedId]={...st,...patch};if(typeof globalStudentsData!=='undefined')globalStudentsData[selectedId]=students[selectedId];if(typeof renderStudentsList==='function')renderStudentsList();
-   if(oldPhoto&&freshPhoto&&oldPhoto!==freshPhoto.path)await cleanupUpload(oldPhoto);if(oldQr&&oldQr!==freshQr.path)await cleanupUpload(oldQr);
-   $('sdb-photo-file').value='';photoUploadFile=null;if(photoPreviewUrl.startsWith('blob:'))URL.revokeObjectURL(photoPreviewUrl);photoPreviewUrl='';updatePreview();renderResults();status('تم حفظ الباج والصورة الأصلية كاملة الأبعاد في التخزين السحابي.');
-  }catch(e){if(freshPhoto?.path)await cleanupUpload(freshPhoto.path);if(freshQr?.path)await cleanupUpload(freshQr.path);status('تعذر حفظ الباج: '+(e.message||e));console.error('[School badges] save failed',e);alert('تعذر حفظ الباج:\n'+(e.message||e))}
-  finally{btn.disabled=false}
- }
- function loadImage(src){return new Promise((resolve,reject)=>{const im=new Image();if(!String(src).startsWith('data:'))im.crossOrigin='anonymous';im.onload=()=>resolve(im);im.onerror=()=>reject(new Error('تعذر تحميل صورة الباج أو صورة الطالب.'));im.src=src})}
- async function drawFace(which){
-  const st=selectedId?students[selectedId]:null;
-  const canvas=document.createElement('canvas');canvas.width=1080;canvas.height=1620;
-  const ctx=canvas.getContext('2d');if(!ctx)throw new Error('تعذر تشغيل محرك رسم الباج.');
-  const W=1080,H=1620;
-  const bg=ctx.createLinearGradient(0,0,W,H);bg.addColorStop(0,'#160d2d');bg.addColorStop(.48,'#4a2868');bg.addColorStop(1,'#170d2a');
-  ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
-  const glow=ctx.createRadialGradient(540,250,20,540,250,650);glow.addColorStop(0,'rgba(244,211,139,.22)');glow.addColorStop(1,'rgba(244,211,139,0)');ctx.fillStyle=glow;ctx.fillRect(0,0,W,H);
-  ctx.strokeStyle='#d8b45e';ctx.lineWidth=14;ctx.strokeRect(28,28,W-56,H-56);
-  ctx.strokeStyle='rgba(255,226,157,.7)';ctx.lineWidth=3;ctx.strokeRect(52,52,W-104,H-104);
-  ctx.strokeStyle='rgba(231,194,105,.38)';ctx.lineWidth=2;
-  for(let y=92;y<H-92;y+=42){ctx.beginPath();ctx.moveTo(82,y);ctx.lineTo(112,y);ctx.moveTo(W-82,y);ctx.lineTo(W-112,y);ctx.stroke()}
-  ctx.textAlign='center';ctx.textBaseline='middle';ctx.direction='rtl';
-  const text=(value,x,y,size,color='#fff0bf',weight='700',max=900)=>{ctx.fillStyle=color;ctx.font=weight+' '+size+'px Tahoma,Arial,sans-serif';ctx.fillText(String(value||''),x,y,max)};
-  const school='إعدادية صلاح الدين للبنين';
-  text(which==='front'?school:'بطاقة الطالب',W/2,142,48,'#ffe6a3','900',900);
-  text('ROYAL STUDENT ID  •  V20',W/2,205,25,'#e8cf91','700',900);
-  ctx.strokeStyle='rgba(232,198,112,.7)';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(180,250);ctx.lineTo(900,250);ctx.stroke();
-  if(which==='front'){
-   ctx.fillStyle='rgba(255,255,255,.08)';ctx.fillRect(210,300,660,690);
-   ctx.strokeStyle='#e2c16e';ctx.lineWidth=8;ctx.strokeRect(210,300,660,690);
-   const photoSrc=photoPreviewUrl||imageUrl(st);
-   if(photoSrc){
-    const p=await loadImage(photoSrc);const x=230,y=320,w=620,h=650;
-    const scale=Math.max(w/p.width,h/p.height),sw=w/scale,sh=h/scale,sx=(p.width-sw)/2,sy=(p.height-sh)/2;
-    ctx.save();ctx.beginPath();ctx.rect(x,y,w,h);ctx.clip();ctx.drawImage(p,sx,sy,sw,sh,x,y,w,h);ctx.restore();
-   }else{
-    ctx.fillStyle='rgba(255,255,255,.12)';ctx.fillRect(230,320,620,650);
-    text('صورة الطالب',W/2,635,38,'#f6e8c5','700',560);
-   }
-   ctx.fillStyle='#f7dfa0';ctx.fillRect(150,1040,780,3);
-   text(st?.name||$('sdb-name').value||'اسم الطالب',W/2,1110,43,'#fff0bd','900',900);
-   text('الصف الدراسي  •  '+(st?.grade||$('sdb-grade').value||'—'),W/2,1190,31,'#f3dfb1','700',900);
-   text('الشعبة  •  '+(st?.section||$('sdb-section').value||'—'),W/2,1260,31,'#f3dfb1','700',900);
-   text('بطاقة تعريف مدرسية رسمية',W/2,1435,25,'#d9c18c','700',900);
-   text('يرجى المحافظة على البطاقة',W/2,1480,22,'#cbb98e','400',900);
-  }else{
-   text('هذه البطاقة تخص الطالب الموضح اسمه في الوجه الأمامي',W/2,330,27,'#f5e5bf','700',920);
-   text('يرجى إبرازها عند الطلب داخل المدرسة',W/2,390,28,'#f5e5bf','700',920);
-   const q=qrDataUrl||st?.badgeQrData||st?.badgeQrUrl||st?.qrData||'';
-   const boxX=285,boxY=500,box=510;
-   ctx.fillStyle='#fff';ctx.fillRect(boxX-18,boxY-18,box+36,box+36);
-   ctx.strokeStyle='#e0bd68';ctx.lineWidth=8;ctx.strokeRect(boxX-18,boxY-18,box+36,box+36);
-   if(q){
-    const qi=await loadImage(q);ctx.imageSmoothingEnabled=false;ctx.drawImage(qi,boxX,boxY,box,box);ctx.imageSmoothingEnabled=true;
-   }else{
-    ctx.fillStyle='#38244b';ctx.textAlign='center';ctx.font='bold 38px Tahoma,Arial';ctx.fillText('QR',W/2,boxY+235);
-    ctx.font='bold 24px Tahoma,Arial';ctx.fillText('يظهر بعد اختيار الطالب',W/2,boxY+290);
-   }
-   text('امسح الرمز للتحقق من بيانات البطاقة',W/2,1115,26,'#fff0bd','700',900);
-   text('تُسلّم البطاقة للإدارة عند العثور عليها',W/2,1205,25,'#f5e5bf','700',900);
-   text('يمنع العبث بالرمز أو بيانات البطاقة',W/2,1265,25,'#f5e5bf','700',900);
-   text('تاريخ الإصدار  •  '+fmtDate($('sdb-date').value||st?.badgeIssuedAt),W/2,1435,27,'#ffe6a3','900',900);
-   text(school,W/2,1485,24,'#d9c18c','700',900);
-  }
-  return canvas;
- }
- async function download(which){try{status('جارٍ تجهيز صورة عالية الدقة…');const c=await drawFace(which);const a=document.createElement('a');a.href=c.toDataURL('image/png');a.download=(which==='front'?'الباج-الامامي-':'الباج-الخلفي-')+(students[selectedId]?.name||'student')+'.png';a.click();status('تم تجهيز صورة الباج للتنزيل.')}catch(e){alert(e.message);status('تعذر إنشاء الصورة: '+e.message)}}
- async function printBoth(){
-  if(!selectedId||!students[selectedId]){alert('اختر الطالب أولاً.');return}
-  try{status('جارٍ تجهيز الوجهين للطباعة…');const frontCanvas=await drawFace('front'),backCanvas=await drawFace('back');const frontUrl=frontCanvas.toDataURL('image/png'),backUrl=backCanvas.toDataURL('image/png');const w=window.open('','_blank','width=900,height=900');if(!w)throw new Error('اسمح بالنوافذ المنبثقة حتى تتمكن من الطباعة.');
-   w.document.write(`<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>باج الطالب</title><style>@page{size:54mm 81mm;margin:0}*{box-sizing:border-box}html,body{margin:0;padding:0}.face{width:54mm;height:81mm;page-break-after:always;break-after:page}.face:last-child{page-break-after:auto;break-after:auto}img{width:54mm;height:81mm;display:block}@media screen{body{background:#ddd;padding:20px}.face{margin:0 auto 20px;box-shadow:0 4px 20px #0004}img{width:54mm;height:90mm}}</style>    
-</head><body><div class="face"><img src="${frontUrl}"></div><div class="face"><img src="${backUrl}"></div><script>window.onload=()=>setTimeout(()=>window.print(),350)<\/script></body></html>`);w.document.close();status('تم فتح نافذة الطباعة؛ اختر الطابعة أو حفظ PDF.');
-  }catch(e){alert(e.message);status('تعذرت الطباعة: '+e.message)}
- }
- function init(){
-  if(!$('sd-school-badges'))return;$('sdb-date').value=today();
-  $('sdb-load-students').addEventListener('click',loadStudents);$('sdb-search').addEventListener('input',renderResults);$('sdb-date').addEventListener('change',()=>{qrDataUrl='';updatePreview();if(selectedId)generateQr(false)});
-  $('sdb-photo-file').addEventListener('change',()=>{const f=$('sdb-photo-file').files?.[0];if(photoPreviewUrl.startsWith('blob:'))URL.revokeObjectURL(photoPreviewUrl);photoPreviewUrl='';photoUploadFile=null;if(!f){updatePreview();return}if(!/^image\/(jpeg|png|webp)$/i.test(f.type)||f.size>50*1024*1024){alert('اختر صورة JPG أو PNG أو WEBP لا يتجاوز 50MB.');$('sdb-photo-file').value='';updatePreview();return}photoUploadFile=f;photoPreviewUrl=URL.createObjectURL(f);updatePreview();status('تم اختيار الصورة الأصلية؛ احفظ الباج لرفعها دون ضغط أو تغيير أبعاد.');});
-  $('sdb-save').addEventListener('click',saveBadge);$('sdb-print').addEventListener('click',printBoth);$('sdb-download-front').addEventListener('click',()=>download('front'));$('sdb-download-back').addEventListener('click',()=>download('back'));
-  const admin=$('admin-dashboard-modal');if(admin){new MutationObserver(()=>{if(!admin.classList.contains('hidden')&&visible()&&authorized()){if(!Object.keys(students).length)loadStudents()}}).observe(admin,{attributes:true,attributeFilter:['class']})}
- }
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
-})();
 </script>
 
  
